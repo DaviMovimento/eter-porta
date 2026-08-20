@@ -2,6 +2,9 @@
   "_leia": "O catálogo das portas. Edição nova = uma entrada nova aqui + rodar o converter.sh. Nada mais muda.",
 
   "config": {
+    "_cdn": "As imagens saem daqui; o site em si pode morar em qualquer hospedagem, leve.",
+    "baseImagens": "https://davimovimento.github.io/eter-porta/",
+
     "checkoutPasse": "https://clkdmg.site/pay/SEU-CHECKOUT",
     "precoPasse": "R$97",
 

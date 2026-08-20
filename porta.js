@@ -26,6 +26,9 @@ const INTERVALO_EM = 6;
 const ZOOM = 1.65;
 
 let DADOS, EDICAO, PASSE, CFG, TOTAL = 0;
+/* De onde vêm as imagens. Vazio = da mesma pasta do site. Com endereço = de um
+   CDN — o site fica leve em qualquer hospedagem e as páginas pesadas moram fora. */
+let BASE = '';
 let paginaAtual = 1, maximaLida = 0;
 
 /* ── telemetria ────────────────────────────────────────────────
@@ -127,6 +130,7 @@ async function iniciar() {
   CFG = DADOS.config;
   PASSE = DADOS.passe;
 
+  BASE = CFG.baseImagens || '';
   EDICAO = DADOS.edicoes.find(e => e.n === url.get('ed')) || DADOS.edicoes[0];
   TOTAL = EDICAO.paginas;
 
@@ -180,7 +184,7 @@ const EVENTO_META = {
 /* ═══ TELA 1 · A CAPA ══════════════════════════════════════════ */
 function montarCapa() {
   const img = $('#capa-img');
-  img.src = `edicoes/${EDICAO.n}/capa.webp`;
+  img.src = `${BASE}edicoes/${EDICAO.n}/capa.webp`;
   img.alt = `Capa da edição ${EDICAO.n} — ${EDICAO.titulo}`;
   img.onerror = () => { img.style.visibility = 'hidden'; };
 
@@ -248,7 +252,7 @@ function montarLeitor() {
   const frag = document.createDocumentFragment();
 
   for (let i = 1; i <= TOTAL; i++) {
-    const base = `edicoes/${EDICAO.n}/paginas/p${String(i).padStart(3, '0')}`;
+    const base = `${BASE}edicoes/${EDICAO.n}/paginas/p${String(i).padStart(3, '0')}`;
     const img = document.createElement('img');
     img.className = 'pagina';
     img.dataset.pagina = i;
