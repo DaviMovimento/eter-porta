@@ -1,0 +1,18 @@
+# URLs limpas. Funciona no Cloudflare Pages e no Netlify sem alteração.
+#
+# Em vez de mandar "eter.com/?ed=004" no Instagram, você manda "eter.com/e/004".
+# É mais curto, cabe na bio, e não parece endereço de sistema.
+
+/e/:numero   /index.html?ed=:numero   200
+/e/          /index.html              200
+
+# atalhos por nome, para quando o link vai escrito num carrossel
+/mascaras    /index.html?ed=007       302
+/coracoes    /index.html?ed=004       302
+/autoral     /index.html?ed=002       302
+/verbo       /index.html?ed=003       302
+/decada      /index.html?ed=001       302
+
+# páginas de apoio com endereço decente
+/privacidade /privacidade.html        200
+/obrigado    /upsell.html             200

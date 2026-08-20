@@ -1,0 +1,171 @@
+{
+  "_leia": "O catálogo das portas. Edição nova = uma entrada nova aqui + rodar o converter.sh. Nada mais muda.",
+
+  "config": {
+    "checkoutPasse": "https://clkdmg.site/pay/SEU-CHECKOUT",
+    "precoPasse": "R$97",
+
+    "_anual": "A segunda oferta, que roda na página de upsell logo depois do passe pago. Na Guru: produto de R$900, parcelamento em até 12x com os juros por conta do cliente — a parcela cai em ~R$87, menor que o passe.",
+    "checkoutAnual": "https://clkdmg.site/pay/SEU-CHECKOUT-ANUAL",
+    "precoAnual": "R$900",
+    "parcelaAnual": "12× de R$87",
+    "precoCheio": "R$997",
+
+    "_captura": "Como o lead é pego. 'whatsapp' abre a conversa e a janela de 24h (mensagem grátis depois). 'formulario' pega nome e zap na página, mas NÃO abre a janela — toda mensagem sua depois vira template pago.",
+    "modoCaptura": "formulario",
+    "whatsappNumero": "5551999999999",
+
+    "_portao": "Onde a página cobra o dado. 0 = antes de ler (o desenho atual). N = libera até a página N e só então pede. A evidência favorece N; é a chave do seu teste A/B.",
+    "gateNaPagina": 0,
+
+    "_checkout": "true faz todo botão de compra virar lead ANTES de mandar para o pagamento. Sem isto, quem abandona o checkout some — e é justamente o público de recuperação.",
+    "capturaAntesDoCheckout": true,
+
+    "_leads": "Endereço do app da web do Apps Script (termina em /exec). Ver build/planilha-de-leads.gs.",
+    "webhookLead": "",
+    "webhookEventos": "",
+
+    "_pixel": "Só os números. Sem eles não há público de remarketing: você fala só com quem deixou o WhatsApp, e perde quem leu 30 páginas e saiu.",
+    "pixelMeta": "",
+    "ga4": ""
+  },
+
+  "passe": {
+    "rotulo": "Passe ETER · 30 dias",
+    "itens": [
+      ["4 edições novas", "uma por quarta, no seu WhatsApp"],
+      ["4 encontros ao vivo", "quarta à noite, com o Davi — e ficam gravados"],
+      ["8 edições anteriores", "o acervo inteiro, aberto desde o primeiro dia"],
+      ["A sala dos leitores", "o grupo no WhatsApp, com os outros assinantes"]
+    ],
+    "condicao": "Cobrança única no Pix. Não renova sozinho.",
+    "credito": "A assinatura anual custa R$997. Os R$97 são abatidos: para ficar o ano inteiro, você completa R$900."
+  },
+
+  "edicoes": [
+    {
+      "n": "008",
+      "titulo": "Versos & Trovas",
+      "subtitulo": "A poesia como tecnologia de marca: o que Ariano Suassuna sabia sobre construir algo que dura.",
+      "paginas": 39,
+      "minutos": 32,
+      "capitulos": [
+        ["As Palavras Mortas da Modernidade", 5],
+        ["Dumbledore, Bachelard e o Feitiço da Palavra", 10],
+        ["A Arte de Falar e Escrever", 16],
+        ["Exercício prático: Desenvolvendo seu Estilo Autoral", 24],
+        ["O Renascimento do Verbo", 32],
+        ["Bibliografia", 37]
+      ]
+    },
+    {
+      "n": "007",
+      "titulo": "O Baile de Máscaras",
+      "subtitulo": "Como construir o personagem certo para se destacar no teatro social do mercado.",
+      "paginas": 59,
+      "minutos": 53,
+      "capitulos": [
+        ["O Palco da Vida e o Teatro Social", 5],
+        ["Dê-me uma Máscara e Direi a Verdade", 12],
+        ["Sombras no Camarim", 20],
+        ["Estudo de Caso: Silvio Santos", 30],
+        ["Exercício prático: Construindo seu Personagem", 38],
+        ["O Século dos Poetas", 51],
+        ["Bibliografia", 56]
+      ]
+    },
+    {
+      "n": "006",
+      "titulo": "Fascinar Multidões",
+      "subtitulo": "Como antecipar, construir e liderar os movimentos culturais que dominam o mercado.",
+      "paginas": 56,
+      "minutos": 46,
+      "capitulos": [
+        ["Psicologia das Massas e o Espírito do Tempo", 5],
+        ["A Guerra de Narrativas da Nova Economia", 14],
+        ["Mito, Rito e Doutrina", 28],
+        ["Exercício prático: Criação de Movimento", 39],
+        ["Os Filhos do Fogo", 49],
+        ["Bibliografia", 54]
+      ]
+    },
+    {
+      "n": "005",
+      "titulo": "Venda como um Brasileiro",
+      "subtitulo": "De onde vem a nossa vergonha de vender, como o brasileiro decide comprar, e como vender através da nossa cultura.",
+      "paginas": 52,
+      "minutos": 45,
+      "capitulos": [
+        ["Todo mundo odeia vendedores", 5],
+        ["Como brasileiros compram?", 13],
+        ["Como os brasileiros vendem? (ou deveriam)", 22],
+        ["Estudo de Caso: Natura", 36],
+        ["Entre nós", 46],
+        ["Bibliografia", 51]
+      ]
+    },
+    {
+      "n": "004",
+      "titulo": "Corações Miméticos",
+      "subtitulo": "Os arquétipos, a engenharia do desejo e a semiótica dos algoritmos.",
+      "paginas": 56,
+      "minutos": 48,
+      "capitulos": [
+        ["A Guerra pelo Coração", 5],
+        ["A Moda e seus Arquétipos", 10],
+        ["Semiótica & Algoritmos", 24],
+        ["Estética da Vergonha", 32],
+        ["Estudo de caso: Farm vs Sol de Janeiro", 37],
+        ["Exercício: Antropofagia, Devore como um Artista", 47],
+        ["Bibliografia", 54]
+      ]
+    },
+    {
+      "n": "003",
+      "titulo": "O Verbo e a Máquina",
+      "subtitulo": "O manual rebelde de inteligência artificial para empreendedores criativos.",
+      "paginas": 52,
+      "minutos": 45,
+      "capitulos": [
+        ["Bem vindo à Revolução Criativa", 5],
+        ["O Verbo", 12],
+        ["A Máquina", 21],
+        ["Perguntas e Proposições", 31],
+        ["Ancestralidade e Tecnologia", 39],
+        ["O País do presente", 46],
+        ["Bibliografia", 51]
+      ]
+    },
+    {
+      "n": "002",
+      "titulo": "Torna-te Quem Tu És",
+      "subtitulo": "Como construir uma marca autoral e desejada na era da superficialidade.",
+      "paginas": 43,
+      "minutos": 38,
+      "capitulos": [
+        ["A Revolução das Máquinas e a Era dos Autorais", 5],
+        ["Autoralidade, A Marca dos Originais", 11],
+        ["Estudo de caso: Emicida", 25],
+        ["O destino de todo criador", 31],
+        ["Tornar-se Brasil", 35],
+        ["Bibliografia", 42]
+      ]
+    },
+    {
+      "n": "001",
+      "titulo": "A Década do Brasil",
+      "subtitulo": "A revolução cultural 2027–2034 e a vantagem injusta do empreendedor brasileiro.",
+      "paginas": 43,
+      "minutos": 35,
+      "capitulos": [
+        ["A Corrida pelo Ouro Brasileiro", 5],
+        ["Por que o Brasil pode ser o epicentro do próximo Renascimento", 13],
+        ["A vantagem injusta do empreendedor brasileiro", 19],
+        ["O sequestro das riquezas do Brasil", 23],
+        ["Estudo de caso: Misci e o Luxo Brasileiro", 26],
+        ["A Vanguarda Criativa Brasileira", 29],
+        ["Exercício prático: Mapeamento da Visão", 34]
+      ]
+    }
+  ]
+}

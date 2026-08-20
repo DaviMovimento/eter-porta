@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Complete o ano · Revista ETER</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="porta.css">
+<style>
+  .up{max-width:33rem;margin:0 auto;padding:2.2rem 1.25rem 4rem}
+
+  .selo{
+    display:flex;align-items:center;gap:.6rem;justify-content:center;
+    font-family:var(--sans);font-size:.78rem;font-weight:700;
+    letter-spacing:.03em;color:var(--tinta-2);
+    background:rgba(62,107,79,.1);border:1px solid rgba(62,107,79,.3);
+    border-radius:99px;padding:.55rem 1.1rem;width:fit-content;margin:0 auto 2rem;
+  }
+  .selo i{
+    width:1.1rem;height:1.1rem;border-radius:50%;background:#3E6B4F;color:#F5F0E3;
+    display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.7rem;
+  }
+
+  .up h1{
+    font-size:clamp(1.9rem,6.5vw,2.6rem);font-weight:400;line-height:1.1;
+    text-align:center;margin-bottom:.9rem;text-wrap:balance;
+  }
+  .up .lead{
+    font-family:var(--sans);font-size:1rem;line-height:1.6;color:var(--tinta-2);
+    text-align:center;margin-bottom:2.2rem;
+  }
+  .up .lead b{color:var(--tinta)}
+
+  /* a conta, que é o argumento inteiro */
+  .conta{
+    background:var(--creme-2);border-radius:4px;padding:1.3rem 1.35rem;
+    font-family:var(--sans);margin-bottom:1.8rem;
+  }
+  .conta .linha{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    font-size:.93rem;color:var(--tinta-2);padding:.5rem 0;
+  }
+  .conta .linha b{color:var(--tinta);font-variant-numeric:tabular-nums}
+  .conta .linha.total{
+    border-top:1px solid var(--linha);margin-top:.4rem;padding-top:.9rem;
+  }
+  .conta .linha.total span{color:var(--tinta);font-weight:700}
+  .conta .linha.total b{
+    font-family:var(--serif);font-size:1.9rem;font-weight:400;color:var(--ouro);line-height:1;
+  }
+  .conta .risco b{text-decoration:line-through;opacity:.55}
+
+  .oferta{background:var(--cafe);color:var(--sobre-cafe);border-radius:4px;padding:1.6rem 1.35rem 1.4rem}
+  .oferta .rot{
+    font-family:var(--sans);font-size:.66rem;font-weight:800;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ouro-vivo);margin-bottom:1.1rem;
+  }
+  .oferta ul{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin-bottom:1.4rem}
+  .oferta li{
+    font-family:var(--sans);font-size:.9rem;line-height:1.4;
+    color:rgba(240,232,214,.72);padding-left:1.15rem;position:relative;
+  }
+  .oferta li::before{
+    content:"";position:absolute;left:0;top:.52em;width:.4rem;height:.4rem;
+    border-radius:50%;background:var(--ouro-vivo);
+  }
+  .oferta li b{display:block;color:var(--sobre-cafe);font-weight:700;font-size:.97rem;margin-bottom:.1rem}
+
+  .btn-grande{
+    display:block;width:100%;text-align:center;text-decoration:none;
+    font-family:var(--sans);font-weight:700;font-size:1.02rem;
+    background:var(--ouro-vivo);color:#1A1408;
+    padding:1.05rem 1rem;border-radius:3px;border:0;cursor:pointer;
+  }
+  .btn-grande:hover{filter:brightness(1.08)}
+  .sob-botao{
+    font-family:var(--sans);font-size:.78rem;line-height:1.45;
+    color:rgba(240,232,214,.55);text-align:center;margin-top:.8rem;
+  }
+
+  .recusa{text-align:center;margin-top:1.8rem}
+  .recusa a{
+    font-family:var(--sans);font-size:.85rem;color:var(--tinta-3);
+    text-decoration:underline;text-underline-offset:3px;
+  }
+  .recusa a:hover{color:var(--tinta-2)}
+  .recusa p{font-family:var(--sans);font-size:.76rem;color:var(--tinta-3);margin-top:.6rem}
+</style>
+</head>
+<body>
+<div class="up">
+
+  <div class="marca">ETER</div>
+
+  <div class="selo"><i>✓</i> Pagamento confirmado · o passe está ativo</div>
+
+  <h1>Você já pagou o primeiro mês</h1>
+  <p class="lead">O acervo abriu e a edição de quarta já está no seu nome. Como você entrou de
+  qualquer forma, existe uma conta que só vale a pena fazer <b>agora</b>, nesta página, e não
+  daqui a trinta dias.</p>
+
+  <div class="conta">
+    <div class="linha risco"><span>Assinatura anual da ETER</span><b id="cheio">R$997</b></div>
+    <div class="linha"><span>Você acabou de pagar</span><b id="pago">− R$97</b></div>
+    <div class="linha total"><span>Falta para travar o ano</span><b id="parcela">12× de R$87</b></div>
+    <div class="linha" style="padding-top:.2rem"><span>Cada parcela sai <b>menor</b> do que o passe que você acabou de pagar.</span></div>
+  </div>
+
+  <section class="oferta">
+    <p class="rot">O que muda ao completar</p>
+    <ul>
+      <li><b>52 edições em vez de 4</b>uma revista nova por quarta, o ano inteiro</li>
+      <li><b>Todos os encontros ao vivo</b>e não só os quatro do passe</li>
+      <li><b>O acervo aberto para sempre</b>em vez de fechar no trigésimo dia</li>
+      <li><b>O preço de hoje travado</b>a ETER reajusta, e quem entrou antes não é alcançado</li>
+    </ul>
+
+    <button class="btn-grande" id="btn-anual">Travar o ano — <span id="btn-preco">12× de R$87</span></button>
+    <p class="sob-botao">Ou <b id="pix-preco">R$900</b> à vista no Pix, que sai mais barato. Não renova
+    sozinho: quando o ano acabar, você decide de novo.</p>
+  </section>
+
+  <div class="recusa">
+    <a href="#" id="btn-nao">Não, quero só os trinta dias do passe</a>
+    <p>O seu passe continua ativo de qualquer jeito. Esta oferta some ao sair desta página.</p>
+  </div>
+
+</div>
+
+<script>
+/* Lê os valores do mesmo edicoes.json que a porta usa: mexeu lá, mudou aqui.
+   Nenhum preço fica escrito em dois lugares. */
+(async () => {
+  try {
+    const { config: c } = await (await fetch('edicoes.json')).json();
+    document.getElementById('cheio').textContent = c.precoCheio;
+    document.getElementById('pago').textContent = '− ' + c.precoPasse;
+    document.getElementById('parcela').textContent = c.parcelaAnual || c.precoAnual;
+    document.getElementById('btn-preco').textContent = c.parcelaAnual || c.precoAnual;
+    document.getElementById('pix-preco').textContent = c.precoAnual;
+
+    const seguir = () => {
+      const p = new URLSearchParams(location.search);
+      const u = new URL(c.checkoutAnual);
+      /* mantém o rastro da compra original: qual edição trouxe a pessoa */
+      u.searchParams.set('src', p.get('src') || 'upsell');
+      u.searchParams.set('sck', 'upsell-anual');
+      if (window.fbq) fbq('track', 'AddToCart', { value: 900, currency: 'BRL' });
+      if (c.checkoutAnual.includes('SEU-CHECKOUT')) {
+        alert('Checkout do anual ainda não configurado.\n\nColoque o link em edicoes.json → config.checkoutAnual\n\nIria para:\n' + u);
+        return;
+      }
+      location.href = u;
+    };
+
+    document.getElementById('btn-anual').addEventListener('click', seguir);
+  } catch (e) {
+    console.error(e);
+  }
+
+  document.getElementById('btn-nao').addEventListener('click', e => {
+    e.preventDefault();
+    /* leva para a área de membros; troque se o endereço for outro */
+    location.href = 'https://eterbrasil.curseduca.pro/';
+  });
+})();
+</script>
+</body>
+</html>

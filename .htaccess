@@ -1,0 +1,61 @@
+# A PORTA dentro do WordPress — este arquivo já vem no zip, não precisa mexer.
+#
+# O que ele faz: impede o WordPress de sequestrar as URLs desta pasta, cria os
+# endereços curtos (/e/004, /e/coracoes) e cuida do cache das imagens.
+# No Cloudflare Pages e no Netlify ele é ignorado sem causar dano.
+
+# 1 · rotas: arquivo que existe é servido direto; o resto vira a porta
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /e/
+
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # /e/004 abre a porta da edição 004, preservando ?c=1&j=... da URL
+  RewriteRule ^([0-9]{3})/?$ index.html?ed=$1 [L,QSA]
+
+  # atalhos por nome, para link escrito em carrossel e bio
+  RewriteRule ^coracoes/?$   index.html?ed=004 [L,QSA]
+  RewriteRule ^autoral/?$    index.html?ed=002 [L,QSA]
+  RewriteRule ^decada/?$     index.html?ed=001 [L,QSA]
+  RewriteRule ^mascaras/?$   index.html?ed=007 [L,QSA]
+  RewriteRule ^verbo/?$      index.html?ed=003 [L,QSA]
+  RewriteRule ^versos/?$     index.html?ed=008 [L,QSA]
+
+  # páginas de apoio com endereço decente
+  RewriteRule ^obrigado/?$     upsell.html      [L,QSA]
+  RewriteRule ^privacidade/?$  privacidade.html [L,QSA]
+
+  # qualquer outra coisa cai na porta
+  RewriteRule ^ index.html [L,QSA]
+</IfModule>
+
+# 2 · o servidor precisa saber servir WebP
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+
+# 3 · cache: as páginas da revista nunca mudam depois de geradas
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.webp$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # o catálogo e o código mudam a cada edição: sempre revalida
+  <FilesMatch "\.(json|js|css|html)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 4 · compressão do que é texto (as imagens já vêm comprimidas)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
