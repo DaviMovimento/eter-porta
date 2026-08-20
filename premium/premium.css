@@ -611,3 +611,22 @@ dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
   position:absolute;width:1px;height:1px;margin:-1px;padding:0;
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
 }
+
+/* ═══ TARJA DA DEMONSTRAÇÃO ═══════════════════════════════════
+   Precisa ser impossível confundir com a página de verdade. */
+#tarja-demo{
+  position:fixed;left:0;right:0;bottom:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;gap:.9rem;flex-wrap:wrap;
+  padding:.55rem 1rem;
+  background:repeating-linear-gradient(135deg,#241A12,#241A12 12px,#2E2216 12px,#2E2216 24px);
+  color:var(--ouro-claro);
+  font-family:var(--rotulo);font-size:.6rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;text-align:center;
+  border-top:1px solid var(--ouro);
+}
+#tarja-demo b{color:#fff}
+#tarja-demo button{
+  background:transparent;border:1px solid var(--ouro);color:var(--ouro-claro);
+  font:inherit;padding:.3rem .7rem;border-radius:1px;cursor:pointer;
+}
+#tarja-demo button:hover{background:var(--ouro);color:#1E1813}

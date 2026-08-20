@@ -121,7 +121,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608202014')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608202055')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -130,6 +130,7 @@ async function iniciar() {
 
   document.title = `${EDICAO.titulo} · ETER`;
   ligarPixel();
+  tarjaDemo();
   calcularLimite();      /* antes do mosaico: ele também obedece ao cadeado */
   montarChegada();
   montarEspiada();
@@ -860,10 +861,50 @@ function ligarZoom() {
    Guardo a resposta aqui só para não perguntar a cada clique. */
 
 const CHAVE_MES = 'eter_mes';
+const CHAVE_DEMO = 'eter_demo';
+
+/* ── MODO DEMONSTRAÇÃO (?demo=1) ──────────────────────────────
+   O porteiro de verdade mora na planilha. Enquanto ela não está no ar,
+   este modo roda a MESMA lógica aqui no navegador, com uma tarja à vista,
+   para o fluxo poder ser visto de ponta a ponta. Não vale como controle
+   — é uma maquete funcionando, não o porteiro. */
+const emDemo = () => url.get('demo') === '1';
+
+function porteiroDeMentira(edicao) {
+  let d; try { d = JSON.parse(localStorage.getItem(CHAVE_DEMO)); } catch { d = null; }
+  const agora = Date.now();
+  if (d && d.ate > agora && d.edicao !== edicao) {
+    const faltam = Math.ceil((d.ate - agora) / 86400000);
+    const q = new Date(d.ate);
+    return {
+      liberado: false, motivo: 'já escolheu a edição deste mês',
+      edicaoEmCurso: d.edicao, diasQueFaltam: faltam,
+      liberaEmBR: `${String(q.getDate()).padStart(2, '0')}/${String(q.getMonth() + 1).padStart(2, '0')}`,
+    };
+  }
+  if (!d || d.ate <= agora) {
+    localStorage.setItem(CHAVE_DEMO, JSON.stringify({ edicao, ate: agora + 30 * 86400000 }));
+  }
+  return { liberado: true, motivo: 'edição do mês (demonstração)' };
+}
+
+function tarjaDemo() {
+  if (!emDemo() || $('#tarja-demo')) return;
+  const t = document.createElement('div');
+  t.id = 'tarja-demo';
+  t.innerHTML = `<b>Modo demonstração</b> — o porteiro está sendo simulado neste navegador.
+    <button type="button" id="demo-zerar">recomeçar do zero</button>`;
+  document.body.appendChild(t);
+  $('#demo-zerar').addEventListener('click', () => {
+    [CHAVE_DEMO, CHAVE_MES, CHAVE_LEAD].forEach(k => localStorage.removeItem(k));
+    location.reload();
+  });
+}
 
 const vereditoSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_MES)); } catch { return null; } };
 
 async function consultarPorteiro(edicao) {
+  if (emDemo()) return porteiroDeMentira(edicao);
   const l = leadSalvo();
   /* Quem vem do ManyChat entra com c=1 e não preenche formulário — então não
      temos e-mail nem telefone. Mas o ManyChat sabe quem é: se ele acrescentar
@@ -1040,7 +1081,11 @@ function ligar() {
     $('#mes-dialog').close();
     if (!n) return;
     evento('porteiro_voltou', { para: n });
-    location.href = `?ed=${n}`;
+    /* troca SÓ a edição: reescrever a URL do zero apagava o utm e o código
+       do embaixador, e a venda que viesse depois nasceria órfã */
+    const ir = new URL(location.href);
+    ir.searchParams.set('ed', n);
+    location.href = ir.toString();
   });
 
   /* o Esc do <dialog> fecha por fora dos listeners: sem isto, quem desiste
