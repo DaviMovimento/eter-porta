@@ -17,7 +17,6 @@ const posChave = ed => `eter_pos_${ed}`;
 
 let DADOS, EDICAO, PASSE, CFG, BASE = '', TOTAL = 0;
 let paginaAtual = 1, maximaLida = 0, capAtual = -1;
-let espiada = 1;                    /* a página que o visor mostra */
 let fator = 1, ultimoFator = 1.6;
 const fila = [];
 
@@ -55,8 +54,15 @@ const leadSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_LEA
 /* Capturado é quem entregou nome, e-mail E telefone. Um cadastro antigo,
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
    daria o e-mail. E ?reset=1 limpa tudo, para testar como visitante novo. */
+/* ?reset=1 limpa UMA vez, ao carregar — não a cada consulta. Se apagasse
+   sempre, o cadastro feito depois do reset nunca colaria e a pessoa levaria
+   o popup na cara de novo. */
+if (url.get('reset') === '1') localStorage.removeItem(CHAVE_LEAD);
+
+/* Capturado é quem entregou nome, e-mail E telefone. Um cadastro antigo,
+   feito antes de o e-mail existir, não vale — senão essa pessoa nunca
+   daria o e-mail. */
 const jaCapturado = () => {
-  if (url.get('reset') === '1') { localStorage.removeItem(CHAVE_LEAD); return false; }
   if (url.get('c') === '1') return true;
   const l = leadSalvo();
   return !!(l && l.nome && l.email && l.whatsapp);
@@ -98,7 +104,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201821')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201853')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -181,6 +187,9 @@ function montarChegada() {
 }
 
 /* ═══ A REVISTA ESPIÁVEL ═══════════════════════════════════════ */
+let limiteEspiada = Infinity;      /* última página livre antes do cadeado */
+let destravar = () => {};          /* preenchida quando a espiada monta */
+
 function montarEspiada() {
   if (!TOTAL) { $('#revista').hidden = true; return; }
 
@@ -190,68 +199,148 @@ function montarEspiada() {
     return i >= 0 ? caps[i][0] : '';
   };
 
-  /* a faixa com todas as páginas em miniatura */
-  const faixa = $('#faixa');
-  faixa.innerHTML = Array.from({ length: TOTAL }, (_, i) => {
-    const n = i + 1;
-    return `<button class="mini" data-p="${n}" aria-label="Página ${n}">
-      <img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">
-      <span class="n">${n === 1 ? 'capa' : n}</span>
-    </button>`;
-  }).join('');
+  /* O primeiro capítulo é livre; o cadeado começa onde o segundo começa.
+     Sem capítulo 2 mapeado, libera a revista inteira em vez de trancar tudo. */
+  limiteEspiada = caps[1] ? caps[1][1] - 1 : TOTAL;
 
-  /* o visor: duas camadas que se alternam, para a troca ser um fade e não um pisca */
-  const camadas = [$('#visor-a'), $('#visor-b')];
-  let atual = 0;
+  /* A revista é física: a capa fica sozinha, e daí em diante as páginas
+     andam em pares, como numa revista aberta na mesa. */
+  const folhaDe   = n => (n <= 1 ? 0 : Math.floor(n / 2));
+  const paginasDe = k => (k === 0 ? [null, 1] : [2 * k, 2 * k + 1]);
+  const existe    = n => n !== null && n >= 1 && n <= TOTAL;
+  const ultimaFolha = folhaDe(TOTAL);
 
-  function mostrar(n, origem) {
-    n = Math.min(TOTAL, Math.max(1, n));
-    if (n === espiada && camadas[atual].classList.contains('ver')) return;
-    const anterior = espiada;
-    espiada = n;
+  const livre       = n => jaCapturado() || n <= limiteEspiada;
+  const folhaLivre  = k => paginasDe(k).every(n => !existe(n) || livre(n));
+  /* pode chegar a UMA folha depois do limite: é a que aparece embaçada */
+  const folhaMaxima = () => (jaCapturado() ? ultimaFolha
+                                           : Math.min(ultimaFolha, folhaDe(limiteEspiada) + 1));
 
-    /* a folha vira: a página corrente gira sobre a lombada e revela a de baixo.
-       Indo para trás, a nova é que entra girando por cima. */
-    const paraFrente = n > anterior;
-    const prox = camadas[1 - atual], velha = camadas[atual];
+  const spread  = $('#spread');
+  const slotEsq = $('#pg-esq'), slotDir = $('#pg-dir');
+  const virador = $('#virador');
+  const vFrente = $('#vira-frente'), vVerso = $('#vira-verso');
+  const faixa   = $('#faixa');
 
-    prox.classList.remove('vira-sai', 'vira-entra');
-    velha.classList.remove('vira-sai', 'vira-entra');
+  let folha = 0, virando = false;
 
-    const trocar = () => {
-      if (paraFrente) {
-        prox.style.zIndex = 1; velha.style.zIndex = 2;
-        prox.classList.add('ver');
-        velha.classList.add('vira-sai');
-        setTimeout(() => { velha.classList.remove('ver', 'vira-sai'); }, 480);
-      } else {
-        prox.style.zIndex = 3; velha.style.zIndex = 2;
-        prox.classList.add('ver', 'vira-entra');
-        setTimeout(() => {
-          prox.classList.remove('vira-entra');
-          velha.classList.remove('ver');
-        }, 480);
-      }
-      atual = 1 - atual;
-    };
-
-    if (prox.getAttribute('src') === pag(n, 800) && prox.complete) trocar();
-    else { prox.onload = trocar; prox.src = pag(n, 800); }
-
-    $('#pulso-n').textContent = n === 1 ? 'Capa' : `Página ${n}`;
-    $('#pulso-cap').textContent = nomeDe(n);
-    $('#trilho').style.setProperty('--f', (n / TOTAL).toFixed(3));
-
-    faixa.querySelectorAll('.mini').forEach(m => m.classList.toggle('ativa', +m.dataset.p === n));
-    const ativa = faixa.querySelector('.mini.ativa');
-    if (ativa && origem !== 'faixa') ativa.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-
-    $('#seta-esq').disabled = n <= 1;
-    $('#seta-dir').disabled = n >= TOTAL;
-    if (origem) evento('espiou', { pagina: n, origem });
+  /* ── a faixa de miniaturas ─────────────────────────────────── */
+  function pintarFaixa() {
+    faixa.innerHTML = Array.from({ length: TOTAL }, (_, i) => {
+      const n = i + 1;
+      return `<button class="mini${livre(n) ? '' : ' travada'}" data-p="${n}"
+        aria-label="Página ${n}${livre(n) ? '' : ' — trancada'}">
+        <img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">
+        <span class="n">${n === 1 ? 'capa' : n}</span>
+      </button>`;
+    }).join('');
+    marcarAtivas();
   }
 
-  /* a faixa manda: deslizou, o visor acompanha */
+  function marcarAtivas(origem) {
+    const [e, d] = paginasDe(folha);
+    faixa.querySelectorAll('.mini').forEach(m => {
+      const n = +m.dataset.p;
+      m.classList.toggle('ativa', n === e || n === d);
+    });
+    /* a faixa acompanha quem folheia — menos quando foi ela quem mandou */
+    if (origem && origem !== 'faixa') {
+      const alvo = faixa.querySelector(`.mini[data-p="${existe(e) ? e : d}"]`);
+      /* scrollIntoView arrastava a página inteira junto; centralizar na mão
+         mexe só na faixa */
+      if (alvo) {
+        const rf = faixa.getBoundingClientRect(), ra = alvo.getBoundingClientRect();
+        /* 'smooth' briga com o scroll-snap da faixa e ela volta pro zero;
+           instantâneo o snap respeita */
+        faixa.scrollTo({
+          left: faixa.scrollLeft + (ra.left - rf.left) - (rf.width - ra.width) / 2,
+          behavior: 'auto',
+        });
+      }
+    }
+  }
+
+  /* ── pintar uma folha, com ou sem virada ───────────────────── */
+  const carregar = n => new Promise(ok => {
+    if (!existe(n)) return ok('');
+    const im = new Image();
+    im.onload = im.onerror = () => ok(pag(n, 800));
+    im.src = pag(n, 800);
+  });
+
+  function por(slot, n) {
+    if (existe(n)) { slot.src = pag(n, 800); slot.style.visibility = 'visible'; }
+    else { slot.removeAttribute('src'); slot.style.visibility = 'hidden'; }
+  }
+
+  function legendar(origem) {
+    const [e, d] = paginasDe(folha);
+    const trancada = !folhaLivre(folha);
+    const visiveis = [e, d].filter(existe);
+    $('#pulso-n').textContent = folha === 0 ? 'Capa'
+      : visiveis.length > 1 ? `Páginas ${visiveis[0]}–${visiveis[1]}` : `Página ${visiveis[0]}`;
+    $('#pulso-cap').textContent = trancada ? '' : nomeDe(visiveis[visiveis.length - 1]);
+    $('#trilho').style.setProperty('--f', (visiveis[visiveis.length - 1] / TOTAL).toFixed(3));
+
+    spread.classList.toggle('fechada', folha === 0);
+    spread.classList.toggle('travado', trancada);
+    $('#tranca').hidden = !trancada;
+
+    $('#seta-esq').disabled = folha <= 0;
+    $('#seta-dir').disabled = folha >= folhaMaxima();
+    marcarAtivas(origem);
+  }
+
+  async function irParaFolha(k, origem) {
+    k = Math.max(0, Math.min(folhaMaxima(), k));
+    if (virando || k === folha) return;
+
+    const salto = Math.abs(k - folha) > 1;
+    const [e0, d0] = paginasDe(folha);
+    const [e1, d1] = paginasDe(k);
+
+    /* pulo largo (veio da faixa): troca seca, virar 8 folhas seria teatro */
+    if (salto) { folha = k; por(slotEsq, e1); por(slotDir, d1); legendar(origem); anunciar(origem); return; }
+
+    virando = true;
+    const frente = k > folha;
+
+    if (frente) {
+      /* a folha da direita levanta: na frente o que sai, no verso o que entra */
+      await Promise.all([carregar(d0), carregar(e1), carregar(d1)]);
+      vFrente.src = existe(d0) ? pag(d0, 800) : '';
+      vVerso.src  = existe(e1) ? pag(e1, 800) : '';
+      por(slotDir, d1);                       /* aparece por baixo, ao levantar */
+      folha = k;
+      spread.classList.remove('fechada');     /* a revista abre */
+      spread.classList.add('virando-frente');
+      virador.classList.add('ativo', 'avanca');
+    } else {
+      /* voltando: a folha da esquerda se levanta e deita sobre a direita */
+      await Promise.all([carregar(e0), carregar(d1), carregar(e1)]);
+      vVerso.src  = existe(e0) ? pag(e0, 800) : '';
+      vFrente.src = existe(d1) ? pag(d1, 800) : '';
+      por(slotEsq, e1);
+      folha = k;
+      spread.classList.add('virando-tras');
+      virador.classList.add('ativo', 'volta');
+    }
+
+    setTimeout(() => {
+      if (frente) por(slotEsq, e1); else por(slotDir, d1);
+      virador.classList.remove('ativo', 'avanca', 'volta');
+      spread.classList.remove('virando-frente', 'virando-tras');
+      virando = false;
+      legendar(origem);
+      anunciar(origem);
+    }, 620);
+  }
+
+  const anunciar = origem => { if (origem) evento('espiou', { folha, pagina: paginasDe(folha)[1], origem }); };
+
+  const irParaPagina = (n, origem) => irParaFolha(folhaDe(n), origem);
+
+  /* ── gestos e cliques ──────────────────────────────────────── */
   let quieto;
   faixa.addEventListener('scroll', () => {
     clearTimeout(quieto);
@@ -263,40 +352,82 @@ function montarEspiada() {
         const d = Math.abs(r.left + r.width / 2 - meio);
         if (d < dist) { dist = d; perto = m; }
       });
-      if (perto) mostrar(+perto.dataset.p, 'faixa');
-    }, 90);
+      if (perto) irParaPagina(+perto.dataset.p, 'faixa');
+    }, 100);
   }, { passive: true });
 
-  /* tocar numa página é dizer "quero ler esta" */
   faixa.addEventListener('click', e => {
     const m = e.target.closest('.mini');
     if (!m) return;
     const n = +m.dataset.p;
-    if (n !== espiada) { mostrar(n, 'toque'); return; }
-    abrirNaPagina(n);          /* segundo toque na mesma: vai ler */
+    if (!livre(n)) { abrirNaPagina(n); return; }        /* trancada: pede o cadastro */
+    if (paginasDe(folha).includes(n)) abrirNaPagina(n); /* já está à vista: vai ler */
+    else irParaPagina(n, 'toque');
   });
-  $('#visor').addEventListener('click', () => abrirNaPagina(espiada));
+
+  /* clicar na revista abre a leitura na página em que o dedo caiu */
+  $('#visor').addEventListener('click', ev => {
+    const [e, d] = paginasDe(folha);
+    const r = spread.getBoundingClientRect();
+    const ladoEsq = ev.clientX < r.left + r.width / 2;
+    const alvo = (ladoEsq && existe(e)) ? e : (existe(d) ? d : e);
+    abrirNaPagina(alvo);
+  });
+  $('#tranca-btn').addEventListener('click', ev => {
+    ev.stopPropagation();
+    evento('bateu_no_cadeado', { pagina: limiteEspiada + 1 });
+    abrirNaPagina(limiteEspiada + 1);
+  });
 
   /* as setas moram dentro do visor: sem parar a propagação, clicar nelas
      virava a página E abria a leitura de uma vez */
-  $('#seta-esq').addEventListener('click', e => { e.stopPropagation(); mostrar(espiada - 1, 'seta'); });
-  $('#seta-dir').addEventListener('click', e => { e.stopPropagation(); mostrar(espiada + 1, 'seta'); });
+  $('#seta-esq').addEventListener('click', e => { e.stopPropagation(); irParaFolha(folha - 1, 'seta'); });
+  $('#seta-dir').addEventListener('click', e => { e.stopPropagation(); irParaFolha(folha + 1, 'seta'); });
+
+  /* arrastar a revista com o dedo, como se vira papel */
+  let x0 = null;
+  $('#visor').addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  $('#visor').addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) < 45) return;
+    ev_impedir = true;
+    irParaFolha(folha + (dx < 0 ? 1 : -1), 'arrasto');
+  }, { passive: true });
+  let ev_impedir = false;
+  $('#visor').addEventListener('click', e => {
+    if (ev_impedir) { e.stopImmediatePropagation(); ev_impedir = false; }
+  }, true);
 
   addEventListener('keydown', e => {
     if (!$('#leitura').classList.contains('aberta') && !document.querySelector('dialog[open]')) {
-      if (e.key === 'ArrowRight') { e.preventDefault(); mostrar(espiada + 1, 'seta'); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); mostrar(espiada - 1, 'seta'); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); irParaFolha(folha + 1, 'seta'); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); irParaFolha(folha - 1, 'seta'); }
     }
   });
 
-  mostrar(1);
+  /* quando o cadastro entra, a revista inteira abre sem recarregar a página */
+  destravar = () => {
+    if (!jaCapturado()) return;
+    pintarFaixa();
+    legendar('destravou');       /* recentra a faixa, que o repinte zerou */
+    $('#dica-faixa').innerHTML = 'deslize para espiar · <b>toque para ler a partir dali</b>';
+  };
+
+  pintarFaixa();
+  por(slotEsq, null); por(slotDir, 1);
+  legendar();
+
+  if (!jaCapturado() && limiteEspiada < TOTAL) {
+    $('#dica-faixa').innerHTML = `o capítulo 1 é livre · <b>o resto abre com seu cadastro</b>`;
+  }
 }
 
 /* quem espiou e quis ler cai exatamente na página que estava vendo */
 function abrirNaPagina(n) {
   const ir = () => { abrirLeitura(); setTimeout(() => irPara(n), 420); };
   if (jaCapturado()) { evento('leu_da_espiada', { pagina: n }); ir(); return; }
-  pedirDados('espiada', ir);
+  pedirDados(n > limiteEspiada ? 'trancada' : 'espiada', ir);
 }
 
 /* ═══ TELA 2 · A LEITURA ═══════════════════════════════════════ */
@@ -573,6 +704,7 @@ let aoTerminar = null;
 
 const COPY = {
   leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.', 'Abrir a edição'],
+  trancada: ['O resto da edição abre aqui', 'O primeiro capítulo é livre. Os outros seis abrem agora, na íntegra, assim que você se identificar.', 'Destravar a edição'],
   espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima quarta.', 'Ler a partir daqui'],
   checkout: ['Para onde mandamos seu acesso?', 'Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.', 'Continuar para o pagamento'],
 };
@@ -580,7 +712,7 @@ const COPY = {
 function pedirDados(onde, depois = null) {
   if (jaCapturado()) { depois?.(); return true; }
   aoTerminar = depois;
-  const chave = onde.startsWith('checkout') ? 'checkout' : (onde === 'espiada' ? 'espiada' : 'leitura');
+  const chave = onde.startsWith('checkout') ? 'checkout' : (COPY[onde] ? onde : 'leitura');
   const [tit, dek, bt] = COPY[chave];
   $('#form-tit').textContent = tit;
   $('#form-dek').textContent = dek;
@@ -647,6 +779,7 @@ async function enviar(e) {
   evento('virou_lead', { onde: lead.onde });
   $('#form-dialog').close();
   bt.disabled = false;
+  destravar();
 
   if (aoTerminar) { const f = aoTerminar; aoTerminar = null; f(); return; }
   abrirLeitura();
