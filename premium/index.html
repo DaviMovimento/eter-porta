@@ -11,9 +11,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="premium.css?v=202608201801">
+<link rel="stylesheet" href="premium.css?v=202608201812">
 </head>
 <body>
+
+<!-- ══ A BARRA DA CASA — hoje uma página, amanhã várias ══════════ -->
+<header class="topo" id="topo">
+  <a class="topo-marca" href="./" aria-label="ETER — início">
+    <img src="logo.webp" alt="ETER" width="900" height="240">
+  </a>
+  <nav class="topo-nav">
+    <a href="#" id="nav-acervo">Edições</a>
+    <a href="#" id="nav-passe" class="destaque">Assinar</a>
+  </nav>
+</header>
 
 <!-- ══ TELA 1 · A CHEGADA ══════════════════════════════════════ -->
 <main id="chegada">
@@ -21,10 +32,6 @@
   <div class="veu" aria-hidden="true"></div>
 
   <div class="folha">
-
-    <header class="marca">
-      <img src="logo.webp" alt="ETER" width="900" height="240" fetchpriority="high">
-    </header>
 
     <!-- a revista, espiável na própria chegada -->
     <section class="revista" id="revista">
@@ -87,7 +94,10 @@
   <header class="cromo" id="cromo">
     <button class="ic" id="btn-voltar" aria-label="Voltar">←</button>
     <span class="cromo-tit" id="cromo-tit"></span>
-    <button class="ic" id="btn-zoom" aria-label="Aproximar o texto" title="Aproximar">⌕</button>
+    <span class="zoom-n" id="zoom-n"></span>
+    <button class="ic" id="btn-menos" aria-label="Diminuir" title="Diminuir">−</button>
+    <button class="ic" id="btn-zoom" aria-label="Alternar o zoom" title="Aproximar">⌕</button>
+    <button class="ic" id="btn-mais" aria-label="Aumentar" title="Aumentar">+</button>
     <button class="ic" id="btn-sumario" aria-label="Capítulos" title="Capítulos">☰</button>
     <span class="pagina-n" id="pagina-n"></span>
   </header>
@@ -158,6 +168,6 @@
   </form>
 </dialog>
 
-<script src="premium.js?v=202608201801"></script>
+<script src="premium.js?v=202608201812"></script>
 </body>
 </html>

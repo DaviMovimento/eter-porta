@@ -89,7 +89,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201801')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201812')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -198,15 +198,36 @@ function montarEspiada() {
   function mostrar(n, origem) {
     n = Math.min(TOTAL, Math.max(1, n));
     if (n === espiada && camadas[atual].classList.contains('ver')) return;
+    const anterior = espiada;
     espiada = n;
 
-    const prox = camadas[1 - atual];
-    prox.onload = () => {
-      prox.classList.add('ver');
-      camadas[atual].classList.remove('ver');
+    /* a folha vira: a página corrente gira sobre a lombada e revela a de baixo.
+       Indo para trás, a nova é que entra girando por cima. */
+    const paraFrente = n > anterior;
+    const prox = camadas[1 - atual], velha = camadas[atual];
+
+    prox.classList.remove('vira-sai', 'vira-entra');
+    velha.classList.remove('vira-sai', 'vira-entra');
+
+    const trocar = () => {
+      if (paraFrente) {
+        prox.style.zIndex = 1; velha.style.zIndex = 2;
+        prox.classList.add('ver');
+        velha.classList.add('vira-sai');
+        setTimeout(() => { velha.classList.remove('ver', 'vira-sai'); }, 480);
+      } else {
+        prox.style.zIndex = 3; velha.style.zIndex = 2;
+        prox.classList.add('ver', 'vira-entra');
+        setTimeout(() => {
+          prox.classList.remove('vira-entra');
+          velha.classList.remove('ver');
+        }, 480);
+      }
       atual = 1 - atual;
     };
-    prox.src = pag(n, 800);
+
+    if (prox.getAttribute('src') === pag(n, 800) && prox.complete) trocar();
+    else { prox.onload = trocar; prox.src = pag(n, 800); }
 
     $('#pulso-n').textContent = n === 1 ? 'Capa' : `Página ${n}`;
     $('#pulso-cap').textContent = nomeDe(n);
@@ -247,8 +268,10 @@ function montarEspiada() {
   });
   $('#visor').addEventListener('click', () => abrirNaPagina(espiada));
 
-  $('#seta-esq').addEventListener('click', () => mostrar(espiada - 1, 'seta'));
-  $('#seta-dir').addEventListener('click', () => mostrar(espiada + 1, 'seta'));
+  /* as setas moram dentro do visor: sem parar a propagação, clicar nelas
+     virava a página E abria a leitura de uma vez */
+  $('#seta-esq').addEventListener('click', e => { e.stopPropagation(); mostrar(espiada - 1, 'seta'); });
+  $('#seta-dir').addEventListener('click', e => { e.stopPropagation(); mostrar(espiada + 1, 'seta'); });
 
   addEventListener('keydown', e => {
     if (!$('#leitura').classList.contains('aberta') && !document.querySelector('dialog[open]')) {
@@ -455,9 +478,9 @@ function controlarCromo() {
 }
 
 /* ── o zoom: pinça e duplo toque; o toque simples nunca dispara ── */
-function aplicarZoom(novo, origem, ancoraX) {
+let aplicarZoom = function (novo, origem, ancoraX) {
   const antes = fator;
-  fator = Math.min(3, Math.max(1, novo));
+  fator = Math.min(4, Math.max(1, novo));
   if (fator > 1.02) ultimoFator = fator;
   document.querySelectorAll('.folha-in').forEach(el => el.style.width = (fator * 100) + '%');
   const larg = Math.round(Math.min(innerWidth, 736) * fator);
@@ -468,22 +491,31 @@ function aplicarZoom(novo, origem, ancoraX) {
     document.querySelectorAll('.folha-p').forEach(f => {
       const max = f.scrollWidth - f.clientWidth;
       if (max <= 0) { f.scrollLeft = 0; return; }
-      f.scrollLeft = ancoraX != null
-        ? Math.max(0, Math.min(max, (f.scrollLeft + ancoraX) * (fator / antes) - ancoraX))
-        : max / 2;
+      if (ancoraX == null) { f.scrollLeft = max / 2; return; }
+      /* a âncora precisa ser relativa à folha; usar a coordenada da tela
+         fazia o zoom pousar sempre no lugar errado */
+      const dentro = ancoraX - f.getBoundingClientRect().left;
+      const alvo = (f.scrollLeft + dentro) * (fator / antes) - dentro;
+      f.scrollLeft = Math.max(0, Math.min(max, alvo));
     });
   });
 
-  clearTimeout(aplicarZoom.t);
-  aplicarZoom.t = setTimeout(() => {
+  clearTimeout(guardaZoom);
+  guardaZoom = setTimeout(() => {
     localStorage.setItem(CHAVE_ZOOM, fator.toFixed(2));
     evento('ajustou_zoom', { fator: +fator.toFixed(2), origem, pagina: paginaAtual });
   }, 600);
-}
+};
+let guardaZoom;
 
 function ligarZoom() {
   const caixa = $('#paginas');
-  $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : ultimoFator, 'lupa'));
+  $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : 1.8, 'lupa'));
+  $('#btn-mais').addEventListener('click', () => aplicarZoom(fator + 0.2, 'botao', innerWidth / 2));
+  $('#btn-menos').addEventListener('click', () => aplicarZoom(fator - 0.2, 'botao', innerWidth / 2));
+  const nivel = () => { $('#zoom-n').textContent = fator > 1.02 ? Math.round(fator * 100) + '%' : ''; };
+  const _aplicar = aplicarZoom;
+  aplicarZoom = (...a) => { _aplicar(...a); nivel(); };
 
   let ultimoToque = 0, ultimoX = 0;
   caixa.addEventListener('pointerup', e => {
@@ -491,7 +523,7 @@ function ligarZoom() {
     const agora = Date.now();
     if (agora - ultimoToque < 320 && Math.abs(e.clientX - ultimoX) < 40) {
       e.preventDefault();
-      aplicarZoom(fator > 1.02 ? 1 : ultimoFator, 'duplo-toque', e.clientX);
+      aplicarZoom(fator > 1.02 ? 1 : 2, 'duplo-toque', e.clientX);
       ultimoToque = 0;
     } else { ultimoToque = agora; ultimoX = e.clientX; }
   });
@@ -511,7 +543,7 @@ function ligarZoom() {
   addEventListener('wheel', e => {
     if (!e.ctrlKey || !$('#leitura').classList.contains('aberta')) return;
     e.preventDefault();
-    aplicarZoom(fator * (1 - e.deltaY * 0.012), 'roda', e.clientX);
+    aplicarZoom(fator * (1 - e.deltaY * 0.006), 'roda', e.clientX);
   }, { passive: false });
 
   addEventListener('keydown', e => {
@@ -616,7 +648,10 @@ function ligar() {
   $('#btn-ler').addEventListener('click', () => jaCapturado() ? abrirLeitura() : pedirDados('leitura'));
   $('#btn-voltar').addEventListener('click', voltar);
   $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });
-  $('#ver-edicoes').addEventListener('click', e => { e.preventDefault(); $('#acervo-dialog').showModal(); });
+  const abrirAcervo = e => { e.preventDefault(); $('#acervo-dialog').showModal(); evento('abriu_acervo'); };
+  $('#ver-edicoes').addEventListener('click', abrirAcervo);
+  $('#nav-acervo').addEventListener('click', abrirAcervo);
+  $('#nav-passe').addEventListener('click', e => { e.preventDefault(); irParaCheckout('topo'); });
   $('#form').addEventListener('submit', enviar);
   $('#f-zap').addEventListener('input', mascara);
   $('#f-nome').addEventListener('input', () => $('#c-nome').classList.remove('erro'));

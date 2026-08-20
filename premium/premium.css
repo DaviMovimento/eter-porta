@@ -48,9 +48,35 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 [hidden]{display:none !important}
 
 /* ═══════════════════════════════════════════════════════════════
+   A BARRA DA CASA
+   ═══════════════════════════════════════════════════════════════ */
+.topo{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.75rem 1.4rem;
+  background:rgba(242,238,230,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--linha);
+}
+body.lendo .topo{display:none}
+.topo-marca{display:flex;align-items:center}
+.topo-marca img{width:4rem}
+.topo-nav{display:flex;align-items:center;gap:1.4rem}
+.topo-nav a{
+  font-family:var(--rotulo);font-size:.6rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-2);
+  text-decoration:none;transition:color .2s;
+}
+.topo-nav a:hover{color:var(--tinta)}
+.topo-nav a.destaque{
+  color:#17110A;background:var(--ouro-vivo);
+  padding:.45rem .85rem;border-radius:2px;
+}
+.topo-nav a.destaque:hover{filter:brightness(1.06)}
+
+/* ═══════════════════════════════════════════════════════════════
    O AMBIENTE — mosaico das próprias páginas, quase apagado
    ═══════════════════════════════════════════════════════════════ */
-#chegada{position:relative;min-height:100svh;overflow:hidden;background:var(--papel)}
+#chegada{position:relative;min-height:calc(100svh - 3.4rem);overflow:hidden;background:var(--papel)}
 
 .mosaico{
   position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -76,8 +102,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .folha{
   position:relative;z-index:2;
   width:100%;max-width:31rem;margin:0 auto;
-  padding:1.4rem 1.4rem 2.5rem;
-  display:flex;flex-direction:column;min-height:100svh;
+  padding:1.6rem 1.4rem 2.5rem;
+  display:flex;flex-direction:column;min-height:calc(100svh - 3.4rem);
 }
 
 .marca{display:flex;justify-content:center;margin-bottom:1.8rem}
@@ -90,10 +116,12 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
   position:relative;
   width:min(15.5rem,68%);margin:0 auto;
   aspect-ratio:1/1.414;
+  perspective:1500px;
 }
 .visor .pag-atual{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   border-radius:1px;background:var(--papel-2);
+  transform-origin:left center;backface-visibility:hidden;
   box-shadow:
     0 1px 1px rgba(30,24,19,.2),
     0 10px 24px -8px rgba(30,24,19,.32),
@@ -102,9 +130,21 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 }
 .visor .pag-atual.ver{opacity:1}
 
+/* a folha gira sobre a lombada, como no papel */
+.pag-atual.vira-sai{animation:virarSai .48s cubic-bezier(.4,0,.55,1) forwards}
+.pag-atual.vira-entra{animation:virarEntra .48s cubic-bezier(.35,.5,.3,1) forwards}
+@keyframes virarSai{
+  0%{transform:rotateY(0);box-shadow:0 1px 1px rgba(30,24,19,.2),0 10px 24px -8px rgba(30,24,19,.32)}
+  100%{transform:rotateY(-118deg);box-shadow:0 0 40px rgba(30,24,19,.4)}
+}
+@keyframes virarEntra{
+  0%{transform:rotateY(-118deg);box-shadow:0 0 40px rgba(30,24,19,.4)}
+  100%{transform:rotateY(0);box-shadow:0 1px 1px rgba(30,24,19,.2),0 10px 24px -8px rgba(30,24,19,.32)}
+}
+
 /* as setas, no desktop */
 .seta{
-  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  position:absolute;top:50%;transform:translateY(-50%);z-index:8;
   width:2.6rem;height:2.6rem;border-radius:50%;
   display:none;align-items:center;justify-content:center;
   background:rgba(242,238,230,.92);color:var(--tinta);
@@ -248,15 +288,15 @@ h1 em{
    DESKTOP — duas colunas de verdade
    ═══════════════════════════════════════════════════════════════ */
 @media (min-width:60rem){
+  .topo{padding:.85rem 2.5rem}
+  .topo-marca img{width:4.6rem}
   .folha{
     max-width:66rem;
     display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-    grid-template-areas:"marca marca" "revista dizeres";
+    grid-template-areas:"revista dizeres";
     gap:0 3.5rem;align-content:center;align-items:center;
     padding:2rem 2.5rem 2.5rem;
   }
-  .marca{grid-area:marca;margin-bottom:2.5rem}
-  .marca img{width:5.6rem}
 
   .revista{grid-area:revista;margin-bottom:0}
   .visor{width:min(22rem,100%)}
@@ -300,6 +340,11 @@ h1 em{
 .ic{width:2.05rem;height:2.05rem;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:var(--ouro-claro);border-radius:50%;font-size:1rem;line-height:1;transition:background .2s,color .2s}
 .ic:hover{background:rgba(240,234,224,.1)}
 .ic.ativo{background:var(--ouro-vivo);color:#17110A}
+.zoom-n{
+  font-family:var(--rotulo);font-size:.58rem;letter-spacing:.06em;
+  color:var(--ouro-claro);min-width:2.4rem;text-align:right;
+  font-variant-numeric:tabular-nums;
+}
 .pagina-n{font-family:var(--rotulo);font-size:.6rem;letter-spacing:.06em;color:rgba(240,234,224,.5);white-space:nowrap;padding:0 .25rem;font-variant-numeric:tabular-nums}
 
 .selo-cap{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:65;pointer-events:none;text-align:center;opacity:0;transition:opacity .5s}
