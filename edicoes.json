@@ -5,11 +5,11 @@
     "_cdn": "As imagens saem daqui; o site em si pode morar em qualquer hospedagem, leve.",
     "baseImagens": "https://davimovimento.github.io/eter-porta/",
 
-    "checkoutPasse": "https://clkdmg.site/pay/SEU-CHECKOUT",
+    "checkoutPasse": "https://clkdmg.site/pay/passe-de-30-dias",
     "precoPasse": "R$97",
 
     "_anual": "A segunda oferta, que roda na página de upsell logo depois do passe pago. Na Guru: produto de R$900, parcelamento em até 12x com os juros por conta do cliente — a parcela cai em ~R$87, menor que o passe.",
-    "checkoutAnual": "https://clkdmg.site/pay/SEU-CHECKOUT-ANUAL",
+    "checkoutAnual": "https://clkdmg.site/subscribe/eter-upsell/1click",
     "precoAnual": "R$900",
     "parcelaAnual": "12× de R$87",
     "precoCheio": "R$997",
