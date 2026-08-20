@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════
-   A PORTA PREMIUM — o motor.
-   Mesmo funil, mesmas regras de rastreio. O que muda é a forma:
-   cerimônia na chegada, física de papel na leitura, selo na oferta.
+   A PORTA PREMIUM — v3
+   A revista fica espiável na própria chegada: o visor mostra a página,
+   a faixa deixa deslizar por todas, e tocar numa delas leva à leitura
+   NAQUELA página — passando pela captura só uma vez.
    ═══════════════════════════════════════════════════════════════ */
 
 (() => {
@@ -16,10 +17,13 @@ const posChave = ed => `eter_pos_${ed}`;
 
 let DADOS, EDICAO, PASSE, CFG, BASE = '', TOTAL = 0;
 let paginaAtual = 1, maximaLida = 0, capAtual = -1;
+let espiada = 1;                    /* a página que o visor mostra */
 let fator = 1, ultimoFator = 1.6;
 const fila = [];
 
-/* ── telemetria (idêntica à porta original: nada se perde) ────── */
+const pag = (n, tam) => `${BASE}edicoes/${EDICAO.n}/paginas/p${String(n).padStart(3, '0')}@${tam}.webp`;
+
+/* ── telemetria ───────────────────────────────────────────────── */
 const EVENTO_META = { abriu_leitura: 'ViewContent', virou_lead: 'Lead', foi_ao_checkout: 'InitiateCheckout' };
 
 function evento(nome, dados = {}) {
@@ -58,10 +62,8 @@ function utmsDaUrl() {
 function linkCheckout(origem) {
   const base = CFG.checkoutPasse, j = url.get('j');
   const p = new URLSearchParams({
-    src: `ed${EDICAO.n}`,
-    sck: j ? `${origem}-${j}` : origem,
-    utm_source: 'porta', utm_medium: origem, utm_campaign: `ed${EDICAO.n}`,
-    ...utmsDaUrl(),
+    src: `ed${EDICAO.n}`, sck: j ? `${origem}-${j}` : origem,
+    utm_source: 'porta', utm_medium: origem, utm_campaign: `ed${EDICAO.n}`, ...utmsDaUrl(),
   });
   return base + (base.includes('?') ? '&' : '?') + p;
 }
@@ -79,9 +81,7 @@ function seguir(origem) {
   const destino = linkCheckout(origem);
   evento('foi_ao_checkout', { origem });
   despachar();
-  if (CFG.checkoutPasse.includes('SEU-CHECKOUT')) {
-    alert('Checkout não configurado.\n\nIria para:\n' + destino); return;
-  }
+  if (CFG.checkoutPasse.includes('SEU-CHECKOUT')) { alert('Checkout não configurado.\n\n' + destino); return; }
   location.href = destino;
 }
 
@@ -89,7 +89,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201729')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201755')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -99,7 +99,7 @@ async function iniciar() {
   document.title = `${EDICAO.titulo} · ETER`;
   ligarPixel();
   montarChegada();
-  ligarLeque();
+  montarEspiada();
   ligar();
   evento('viu_porta', { titulo: EDICAO.titulo, capturado: jaCapturado() });
 }
@@ -125,33 +125,16 @@ function ligarPixel() {
 
 /* ═══ TELA 1 · A CHEGADA ═══════════════════════════════════════ */
 function montarChegada() {
-  const capa = $('#capa');
-  capa.src = `${BASE}edicoes/${EDICAO.n}/capa.webp`;
-  capa.alt = `Capa da edição ${EDICAO.n} — ${EDICAO.titulo}`;
-  capa.onerror = () => capa.style.visibility = 'hidden';
-
-  /* o leque: as aberturas de capítulo espiam atrás da capa e dão curiosidade */
   const caps = EDICAO.capitulos || [];
-  const espiar = [caps[1]?.[1], caps[2]?.[1], caps[3]?.[1]].filter(Boolean).slice(0, 3);
-  espiar.forEach((p, i) => {
-    const im = $(`#espia${i + 1}`);
-    im.src = `${BASE}edicoes/${EDICAO.n}/paginas/p${String(p).padStart(3, '0')}@800.webp`;
-  });
-  if (!espiar.length) $('#folhear').hidden = true;
 
   $('#numero').textContent = `Edição N° ${EDICAO.n}`;
 
-  /* a última palavra do título vira caligrafia, como nas capas da revista */
   const partes = EDICAO.titulo.split(' ');
   const fecho = partes.pop();
-  $('#titulo').innerHTML = partes.length ? `${partes.join(' ')}<em>${fecho}</em>` : fecho;
+  $('#titulo').innerHTML = partes.length ? `${partes.join(' ')} <em>${fecho}</em>` : fecho;
 
-  /* a promessa é o "Nesta Edição" da própria revista, verbatim */
   $('#promessa').textContent = EDICAO.nestaEdicao || EDICAO.subtitulo;
-  if (EDICAO.convite) {
-    $('#convite-frase').textContent = EDICAO.convite;
-    $('#convite-frase').hidden = false;
-  }
+  if (EDICAO.convite) { $('#convite-frase').textContent = EDICAO.convite; $('#convite-frase').hidden = false; }
 
   const f = [];
   if (caps.length) f.push(`<b>${caps.length}</b> capítulos`);
@@ -173,22 +156,115 @@ function montarChegada() {
 
   $('#acervo').innerHTML = DADOS.edicoes.map(e => `
     <li><a href="?ed=${e.n}">
-      <span class="alg">${e.n}</span>
-      <span class="nom">${e.titulo}</span>
+      <span class="alg">${e.n}</span><span class="nom">${e.titulo}</span>
       <span class="pg">${e.paginas ? e.paginas + ' pág' : 'em breve'}</span>
     </a></li>`).join('');
+
+  /* o mosaico de fundo: páginas espalhadas pela edição, quase apagadas —
+     mostra que existe conteúdo lá dentro sem competir com nada */
+  if (TOTAL > 8) {
+    const passo = Math.floor(TOTAL / 8);
+    const quadros = Array.from({ length: 8 }, (_, i) => 1 + i * passo).filter(n => n <= TOTAL);
+    $('#mosaico').innerHTML = quadros.map(n => `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">`).join('');
+    /* só aparece quando as imagens estiverem prontas: nada de piscar */
+    setTimeout(() => $('#mosaico').classList.add('ver'), 900);
+  }
 }
 
-/* ── o leque de páginas: espiar dentro sem sair da capa ───────── */
-function ligarLeque() {
-  const pilha = $('#pilha'), bt = $('#folhear'), txt = $('#folhear-txt');
-  const alternar = () => {
-    const aberto = pilha.classList.toggle('aberta');
-    txt.textContent = aberto ? 'Fechar' : 'Espiar por dentro';
-    if (aberto) evento('espiou_dentro');
+/* ═══ A REVISTA ESPIÁVEL ═══════════════════════════════════════ */
+function montarEspiada() {
+  if (!TOTAL) { $('#revista').hidden = true; return; }
+
+  const caps = EDICAO.capitulos || [];
+  const nomeDe = n => {
+    const i = caps.findLastIndex(c => n >= c[1]);
+    return i >= 0 ? caps[i][0] : '';
   };
-  bt.addEventListener('click', alternar);
-  pilha.addEventListener('click', alternar);
+
+  /* a faixa com todas as páginas em miniatura */
+  const faixa = $('#faixa');
+  faixa.innerHTML = Array.from({ length: TOTAL }, (_, i) => {
+    const n = i + 1;
+    return `<button class="mini" data-p="${n}" aria-label="Página ${n}">
+      <img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">
+      <span class="n">${n === 1 ? 'capa' : n}</span>
+    </button>`;
+  }).join('');
+
+  /* o visor: duas camadas que se alternam, para a troca ser um fade e não um pisca */
+  const camadas = [$('#visor-a'), $('#visor-b')];
+  let atual = 0;
+
+  function mostrar(n, origem) {
+    n = Math.min(TOTAL, Math.max(1, n));
+    if (n === espiada && camadas[atual].classList.contains('ver')) return;
+    espiada = n;
+
+    const prox = camadas[1 - atual];
+    prox.onload = () => {
+      prox.classList.add('ver');
+      camadas[atual].classList.remove('ver');
+      atual = 1 - atual;
+    };
+    prox.src = pag(n, 800);
+
+    $('#pulso-n').textContent = n === 1 ? 'Capa' : `Página ${n}`;
+    $('#pulso-cap').textContent = nomeDe(n);
+    $('#trilho').style.setProperty('--f', (n / TOTAL).toFixed(3));
+
+    faixa.querySelectorAll('.mini').forEach(m => m.classList.toggle('ativa', +m.dataset.p === n));
+    const ativa = faixa.querySelector('.mini.ativa');
+    if (ativa && origem !== 'faixa') ativa.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+    $('#seta-esq').disabled = n <= 1;
+    $('#seta-dir').disabled = n >= TOTAL;
+    if (origem) evento('espiou', { pagina: n, origem });
+  }
+
+  /* a faixa manda: deslizou, o visor acompanha */
+  let quieto;
+  faixa.addEventListener('scroll', () => {
+    clearTimeout(quieto);
+    quieto = setTimeout(() => {
+      const meio = faixa.getBoundingClientRect().left + faixa.clientWidth / 2;
+      let perto = null, dist = Infinity;
+      faixa.querySelectorAll('.mini').forEach(m => {
+        const r = m.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - meio);
+        if (d < dist) { dist = d; perto = m; }
+      });
+      if (perto) mostrar(+perto.dataset.p, 'faixa');
+    }, 90);
+  }, { passive: true });
+
+  /* tocar numa página é dizer "quero ler esta" */
+  faixa.addEventListener('click', e => {
+    const m = e.target.closest('.mini');
+    if (!m) return;
+    const n = +m.dataset.p;
+    if (n !== espiada) { mostrar(n, 'toque'); return; }
+    abrirNaPagina(n);          /* segundo toque na mesma: vai ler */
+  });
+  $('#visor').addEventListener('click', () => abrirNaPagina(espiada));
+
+  $('#seta-esq').addEventListener('click', () => mostrar(espiada - 1, 'seta'));
+  $('#seta-dir').addEventListener('click', () => mostrar(espiada + 1, 'seta'));
+
+  addEventListener('keydown', e => {
+    if (!$('#leitura').classList.contains('aberta') && !document.querySelector('dialog[open]')) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); mostrar(espiada + 1, 'seta'); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); mostrar(espiada - 1, 'seta'); }
+    }
+  });
+
+  mostrar(1);
+}
+
+/* quem espiou e quis ler cai exatamente na página que estava vendo */
+function abrirNaPagina(n) {
+  const ir = () => { abrirLeitura(); setTimeout(() => irPara(n), 420); };
+  if (jaCapturado()) { evento('leu_da_espiada', { pagina: n }); ir(); return; }
+  pedirDados('espiada', ir);
 }
 
 /* ═══ TELA 2 · A LEITURA ═══════════════════════════════════════ */
@@ -198,15 +274,10 @@ function abrirLeitura() {
   $('#chegada').style.display = 'none';
   $('#leitura').classList.add('aberta');
   document.body.classList.add('lendo');
-  document.querySelector('meta[name=theme-color]').content = '#181009';
+  document.querySelector('meta[name=theme-color]').content = '#0F0C09';
   $('#cromo-tit').textContent = EDICAO.titulo;
   scrollTo(0, 0);
-
   if (!montado) { montarLeitor(); montado = true; }
-
-  const salvo = +localStorage.getItem(posChave(EDICAO.n)) || 0;
-  if (salvo > 3) setTimeout(() => irPara(salvo), 350);
-
   evento('abriu_leitura');
 }
 
@@ -214,7 +285,7 @@ function voltar() {
   $('#leitura').classList.remove('aberta');
   $('#chegada').style.display = '';
   document.body.classList.remove('lendo');
-  document.querySelector('meta[name=theme-color]').content = '#E7E1D4';
+  document.querySelector('meta[name=theme-color]').content = '#F2EEE6';
   scrollTo(0, 0);
 }
 
@@ -223,29 +294,23 @@ function montarLeitor() {
   const frag = document.createDocumentFragment();
   const caps = EDICAO.capitulos || [];
 
-  /* a régua: um segmento por capítulo, larguras proporcionais */
-  $('#regua').innerHTML = (caps.length ? caps : [['', 1]])
-    .map((c, i) => {
-      const ini = c[1] || 1;
-      const fim = caps[i + 1] ? caps[i + 1][1] : TOTAL + 1;
-      return `<i style="flex:${fim - ini}" data-cap="${i}"></i>`;
-    }).join('');
+  $('#regua').innerHTML = (caps.length ? caps : [['', 1]]).map((c, i) => {
+    const ini = c[1] || 1, fim = caps[i + 1] ? caps[i + 1][1] : TOTAL + 1;
+    return `<i style="flex:${fim - ini}" data-cap="${i}"></i>`;
+  }).join('');
 
   for (let i = 1; i <= TOTAL; i++) {
-    const b = `${BASE}edicoes/${EDICAO.n}/paginas/p${String(i).padStart(3, '0')}`;
     const img = document.createElement('img');
     img.className = 'pag';
     img.dataset.pagina = i;
     img.alt = `Página ${i}`;
     img.width = 1400; img.height = 1979;
-
-    /* loading antes do src: sem isso a edição inteira desce de uma vez */
     img.loading = i <= 2 ? 'eager' : 'lazy';
     img.decoding = 'async';
     if (i === 1) img.fetchPriority = 'high';
     img.sizes = '(min-width: 56rem) 46rem, 100vw';
-    img.srcset = `${b}@800.webp 800w, ${b}@1400.webp 1400w`;
-    img.src = `${b}@800.webp`;
+    img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
+    img.src = pag(i, 800);
     img.addEventListener('load', () => img.classList.add('carregada'), { once: true });
 
     const folha = document.createElement('div');
@@ -257,10 +322,8 @@ function montarLeitor() {
     folha.appendChild(dentro);
     frag.appendChild(folha);
 
-    /* o convite do meio cai numa fronteira de capítulo, nunca no meio da ideia */
     if (caps.length > 2 && i === (caps[2]?.[1] || 0) - 1) frag.appendChild(blocoMeio());
   }
-
   frag.appendChild(blocoFim());
   caixa.appendChild(frag);
 
@@ -275,11 +338,11 @@ function montarLeitor() {
 
 function blocoMeio() {
   const d = document.createElement('div');
-  d.className = 'intervalo papel';
+  d.className = 'intervalo';
   d.innerHTML = `
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="rot">Um intervalo</p>
-    <h3 class="relevo">Toda quarta nasce uma <em>nova</em></h3>
+    <h3>Toda quarta nasce uma <em>nova</em></h3>
     <p>Esta você lê inteira, de graça. O passe abre as próximas quatro, os encontros ao vivo e o acervo completo — e você segue lendo esta aqui do mesmo jeito.</p>
     <button class="btn btn-passe" data-passe="intervalo">Adquirir passe — ${CFG.precoPasse}</button>`;
   return d;
@@ -287,11 +350,11 @@ function blocoMeio() {
 
 function blocoFim() {
   const d = document.createElement('div');
-  d.className = 'intervalo papel';
+  d.className = 'intervalo';
   d.innerHTML = `
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="rot">Contracapa</p>
-    <h3 class="relevo">A próxima sai <em>quarta</em></h3>
+    <h3>A próxima sai <em>quarta</em></h3>
     <p>Você acabou de ler ${TOTAL} páginas de uma revista de ${CFG.precoCheio} por ano, sem pagar nada. O que muda do lado de dentro é a continuidade.</p>
     <section class="passe">
       <div class="passe-topo">
@@ -310,13 +373,11 @@ function montarSumario() {
   if (!caps?.length) { $('#btn-sumario').hidden = true; return; }
   $('#sum-tit').textContent = EDICAO.titulo;
   $('#sum-leg').textContent = `Edição N° ${EDICAO.n} · ${TOTAL} páginas`;
-  $('#caps').innerHTML = caps.map(([nome, pag], i) => `
-    <li><a href="#" data-pagina="${pag}" data-cap="${i}">
+  $('#caps').innerHTML = caps.map(([nome, p], i) => `
+    <li><a href="#" data-pagina="${p}" data-cap="${i}">
       <span class="alg">${String(i + 1).padStart(2, '0')}</span>
-      <span class="nom">${nome}</span>
-      <span class="pg">${pag}</span>
+      <span class="nom">${nome}</span><span class="pg">${p}</span>
     </a></li>`).join('');
-
   $('#caps').addEventListener('click', e => {
     const a = e.target.closest('a[data-pagina]');
     if (!a) return;
@@ -329,7 +390,6 @@ function montarSumario() {
 
 const irPara = n => document.querySelector(`.folha-p[data-pagina="${n}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-/* ── profundidade, régua e o selo de capítulo ─────────────────── */
 function observar() {
   const caps = EDICAO.capitulos || [];
   const marcos = new Set([25, 50, 75, 100]);
@@ -342,22 +402,18 @@ function observar() {
       paginaAtual = p;
       $('#pagina-n').textContent = `${p}/${TOTAL}`;
 
-      /* a régua: preenche o segmento do capítulo corrente */
       const iCap = caps.findLastIndex(c => p >= c[1]);
       $('#regua').querySelectorAll('i').forEach((seg, i) => {
-        const ini = caps[i]?.[1] || 1;
-        const fim = caps[i + 1]?.[1] || TOTAL + 1;
+        const ini = caps[i]?.[1] || 1, fim = caps[i + 1]?.[1] || TOTAL + 1;
         seg.style.setProperty('--f', i < iCap ? 1 : i === iCap ? Math.min(1, (p - ini + 1) / (fim - ini)) : 0);
       });
 
-      /* entrou num capítulo novo: a cerimônia de duas linhas */
       if (iCap >= 0 && iCap !== capAtual) {
         capAtual = iCap;
         mostrarSelo(iCap, caps[iCap][0]);
         $('#caps')?.querySelectorAll('a').forEach(a => a.classList.toggle('atual', +a.dataset.cap === iCap));
       }
 
-      /* pré-carrega as próximas: a página nunca chega em branco */
       for (let i = p + 1; i <= Math.min(p + 3, TOTAL); i++) {
         const im = document.querySelector(`.pag[data-pagina="${i}"]`);
         if (im && im.loading === 'lazy') im.loading = 'eager';
@@ -384,40 +440,30 @@ function mostrarSelo(i, nome) {
   seloTimer = setTimeout(() => s.classList.remove('ver'), 1700);
 }
 
-/* ── o cromo some enquanto se lê e volta ao parar ─────────────── */
 function controlarCromo() {
   const cromo = $('#cromo'), barra = $('#barra');
   let ultimo = scrollY, parado;
-
   addEventListener('scroll', () => {
+    if (!$('#leitura').classList.contains('aberta')) return;
     const y = scrollY, descendo = y > ultimo + 6 && y > 300;
     cromo.classList.toggle('oculto', descendo);
     barra.classList.toggle('oculta', descendo);
     ultimo = y;
     clearTimeout(parado);
-    parado = setTimeout(() => {
-      cromo.classList.remove('oculto');
-      barra.classList.remove('oculta');
-    }, 800);
+    parado = setTimeout(() => { cromo.classList.remove('oculto'); barra.classList.remove('oculta'); }, 800);
   }, { passive: true });
 }
 
-/* ── o zoom ───────────────────────────────────────────────────
-   O que estava ruim: um toque na página alternava o zoom, então rolar
-   com o dedo disparava zoom sem querer. Agora o toque simples não faz
-   nada; quem manda é a PINÇA (o gesto que todo mundo já conhece), o
-   DUPLO TOQUE (que aproxima na coluna onde o dedo está) e a lupa. */
+/* ── o zoom: pinça e duplo toque; o toque simples nunca dispara ── */
 function aplicarZoom(novo, origem, ancoraX) {
   const antes = fator;
   fator = Math.min(3, Math.max(1, novo));
   if (fator > 1.02) ultimoFator = fator;
-
   document.querySelectorAll('.folha-in').forEach(el => el.style.width = (fator * 100) + '%');
   const larg = Math.round(Math.min(innerWidth, 736) * fator);
   document.querySelectorAll('.pag').forEach(im => im.sizes = larg + 'px');
   $('#btn-zoom').classList.toggle('ativo', fator > 1.02);
 
-  /* mantém sob o dedo o ponto que estava sob o dedo */
   requestAnimationFrame(() => {
     document.querySelectorAll('.folha-p').forEach(f => {
       const max = f.scrollWidth - f.clientWidth;
@@ -437,11 +483,8 @@ function aplicarZoom(novo, origem, ancoraX) {
 
 function ligarZoom() {
   const caixa = $('#paginas');
-
-  /* a lupa alterna entre a página inteira e o último zoom usado */
   $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : ultimoFator, 'lupa'));
 
-  /* duplo toque: aproxima onde o dedo tocou, como num mapa */
   let ultimoToque = 0, ultimoX = 0;
   caixa.addEventListener('pointerup', e => {
     if (e.target.closest('.intervalo') || !e.target.closest('.folha-p')) return;
@@ -453,14 +496,10 @@ function ligarZoom() {
     } else { ultimoToque = agora; ultimoX = e.clientX; }
   });
 
-  /* pinça: o gesto natural, com âncora no meio dos dois dedos */
   let d0 = 0, f0 = 1, cx = 0;
   const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
   caixa.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) {
-      d0 = dist(e.touches); f0 = fator;
-      cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-    }
+    if (e.touches.length === 2) { d0 = dist(e.touches); f0 = fator; cx = (e.touches[0].clientX + e.touches[1].clientX) / 2; }
   }, { passive: true });
   caixa.addEventListener('touchmove', e => {
     if (e.touches.length !== 2 || !d0) return;
@@ -469,7 +508,6 @@ function ligarZoom() {
   }, { passive: false });
   caixa.addEventListener('touchend', () => d0 = 0, { passive: true });
 
-  /* desktop: pinça do trackpad ou Ctrl+roda */
   addEventListener('wheel', e => {
     if (!e.ctrlKey || !$('#leitura').classList.contains('aberta')) return;
     e.preventDefault();
@@ -493,14 +531,16 @@ function ligarZoom() {
 let aoTerminar = null;
 
 const COPY = {
-  leitura: ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.', 'Abrir a edição'],
+  leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.', 'Abrir a edição'],
+  espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima quarta.', 'Ler a partir daqui'],
   checkout: ['Para onde mandamos seu acesso?', 'Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.', 'Continuar para o pagamento'],
 };
 
 function pedirDados(onde, depois = null) {
   if (jaCapturado()) { depois?.(); return true; }
   aoTerminar = depois;
-  const [tit, dek, bt] = COPY[onde.startsWith('checkout') ? 'checkout' : 'leitura'];
+  const chave = onde.startsWith('checkout') ? 'checkout' : (onde === 'espiada' ? 'espiada' : 'leitura');
+  const [tit, dek, bt] = COPY[chave];
   $('#form-tit').textContent = tit;
   $('#form-dek').textContent = dek;
   $('#btn-enviar').textContent = bt;
@@ -526,7 +566,6 @@ async function enviar(e) {
   const nome = $('#f-nome').value.trim();
   const zap = soDigitos($('#f-zap').value);
   let falhou = false;
-
   $('#c-nome').classList.toggle('erro', nome.length < 2);
   $('#c-zap').classList.toggle('erro', zap.length < 10 || zap.length > 11);
   if (nome.length < 2) { $('#f-nome').focus(); falhou = true; }
@@ -576,7 +615,10 @@ function ligar() {
 
   document.querySelectorAll('[data-fecha]').forEach(b =>
     b.addEventListener('click', () => {
-      if (b.dataset.fecha === 'form-dialog') { evento('desistiu_do_formulario', { onde: $('#form-dialog').dataset.onde }); aoTerminar = null; }
+      if (b.dataset.fecha === 'form-dialog') {
+        evento('desistiu_do_formulario', { onde: $('#form-dialog').dataset.onde });
+        aoTerminar = null;
+      }
       $('#' + b.dataset.fecha).close();
     }));
 
