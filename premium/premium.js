@@ -51,7 +51,16 @@ addEventListener('visibilitychange', () => document.visibilityState === 'hidden'
 
 /* ── lead e checkout ──────────────────────────────────────────── */
 const leadSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_LEAD)); } catch { return null; } };
-const jaCapturado = () => url.get('c') === '1' || !!leadSalvo();
+
+/* Capturado é quem entregou nome, e-mail E telefone. Um cadastro antigo,
+   feito antes de o e-mail existir, não vale — senão essa pessoa nunca
+   daria o e-mail. E ?reset=1 limpa tudo, para testar como visitante novo. */
+const jaCapturado = () => {
+  if (url.get('reset') === '1') { localStorage.removeItem(CHAVE_LEAD); return false; }
+  if (url.get('c') === '1') return true;
+  const l = leadSalvo();
+  return !!(l && l.nome && l.email && l.whatsapp);
+};
 
 function utmsDaUrl() {
   const u = {};
@@ -89,7 +98,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201812')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201821')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -651,7 +660,25 @@ function ligar() {
   const abrirAcervo = e => { e.preventDefault(); $('#acervo-dialog').showModal(); evento('abriu_acervo'); };
   $('#ver-edicoes').addEventListener('click', abrirAcervo);
   $('#nav-acervo').addEventListener('click', abrirAcervo);
-  $('#nav-passe').addEventListener('click', e => { e.preventDefault(); irParaCheckout('topo'); });
+  $('#nav-passe').addEventListener('click', e => {
+    e.preventDefault();
+    /* o topo vende o ANUAL — a oferta cheia, para quem já chegou decidido.
+       O passe continua sendo a entrada barata, no corpo da página. */
+    const anual = CFG.checkoutAnualDireto || '';
+    if (!anual || anual.includes('SEU-CHECKOUT')) {
+      /* sem link do anual configurado, leva ao passe em vez de quebrar */
+      document.querySelector('.passe')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      evento('topo_sem_anual');
+      return;
+    }
+    evento('clicou_anual', { origem: 'topo' });
+    const p = new URLSearchParams({
+      src: `ed${EDICAO.n}`, sck: 'topo-anual',
+      utm_source: 'porta', utm_medium: 'topo', utm_campaign: `ed${EDICAO.n}`, ...utmsDaUrl(),
+    });
+    despachar();
+    location.href = anual + (anual.includes('?') ? '&' : '?') + p;
+  });
   $('#form').addEventListener('submit', enviar);
   $('#f-zap').addEventListener('input', mascara);
   $('#f-nome').addEventListener('input', () => $('#c-nome').classList.remove('erro'));

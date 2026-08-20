@@ -10,6 +10,8 @@
     "precoAnual": "R$900",
     "parcelaAnual": "12× de R$87",
     "precoCheio": "R$997",
+    "_anualDireto": "O link de venda DIRETA do anual (para o botão Assinar do topo). O checkoutAnual acima é o 1-clique, que só funciona para quem JÁ comprou — não serve para tráfego frio.",
+    "checkoutAnualDireto": "",
     "_captura": "Como o lead é pego. 'whatsapp' abre a conversa e a janela de 24h (mensagem grátis depois). 'formulario' pega nome e zap na página, mas NÃO abre a janela — toda mensagem sua depois vira template pago.",
     "modoCaptura": "formulario",
     "whatsappNumero": "5551999999999",
