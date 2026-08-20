@@ -89,7 +89,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201755')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201801')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -564,17 +564,25 @@ function mascara(e) {
 async function enviar(e) {
   e.preventDefault();
   const nome = $('#f-nome').value.trim();
+  const mail = $('#f-mail').value.trim();
   const zap = soDigitos($('#f-zap').value);
-  let falhou = false;
-  $('#c-nome').classList.toggle('erro', nome.length < 2);
-  $('#c-zap').classList.toggle('erro', zap.length < 10 || zap.length > 11);
-  if (nome.length < 2) { $('#f-nome').focus(); falhou = true; }
-  else if (zap.length < 10 || zap.length > 11) { $('#f-zap').focus(); falhou = true; }
-  if (!$('#f-ok').checked) { $('#f-ok').focus(); falhou = true; }
-  if (falhou) return;
+
+  /* nome, e-mail e telefone são obrigatórios — ninguém lê sem se identificar */
+  const nomeOk = nome.length >= 2;
+  const mailOk = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(mail);
+  const zapOk = zap.length >= 10 && zap.length <= 11;
+
+  $('#c-nome').classList.toggle('erro', !nomeOk);
+  $('#c-mail').classList.toggle('erro', !mailOk);
+  $('#c-zap').classList.toggle('erro', !zapOk);
+
+  if (!nomeOk) { $('#f-nome').focus(); return; }
+  if (!mailOk) { $('#f-mail').focus(); return; }
+  if (!zapOk) { $('#f-zap').focus(); return; }
+  if (!$('#f-ok').checked) { $('#f-ok').focus(); return; }
 
   const lead = {
-    nome, whatsapp: '55' + zap, edicao: EDICAO.n,
+    nome, email: mail, whatsapp: '55' + zap, edicao: EDICAO.n,
     onde: $('#form-dialog').dataset.onde || 'capa',
     jornaleiro: url.get('j') || null,
     utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
@@ -612,6 +620,7 @@ function ligar() {
   $('#form').addEventListener('submit', enviar);
   $('#f-zap').addEventListener('input', mascara);
   $('#f-nome').addEventListener('input', () => $('#c-nome').classList.remove('erro'));
+  $('#f-mail').addEventListener('input', () => $('#c-mail').classList.remove('erro'));
 
   document.querySelectorAll('[data-fecha]').forEach(b =>
     b.addEventListener('click', () => {

@@ -358,7 +358,13 @@ body.lendo{scroll-snap-type:y proximity}
 .barra .btn{width:auto;flex:0 0 auto;padding:.7rem 1rem;font-size:.79rem}
 
 /* ═══ DIÁLOGOS ═══════════════════════════════════════════════ */
-dialog{border:0;padding:0;background:transparent;max-width:min(27rem,92vw);width:100%;color:var(--tinta)}
+dialog{
+  border:0;padding:0;background:transparent;color:var(--tinta);
+  max-width:min(27rem,92vw);width:100%;
+  margin:auto;                      /* sem isto o diálogo cola no canto */
+  max-height:92svh;overflow:auto;
+}
+dialog::-webkit-scrollbar{display:none}
 dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
 .painel,.form{
   position:relative;background:var(--papel);border-radius:3px;
