@@ -121,7 +121,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201956')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608202014')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -865,21 +865,26 @@ const vereditoSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE
 
 async function consultarPorteiro(edicao) {
   const l = leadSalvo();
-  if (!CFG.webhookLead || !l) return { liberado: true, motivo: 'sem porteiro' };
+  /* Quem vem do ManyChat entra com c=1 e não preenche formulário — então não
+     temos e-mail nem telefone. Mas o ManyChat sabe quem é: se ele acrescentar
+     o id do assinante no link (&ms=...), o porteiro conta a edição dessa
+     pessoa sem que nenhum dado pessoal ande pela barra de endereços. */
+  const ms = url.get('ms') || '';
+  if (!CFG.webhookLead || (!l && !ms)) return { liberado: true, motivo: 'sem porteiro' };
 
   /* resposta fresca guardada: não repergunta */
   const g = vereditoSalvo();
-  if (g && g.edicao === edicao && g.ate && Date.now() < g.ate) return g.veredito;
+  if (g && g.edicao === edicao && g.quem === ((l && l.email) || ms) && g.ate && Date.now() < g.ate) return g.veredito;
 
   try {
     const r = await fetch(CFG.webhookLead, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ acao: 'pode_ler', email: l.email, whatsapp: l.whatsapp, edicao }),
+      body: JSON.stringify({ acao: 'pode_ler', email: l?.email, whatsapp: l?.whatsapp, ms, edicao }),
     });
     const v = await r.json();
     /* guarda por 10 minutos: tempo de uma leitura, não de uma decisão */
-    localStorage.setItem(CHAVE_MES, JSON.stringify({ edicao, veredito: v, ate: Date.now() + 6e5 }));
+    localStorage.setItem(CHAVE_MES, JSON.stringify({ edicao, quem: l?.email || ms, veredito: v, ate: Date.now() + 6e5 }));
     return v;
   } catch (err) {
     /* Falhar ABERTO é regra: internet ruim não pode trancar quem já deu
@@ -979,7 +984,7 @@ async function enviar(e) {
   const lead = {
     nome, email: mail, whatsapp: '55' + zap, edicao: EDICAO.n,
     onde: $('#form-dialog').dataset.onde || 'capa',
-    jornaleiro: url.get('j') || null,
+    jornaleiro: url.get('j') || null, ms: url.get('ms') || null,
     utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
     /* paginaAtual só anda na leitura; na espiada a página é a da folha */
     pagina: paginaEmFoco || paginaAtual, referrer: document.referrer || '', em: new Date().toISOString(),
