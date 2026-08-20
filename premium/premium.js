@@ -15,6 +15,12 @@ const CHAVE_LEAD = 'eter_lead';
 const CHAVE_ZOOM = 'eter_zoom';
 const posChave = ed => `eter_pos_${ed}`;
 
+/* quem pediu menos movimento no sistema não pode levar rolagem animada
+   nem ficar esperando uma animação que o CSS já desligou */
+const semMovimento = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rolar = (el, opcoes = {}) =>
+  el?.scrollIntoView({ behavior: semMovimento() ? 'auto' : 'smooth', block: 'start', ...opcoes });
+
 let DADOS, EDICAO, PASSE, CFG, BASE = '', TOTAL = 0;
 let paginaAtual = 1, maximaLida = 0, capAtual = -1;
 let fator = 1, ultimoFator = 1.6;
@@ -36,7 +42,8 @@ function evento(nome, dados = {}) {
     p ? fbq('track', p, { content_name: `ED${carga.edicao}` }) : fbq('trackCustom', nome, carga);
   }
   if (window.gtag) gtag('event', nome, carga);
-  fila.push({ ...carga, t: Date.now() });
+  /* sem webhook a fila nunca era drenada e crescia até a aba morrer */
+  if (CFG?.webhookEventos) { fila.push({ ...carga, t: Date.now() }); if (fila.length > 400) fila.splice(0, 200); }
 }
 
 function despachar() {
@@ -114,7 +121,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201936')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201956')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -202,6 +209,7 @@ function montarChegada() {
 
 /* ═══ A REVISTA ESPIÁVEL ═══════════════════════════════════════ */
 let limiteEspiada = Infinity;      /* última página livre antes do cadeado */
+let paginaEmFoco = 0;              /* a página que a espiada está mostrando */
 
 /* O primeiro capítulo é livre; o cadeado começa onde o segundo começa.
    Sem o capítulo 2 mapeado o portão FECHA num terço da revista — falhar
@@ -243,7 +251,7 @@ function montarEspiada() {
   const vFrente = $('#vira-frente'), vVerso = $('#vira-verso');
   const faixa   = $('#faixa');
 
-  let folha = 0, virando = false;
+  let folha = 0, virando = false, pendente = null;
 
   /* ── a faixa de miniaturas ─────────────────────────────────── */
   function pintarFaixa() {
@@ -317,7 +325,12 @@ function montarEspiada() {
     spread.classList.toggle('fechada', folha === 0);
     marcarTravas(folha);
     $('#tranca').hidden = !trancada;
+    /* a trava só existia em pixels: quem usa leitor de tela não sabia */
+    $('#aviso-trava').textContent = trancada
+      ? `Daqui em diante a edição está trancada. O primeiro capítulo vai até a página ${limiteEspiada}.`
+      : '';
 
+    paginaEmFoco = visiveis[visiveis.length - 1];
     $('#seta-esq').disabled = folha <= 0;
     $('#seta-dir').disabled = folha >= folhaMaxima();
     marcarAtivas(origem);
@@ -325,14 +338,35 @@ function montarEspiada() {
 
   async function irParaFolha(k, origem) {
     k = Math.max(0, Math.min(folhaMaxima(), k));
-    if (virando || k === folha) return;
+
+    /* Clicar rápido na seta jogava o segundo clique fora, e a revista parecia
+       travada. Agora o pedido fica na fila: se foi "próxima", guarda a
+       DIREÇÃO, porque quando a vez dele chegar a folha já será outra. */
+    if (virando) {
+      const passo = k - folha;
+      /* clique repetido SOMA: seis toques rápidos avançam seis folhas, e
+         a virada acumulada vira um pulo seco em vez de seis animações */
+      pendente = (pendente && Math.abs(passo) === 1 && Math.abs(pendente.passo) >= 1
+                  && Math.sign(pendente.passo) === Math.sign(passo))
+        ? { alvo: k, passo: pendente.passo + passo }
+        : { alvo: k, passo };
+      return;
+    }
+    if (k === folha) return;
 
     const salto = Math.abs(k - folha) > 1;
     const [e0, d0] = paginasDe(folha);
     const [e1, d1] = paginasDe(k);
 
-    /* pulo largo (veio da faixa): troca seca, virar 8 folhas seria teatro */
-    if (salto) { folha = k; por(slotEsq, e1); por(slotDir, d1); legendar(origem); anunciar(origem); return; }
+    /* pulo largo (veio da faixa): troca seca, virar 8 folhas seria teatro —
+       mas espera a imagem existir, senão a legenda anuncia uma página que
+       ainda não está na tela */
+    if (salto) {
+      virando = true;
+      await Promise.all([carregar(e1), carregar(d1)]);
+      folha = k; por(slotEsq, e1); por(slotDir, d1);
+      virando = false; legendar(origem); anunciar(origem); seguirPendente(); return;
+    }
 
     virando = true;
     const frente = k > folha;
@@ -358,6 +392,9 @@ function montarEspiada() {
       vFrente.src = existe(d1) ? pag(d1, 800) : '';
       por(slotEsq, e1);
       folha = k;
+      /* abrir tira a classe no início; fechar tem que devolver no início
+         também, senão a volta para a capa custa o dobro do tempo */
+      if (k === 0) spread.classList.add('fechada');
       spread.classList.add('virando-tras');
       virador.classList.add('ativo', 'volta');
     }
@@ -369,7 +406,17 @@ function montarEspiada() {
       virando = false;
       legendar(origem);
       anunciar(origem);
-    }, 730);   /* a virada dura 720ms no CSS; 10ms de folga */
+      seguirPendente();
+    }, semMovimento() ? 20 : 730);   /* a virada dura 720ms; sem movimento, quase nada */
+  }
+
+  function seguirPendente() {
+    if (!pendente) return;
+    const p = pendente; pendente = null;
+    /* o alvo guardado foi calculado com a folha ANTIGA e já não vale nada:
+       o que continua valendo é o passo — "tantas para a frente a partir
+       de onde eu estiver agora". */
+    irParaFolha(p.passo ? folha + p.passo : p.alvo, 'fila');
   }
 
   const anunciar = origem => { if (origem) evento('espiou', { folha, pagina: paginasDe(folha)[1], origem }); };
@@ -411,8 +458,11 @@ function montarEspiada() {
   });
   $('#tranca-btn').addEventListener('click', ev => {
     ev.stopPropagation();
-    evento('bateu_no_cadeado', { pagina: limiteEspiada + 1 });
-    abrirNaPagina(limiteEspiada + 1);
+    /* abre na página que ele está OLHANDO, não na primeira travada da
+       revista — quem bateu duas folhas adiante volta ao lugar errado */
+    const alvo = paginasDe(folha).filter(n => existe(n) && !livre(n))[0] || limiteEspiada + 1;
+    evento('bateu_no_cadeado', { pagina: alvo });
+    abrirNaPagina(alvo);
   });
 
   /* as setas moram dentro do visor: sem parar a propagação, clicar nelas
@@ -540,6 +590,13 @@ function montarLeitor() {
 
   const z = parseFloat(localStorage.getItem(CHAVE_ZOOM));
   if (z > 1.02) aplicarZoom(z, 'memoria');
+
+  /* onde ele parou da última vez: guardado desde sempre, nunca usado */
+  const parou = parseInt(localStorage.getItem(posChave(EDICAO.n)), 10);
+  if (parou > 2 && parou <= TOTAL) {
+    maximaLida = parou;
+    setTimeout(() => { irPara(parou); evento('retomou_leitura', { pagina: parou }); }, 500);
+  }
 }
 
 function blocoMeio() {
@@ -594,7 +651,7 @@ function montarSumario() {
   });
 }
 
-const irPara = n => document.querySelector(`.folha-p[data-pagina="${n}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+const irPara = n => rolar(document.querySelector(`.folha-p[data-pagina="${n}"]`));
 
 function observar() {
   const caps = EDICAO.capitulos || [];
@@ -924,7 +981,8 @@ async function enviar(e) {
     onde: $('#form-dialog').dataset.onde || 'capa',
     jornaleiro: url.get('j') || null,
     utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
-    pagina: paginaAtual, referrer: document.referrer || '', em: new Date().toISOString(),
+    /* paginaAtual só anda na leitura; na espiada a página é a da folha */
+    pagina: paginaEmFoco || paginaAtual, referrer: document.referrer || '', em: new Date().toISOString(),
   };
 
   const bt = $('#btn-enviar');
@@ -959,25 +1017,14 @@ function ligar() {
   const abrirAcervo = e => { e.preventDefault(); $('#acervo-dialog').showModal(); evento('abriu_acervo'); };
   $('#ver-edicoes').addEventListener('click', abrirAcervo);
   $('#nav-acervo').addEventListener('click', abrirAcervo);
+  /* O topo vende o PASSE — duas portas na casa e nada mais: as edições e
+     a que resolve. O anual não entra aqui: ele é a oferta de quem já pagou
+     o passe, e mora na página de upsell, depois da compra. */
   $('#nav-passe').addEventListener('click', e => {
     e.preventDefault();
-    /* o topo vende o ANUAL — a oferta cheia, para quem já chegou decidido.
-       O passe continua sendo a entrada barata, no corpo da página. */
-    const anual = CFG.checkoutAnualDireto || '';
-    if (!anual || anual.includes('SEU-CHECKOUT')) {
-      /* sem link do anual configurado, leva ao passe em vez de quebrar */
-      document.querySelector('.passe')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      evento('topo_sem_anual');
-      return;
-    }
-    evento('clicou_anual', { origem: 'topo' });
-    const p = new URLSearchParams({
-      src: `ed${EDICAO.n}`, sck: 'topo-anual',
-      utm_source: 'porta', utm_medium: 'topo', utm_campaign: `ed${EDICAO.n}`, ...utmsDaUrl(),
-    });
-    despachar();
-    location.href = anual + (anual.includes('?') ? '&' : '?') + p;
+    irParaCheckout('topo');
   });
+
   $('#mes-passe').addEventListener('click', () => {
     $('#mes-dialog').close();
     evento('porteiro_virou_passe');
@@ -989,6 +1036,12 @@ function ligar() {
     if (!n) return;
     evento('porteiro_voltou', { para: n });
     location.href = `?ed=${n}`;
+  });
+
+  /* o Esc do <dialog> fecha por fora dos listeners: sem isto, quem desiste
+     pelo teclado some da conta sem deixar rastro */
+  $('#form-dialog').addEventListener('close', () => {
+    if (!jaCapturado()) { evento('desistiu_do_formulario', { onde: $('#form-dialog').dataset.onde }); aoTerminar = null; }
   });
 
   $('#form').addEventListener('submit', enviar);

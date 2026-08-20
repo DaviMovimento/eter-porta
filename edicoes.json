@@ -11,7 +11,6 @@
     "parcelaAnual": "12× de R$87",
     "precoCheio": "R$997",
     "_anualDireto": "O link de venda DIRETA do anual (para o botão Assinar do topo). O checkoutAnual acima é o 1-clique, que só funciona para quem JÁ comprou — não serve para tráfego frio.",
-    "checkoutAnualDireto": "",
     "_captura": "Como o lead é pego. 'whatsapp' abre a conversa e a janela de 24h (mensagem grátis depois). 'formulario' pega nome e zap na página, mas NÃO abre a janela — toda mensagem sua depois vira template pago.",
     "modoCaptura": "formulario",
     "whatsappNumero": "5551999999999",
@@ -24,7 +23,8 @@
     "webhookEventos": "",
     "_pixel": "Só os números. Sem eles não há público de remarketing: você fala só com quem deixou o WhatsApp, e perde quem leu 30 páginas e saiu.",
     "pixelMeta": "",
-    "ga4": ""
+    "ga4": "",
+    "_nota_anual": "O anual (checkoutAnual) é oferta de upsell 1-clique: só funciona para quem ACABOU de comprar. Por isso ele vive apenas em upsell.html, e o topo da porta vende o passe."
   },
   "passe": {
     "rotulo": "Passe ETER · 30 dias",
