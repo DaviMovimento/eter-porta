@@ -104,7 +104,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201853')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201918')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -305,6 +305,10 @@ function montarEspiada() {
     virando = true;
     const frente = k > folha;
 
+    /* o embaçado tem que entrar ANTES do giro: a legenda só roda no fim, e
+       durante os 720ms da virada a página travada apareceria limpa na folha */
+    spread.classList.toggle('travado', !folhaLivre(k));
+
     if (frente) {
       /* a folha da direita levanta: na frente o que sai, no verso o que entra */
       await Promise.all([carregar(d0), carregar(e1), carregar(d1)]);
@@ -333,7 +337,7 @@ function montarEspiada() {
       virando = false;
       legendar(origem);
       anunciar(origem);
-    }, 620);
+    }, 730);   /* a virada dura 720ms no CSS; 10ms de folga */
   }
 
   const anunciar = origem => { if (origem) evento('espiou', { folha, pagina: paginasDe(folha)[1], origem }); };
@@ -618,27 +622,71 @@ function controlarCromo() {
 }
 
 /* ── o zoom: pinça e duplo toque; o toque simples nunca dispara ── */
+/* ═══ ZOOM ═══════════════════════════════════════════════════
+   A regra que faltava: NÃO disputar com o navegador. A pinça de dois
+   dedos, o ctrl+roda e o toque duplo já existem, funcionam nos dois
+   eixos e rodam na placa de vídeo. A versão caseira só sabia esticar
+   na horizontal, mexia nas 59 páginas a cada passo e deixava cada uma
+   com a sua própria rolagem — por isso desandava.
+
+   O que sobra aqui é a única coisa que o navegador não faz sozinho:
+   aumentar a LARGURA DA PÁGINA (o "ajustar à largura" do PDF), com
+   uma variável só e uma panorâmica compartilhada por todas as folhas. */
+
+let guardaZoom;             /* segura a gravação do nível até o dedo parar */
+let baseCache = 0;
+
+/* a largura de "página inteira na tela", medida na folha de verdade */
+function larguraBase() {
+  /* a folha externa não muda de tamanho com o zoom — quem cresce é a de
+     dentro. Por isso ela serve de régua do "página inteira na tela". */
+  if (!baseCache) {
+    const f = document.querySelector('.folha-p');
+    baseCache = (f && f.clientWidth) || Math.min(innerWidth - 16, 736);
+  }
+  return baseCache;
+}
+let pan = 0.5;              /* 0 = margem esquerda · 1 = margem direita */
+let espelhando = false;
+
+/* todas as folhas olham para o mesmo ponto da linha: passar de página
+   com o texto ampliado não pode jogar o leitor de volta pro começo */
+function sincronizarPan() {
+  espelhando = true;
+  document.querySelectorAll('.folha-p').forEach(f => {
+    const max = f.scrollWidth - f.clientWidth;
+    f.scrollLeft = max > 0 ? pan * max : 0;
+  });
+  requestAnimationFrame(() => { espelhando = false; });
+}
+
 let aplicarZoom = function (novo, origem, ancoraX) {
   const antes = fator;
-  fator = Math.min(4, Math.max(1, novo));
+  fator = Math.min(3, Math.max(1, Math.round(novo * 100) / 100));
   if (fator > 1.02) ultimoFator = fator;
-  document.querySelectorAll('.folha-in').forEach(el => el.style.width = (fator * 100) + '%');
+  if (fator === antes) return;
+
+  /* Largura em PIXEL, não em porcentagem: dentro deste container a
+     porcentagem não resolve (a folha volta a caber e o zoom não sai do
+     lugar). Uma variável no pai — não 59 estilos em linha. */
+  if (fator <= 1.02) $('#paginas').style.removeProperty('--larg');
+  else $('#paginas').style.setProperty('--larg', Math.round(larguraBase() * fator) + 'px');
   const larg = Math.round(Math.min(innerWidth, 736) * fator);
-  document.querySelectorAll('.pag').forEach(im => im.sizes = larg + 'px');
+  document.querySelectorAll('.pag').forEach(im => { im.sizes = larg + 'px'; });
   $('#btn-zoom').classList.toggle('ativo', fator > 1.02);
 
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.folha-p').forEach(f => {
-      const max = f.scrollWidth - f.clientWidth;
-      if (max <= 0) { f.scrollLeft = 0; return; }
-      if (ancoraX == null) { f.scrollLeft = max / 2; return; }
-      /* a âncora precisa ser relativa à folha; usar a coordenada da tela
-         fazia o zoom pousar sempre no lugar errado */
-      const dentro = ancoraX - f.getBoundingClientRect().left;
-      const alvo = (f.scrollLeft + dentro) * (fator / antes) - dentro;
-      f.scrollLeft = Math.max(0, Math.min(max, alvo));
-    });
-  });
+  if (fator <= 1.02) pan = 0.5;
+  else if (ancoraX != null) {
+    /* mantém debaixo do dedo o pedaço que estava debaixo do dedo */
+    const f = document.querySelector('.folha-p');
+    if (f) {
+      const r = f.getBoundingClientRect();
+      const dentro = Math.min(Math.max((ancoraX - r.left) / r.width, 0), 1);
+      pan = Math.min(1, Math.max(0, pan + (dentro - 0.5) * (1 - antes / fator)));
+    }
+  }
+
+  requestAnimationFrame(sincronizarPan);
 
   clearTimeout(guardaZoom);
   guardaZoom = setTimeout(() => {
@@ -646,45 +694,41 @@ let aplicarZoom = function (novo, origem, ancoraX) {
     evento('ajustou_zoom', { fator: +fator.toFixed(2), origem, pagina: paginaAtual });
   }, 600);
 };
-let guardaZoom;
 
 function ligarZoom() {
   const caixa = $('#paginas');
-  $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : 1.8, 'lupa'));
-  $('#btn-mais').addEventListener('click', () => aplicarZoom(fator + 0.2, 'botao', innerWidth / 2));
-  $('#btn-menos').addEventListener('click', () => aplicarZoom(fator - 0.2, 'botao', innerWidth / 2));
   const nivel = () => { $('#zoom-n').textContent = fator > 1.02 ? Math.round(fator * 100) + '%' : ''; };
   const _aplicar = aplicarZoom;
   aplicarZoom = (...a) => { _aplicar(...a); nivel(); };
 
+  $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : 1.6, 'lupa'));
+  $('#btn-mais').addEventListener('click', () => aplicarZoom(fator + 0.2, 'botao'));
+  $('#btn-menos').addEventListener('click', () => aplicarZoom(fator - 0.2, 'botao'));
+
+  /* arrastou uma folha para o lado: as outras acompanham */
+  let quietoPan;
+  caixa.addEventListener('scroll', e => {
+    const f = e.target.closest && e.target.closest('.folha-p');
+    if (!f || espelhando) return;
+    const max = f.scrollWidth - f.clientWidth;
+    if (max <= 0) return;
+    pan = Math.min(1, Math.max(0, f.scrollLeft / max));
+    clearTimeout(quietoPan);
+    quietoPan = setTimeout(sincronizarPan, 140);
+  }, true);
+
+  /* toque duplo só com mouse: no celular o navegador já faz o dele,
+     e interceptar aqui era justamente o que atrapalhava */
   let ultimoToque = 0, ultimoX = 0;
   caixa.addEventListener('pointerup', e => {
+    if (e.pointerType !== 'mouse') return;
     if (e.target.closest('.intervalo') || !e.target.closest('.folha-p')) return;
     const agora = Date.now();
     if (agora - ultimoToque < 320 && Math.abs(e.clientX - ultimoX) < 40) {
-      e.preventDefault();
-      aplicarZoom(fator > 1.02 ? 1 : 2, 'duplo-toque', e.clientX);
+      aplicarZoom(fator > 1.02 ? 1 : 1.8, 'duplo-clique', e.clientX);
       ultimoToque = 0;
     } else { ultimoToque = agora; ultimoX = e.clientX; }
   });
-
-  let d0 = 0, f0 = 1, cx = 0;
-  const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
-  caixa.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) { d0 = dist(e.touches); f0 = fator; cx = (e.touches[0].clientX + e.touches[1].clientX) / 2; }
-  }, { passive: true });
-  caixa.addEventListener('touchmove', e => {
-    if (e.touches.length !== 2 || !d0) return;
-    e.preventDefault();
-    aplicarZoom(f0 * (dist(e.touches) / d0), 'pinca', cx);
-  }, { passive: false });
-  caixa.addEventListener('touchend', () => d0 = 0, { passive: true });
-
-  addEventListener('wheel', e => {
-    if (!e.ctrlKey || !$('#leitura').classList.contains('aberta')) return;
-    e.preventDefault();
-    aplicarZoom(fator * (1 - e.deltaY * 0.006), 'roda', e.clientX);
-  }, { passive: false });
 
   addEventListener('keydown', e => {
     if (!$('#leitura').classList.contains('aberta') || document.querySelector('dialog[open]')) return;
@@ -697,9 +741,18 @@ function ligarZoom() {
     else if (e.key === '-') aplicarZoom(fator - 0.25, 'teclado');
     else if (e.key === 'Escape') voltar();
   });
+
+  addEventListener('resize', () => {
+    baseCache = 0;
+    if (fator > 1.02) { $('#paginas').style.removeProperty('--larg'); requestAnimationFrame(() => {
+      if (fator <= 1.02) $('#paginas').style.removeProperty('--larg');
+  else $('#paginas').style.setProperty('--larg', Math.round(larguraBase() * fator) + 'px'); sincronizarPan();
+    }); }
+  });
+
+  nivel();
 }
 
-/* ═══ CAPTURA ══════════════════════════════════════════════════ */
 let aoTerminar = null;
 
 const COPY = {
