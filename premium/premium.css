@@ -10,6 +10,7 @@
 @font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2') format('woff2');font-weight:700;font-display:swap}
 
 :root{
+  color-scheme:light;   /* a paleta é clara de propósito — não invente escuro */
   --papel:#F2EEE6;
   --papel-2:#E8E2D6;
   --papel-3:#DDD5C5;
@@ -127,16 +128,20 @@ body.lendo .topo{display:none}
   aspect-ratio:2/1.414;
   transform-style:preserve-3d;
   transition:transform .62s cubic-bezier(.42,.02,.32,1);
-  filter:drop-shadow(0 2px 2px rgba(30,24,19,.22)) drop-shadow(0 18px 34px rgba(30,24,19,.26));
 }
+/* A sombra é box-shadow em cada folha, não filter no palco: qualquer filter
+   perto do 3D força transform-style:flat e desmonta a folha que vira. E como
+   a folha da esquerda some quando a revista está fechada, a sombra some com
+   ela — a capa fechada projeta sombra de capa, não de revista aberta. */
 .spread.fechada{transform:translateX(-25%)}
 
 .pg-slot{
   position:relative;width:50%;height:100%;
   background:var(--papel-2);overflow:hidden;
+  box-shadow:0 1px 2px rgba(30,24,19,.2),0 16px 30px -10px rgba(30,24,19,.28);
+  transition:opacity .3s;
 }
 .pg-slot img{width:100%;height:100%;object-fit:cover;display:block}
-.pg-slot.esq{transition:opacity .3s}
 .spread.fechada .pg-slot.esq{opacity:0}
 
 /* a lombada: o vinco de papel dobrado no centro */
@@ -233,14 +238,16 @@ body.lendo .topo{display:none}
 /* ═══ O CADEADO ═══════════════════════════════════════════════
    O primeiro capítulo é livre. Daí em diante a página aparece
    embaçada — dá para ver que existe, não dá para ler. */
-.spread.travado .pg-slot img,
-.spread.travado .virador .face img{filter:blur(9px) saturate(.6) brightness(.94);transform:scale(1.04)}
+.pg-slot.travado img,
+.virador.travado .verso img{filter:blur(9px) saturate(.6) brightness(.94);transform:scale(1.06)}
 .tranca{
   position:absolute;inset:0;z-index:9;
+  transition:left .3s cubic-bezier(.16,1,.3,1);
   display:flex;align-items:center;justify-content:center;
   background:linear-gradient(180deg,rgba(232,226,214,.24),rgba(30,24,19,.16));
   animation:revela .4s ease both;
 }
+.tranca.so-direita{left:50%}
 .tranca-btn{
   display:flex;flex-direction:column;align-items:center;gap:.34rem;
   padding:1rem 1.4rem;max-width:88%;
@@ -252,8 +259,8 @@ body.lendo .topo{display:none}
 .tranca-btn:hover{background:var(--papel);transform:translateY(-1px)}
 .tranca-tit{font-family:var(--display);font-size:.86rem;letter-spacing:.02em;color:var(--tinta)}
 .tranca-sub{
-  font-family:var(--rotulo);font-size:.47rem;font-weight:700;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--tinta-3);
+  font-family:var(--rotulo);font-size:.62rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-2);
   text-align:center;line-height:1.5;
 }
 
@@ -574,4 +581,23 @@ dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+/* ═══ A CAIXA DO PORTEIRO ═════════════════════════════════════
+   Duas saídas de peso igual em tamanho e desiguais em cor: a que
+   resolve agora fica sólida, a que só espera fica de contorno. */
+.mes-saidas{display:flex;flex-direction:column;gap:.6rem;margin-top:1.4rem}
+.btn-fantasma{
+  background:transparent;color:var(--tinta-2);
+  border:1px solid var(--linha-2);
+  font-family:var(--rotulo);font-size:.7rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.85rem 1rem;border-radius:1px;cursor:pointer;
+  transition:border-color .2s,color .2s;
+}
+.btn-fantasma:hover{border-color:var(--ouro);color:var(--ouro)}
+.btn-fantasma[hidden]{display:none}
+.mes-pe{
+  margin-top:1rem;text-align:center;
+  font-size:.76rem;line-height:1.55;color:var(--tinta-3);
 }

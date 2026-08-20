@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="premium.css?v=202608201918">
+<link rel="stylesheet" href="premium.css?v=202608201936">
 </head>
 <body>
 
@@ -192,6 +192,22 @@
   </form>
 </dialog>
 
-<script src="premium.js?v=202608201918"></script>
+<!-- ══ A EDIÇÃO DO MÊS JÁ FOI ESCOLHIDA ═══════════════════════ -->
+<dialog id="mes-dialog">
+  <div class="form" id="mes-caixa">
+    <button type="button" class="fechar" data-fecha="mes-dialog" aria-label="Fechar">×</button>
+    <img class="mono" src="monograma.webp" alt="" width="256" height="256">
+    <h2 id="mes-tit">Você já escolheu a edição deste mês</h2>
+    <p class="dek2" id="mes-dek"></p>
+
+    <div class="mes-saidas">
+      <button class="btn btn-passe" id="mes-passe">Pegar o passe — abre tudo, agora</button>
+      <button class="btn btn-fantasma" id="mes-voltar">Voltar para a edição que abri</button>
+    </div>
+    <p class="mes-pe" id="mes-pe"></p>
+  </div>
+</dialog>
+
+<script src="premium.js?v=202608201936"></script>
 </body>
 </html>

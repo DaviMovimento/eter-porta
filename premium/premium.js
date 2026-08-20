@@ -28,7 +28,9 @@ const EVENTO_META = { abriu_leitura: 'ViewContent', virou_lead: 'Lead', foi_ao_c
 function evento(nome, dados = {}) {
   const carga = { evento: nome, edicao: EDICAO?.n, jornaleiro: url.get('j') || null, ...dados };
   console.log('[porta]', nome, carga);
-  (window.dataLayer = window.dataLayer || []).push(carga);
+  /* o GTM só enxerga a chave 'event'; mando as duas para não quebrar
+     nada que já leia 'evento' */
+  (window.dataLayer = window.dataLayer || []).push({ event: nome, ...carga });
   if (window.fbq) {
     const p = EVENTO_META[nome];
     p ? fbq('track', p, { content_name: `ED${carga.edicao}` }) : fbq('trackCustom', nome, carga);
@@ -57,7 +59,13 @@ const leadSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_LEA
 /* ?reset=1 limpa UMA vez, ao carregar — não a cada consulta. Se apagasse
    sempre, o cadastro feito depois do reset nunca colaria e a pessoa levaria
    o popup na cara de novo. */
-if (url.get('reset') === '1') localStorage.removeItem(CHAVE_LEAD);
+if (url.get('reset') === '1') {
+  localStorage.removeItem(CHAVE_LEAD);
+  /* tira o parâmetro da barra: senão cada recarga limpa de novo e o cadastro
+     feito depois do reset nunca cola */
+  const limpa = new URL(location.href); limpa.searchParams.delete('reset');
+  history.replaceState(null, '', limpa);
+}
 
 /* Capturado é quem entregou nome, e-mail E telefone. Um cadastro antigo,
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
@@ -78,7 +86,9 @@ function linkCheckout(origem) {
   const base = CFG.checkoutPasse, j = url.get('j');
   const p = new URLSearchParams({
     src: `ed${EDICAO.n}`, sck: j ? `${origem}-${j}` : origem,
-    utm_source: 'porta', utm_medium: origem, utm_campaign: `ed${EDICAO.n}`, ...utmsDaUrl(),
+    /* os UTMs da URL entram antes: a origem do botão é o dado mais preciso
+       e não pode ser apagada pelo utm_medium que veio do anúncio */
+    utm_source: 'porta', utm_campaign: `ed${EDICAO.n}`, ...utmsDaUrl(), utm_medium: origem,
   });
   return base + (base.includes('?') ? '&' : '?') + p;
 }
@@ -104,7 +114,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608201918')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608201936')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -113,6 +123,7 @@ async function iniciar() {
 
   document.title = `${EDICAO.titulo} · ETER`;
   ligarPixel();
+  calcularLimite();      /* antes do mosaico: ele também obedece ao cadeado */
   montarChegada();
   montarEspiada();
   ligar();
@@ -178,7 +189,10 @@ function montarChegada() {
   /* o mosaico de fundo: páginas espalhadas pela edição, quase apagadas —
      mostra que existe conteúdo lá dentro sem competir com nada */
   if (TOTAL > 8) {
-    const passo = Math.floor(TOTAL / 8);
+    /* só páginas do trecho livre: o mosaico estava publicando o miolo
+       travado na tela de entrada, por fora do próprio cadeado */
+    const teto = Math.max(8, Math.min(TOTAL, limiteEspiada || TOTAL));
+    const passo = Math.max(1, Math.floor(teto / 8));
     const quadros = Array.from({ length: 8 }, (_, i) => 1 + i * passo).filter(n => n <= TOTAL);
     $('#mosaico').innerHTML = quadros.map(n => `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">`).join('');
     /* só aparece quando as imagens estiverem prontas: nada de piscar */
@@ -188,6 +202,14 @@ function montarChegada() {
 
 /* ═══ A REVISTA ESPIÁVEL ═══════════════════════════════════════ */
 let limiteEspiada = Infinity;      /* última página livre antes do cadeado */
+
+/* O primeiro capítulo é livre; o cadeado começa onde o segundo começa.
+   Sem o capítulo 2 mapeado o portão FECHA num terço da revista — falhar
+   aberto seria entregar a edição inteira por causa de um dado faltando. */
+function calcularLimite() {
+  const caps = EDICAO.capitulos || [];
+  limiteEspiada = caps[1] ? caps[1][1] - 1 : Math.max(4, Math.ceil(TOTAL / 3));
+}
 let destravar = () => {};          /* preenchida quando a espiada monta */
 
 function montarEspiada() {
@@ -199,10 +221,6 @@ function montarEspiada() {
     return i >= 0 ? caps[i][0] : '';
   };
 
-  /* O primeiro capítulo é livre; o cadeado começa onde o segundo começa.
-     Sem capítulo 2 mapeado, libera a revista inteira em vez de trancar tudo. */
-  limiteEspiada = caps[1] ? caps[1][1] - 1 : TOTAL;
-
   /* A revista é física: a capa fica sozinha, e daí em diante as páginas
      andam em pares, como numa revista aberta na mesa. */
   const folhaDe   = n => (n <= 1 ? 0 : Math.floor(n / 2));
@@ -210,11 +228,14 @@ function montarEspiada() {
   const existe    = n => n !== null && n >= 1 && n <= TOTAL;
   const ultimaFolha = folhaDe(TOTAL);
 
-  const livre       = n => jaCapturado() || n <= limiteEspiada;
-  const folhaLivre  = k => paginasDe(k).every(n => !existe(n) || livre(n));
-  /* pode chegar a UMA folha depois do limite: é a que aparece embaçada */
+  const livre      = n => jaCapturado() || n <= limiteEspiada;
+  const folhaLivre = k => paginasDe(k).every(n => !existe(n) || livre(n));
+  /* Quando o limite cai em página par, a última livre divide a folha com a
+     primeira travada. Em vez de embaçar as duas (o que comia uma página do
+     capítulo 1 em três edições), embaça só a metade travada: o leitor vê a
+     parede exatamente onde ela está. */
   const folhaMaxima = () => (jaCapturado() ? ultimaFolha
-                                           : Math.min(ultimaFolha, folhaDe(limiteEspiada) + 1));
+                                           : Math.min(ultimaFolha, folhaDe(limiteEspiada + 1)));
 
   const spread  = $('#spread');
   const slotEsq = $('#pg-esq'), slotDir = $('#pg-dir');
@@ -273,6 +294,17 @@ function montarEspiada() {
     else { slot.removeAttribute('src'); slot.style.visibility = 'hidden'; }
   }
 
+  /* embaça só o lado que está travado, e leva o cartão para esse lado */
+  function marcarTravas(k) {
+    const [e, d] = paginasDe(k);
+    const eTrav = existe(e) && !livre(e), dTrav = existe(d) && !livre(d);
+    spread.classList.toggle('travado', eTrav || dTrav);
+    slotEsq.parentElement.classList.toggle('travado', eTrav);
+    slotDir.parentElement.classList.toggle('travado', dTrav);
+    virador.classList.toggle('travado', dTrav || eTrav);
+    $('#tranca').classList.toggle('so-direita', dTrav && !eTrav);
+  }
+
   function legendar(origem) {
     const [e, d] = paginasDe(folha);
     const trancada = !folhaLivre(folha);
@@ -283,7 +315,7 @@ function montarEspiada() {
     $('#trilho').style.setProperty('--f', (visiveis[visiveis.length - 1] / TOTAL).toFixed(3));
 
     spread.classList.toggle('fechada', folha === 0);
-    spread.classList.toggle('travado', trancada);
+    marcarTravas(folha);
     $('#tranca').hidden = !trancada;
 
     $('#seta-esq').disabled = folha <= 0;
@@ -307,7 +339,7 @@ function montarEspiada() {
 
     /* o embaçado tem que entrar ANTES do giro: a legenda só roda no fim, e
        durante os 720ms da virada a página travada apareceria limpa na folha */
-    spread.classList.toggle('travado', !folhaLivre(k));
+    marcarTravas(k);
 
     if (frente) {
       /* a folha da direita levanta: na frente o que sai, no verso o que entra */
@@ -395,12 +427,16 @@ function montarEspiada() {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0; x0 = null;
     if (Math.abs(dx) < 45) return;
-    ev_impedir = true;
+    arrastouEm = Date.now();
     irParaFolha(folha + (dx < 0 ? 1 : -1), 'arrasto');
   }, { passive: true });
-  let ev_impedir = false;
+
+  /* Marca a HORA do arrasto em vez de levantar uma bandeira: se o navegador
+     não disparar o clique sintético (o normal quando o dedo andou), a bandeira
+     ficava levantada e engolia o toque seguinte — o do cadeado, inclusive. */
+  let arrastouEm = 0;
   $('#visor').addEventListener('click', e => {
-    if (ev_impedir) { e.stopImmediatePropagation(); ev_impedir = false; }
+    if (Date.now() - arrastouEm < 400) { e.stopImmediatePropagation(); arrastouEm = 0; }
   }, true);
 
   addEventListener('keydown', e => {
@@ -429,7 +465,10 @@ function montarEspiada() {
 
 /* quem espiou e quis ler cai exatamente na página que estava vendo */
 function abrirNaPagina(n) {
-  const ir = () => { abrirLeitura(); setTimeout(() => irPara(n), 420); };
+  const ir = async () => {
+    if (!await liberadoParaLer()) return;
+    abrirLeitura(); setTimeout(() => irPara(n), 420);
+  };
   if (jaCapturado()) { evento('leu_da_espiada', { pagina: n }); ir(); return; }
   pedirDados(n > limiteEspiada ? 'trancada' : 'espiada', ir);
 }
@@ -753,11 +792,75 @@ function ligarZoom() {
   nivel();
 }
 
+/* ═══ O PORTEIRO — uma edição por mês ═════════════════════════
+   A escolha vale 30 dias. Quem já escolheu vê duas saídas: esperar
+   ou pegar o passe.
+
+   Esta regra NÃO pode morar no navegador. O navegador é a casa do
+   leitor: qualquer coisa que eu guarde lá ele apaga em dois cliques,
+   ou troca de janela anônima e recomeça. Quem decide é a planilha,
+   que é a única que enxerga as duas visitas como a mesma pessoa.
+   Guardo a resposta aqui só para não perguntar a cada clique. */
+
+const CHAVE_MES = 'eter_mes';
+
+const vereditoSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_MES)); } catch { return null; } };
+
+async function consultarPorteiro(edicao) {
+  const l = leadSalvo();
+  if (!CFG.webhookLead || !l) return { liberado: true, motivo: 'sem porteiro' };
+
+  /* resposta fresca guardada: não repergunta */
+  const g = vereditoSalvo();
+  if (g && g.edicao === edicao && g.ate && Date.now() < g.ate) return g.veredito;
+
+  try {
+    const r = await fetch(CFG.webhookLead, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ acao: 'pode_ler', email: l.email, whatsapp: l.whatsapp, edicao }),
+    });
+    const v = await r.json();
+    /* guarda por 10 minutos: tempo de uma leitura, não de uma decisão */
+    localStorage.setItem(CHAVE_MES, JSON.stringify({ edicao, veredito: v, ate: Date.now() + 6e5 }));
+    return v;
+  } catch (err) {
+    /* Falhar ABERTO é regra: internet ruim não pode trancar quem já deu
+       o e-mail. Perder um controle custa menos do que barrar um leitor. */
+    console.warn('[porta] porteiro fora do ar, liberando', err);
+    return { liberado: true, motivo: 'porteiro fora do ar' };
+  }
+}
+
+function mostrarPorteiro(v) {
+  const outra = v.edicaoEmCurso ? `ED${v.edicaoEmCurso}` : 'a que você abriu';
+  const dias = v.diasQueFaltam;
+  $('#mes-dek').textContent =
+    `A leitura gratuita é uma edição a cada 30 dias, e a sua deste mês é a ${outra} — ` +
+    `que continua aberta, inteira, quando você quiser. Esta aqui abre ` +
+    (v.liberaEmBR ? `em ${v.liberaEmBR}` : 'em breve') +
+    (dias ? `, daqui a ${dias} ${dias === 1 ? 'dia' : 'dias'}.` : '.');
+  $('#mes-pe').textContent = `Com o passe, as duas abrem agora — e o acervo inteiro junto, por ${PASSE?.preco || 'R$97'}.`;
+  $('#mes-voltar').hidden = !v.edicaoEmCurso;
+  $('#mes-voltar').textContent = v.edicaoEmCurso ? `Voltar para a ED${v.edicaoEmCurso}` : 'Voltar';
+  $('#mes-dialog').dataset.edicao = v.edicaoEmCurso || '';
+  $('#mes-dialog').showModal();
+  evento('bateu_no_porteiro', { edicaoEmCurso: v.edicaoEmCurso || null, dias: dias || null });
+}
+
+/* devolve true quando pode seguir; senão mostra as duas saídas */
+async function liberadoParaLer() {
+  const v = await consultarPorteiro(EDICAO.n);
+  if (v.liberado) return true;
+  mostrarPorteiro(v);
+  return false;
+}
+
 let aoTerminar = null;
 
 const COPY = {
   leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.', 'Abrir a edição'],
-  trancada: ['O resto da edição abre aqui', 'O primeiro capítulo é livre. Os outros seis abrem agora, na íntegra, assim que você se identificar.', 'Destravar a edição'],
+  trancada: ['O resto da edição abre aqui', '', 'Destravar a edição'],
   espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima quarta.', 'Ler a partir daqui'],
   checkout: ['Para onde mandamos seu acesso?', 'Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.', 'Continuar para o pagamento'],
 };
@@ -766,7 +869,13 @@ function pedirDados(onde, depois = null) {
   if (jaCapturado()) { depois?.(); return true; }
   aoTerminar = depois;
   const chave = onde.startsWith('checkout') ? 'checkout' : (COPY[onde] ? onde : 'leitura');
-  const [tit, dek, bt] = COPY[chave];
+  const [tit, dek0, bt] = COPY[chave];
+  /* o número de capítulos muda por edição — prometer "seis" no código
+     fazia a frase mentir em metade do acervo */
+  const restantes = Math.max(1, (EDICAO.capitulos || []).length - 1);
+  const dek = chave === 'trancada'
+    ? `O primeiro capítulo é livre. ${restantes === 1 ? 'O resto' : `Os outros ${porExtenso(restantes)}`} abre${restantes === 1 ? '' : 'm'} agora, na íntegra, assim que você se identificar.`
+    : dek0;
   $('#form-tit').textContent = tit;
   $('#form-dek').textContent = dek;
   $('#btn-enviar').textContent = bt;
@@ -776,6 +885,9 @@ function pedirDados(onde, depois = null) {
   evento('viu_formulario', { onde });
   return false;
 }
+
+const EXTENSO = ['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez'];
+const porExtenso = n => EXTENSO[n] || String(n);
 
 const soDigitos = s => s.replace(/\D/g, '');
 
@@ -835,12 +947,13 @@ async function enviar(e) {
   destravar();
 
   if (aoTerminar) { const f = aoTerminar; aoTerminar = null; f(); return; }
-  abrirLeitura();
+  if (await liberadoParaLer()) abrirLeitura();
 }
 
 /* ═══ LIGAÇÕES ═════════════════════════════════════════════════ */
 function ligar() {
-  $('#btn-ler').addEventListener('click', () => jaCapturado() ? abrirLeitura() : pedirDados('leitura'));
+  const lerAgora = async () => { if (await liberadoParaLer()) abrirLeitura(); };
+  $('#btn-ler').addEventListener('click', () => jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora));
   $('#btn-voltar').addEventListener('click', voltar);
   $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });
   const abrirAcervo = e => { e.preventDefault(); $('#acervo-dialog').showModal(); evento('abriu_acervo'); };
@@ -865,6 +978,19 @@ function ligar() {
     despachar();
     location.href = anual + (anual.includes('?') ? '&' : '?') + p;
   });
+  $('#mes-passe').addEventListener('click', () => {
+    $('#mes-dialog').close();
+    evento('porteiro_virou_passe');
+    irParaCheckout('porteiro');
+  });
+  $('#mes-voltar').addEventListener('click', () => {
+    const n = $('#mes-dialog').dataset.edicao;
+    $('#mes-dialog').close();
+    if (!n) return;
+    evento('porteiro_voltou', { para: n });
+    location.href = `?ed=${n}`;
+  });
+
   $('#form').addEventListener('submit', enviar);
   $('#f-zap').addEventListener('input', mascara);
   $('#f-nome').addEventListener('input', () => $('#c-nome').classList.remove('erro'));
