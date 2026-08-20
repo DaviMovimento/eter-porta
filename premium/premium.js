@@ -99,6 +99,7 @@ async function iniciar() {
   document.title = `${EDICAO.titulo} · ETER`;
   ligarPixel();
   montarChegada();
+  ligarLeque();
   ligar();
   evento('viu_porta', { titulo: EDICAO.titulo, capturado: jaCapturado() });
 }
@@ -129,19 +130,31 @@ function montarChegada() {
   capa.alt = `Capa da edição ${EDICAO.n} — ${EDICAO.titulo}`;
   capa.onerror = () => capa.style.visibility = 'hidden';
 
+  /* o leque: as aberturas de capítulo espiam atrás da capa e dão curiosidade */
+  const caps = EDICAO.capitulos || [];
+  const espiar = [caps[1]?.[1], caps[2]?.[1], caps[3]?.[1]].filter(Boolean).slice(0, 3);
+  espiar.forEach((p, i) => {
+    const im = $(`#espia${i + 1}`);
+    im.src = `${BASE}edicoes/${EDICAO.n}/paginas/p${String(p).padStart(3, '0')}@800.webp`;
+  });
+  if (!espiar.length) $('#folhear').hidden = true;
+
   $('#numero').textContent = `Edição N° ${EDICAO.n}`;
 
-  /* a última palavra do título ganha a itálica manuscrita da identidade */
+  /* a última palavra do título vira caligrafia, como nas capas da revista */
   const partes = EDICAO.titulo.split(' ');
   const fecho = partes.pop();
-  $('#titulo').innerHTML = partes.length
-    ? `${partes.join(' ')}<em>${fecho}</em>`
-    : fecho;
+  $('#titulo').innerHTML = partes.length ? `${partes.join(' ')}<em>${fecho}</em>` : fecho;
 
-  $('#dek').textContent = EDICAO.subtitulo;
+  /* a promessa é o "Nesta Edição" da própria revista, verbatim */
+  $('#promessa').textContent = EDICAO.nestaEdicao || EDICAO.subtitulo;
+  if (EDICAO.convite) {
+    $('#convite-frase').textContent = EDICAO.convite;
+    $('#convite-frase').hidden = false;
+  }
 
   const f = [];
-  if (EDICAO.capitulos) f.push(`<b>${EDICAO.capitulos.length}</b> capítulos`);
+  if (caps.length) f.push(`<b>${caps.length}</b> capítulos`);
   if (TOTAL) f.push(`<b>${TOTAL}</b> páginas`);
   if (EDICAO.minutos) f.push(`<b>${EDICAO.minutos}</b> min`);
   $('#ficha').innerHTML = f.map(t => `<span>${t}</span>`).join('');
@@ -158,12 +171,24 @@ function montarChegada() {
     $('#sub-ler').textContent = 'esta edição ainda não foi publicada';
   }
 
-  $('#acervo').innerHTML = DADOS.edicoes.map((e, i) => `
-    <li><a href="?ed=${e.n}${e.paginas ? '' : '" aria-disabled="true'}">
+  $('#acervo').innerHTML = DADOS.edicoes.map(e => `
+    <li><a href="?ed=${e.n}">
       <span class="alg">${e.n}</span>
       <span class="nom">${e.titulo}</span>
       <span class="pg">${e.paginas ? e.paginas + ' pág' : 'em breve'}</span>
     </a></li>`).join('');
+}
+
+/* ── o leque de páginas: espiar dentro sem sair da capa ───────── */
+function ligarLeque() {
+  const pilha = $('#pilha'), bt = $('#folhear'), txt = $('#folhear-txt');
+  const alternar = () => {
+    const aberto = pilha.classList.toggle('aberta');
+    txt.textContent = aberto ? 'Fechar' : 'Espiar por dentro';
+    if (aberto) evento('espiou_dentro');
+  };
+  bt.addEventListener('click', alternar);
+  pilha.addEventListener('click', alternar);
 }
 
 /* ═══ TELA 2 · A LEITURA ═══════════════════════════════════════ */
@@ -256,7 +281,7 @@ function blocoMeio() {
     <p class="rot">Um intervalo</p>
     <h3 class="relevo">Toda quarta nasce uma <em>nova</em></h3>
     <p>Esta você lê inteira, de graça. O passe abre as próximas quatro, os encontros ao vivo e o acervo completo — e você segue lendo esta aqui do mesmo jeito.</p>
-    <button class="btn btn-passe" data-passe="intervalo">Ver o passe — ${CFG.precoPasse}</button>`;
+    <button class="btn btn-passe" data-passe="intervalo">Adquirir passe — ${CFG.precoPasse}</button>`;
   return d;
 }
 
@@ -274,7 +299,7 @@ function blocoFim() {
         <span class="passe-preco">${CFG.precoPasse}</span>
       </div>
       <ul class="passe-itens">${PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('')}</ul>
-      <button class="btn btn-passe" data-passe="fim">Assinar o passe</button>
+      <button class="btn btn-passe" data-passe="fim">Adquirir passe</button>
       <p class="passe-nota">${PASSE.condicao} ${PASSE.credito}</p>
     </section>`;
   return d;
@@ -377,13 +402,32 @@ function controlarCromo() {
   }, { passive: true });
 }
 
-/* ── o zoom é do leitor: pinça, roda, botões, toque ───────────── */
-function aplicarZoom(novo, origem) {
+/* ── o zoom ───────────────────────────────────────────────────
+   O que estava ruim: um toque na página alternava o zoom, então rolar
+   com o dedo disparava zoom sem querer. Agora o toque simples não faz
+   nada; quem manda é a PINÇA (o gesto que todo mundo já conhece), o
+   DUPLO TOQUE (que aproxima na coluna onde o dedo está) e a lupa. */
+function aplicarZoom(novo, origem, ancoraX) {
+  const antes = fator;
   fator = Math.min(3, Math.max(1, novo));
   if (fator > 1.02) ultimoFator = fator;
+
   document.querySelectorAll('.folha-in').forEach(el => el.style.width = (fator * 100) + '%');
   const larg = Math.round(Math.min(innerWidth, 736) * fator);
   document.querySelectorAll('.pag').forEach(im => im.sizes = larg + 'px');
+  $('#btn-zoom').classList.toggle('ativo', fator > 1.02);
+
+  /* mantém sob o dedo o ponto que estava sob o dedo */
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.folha-p').forEach(f => {
+      const max = f.scrollWidth - f.clientWidth;
+      if (max <= 0) { f.scrollLeft = 0; return; }
+      f.scrollLeft = ancoraX != null
+        ? Math.max(0, Math.min(max, (f.scrollLeft + ancoraX) * (fator / antes) - ancoraX))
+        : max / 2;
+    });
+  });
+
   clearTimeout(aplicarZoom.t);
   aplicarZoom.t = setTimeout(() => {
     localStorage.setItem(CHAVE_ZOOM, fator.toFixed(2));
@@ -391,37 +435,45 @@ function aplicarZoom(novo, origem) {
   }, 600);
 }
 
-function centralizar() {
-  document.querySelectorAll('.folha-p').forEach(f => f.scrollLeft = (f.scrollWidth - f.clientWidth) / 2);
-}
-
 function ligarZoom() {
   const caixa = $('#paginas');
 
-  caixa.addEventListener('click', e => {
-    if (e.target.closest('.intervalo')) return;
-    if (!e.target.closest('.folha-p')) return;
-    aplicarZoom(fator > 1.02 ? 1 : ultimoFator, 'toque');
-    if (fator > 1.02) setTimeout(centralizar, 260);
+  /* a lupa alterna entre a página inteira e o último zoom usado */
+  $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : ultimoFator, 'lupa'));
+
+  /* duplo toque: aproxima onde o dedo tocou, como num mapa */
+  let ultimoToque = 0, ultimoX = 0;
+  caixa.addEventListener('pointerup', e => {
+    if (e.target.closest('.intervalo') || !e.target.closest('.folha-p')) return;
+    const agora = Date.now();
+    if (agora - ultimoToque < 320 && Math.abs(e.clientX - ultimoX) < 40) {
+      e.preventDefault();
+      aplicarZoom(fator > 1.02 ? 1 : ultimoFator, 'duplo-toque', e.clientX);
+      ultimoToque = 0;
+    } else { ultimoToque = agora; ultimoX = e.clientX; }
   });
 
-  $('#btn-mais').addEventListener('click', () => aplicarZoom(fator + 0.25, 'botao'));
-  $('#btn-menos').addEventListener('click', () => aplicarZoom(fator - 0.25, 'botao'));
-
-  let d0 = 0, f0 = 1;
+  /* pinça: o gesto natural, com âncora no meio dos dois dedos */
+  let d0 = 0, f0 = 1, cx = 0;
   const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
-  caixa.addEventListener('touchstart', e => { if (e.touches.length === 2) { d0 = dist(e.touches); f0 = fator; } }, { passive: true });
+  caixa.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      d0 = dist(e.touches); f0 = fator;
+      cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+    }
+  }, { passive: true });
   caixa.addEventListener('touchmove', e => {
     if (e.touches.length !== 2 || !d0) return;
     e.preventDefault();
-    aplicarZoom(f0 * (dist(e.touches) / d0), 'pinca');
+    aplicarZoom(f0 * (dist(e.touches) / d0), 'pinca', cx);
   }, { passive: false });
   caixa.addEventListener('touchend', () => d0 = 0, { passive: true });
 
+  /* desktop: pinça do trackpad ou Ctrl+roda */
   addEventListener('wheel', e => {
     if (!e.ctrlKey || !$('#leitura').classList.contains('aberta')) return;
     e.preventDefault();
-    aplicarZoom(fator * (1 - e.deltaY * 0.01), 'roda');
+    aplicarZoom(fator * (1 - e.deltaY * 0.012), 'roda', e.clientX);
   }, { passive: false });
 
   addEventListener('keydown', e => {
@@ -431,6 +483,8 @@ function ligarZoom() {
     else if (e.key in passo) { e.preventDefault(); irPara(Math.min(Math.max(paginaAtual + passo[e.key], 1), TOTAL)); }
     else if (e.key === 'Home') { e.preventDefault(); irPara(1); }
     else if (e.key === 'End') { e.preventDefault(); irPara(TOTAL); }
+    else if (e.key === '+' || e.key === '=') aplicarZoom(fator + 0.25, 'teclado');
+    else if (e.key === '-') aplicarZoom(fator - 0.25, 'teclado');
     else if (e.key === 'Escape') voltar();
   });
 }

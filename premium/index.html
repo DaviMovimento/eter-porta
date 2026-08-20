@@ -5,32 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Revista ETER</title>
 <meta name="description" content="A revista semanal da nova economia brasileira.">
-<meta name="theme-color" content="#E7E1D4">
+<meta name="theme-color" content="#0A0A0A">
 
+<link rel="preload" href="fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Sora:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="premium.css">
 </head>
 <body>
 
 <!-- ══ TELA 1 · A CHEGADA ══════════════════════════════════════ -->
-<main id="chegada" class="papel">
+<main id="chegada" class="grao">
   <div class="folha">
 
     <header class="marca">
-      <img class="mono" src="monograma.webp" alt="" width="256" height="256">
-      <span class="nome relevo">ETER</span>
+      <img src="logo.webp" alt="ETER" width="900" height="240" fetchpriority="high">
     </header>
 
-    <div class="capa-palco">
-      <img id="capa" class="capa" alt="" width="600" height="849" fetchpriority="high">
+    <div class="palco">
+      <div class="pilha" id="pilha">
+        <div class="espia"><img id="espia1" alt="" loading="lazy" decoding="async"></div>
+        <div class="espia"><img id="espia2" alt="" loading="lazy" decoding="async"></div>
+        <div class="espia"><img id="espia3" alt="" loading="lazy" decoding="async"></div>
+        <img id="capa" class="capa" alt="" width="600" height="849" fetchpriority="high">
+      </div>
     </div>
+    <button class="folhear" id="folhear">
+      <span id="folhear-txt">Espiar por dentro</span> <span class="seta">→</span>
+    </button>
 
-    <p class="numero" id="numero">Edição N° 007</p>
-    <h1 id="titulo" class="relevo"></h1>
-    <p class="dek" id="dek"></p>
-
+    <p class="numero" id="numero"></p>
+    <h1 id="titulo"></h1>
+    <p class="promessa" id="promessa"></p>
+    <p class="convite-frase" id="convite-frase" hidden></p>
     <p class="ficha" id="ficha"></p>
 
     <div class="convites">
@@ -43,18 +51,18 @@
 
       <section class="passe">
         <div class="passe-topo">
-          <span class="passe-rot" id="passe-rot">Passe · 30 dias</span>
-          <span class="passe-preco" id="passe-preco">R$97</span>
+          <span class="passe-rot" id="passe-rot"></span>
+          <span class="passe-preco" id="passe-preco"></span>
         </div>
         <ul class="passe-itens" id="passe-itens"></ul>
-        <button class="btn btn-passe" data-passe="capa">Assinar o passe</button>
+        <button class="btn btn-passe" data-passe="capa">Adquirir passe</button>
         <p class="passe-nota" id="passe-nota"></p>
       </section>
     </div>
 
     <footer class="pe">
-      <p><a href="#" id="ver-edicoes">o acervo completo</a> · <a href="../privacidade.html">privacidade</a></p>
-      <p>ETER COMPANY LTDA · CNPJ 37.223.854/0001-47</p>
+      <p><a href="#" id="ver-edicoes">o acervo</a> · <a href="../privacidade.html">privacidade</a></p>
+      <p>ETER Company · CNPJ 37.223.854/0001-47</p>
     </footer>
   </div>
 </main>
@@ -66,9 +74,8 @@
   <header class="cromo" id="cromo">
     <button class="ic" id="btn-voltar" aria-label="Voltar">←</button>
     <span class="cromo-tit" id="cromo-tit"></span>
-    <button class="ic" id="btn-menos" aria-label="Diminuir">−</button>
-    <button class="ic" id="btn-mais" aria-label="Aumentar">+</button>
-    <button class="ic" id="btn-sumario" aria-label="Sumário">☰</button>
+    <button class="ic" id="btn-zoom" aria-label="Aproximar o texto" title="Aproximar">⌕</button>
+    <button class="ic" id="btn-sumario" aria-label="Capítulos" title="Capítulos">☰</button>
     <span class="pagina-n" id="pagina-n"></span>
   </header>
 
@@ -82,36 +89,33 @@
   <div class="barra" id="barra">
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="barra-txt" id="barra-txt"></p>
-    <button class="btn" data-passe="barra">Assinar</button>
+    <button class="btn btn-passe" data-passe="barra">Adquirir</button>
   </div>
 </main>
 
-<!-- ══ SUMÁRIO ═════════════════════════════════════════════════ -->
 <dialog id="sumario-dialog">
-  <div class="painel papel">
+  <div class="painel">
     <button class="fechar" data-fecha="sumario-dialog" aria-label="Fechar">×</button>
-    <h2 id="sum-tit" class="relevo"></h2>
+    <h2 id="sum-tit"></h2>
     <p class="leg" id="sum-leg"></p>
     <ul class="caps" id="caps"></ul>
   </div>
 </dialog>
 
-<!-- ══ ACERVO ══════════════════════════════════════════════════ -->
 <dialog id="acervo-dialog">
-  <div class="painel papel">
+  <div class="painel">
     <button class="fechar" data-fecha="acervo-dialog" aria-label="Fechar">×</button>
-    <h2 class="relevo">O acervo</h2>
+    <h2>O acervo</h2>
     <p class="leg">todas as edições publicadas</p>
     <ul class="caps" id="acervo"></ul>
   </div>
 </dialog>
 
-<!-- ══ CAPTURA ═════════════════════════════════════════════════ -->
 <dialog id="form-dialog">
-  <form class="form papel" id="form" novalidate>
+  <form class="form" id="form" novalidate>
     <button type="button" class="fechar" data-fecha="form-dialog" aria-label="Fechar">×</button>
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
-    <h2 id="form-tit" class="relevo">Para onde mandamos a edição?</h2>
+    <h2 id="form-tit">Para onde mandamos a edição?</h2>
     <p class="dek2" id="form-dek">A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.</p>
 
     <div class="campo" id="c-nome">
@@ -131,7 +135,7 @@
       <span>Autorizo a <b>ETER</b> a me enviar no WhatsApp esta edição e comunicações sobre a revista. Meus dados são tratados no ManyChat (EUA) e na Meta. Saio quando quiser respondendo <b>SAIR</b>. <a href="../privacidade.html" target="_blank" rel="noopener">Privacidade</a>.</span>
     </label>
 
-    <button class="btn btn-ler" type="submit" id="btn-enviar">Abrir a edição</button>
+    <button class="btn btn-passe" type="submit" id="btn-enviar">Abrir a edição</button>
   </form>
 </dialog>
 
