@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211841') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211841') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211841') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211844') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211844') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211844') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -228,8 +228,11 @@ body.lendo .topo{display:none}
 }
 @keyframes deriva-lado{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
+/* A faixa do celular é `.faixa-de-provas .tira` (0,2,0) e ganhava de um
+   `.tira` solto (0,1,0): quem pediu para o movimento parar continuava
+   vendo a faixa correr. Os dois seletores, para os dois desenhos. */
 @media (prefers-reduced-motion:reduce){
-  .tira{animation:none}
+  .tira,.faixa-de-provas .tira{animation:none}
 }
 
 .folha{
