@@ -119,7 +119,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608211056')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608211059')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -801,6 +801,11 @@ function tarjaDemo() {
 
 const vereditoSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_MES)); } catch { return null; } };
 
+/* a pergunta em voo: se o aquecimento já está esperando resposta, o clique
+   entra na MESMA fila em vez de abrir outra — senão a pessoa paga a espera
+   duas vezes, em paralelo, sem ganhar nada */
+let porteiroEmVoo = null;
+
 async function consultarPorteiro(edicao) {
   if (emDemo()) return porteiroDeMentira(edicao);
   const l = leadSalvo();
@@ -815,17 +820,22 @@ async function consultarPorteiro(edicao) {
   const g = vereditoSalvo();
   if (g && g.edicao === edicao && g.quem === ((l && l.email) || ms) && g.ate && Date.now() < g.ate) return g.veredito;
 
+  if (porteiroEmVoo && porteiroEmVoo.edicao === edicao) return porteiroEmVoo.promessa;
+
   try {
-    const r = await fetch(CFG.webhookLead, {
+    const promessa = fetch(CFG.webhookLead, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ acao: 'pode_ler', email: l?.email, whatsapp: l?.whatsapp, ms, edicao }),
-    });
-    const v = await r.json();
+    }).then(r => r.json());
+    porteiroEmVoo = { edicao, promessa };
+    const v = await promessa;
+    porteiroEmVoo = null;
     /* guarda por 10 minutos: tempo de uma leitura, não de uma decisão */
     localStorage.setItem(CHAVE_MES, JSON.stringify({ edicao, quem: l?.email || ms, veredito: v, ate: Date.now() + 6e5 }));
     return v;
   } catch (err) {
+    porteiroEmVoo = null;
     /* Falhar ABERTO é regra: internet ruim não pode trancar quem já deu
        o e-mail. Perder um controle custa menos do que barrar um leitor. */
     console.warn('[porta] porteiro fora do ar, liberando', err);
