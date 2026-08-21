@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Revista ETER</title>
+<title>[DEMO ESTÉTICA] Revista ETER</title>
 <meta name="description" content="A revista semanal da nova economia brasileira.">
 <meta name="theme-color" content="#F2EEE6">
 
@@ -11,9 +11,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../premium/premium.css?v=202608211629">
+<link rel="stylesheet" href="../premium/premium.css?v=202608211418">
+  <link rel="stylesheet" href="../premium/estetica-v2.css?v=2">
+  <meta name="theme-color" content="#FFFBF3">
 </head>
 <body>
+<div class="tarja-demo-estetica">
+  <b>Demonstração de estética</b> — paleta, fontes e tratamento da identidade oficial.
+  Nenhuma função mudou. <a href="../007/">ver a atual ao lado</a>
+</div>
 
 <!-- ══ A BARRA DA CASA — hoje uma página, amanhã várias ══════════ -->
 <header class="topo" id="topo">
@@ -212,6 +218,11 @@
   </div>
 </dialog>
 
-<script src="../premium/premium.js?v=202608211629"></script>
+<script>
+/* a pasta se chama "demo", não tem número: crava a edição antes de o
+   motor ler o endereço */
+if (!location.search.includes('ed=')) history.replaceState(null, '', '?ed=007' + location.hash);
+</script>
+<script src="../premium/premium.js?v=202608211418"></script>
 </body>
 </html>
