@@ -74,31 +74,118 @@ body.lendo .topo{display:none}
   padding:.45rem .85rem;border-radius:2px;
 }
 .topo-nav a.destaque:hover{filter:brightness(1.06)}
+.topo-nav a.destaque:focus-visible,.topo-nav a:focus-visible{
+  outline:2px solid var(--ouro);outline-offset:3px;border-radius:1px;
+}
+
+/* No celular a barra tinha 3 linhas de altura porque o rótulo quebrava.
+   Duas portas, uma linha, sem sobra. */
+@media (max-width:34rem){
+  .topo{padding:.6rem .9rem;gap:.7rem}
+  .topo-marca img{width:3.2rem}
+  .topo-nav{gap:.9rem;flex:0 0 auto}
+  .topo-nav a{font-size:.53rem;letter-spacing:.12em;white-space:nowrap}
+  .topo-nav a.destaque{padding:.5rem .7rem}
+}
 
 /* ═══════════════════════════════════════════════════════════════
    O AMBIENTE — mosaico das próprias páginas, quase apagado
    ═══════════════════════════════════════════════════════════════ */
 #chegada{position:relative;min-height:calc(100svh - 3.4rem);overflow:hidden;background:var(--papel)}
 
-.mosaico{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
-  opacity:0;transition:opacity 1.6s ease;
-}
-.mosaico.ver{opacity:.14}
-.mosaico img{width:100%;height:100%;object-fit:cover;filter:saturate(.5) contrast(.9)}
+/* ═══ O FUNDO — a parede de provas ════════════════════════════
+   Três camadas, e todas saem da própria edição: a atmosfera (a capa
+   ampliada e desfocada, que dá a cor), as provas (páginas de verdade
+   penduradas em colunas), e o véu (que devolve o silêncio no centro).
+   Nada aqui é enfeite genérico — cada edição veste a sua. */
 
-/* o véu que devolve o silêncio: o mosaico fica como memória, não como ruído */
-.veu{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:
-    radial-gradient(90% 55% at 50% 32%,rgba(242,238,230,.55),rgba(242,238,230,.93) 62%),
-    linear-gradient(180deg,rgba(242,238,230,.9) 0%,rgba(242,238,230,.82) 30%,var(--papel) 78%);
+.atmosfera{
+  position:fixed;inset:-12%;z-index:0;pointer-events:none;
+  background-size:cover;background-position:50% 22%;
+  filter:blur(90px) saturate(1.5) brightness(1.12);
+  opacity:0;transition:opacity 2.4s ease;
+  transform:translateZ(0);
 }
-.veu::after{
-  content:"";position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.4'/%3E%3C/svg%3E");
-  background-size:140px;opacity:.4;mix-blend-mode:multiply;
+.atmosfera.ver{opacity:.38}
+
+.mosaico{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  display:flex;gap:1.5rem;padding:0 .8rem;
+  opacity:0;transition:opacity 2.4s ease;
+}
+.mosaico.ver{opacity:1}
+
+.coluna{flex:1 1 0;min-width:0;overflow:hidden}
+.tira{
+  display:flex;flex-direction:column;gap:1.5rem;
+  animation:deriva var(--t,80s) linear infinite;
+  will-change:transform;
+}
+.coluna.avessa .tira{animation-direction:reverse}
+.tira img{
+  width:100%;aspect-ratio:1/1.414;object-fit:cover;display:block;
+  border-radius:1px;
+  /* dessaturado o bastante para não competir, vivo o bastante para
+     ainda ser papel impresso e não uma mancha cinza */
+  filter:saturate(.55) contrast(.98) brightness(1.02);
+  box-shadow:0 1px 2px rgba(30,24,19,.14),0 18px 32px -16px rgba(30,24,19,.38);
+}
+/* o laço fecha na metade porque a tira é a mesma sequência, duas vezes */
+@keyframes deriva{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+
+/* O VÉU. A conta aqui é literal: dois gradientes se SOMAM, e o que eu tinha
+   chegava a 74% de papel mesmo na beirada — por isso o mosaico existia e não
+   aparecia. Agora o eixo é horizontal, que é como a página é: coluna de
+   leitura no meio, margem livre dos dois lados. */
+.veu{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(90deg,
+      rgba(242,238,230,0)    0%,
+      rgba(242,238,230,.22)  6%,
+      rgba(242,238,230,.80) 13%,
+      rgba(242,238,230,.965) 21%,
+      rgba(242,238,230,.98)  50%,
+      rgba(242,238,230,.965) 79%,
+      rgba(242,238,230,.80) 87%,
+      rgba(242,238,230,.22) 94%,
+      rgba(242,238,230,0)  100%),
+    linear-gradient(180deg,
+      rgba(242,238,230,.7) 0%,
+      rgba(242,238,230,0) 14%,
+      rgba(242,238,230,0) 86%,
+      rgba(242,238,230,.9) 100%);
+}
+
+/* a vinheta de ouro: o que faz a página parecer emoldurada, não recortada */
+.vinheta{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(125% 95% at 50% 48%,
+    transparent 58%,rgba(143,115,51,.06) 84%,rgba(35,26,19,.13) 100%);
+  mix-blend-mode:multiply;
+}
+
+/* No celular a coluna de leitura ocupa a largura inteira: não sobra margem
+   para as provas aparecerem. Então lá o mosaico vira TEXTURA — quase um
+   grão de papel impresso — e quem veste a página é a atmosfera da capa. */
+@media (max-width:59.99rem){
+  /* invisível atrás da coluna de leitura e ainda assim baixava 16 imagens:
+     no celular quem veste a página é a atmosfera, que é UMA imagem — a
+     capa, que já foi baixada de qualquer jeito */
+  .mosaico{display:none}
+  .veu{
+    background:
+      linear-gradient(180deg,
+        rgba(242,238,230,.72) 0%,
+        rgba(242,238,230,.9) 22%,
+        rgba(242,238,230,.955) 45%,
+        rgba(242,238,230,.975) 100%);
+  }
+  .atmosfera.ver{opacity:.38}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tira{animation:none}
 }
 
 .folha{

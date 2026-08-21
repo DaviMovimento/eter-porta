@@ -119,7 +119,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608211059')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608211117')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -200,21 +200,58 @@ function montarChegada() {
       <span class="pg">${e.paginas ? e.paginas + ' páginas' : ''}</span>
     </a></li>`).join('');
 
-  /* o mosaico de fundo: páginas espalhadas pela edição, quase apagadas —
-     mostra que existe conteúdo lá dentro sem competir com nada */
-  if (TOTAL > 8) {
-    /* só páginas do trecho livre: o mosaico estava publicando o miolo
-       travado na tela de entrada, por fora do próprio cadeado */
-    const teto = Math.max(8, Math.min(TOTAL, limiteEspiada || TOTAL));
-    const passo = Math.max(1, Math.floor(teto / 8));
-    const quadros = Array.from({ length: 8 }, (_, i) => 1 + i * passo).filter(n => n <= TOTAL);
-    $('#mosaico').innerHTML = quadros.map(n => `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">`).join('');
-    /* só aparece quando as imagens estiverem prontas: nada de piscar */
-    setTimeout(() => $('#mosaico').classList.add('ver'), 900);
-  }
+  montarFundo();
+
 }
 
 /* ═══ A REVISTA ESPIÁVEL ═══════════════════════════════════════ */
+/* ═══ O FUNDO ═════════════════════════════════════════════════
+   Cada edição traz o seu próprio ambiente, sem ninguém escolher nada:
+   a CAPA, gigante e desfocada, dá a temperatura de cor da página — a
+   ED007 é preta e dourada, a ED005 é outra coisa, e a página inteira
+   se veste disso. Por cima, as páginas da edição ficam penduradas em
+   colunas que derivam devagar, como provas numa parede de gráfica.
+   O véu devolve o silêncio no centro, onde mora a leitura. */
+function montarFundo() {
+  if (!TOTAL) return;
+
+  const atm = $('#atmosfera');
+  atm.style.backgroundImage = `url("${pag(1, 800)}")`;
+  const capa = new Image();
+  capa.onload = () => atm.classList.add('ver');
+  capa.src = pag(1, 800);
+
+  /* só páginas do trecho livre: o fundo não pode publicar o miolo travado */
+  /* no celular o mosaico não aparece (a coluna de leitura ocupa tudo), então
+     nem monta: 16 imagens invisíveis é banda jogada fora no 4G de alguém */
+  if (innerWidth < 960) return;
+
+  const teto = Math.max(6, Math.min(TOTAL, limiteEspiada || TOTAL));
+  const colunas = 7;
+  const porColuna = 4;
+
+  const mosaico = $('#mosaico');
+  mosaico.innerHTML = Array.from({ length: colunas }, (_, c) => {
+    const paginas = Array.from({ length: porColuna }, (_, i) => {
+      /* passo primo para as colunas não repetirem o mesmo par de páginas */
+      const n = 1 + ((c * 3 + i * 5) % teto);
+      return `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">`;
+    }).join('');
+    const seg = 74 + (c % 4) * 13;          /* cada coluna anda no seu tempo */
+    return `<div class="coluna${c % 2 ? ' avessa' : ''}" style="--t:${seg}s">
+      <div class="tira">${paginas}${paginas}</div></div>`;
+  }).join('');
+
+  /* só acende quando há o que mostrar — nada de piscar papel vazio */
+  const primeira = mosaico.querySelector('img');
+  const acender = () => requestAnimationFrame(() => {
+    mosaico.classList.add('ver'); $('#atmosfera').classList.add('ver');
+  });
+  if (primeira && primeira.complete) acender();
+  else primeira?.addEventListener('load', acender, { once: true });
+  setTimeout(acender, 2500);               /* rede de segurança */
+}
+
 let limiteEspiada = Infinity;      /* última página livre antes do cadeado */
 let paginaEmFoco = 0;              /* a página que a espiada está mostrando */
 
