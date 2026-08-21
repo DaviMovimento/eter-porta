@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211801') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211801') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211801') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211804') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211804') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211804') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -618,17 +618,22 @@ h1 em{
    título, promessa e ficha —, a demonstração vem provar o que a manchete
    prometeu, e os dois botões nascem colados nela, onde a decisão acontece.
    `display:contents` dissolve a caixa dos dizeres para que os filhos
-   entrem na mesma coluna flex da folha e possam ser reordenados. */
+   entrem na mesma coluna flex da folha e possam ser reordenados.
+
+   Cuidado que me custou uma volta: `display:contents` dissolve a CAIXA,
+   não a árvore. O seletor continua sendo `.dizeres > .convites` — escrito
+   como `.folha > .convites` ele não casa com nada, e os dizeres inteiros
+   ficam com ordem 0, ou seja, antes da revista. */
 @media (max-width:59.99rem){
   .dizeres{display:contents}
-  .folha>.numero        {order:1;margin-top:.4rem}
-  .folha>h1             {order:2}
-  .folha>.promessa      {order:3}
-  .folha>.convite-frase {order:4}
-  .folha>.ficha         {order:5;margin-bottom:1.4rem}
-  .folha>.revista       {order:6;margin-bottom:0}
-  .folha>.convites      {order:7;margin-top:1.3rem;padding-top:0}
-  .folha>.pe            {order:8}
+  .dizeres>.numero        {order:1;margin-top:.4rem}
+  .dizeres>h1             {order:2}
+  .dizeres>.promessa      {order:3}
+  .dizeres>.convite-frase {order:4}
+  .dizeres>.ficha         {order:5;margin-bottom:1.2rem}
+  .folha>.revista         {order:6;margin-bottom:0}
+  .dizeres>.convites      {order:7;margin-top:1.3rem;padding-top:0}
+  .folha>.pe              {order:8}
 }
 
 /* ═══════════════════════════════════════════════════════════════
