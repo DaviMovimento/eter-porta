@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211755') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211755') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211755') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211801') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211801') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211801') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -147,29 +147,31 @@ body.lendo .topo{display:none}
   /* some por dentro: contra a coluna de leitura e nas duas pontas,
      para o trilho parecer que continua em vez de acabar cortado */
   -webkit-mask-image:
-    linear-gradient(90deg,transparent 0,#000 26%),
-    linear-gradient(180deg,transparent 0,#000 11%,#000 84%,transparent 100%);
+    linear-gradient(90deg,transparent 0,#000 12%),
+    linear-gradient(180deg,transparent 0,#000 13%,#000 82%,transparent 100%);
   -webkit-mask-composite:source-in;
   mask-image:
-    linear-gradient(90deg,transparent 0,#000 26%),
-    linear-gradient(180deg,transparent 0,#000 11%,#000 84%,transparent 100%);
+    linear-gradient(90deg,transparent 0,#000 12%),
+    linear-gradient(180deg,transparent 0,#000 13%,#000 82%,transparent 100%);
   mask-composite:intersect;
 }
 .mosaico.ver{opacity:1}
 
 .coluna{flex:1 1 0;min-width:0;overflow:hidden}
 .tira{
-  display:flex;flex-direction:column;gap:.9rem;
+  display:flex;flex-direction:column;gap:1.5rem;
   animation:deriva var(--t,80s) linear infinite;
   will-change:transform;
 }
 .coluna.avessa .tira{animation-direction:reverse}
 .tira img{
   width:100%;aspect-ratio:1/1.414;object-fit:cover;display:block;
-  border-radius:1px;
-  /* dessaturado o bastante para não competir, vivo o bastante para
-     ainda ser papel impresso e não uma mancha cinza */
-  filter:saturate(.55) contrast(.98) brightness(1.02);
+  /* Um fio de tinta em volta e a sombra funda: sem a borda, a página de
+     framework — que é bege sobre bege — dissolvia no papel do site e o
+     trilho virava uma mancha clara. A borda devolve a beirada da folha. */
+  border:1px solid rgb(var(--papel-rgb)/.01);
+  outline:1px solid var(--linha);outline-offset:-1px;
+  filter:saturate(.72) contrast(1.03);
   box-shadow:var(--elev-3);
 }
 /* o laço fecha na metade porque a tira é a mesma sequência, duas vezes */
@@ -572,7 +574,7 @@ h1 em{
 
   /* o trilho tem largura declarada e a página se afasta dele por essa
      mesma medida: um número só governa os dois, e nada encosta */
-  #chegada{--trilho:14rem;padding-right:var(--trilho)}
+  #chegada{--trilho:12.5rem;padding-right:var(--trilho)}
   .folha{
     max-width:66rem;
     display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -602,9 +604,10 @@ h1 em{
   .pe{grid-area:auto;grid-column:1/-1;margin-top:2.5rem;text-align:center}
 }
 
-/* tela larga: o trilho pode abrir sem apertar a leitura */
-@media (min-width:82rem){ #chegada{--trilho:17.5rem} }
-@media (min-width:100rem){ #chegada{--trilho:21rem} }
+/* tela larga: o trilho pode abrir sem apertar a leitura. O teto é 16rem
+   porque a miniatura tem 240px de origem — passar disso é esticar. */
+@media (min-width:82rem){ #chegada{--trilho:14.5rem} }
+@media (min-width:100rem){ #chegada{--trilho:16rem} }
 
 /* ═══════════════════════════════════════════════════════════════
    CELULAR — a ordem que a mão lê

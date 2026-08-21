@@ -254,12 +254,15 @@ function montarFundo() {
   const provas = (EDICAO.destaques || []).filter(n => n <= TOTAL);
   if (!provas.length) return;
 
-  const colunas = 2;
-  const minimo = 3;              /* menos que isto e a volta fica evidente */
+  /* Uma coluna só, e larga. Com duas, cada página ficava com 120px e o
+     framework virava borrão — que é o oposto do que o trilho existe para
+     dizer. Larga, dá para ver que aquilo é um quadro, um gráfico, um
+     painel de preencher, sem nunca dar para LER (e nem deve). */
+  const colunas = 1;
+  const minimo = 4;              /* menos que isto e a volta fica evidente */
 
   const mosaico = $('#mosaico');
   mosaico.innerHTML = Array.from({ length: colunas }, (_, c) => {
-    /* uma coluna leva as pares, a outra as ímpares: nenhuma repete a vizinha */
     let fila = provas.filter((_, i) => i % colunas === c);
     if (!fila.length) fila = provas.slice();
     while (fila.length < minimo) fila = fila.concat(fila);
@@ -268,8 +271,8 @@ function montarFundo() {
       `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async"
         width="240" height="339">`).join('');
 
-    /* a duração acompanha o tamanho da fila para as duas colunas correrem
-       na MESMA velocidade — do contrário a coluna curta parece arrastada */
+    /* a duração acompanha o tamanho da fila: assim a página anda sempre na
+       mesma velocidade, seja a edição de cinco frameworks ou a de oito */
     const seg = fila.length * (25 + c * 4);
     return `<div class="coluna${c % 2 ? ' avessa' : ''}" style="--t:${seg}s">
       <div class="tira">${paginas}${paginas}</div></div>`;
