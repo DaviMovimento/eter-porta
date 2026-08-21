@@ -119,7 +119,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608211042')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608211056')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -129,6 +129,7 @@ async function iniciar() {
   document.title = `${EDICAO.titulo} · ETER`;
   ligarPixel();
   tarjaDemo();
+  aquecerPorteiro();
   calcularLimite();      /* antes do mosaico: ele também obedece ao cadeado */
   montarChegada();
   montarEspiada();
@@ -848,9 +849,26 @@ function mostrarPorteiro(v) {
   evento('bateu_no_porteiro', { edicaoEmCurso: v.edicaoEmCurso || null, dias: dias || null });
 }
 
+/* O Apps Script liga sob demanda e a primeira resposta custa segundos.
+   Perguntar no carregamento, enquanto a pessoa ainda está olhando a capa,
+   faz a resposta já estar aqui quando ela clicar — a espera some sem que
+   nada fique mais rápido. */
+function aquecerPorteiro() {
+  /* só faz sentido para quem já é conhecido — visitante novo ainda vai
+     preencher o formulário, e aquela gravação já traz o veredito junto */
+  if (!CFG.webhookLead) return;
+  if (!leadSalvo() && !url.get('ms')) return;
+  consultarPorteiro(EDICAO.n).catch(() => {});
+}
+
 /* devolve true quando pode seguir; senão mostra as duas saídas */
 async function liberadoParaLer() {
+  const bt = $('#btn-ler');
+  const antes = bt ? bt.innerHTML : null;
+  const lento = setTimeout(() => { if (bt) bt.innerHTML = '<b>Abrindo a edição…</b>'; }, 500);
   const v = await consultarPorteiro(EDICAO.n);
+  clearTimeout(lento);
+  if (bt && antes !== null) bt.innerHTML = antes;
   if (v.liberado) return true;
   mostrarPorteiro(v);
   return false;
@@ -931,24 +949,36 @@ async function enviar(e) {
   const bt = $('#btn-enviar');
   bt.disabled = true; bt.textContent = 'Abrindo…';
 
+  /* A gravação do lead JÁ devolve o veredito do porteiro. Ler essa resposta
+     economiza uma segunda ida ao Google — e são 2 a 5 segundos por ida,
+     porque o Apps Script liga sob demanda. Uma viagem em vez de duas. */
+  let veredito = null;
   if (CFG.webhookLead) {
     try {
-      await fetch(CFG.webhookLead, {
-        method: 'POST', mode: 'no-cors',
+      const r = await fetch(CFG.webhookLead, {
+        method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(lead), keepalive: true,
+        body: JSON.stringify(lead),
       });
-    } catch (err) { console.warn('[porta] webhook falhou, seguindo', err); }
+      veredito = await r.json();
+    } catch (err) {
+      console.warn('[porta] porteiro fora do ar, liberando', err);
+      veredito = { liberado: true, motivo: 'porteiro fora do ar' };
+    }
   }
 
   localStorage.setItem(CHAVE_LEAD, JSON.stringify(lead));
+  if (veredito) localStorage.setItem(CHAVE_MES, JSON.stringify({
+    edicao: EDICAO.n, quem: lead.email, veredito, ate: Date.now() + 6e5,
+  }));
   evento('virou_lead', { onde: lead.onde });
   $('#form-dialog').close();
   bt.disabled = false;
   destravar();
 
   if (aoTerminar) { const f = aoTerminar; aoTerminar = null; f(); return; }
-  if (await liberadoParaLer()) abrirLeitura();
+  if (!veredito || veredito.liberado) abrirLeitura();
+  else mostrarPorteiro(veredito);
 }
 
 /* ═══ LIGAÇÕES ═════════════════════════════════════════════════ */
