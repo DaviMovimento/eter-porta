@@ -8,6 +8,12 @@
 (() => {
 'use strict';
 
+/* Este arquivo é servido de dois lugares — /e/ e /e/premium/ — então o
+   catálogo precisa ser achado a partir de onde o SCRIPT mora, não de onde a
+   página está. currentScript só existe enquanto o arquivo avalia: por isso
+   guardo agora, não depois. */
+const ONDE_MORO = document.currentScript?.src || location.href;
+
 const $ = s => document.querySelector(s);
 const url = new URLSearchParams(location.search);
 
@@ -119,7 +125,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608211117')).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608211117', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
