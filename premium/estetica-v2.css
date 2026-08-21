@@ -11,7 +11,7 @@
    chamadas no sistema visual, não a bold normal que eu tinha posto. */
 @font-face{
   font-family:'FuturaMarca';
-  src:url('fontes/futura-cond-xb.woff2?v=202608211837') format('woff2');
+  src:url('fontes/futura-cond-xb.woff2?v=202608211841') format('woff2');
   font-weight:800;font-display:swap;
 }
 
@@ -29,6 +29,7 @@
   --papel-2:#F7F1E4;   /* meio tom abaixo do bege, derivado dele */
   --papel-3:#EFE7D6;
   --tinta:var(--preto);
+  --tinta-rgb:25 8 8;  /* o preto da marca em canais crus, para a sombra */
   --tinta-2:#4A3230;   /* o preto clareado, mantendo o avermelhado */
   --tinta-3:#6B504C;
 
