@@ -360,3 +360,37 @@ function testar() {
   falso.edicao = '006';
   Logger.log('outra edicao:    ' + JSON.stringify(podeLer(falso)));
 }
+
+
+/* ── LIMPEZA DOS TESTES ───────────────────────────────────────────────
+ *
+ * Apaga SÓ as linhas de teste: as que têm @eter.demo no e-mail, ou nome
+ * começando com TESTE. Nada mais é tocado. Roda uma vez e some do caminho.
+ *
+ * Para rodar: escolha "limparTestes" na lista de funções, aperte Executar,
+ * e veja o resultado em Registro de execução.
+ */
+function limparTestes() {
+  const marcas = /@eter\.demo|^TESTE |^Davi TESTE|^cron-|^real-|^v2-|^sonda/i;
+  const planilha = SpreadsheetApp.getActiveSpreadsheet();
+  const relatorio = [];
+
+  ['leads', 'acessos', 'assinantes', 'erros'].forEach(function (nome) {
+    const aba = planilha.getSheetByName(nome);
+    if (!aba) return;
+    const dados = aba.getDataRange().getValues();
+    let apagadas = 0;
+
+    /* de baixo para cima: apagar linha muda o índice das de baixo */
+    for (let i = dados.length - 1; i >= 1; i--) {
+      const linha = dados[i].join(' ');
+      if (marcas.test(linha)) { aba.deleteRow(i + 1); apagadas++; }
+    }
+    relatorio.push(nome + ': ' + apagadas + ' linha(s) de teste apagada(s), ' +
+                   (aba.getLastRow() - 1) + ' linha(s) reais mantida(s)');
+  });
+
+  const texto = relatorio.join('\n');
+  Logger.log(texto);
+  return texto;
+}
