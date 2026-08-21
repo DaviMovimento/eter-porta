@@ -242,11 +242,7 @@ function montarFundo() {
   capa.onload = () => atm.classList.add('ver');
   capa.src = pag(1, 800);
 
-  /* no celular o trilho não aparece (a coluna de leitura ocupa tudo), então
-     nem monta: 16 imagens invisíveis é banda jogada fora no 4G de alguém */
-  if (innerWidth < 960) return;
-
-  /* O TRILHO. Não é mais um sorteio de páginas quaisquer: cada edição
+  /* AS PROVAS. Não é mais um sorteio de páginas quaisquer: cada edição
      declara em `destaques` as suas páginas de FRAMEWORK — quadro, painel,
      gráfico, exercício —, as que provam que a revista entrega método e não
      opinião. Quem abre a ED005 vê os gráficos DA ED005. A página fala da
@@ -254,14 +250,25 @@ function montarFundo() {
   const provas = (EDICAO.destaques || []).filter(n => n <= TOTAL);
   if (!provas.length) return;
 
-  /* Uma coluna só, e larga. Com duas, cada página ficava com 120px e o
-     framework virava borrão — que é o oposto do que o trilho existe para
-     dizer. Larga, dá para ver que aquilo é um quadro, um gráfico, um
-     painel de preencher, sem nunca dar para LER (e nem deve). */
-  const colunas = 1;
-  const minimo = 4;              /* menos que isto e a volta fica evidente */
+  /* O mesmo material, dois desenhos. No desktop sobra margem à esquerda e
+     as provas viram parede: duas colunas desencontradas, subindo devagar,
+     com a folha de leitura apoiada por cima. No celular não existe margem
+     nenhuma — então a parede deita e vira uma FAIXA que corre de lado,
+     colocada no lugar do funil onde ela argumenta: depois da espiada e do
+     botão de graça, logo antes do preço. */
+  const noCelular = innerWidth < 960;
+  const colunas = noCelular ? 1 : 2;
+  const minimo = noCelular ? 6 : 4;   /* menos que isto e a volta fica evidente */
 
   const mosaico = $('#mosaico');
+  mosaico.classList.toggle('faixa-de-provas', noCelular);
+
+  /* no celular ele deixa de ser fundo e passa a ser um bloco da página,
+     entre o botão de graça e o preço — por isso muda de lugar na árvore.
+     A âncora é o "ou entre inteiro", que é exatamente a dobradiça entre
+     as duas ofertas; se ela não existir, o bloco fica onde estava. */
+  if (noCelular) $('.convites .ou')?.before(mosaico);
+
   mosaico.innerHTML = Array.from({ length: colunas }, (_, c) => {
     let fila = provas.filter((_, i) => i % colunas === c);
     if (!fila.length) fila = provas.slice();
@@ -273,7 +280,7 @@ function montarFundo() {
 
     /* a duração acompanha o tamanho da fila: assim a página anda sempre na
        mesma velocidade, seja a edição de cinco frameworks ou a de oito */
-    const seg = fila.length * (25 + c * 4);
+    const seg = fila.length * (noCelular ? 9 : 25 + c * 4);
     return `<div class="coluna${c % 2 ? ' avessa' : ''}" style="--t:${seg}s">
       <div class="tira">${paginas}${paginas}</div></div>`;
   }).join('');

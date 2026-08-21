@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211804') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211804') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211804') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211833') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211833') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211833') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -23,6 +23,7 @@
   --papel-2:#E8E2D6;
   --papel-3:#DDD5C5;
   --tinta:#1E1813;
+  --tinta-rgb:30 24 19;   /* a tinta em canais crus, para a sombra da folha */
   --tinta-2:#5A5044;
   --tinta-3:#6E6455;   /* era #8E8474, que dava 3,18:1 sobre o papel — reprovava */
   --erro:#8C3D22;
@@ -118,15 +119,16 @@ body.lendo .topo{display:none}
    ═══════════════════════════════════════════════════════════════ */
 #chegada{position:relative;min-height:calc(100svh - 3.4rem);overflow:hidden;background:var(--papel)}
 
-/* ═══ O FUNDO — papel à esquerda, provas à direita ════════════
-   Três camadas, e todas saem da própria edição: a atmosfera (a capa
-   ampliada e desfocada, que dá a cor), o trilho de provas (páginas de
-   framework de verdade, encostado na direita) e o véu, que devolve o
-   silêncio onde mora a leitura.
+/* ═══ O FUNDO — o mosaico à esquerda, a folha por cima ════════
+   A metáfora é a mesa da gráfica: na parede da esquerda ficam as provas
+   penduradas — as páginas de FRAMEWORK desta edição, em mosaico, cada
+   coluna derivando no seu tempo — e sobre elas se apoia a folha onde
+   se lê, com a sombra que separa uma coisa da outra.
 
-   Antes as provas ficavam dos DOIS lados e o olho não sabia onde
-   pousar. Agora a página tem mão: à esquerda o papel respira com a
-   cor da capa, no meio se lê, e só à direita passam os frameworks. */
+   Três camadas, todas saídas da própria edição: a atmosfera (a capa
+   ampliada e desfocada, que dá a cor da parede), o mosaico das provas,
+   e a folha, opaca, que entra por cima. Antes as provas ficavam dos DOIS
+   lados e o olho não sabia onde pousar. Agora a página tem mão. */
 
 .atmosfera{
   position:fixed;inset:-12%;z-index:0;pointer-events:none;
@@ -137,29 +139,28 @@ body.lendo .topo{display:none}
 }
 .atmosfera.ver{opacity:.38}
 
-/* O TRILHO. Duas colunas estreitas, ancoradas na direita, por cima do
-   véu — é a única camada do fundo que tem o direito de ser vista. */
+/* O MOSAICO. Ancorado na esquerda e mais largo do que a faixa que lhe
+   cabe: a folha entra por cima e come a sobra, então as provas somem
+   POR BAIXO dela em vez de acabarem cortadas numa linha reta. */
 .mosaico{
-  position:fixed;top:0;bottom:0;right:0;width:var(--trilho,0);
-  z-index:2;pointer-events:none;overflow:hidden;
-  display:flex;gap:.9rem;padding:0 .9rem;
+  position:fixed;top:0;bottom:0;left:0;
+  width:calc(var(--trilho,0) + 5rem);
+  z-index:1;pointer-events:none;overflow:hidden;
+  display:flex;gap:1.2rem;padding:0 1.1rem;
   opacity:0;transition:opacity 2.4s ease;
-  /* some por dentro: contra a coluna de leitura e nas duas pontas,
-     para o trilho parecer que continua em vez de acabar cortado */
-  -webkit-mask-image:
-    linear-gradient(90deg,transparent 0,#000 12%),
-    linear-gradient(180deg,transparent 0,#000 13%,#000 82%,transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:
-    linear-gradient(90deg,transparent 0,#000 12%),
-    linear-gradient(180deg,transparent 0,#000 13%,#000 82%,transparent 100%);
-  mask-composite:intersect;
+  /* só as pontas de cima e de baixo: o lado direito quem resolve é a
+     folha, e o esquerdo é a beirada da parede, que pode ser beirada */
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 84%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 84%,transparent 100%);
 }
 .mosaico.ver{opacity:1}
 
 .coluna{flex:1 1 0;min-width:0;overflow:hidden}
+/* o desencontro que faz virar mosaico: sem ele são duas listas lado a
+   lado, com ele as folhas se intercalam como provas numa parede */
+.coluna.avessa{margin-top:-5.5rem}
 .tira{
-  display:flex;flex-direction:column;gap:1.5rem;
+  display:flex;flex-direction:column;gap:1.2rem;
   animation:deriva var(--t,80s) linear infinite;
   will-change:transform;
 }
@@ -177,28 +178,22 @@ body.lendo .topo{display:none}
 /* o laço fecha na metade porque a tira é a mesma sequência, duas vezes */
 @keyframes deriva{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 
-/* O VÉU. Agora ele é assimétrico de propósito, porque a página é:
-   à esquerda deixa a cor da capa atravessar, no centro fecha para a
-   leitura, e à direita fecha de novo — o trilho passa por cima dele. */
+/* O VÉU. No celular é o que sempre foi: um lavado de papel que abaixa
+   a atmosfera para o texto ficar legível. No desktop (mais abaixo) ele
+   deixa de ser lavado e vira A FOLHA — opaca, com sombra na beirada. */
 .veu{
-  position:fixed;inset:0;z-index:1;pointer-events:none;
+  position:fixed;inset:0;z-index:2;pointer-events:none;
   background:
-    linear-gradient(90deg,
-      rgb(var(--papel-rgb)/.34)  0%,
-      rgb(var(--papel-rgb)/.74) 11%,
-      rgb(var(--papel-rgb)/.94) 24%,
-      rgb(var(--papel-rgb)/.965) 62%,
-      rgb(var(--papel-rgb)/.95) 100%),
     linear-gradient(180deg,
       rgb(var(--papel-rgb)/.72) 0%,
-      rgb(var(--papel-rgb)/0)  16%,
-      rgb(var(--papel-rgb)/0)  86%,
-      rgb(var(--papel-rgb)/.9) 100%);
+      rgb(var(--papel-rgb)/.9) 22%,
+      rgb(var(--papel-rgb)/.955) 45%,
+      rgb(var(--papel-rgb)/.975) 100%);
 }
 
 /* a vinheta de ouro: o que faz a página parecer emoldurada, não recortada */
 .vinheta{
-  position:fixed;inset:0;z-index:1;pointer-events:none;
+  position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(125% 95% at 50% 48%,
     transparent 58%,rgba(143,115,51,.06) 84%,rgba(35,26,19,.13) 100%);
   mix-blend-mode:multiply;
@@ -208,26 +203,42 @@ body.lendo .topo{display:none}
    para as provas aparecerem. Quem veste a página lá é a atmosfera da capa —
    que é UMA imagem, e já foi baixada de qualquer jeito. */
 @media (max-width:59.99rem){
-  .mosaico{display:none}
-  .veu{
-    background:
-      linear-gradient(180deg,
-        rgb(var(--papel-rgb)/.72) 0%,
-        rgb(var(--papel-rgb)/.9) 22%,
-        rgb(var(--papel-rgb)/.955) 45%,
-        rgb(var(--papel-rgb)/.975) 100%);
-  }
   .atmosfera.ver{opacity:.38}
+
+  /* A FAIXA DE PROVAS. No celular a parede deita: as mesmas páginas de
+     framework, correndo de lado, num bloco da própria página em vez de
+     fundo. E ela mora onde argumenta — depois da espiada e do botão de
+     graça, imediatamente antes do preço, que é onde o leitor pergunta
+     "o que eu levo por R$97?" e a resposta aparece em imagem. */
+  .mosaico.faixa-de-provas{
+    position:static;width:auto;height:9.5rem;
+    display:block;padding:0;margin:.4rem 0 .2rem;
+    /* rompe a margem da folha: a faixa vai de beirada a beirada */
+    margin-left:calc(var(--sangra,1.4rem)*-1);
+    margin-right:calc(var(--sangra,1.4rem)*-1);
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);
+  }
+  .faixa-de-provas .coluna{height:100%;margin-top:0}
+  .faixa-de-provas .tira{
+    flex-direction:row;height:100%;gap:.7rem;
+    animation-name:deriva-lado;
+  }
+  .faixa-de-provas .tira img{width:auto;height:100%;box-shadow:var(--elev-2)}
 }
+@keyframes deriva-lado{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 @media (prefers-reduced-motion:reduce){
   .tira{animation:none}
 }
 
 .folha{
-  position:relative;z-index:2;
+  /* acima da atmosfera(0), do mosaico(1), do véu(2) e da vinheta(3):
+     é a única camada onde mora texto, e nada pode passar por cima dela */
+  position:relative;z-index:4;
   width:100%;max-width:31rem;margin:0 auto;
-  padding:1.6rem 1.4rem 2.5rem;
+  --sangra:1.4rem;              /* a margem que a faixa de provas rompe */
+  padding:1.6rem var(--sangra) 2.5rem;
   display:flex;flex-direction:column;min-height:calc(100svh - 3.4rem);
 }
 
@@ -572,9 +583,23 @@ h1 em{
   .topo{padding:.85rem 2.5rem}
   .topo-marca img{width:4.6rem}
 
-  /* o trilho tem largura declarada e a página se afasta dele por essa
+  /* o mosaico tem largura declarada e a página se afasta dele por essa
      mesma medida: um número só governa os dois, e nada encosta */
-  #chegada{--trilho:12.5rem;padding-right:var(--trilho)}
+  #chegada{--trilho:19rem;padding-left:var(--trilho)}
+
+  /* A FOLHA SOBREPOSTA. O véu deixa de ser lavado e vira uma superfície:
+     papel opaco começando onde o mosaico acaba, com um fio de tinta na
+     dobra e uma sombra funda por baixo. É essa sombra que diz ao olho o
+     que está atrás e o que está por cima — sem ela as duas coisas
+     dividem o mesmo plano e a leitura briga com o fundo. */
+  .veu{
+    left:var(--trilho);right:0;top:0;bottom:0;inset:auto;
+    background:rgb(var(--papel-rgb)/.985);
+    box-shadow:
+      -1px 0 0 rgb(var(--tinta-rgb)/.10),
+      -18px 0 34px -14px rgb(var(--tinta-rgb)/.30),
+      -44px 0 90px -30px rgb(var(--tinta-rgb)/.22);
+  }
   .folha{
     max-width:66rem;
     display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -617,23 +642,43 @@ h1 em{
    de saber o que estava vendo. Agora a manchete abre a página — número,
    título, promessa e ficha —, a demonstração vem provar o que a manchete
    prometeu, e os dois botões nascem colados nela, onde a decisão acontece.
-   `display:contents` dissolve a caixa dos dizeres para que os filhos
-   entrem na mesma coluna flex da folha e possam ser reordenados.
+   O celular não é o desktop estreito. Lá a decisão inteira tem que caber
+   na primeira dobra: QUE edição é esta (número e título), COMO ela é
+   (a revista espiável) e O QUE fazer (o botão de graça). Só depois vem
+   o argumento — a promessa, as provas dos frameworks, e o preço.
 
+   Por isso a promessa desce. Ela tem 250px de altura no celular: mantida
+   em cima, empurrava o preview e o botão para fora da tela, e o leitor
+   decidia antes de ver o que estava decidindo.
+
+   `display:contents` dissolve a caixa dos dizeres e a dos convites para
+   que os filhos entrem na mesma coluna flex da folha e sejam reordenados.
    Cuidado que me custou uma volta: `display:contents` dissolve a CAIXA,
-   não a árvore. O seletor continua sendo `.dizeres > .convites` — escrito
-   como `.folha > .convites` ele não casa com nada, e os dizeres inteiros
-   ficam com ordem 0, ou seja, antes da revista. */
+   não a árvore. O seletor continua sendo `.dizeres > .promessa` — escrito
+   como `.folha > .promessa` não casa com nada, e o bloco inteiro fica com
+   ordem 0, ou seja, antes de tudo que foi ordenado. */
 @media (max-width:59.99rem){
-  .dizeres{display:contents}
-  .dizeres>.numero        {order:1;margin-top:.4rem}
-  .dizeres>h1             {order:2}
-  .dizeres>.promessa      {order:3}
-  .dizeres>.convite-frase {order:4}
-  .dizeres>.ficha         {order:5;margin-bottom:1.2rem}
-  .folha>.revista         {order:6;margin-bottom:0}
-  .dizeres>.convites      {order:7;margin-top:1.3rem;padding-top:0}
-  .folha>.pe              {order:8}
+  .dizeres,.convites{display:contents}
+
+  /* ─── a primeira dobra: quem é, como é, e o que fazer ─── */
+  .dizeres>.numero        {order:1;margin-top:.2rem;margin-bottom:.35rem}
+  .dizeres>h1             {order:2;margin-bottom:.5rem}
+  .dizeres>.ficha         {order:3;margin-bottom:.9rem}
+  .folha>.revista         {order:4;margin-bottom:0}
+  .convites>.btn-ler      {order:5;margin-top:1rem}
+
+  /* ─── abaixo da dobra: o argumento, a prova, o preço ─── */
+  .dizeres>.promessa      {order:6;margin:1.6rem auto .9rem}
+  .dizeres>.convite-frase {order:7;margin-bottom:1.2rem}
+  .folha>.mosaico         {order:8}
+  .convites>.ou           {order:9;margin:.2rem 0 .6rem}
+  .convites>.passe        {order:10}
+  .folha>.pe              {order:11}
+
+  /* a revista come menos altura: no celular ela divide a dobra com o
+     título e com o botão, e 300px de capa não sobram para os três */
+  .visor{max-width:15.5rem}
+  .faixa{padding-top:.5rem}
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1110,7 +1155,7 @@ h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
    Trinta por cento da altura ia embora em miudezas entre a capa e o
    título. O botão que vende ficava abaixo da dobra. */
 @media (max-width:34rem){
-  .folha{padding:1rem 1.1rem 2rem}
+  .folha{--sangra:1.1rem;padding:1rem var(--sangra) 2rem}
   .marca{margin-bottom:1rem}
   .marca img{width:4rem}
   .faixa{padding:.6rem .5rem 0;margin-top:.2rem}
@@ -1127,7 +1172,7 @@ h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
    Entre 768 e 959px a página ficava com coluna de celular e margem
    de computador: um degrau intermediário resolve. */
 @media (min-width:48rem) and (max-width:59.99rem){
-  .folha{max-width:42rem;padding:2rem 2.5rem 2.5rem}
+  .folha{--sangra:2.5rem;max-width:42rem;padding:2rem var(--sangra) 2.5rem}
   .visor{max-width:34rem}
   .mini{flex:0 0 3.6rem}
 }
