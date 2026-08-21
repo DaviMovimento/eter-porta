@@ -101,7 +101,7 @@ function registrarLead(d) {
     nome: d.nome || '',
     email: String(d.email || '').trim().toLowerCase(),
     whatsapp: "'" + soDigitos(d.whatsapp || ''),   // a aspa impede o Sheets de virar número
-    edicao: d.edicao || '',
+    edicao: d.edicao ? "'" + edicaoBonita(d.edicao) : '',
     onde: d.onde || '',
     jornaleiro: d.jornaleiro || '',
     utm_source: d.utm_source || '',
@@ -273,12 +273,12 @@ function podeLer(d) {
 
   /* Já abriu ESTA edição: continua podendo ler, sempre. O que ela gastou
      foi a escolha, não o número de visitas. */
-  const jaEsta = dela.filter(function (l) { return String(l[4]) === edicao; })[0];
+  const jaEsta = dela.filter(function (l) { return mesmaEdicao(l[4], edicao); })[0];
   if (jaEsta) return { liberado: true, motivo: 'é a edição que ela escolheu' };
 
   /* Abriu OUTRA há menos de 30 dias: espera. */
   const recentes = dela
-    .map(function (l) { return { edicao: String(l[4]), liberaEm: new Date(l[5]) }; })
+    .map(function (l) { return { edicao: edicaoBonita(l[4]), liberaEm: new Date(l[5]) }; })
     .filter(function (a) { return a.liberaEm > agora; })
     .sort(function (a, b) { return b.liberaEm - a.liberaEm; });
 
@@ -295,7 +295,7 @@ function podeLer(d) {
 
   /* Está livre: anota a escolha e abre. */
   const liberaEm = new Date(agora.getTime() + DIAS_DE_ESPERA * 86400000);
-  aba.appendRow([agora, email, "'" + zap, ms, edicao, liberaEm]);
+  aba.appendRow([agora, email, "'" + zap, ms, "'" + edicaoBonita(edicao), liberaEm]);
   return {
     liberado: true,
     motivo: 'edição do mês',
@@ -308,6 +308,12 @@ function podeLer(d) {
 /* ── utilidades ──────────────────────────────────────────────────────── */
 
 function soDigitos(s) { return String(s || '').replace(/\D/g, ''); }
+
+/* O Sheets guarda "007" como o número 7 e come o zero à esquerda. Sem isto,
+   "7" !== "007" e a pessoa era barrada da edição que ela mesma escolheu. */
+function mesmaEdicao(a, b) { return numeroDaEdicao(a) === numeroDaEdicao(b); }
+function numeroDaEdicao(x) { return String(x || '').replace(/\D/g, '').replace(/^0+/, '') || '0'; }
+function edicaoBonita(x) { return numeroDaEdicao(x).padStart(3, '0'); }
 
 function formatarBR(data) {
   return Utilities.formatDate(data, 'America/Sao_Paulo', 'dd/MM');
