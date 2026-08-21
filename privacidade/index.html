@@ -6,22 +6,22 @@
 <title>Política de Privacidade <i class="pt"></i> Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="premium/premium.css?v=202608211244">
+<link rel="stylesheet" href="../premium/premium.css?v=202608211233">
 </head>
 <body class="pagina">
 
 <header class="topo">
-  <a class="topo-marca" href="./" aria-label="ETER — início">
-    <img src="premium/logo.webp" alt="ETER" width="900" height="240">
+  <a class="topo-marca" href="../" aria-label="ETER — início">
+    <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
   </a>
   <nav class="topo-nav">
-    <a href="./">Voltar para a revista</a>
+    <a href="../">Voltar para a revista</a>
   </nav>
 </header>
 
 <main class="papelada">
   <div class="selo">
-    <img src="premium/monograma.webp" alt="" width="256" height="256">
+    <img src="../premium/monograma.webp" alt="" width="256" height="256">
     <p class="rotulo">Documento</p>
     <h1>Política de Privacidade</h1>
     <p class="dek">O que a ETER coleta nesta página, por que coleta, com quem compartilha,
@@ -96,7 +96,7 @@
   <p class="pe">
     Versão 2 <i class="pt"></i> 21 de agosto de 2026<br>
     <span id="p-pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="./">voltar para a revista</a>
+    <a href="../">voltar para a revista</a>
   </p>
 </main>
 
@@ -106,7 +106,7 @@
    para o Davi — nunca um colchete cru para o leitor. */
 (async () => {
   try {
-    const cfg = (await (await fetch('edicoes.json?v=202608211244')).json()).config || {};
+    const cfg = (await (await fetch('../edicoes.json?v=202608211233')).json()).config || {};
     const e = cfg.empresa || {};
     const falta = t => `<span class="aguardando">${t}</span>`;
 

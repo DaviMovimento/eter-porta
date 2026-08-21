@@ -6,16 +6,16 @@
 <title>Complete o ano <i class="pt"></i> Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="premium/premium.css?v=202608211244">
+<link rel="stylesheet" href="../premium/premium.css?v=202608211233">
 </head>
 <body class="pagina">
 
 <header class="topo">
-  <a class="topo-marca" href="./" aria-label="ETER — início">
-    <img src="premium/logo.webp" alt="ETER" width="900" height="240">
+  <a class="topo-marca" href="../" aria-label="ETER — início">
+    <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
   </a>
   <nav class="topo-nav">
-    <a href="./">Todas as edições</a>
+    <a href="../">Todas as edições</a>
   </nav>
 </header>
 
@@ -62,7 +62,7 @@
 
   <p class="pe">
     <span id="pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="privacidade.html">Privacidade</a> <i class="pt"></i> <a href="./">Todas as edições</a>
+    <a href="../privacidade">Privacidade</a> <i class="pt"></i> <a href="../">Todas as edições</a>
   </p>
 </main>
 
@@ -87,7 +87,7 @@
 
   let c;
   try {
-    c = (await (await fetch('edicoes.json?v=202608211244')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608211233')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
