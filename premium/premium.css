@@ -37,8 +37,7 @@
 
   --display:'TRJN','Trajan Pro',Georgia,serif;
   --script:'Sloop','Snell Roundhand',cursive;
-  --rotulo:'FuturaE','Futura','Futura PT','Avenir Next','Avenir','Century Gothic','URW Gothic',
-           'Questrial','Jost',system-ui,sans-serif;
+  --rotulo:'FuturaE','Futura','Avenir Next',system-ui,sans-serif;
   --corpo:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
 
   --barra-h:4.4rem;
