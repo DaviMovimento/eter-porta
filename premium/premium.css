@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211833') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211833') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211833') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211837') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211837') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211837') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -596,9 +596,9 @@ h1 em{
     left:var(--trilho);right:0;top:0;bottom:0;inset:auto;
     background:rgb(var(--papel-rgb)/.985);
     box-shadow:
-      -1px 0 0 rgb(var(--tinta-rgb)/.10),
-      -18px 0 34px -14px rgb(var(--tinta-rgb)/.30),
-      -44px 0 90px -30px rgb(var(--tinta-rgb)/.22);
+      -1px 0 0 rgb(var(--tinta-rgb)/.16),
+      -14px 0 26px -10px rgb(var(--tinta-rgb)/.40),
+      -40px 0 80px -26px rgb(var(--tinta-rgb)/.26);
   }
   .folha{
     max-width:66rem;
@@ -670,7 +670,10 @@ h1 em{
   /* ─── abaixo da dobra: o argumento, a prova, o preço ─── */
   .dizeres>.promessa      {order:6;margin:1.6rem auto .9rem}
   .dizeres>.convite-frase {order:7;margin-bottom:1.2rem}
-  .folha>.mosaico         {order:8}
+  /* a faixa é ordenada pela CLASSE, não pelo pai: no celular ela muda de
+     lugar na árvore (vai para dentro dos convites) e um seletor com `>`
+     deixaria de casar — ela voltaria para a ordem 0, no topo de tudo */
+  .mosaico.faixa-de-provas{order:8}
   .convites>.ou           {order:9;margin:.2rem 0 .6rem}
   .convites>.passe        {order:10}
   .folha>.pe              {order:11}
@@ -1130,6 +1133,15 @@ h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
    Cada peça agora declara o seu degrau, nenhuma abaixo dos 11px. */
 .rotulo,.passe-rot,.topo-nav a,#acervo .alg,#acervo .pg{font-size:var(--r-2)}
 .pe{font-size:var(--r-1);line-height:1.9}
+
+/* na tela pequena a barra do topo é o gargalo: logo, um link e o botão
+   que vende disputam 375px. O link encolhe até o piso e aperta a
+   entreletra; quem não encolhe é o botão, que é o que a barra existe
+   para fazer. Esta regra precisa vir DEPOIS do piso acima, senão perde. */
+@media (max-width:34rem){
+  .topo-nav a{font-size:var(--r-1);letter-spacing:.08em}
+  .topo-nav a.destaque{letter-spacing:.1em}
+}
 .pulso,.dica-faixa,.tranca-sub{font-size:var(--r-1);letter-spacing:var(--tk-1)}
 .ficha,.numero{font-size:var(--r-2);letter-spacing:var(--tk-2)}
 .mini .n{font-size:var(--r-1);letter-spacing:.06em}
