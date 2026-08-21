@@ -29,9 +29,9 @@
     "empresa": {
       "razaoSocial": "ETER COMPANY LTDA",
       "cnpj": "37.223.854/0001-47",
-      "endereco": "",
-      "emailContato": "",
-      "emailDpo": "",
+      "endereco": "Rod. José Carlos Daux, 5500, Sala 211, Bloco Campeche A — Saco Grande, Florianópolis/SC, CEP 88032-005",
+      "emailContato": "davi@eter.company",
+      "emailDpo": "davi@eter.company",
       "responsavel": "Davi Ribas Nogueira",
       "whatsapp": ""
     }
