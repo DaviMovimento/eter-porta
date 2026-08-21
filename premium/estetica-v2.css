@@ -11,7 +11,7 @@
    chamadas no sistema visual, não a bold normal que eu tinha posto. */
 @font-face{
   font-family:'FuturaMarca';
-  src:url('fontes/futura-cond-xb.woff2?v=2') format('woff2');
+  src:url('fontes/futura-cond-xb.woff2?v=202608211755') format('woff2');
   font-weight:800;font-display:swap;
 }
 
@@ -25,6 +25,7 @@
 
   /* o papel e a tinta passam a ser os da marca */
   --papel:var(--bege);
+  --papel-rgb:255 251 243;   /* o mesmo bege em canais crus, para o véu */
   --papel-2:#F7F1E4;   /* meio tom abaixo do bege, derivado dele */
   --papel-3:#EFE7D6;
   --tinta:var(--preto);
@@ -103,14 +104,13 @@
    permite a marca sobre fundo escuro — hoje impossível. */
 .topo-marca img,.papelada .selo img[alt="ETER"]{content:url('logo.svg')}
 
-/* a tarja que diz o que é isto */
+/* A tarja que diz o que é isto. No fluxo, não fixa: fixa ela mede
+   uma linha no desktop e três no celular, e o deslocamento que eu
+   compensava no topo saía errado justamente na tela menor. */
 .tarja-demo-estetica{
-  position:fixed;left:0;right:0;top:0;z-index:9999;
   padding:.5rem 1rem;text-align:center;
   background:var(--vinho);color:var(--bege);
   font-family:var(--corpo);font-size:.78rem;line-height:1.4;
 }
 .tarja-demo-estetica b{font-weight:600}
 .tarja-demo-estetica a{color:var(--ouro-claro);text-decoration:underline;text-underline-offset:2px}
-body:has(.tarja-demo-estetica) .topo{top:2.2rem}
-body:has(.tarja-demo-estetica) #chegada{padding-top:2.2rem}

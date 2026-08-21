@@ -44,7 +44,8 @@ let DADOS, EDICAO, PASSE, CFG, BASE = '', TOTAL = 0;
 let paginaAtual = 1, maximaLida = 0, capAtual = -1;
 const fila = [];
 
-const pag = (n, tam) => `${BASE}edicoes/${EDICAO.n}/paginas/p${String(n).padStart(3, '0')}@${tam}.webp`;
+const pag = (n, tam) => pagDe(EDICAO.n, n, tam);
+const pagDe = (ed, n, tam) => `${BASE}edicoes/${ed}/paginas/p${String(n).padStart(3, '0')}@${tam}.webp`;
 
 /* ── telemetria ───────────────────────────────────────────────── */
 const EVENTO_META = { abriu_leitura: 'ViewContent', virou_lead: 'Lead', foi_ao_checkout: 'InitiateCheckout' };
@@ -229,9 +230,9 @@ function montarChegada() {
    Cada edição traz o seu próprio ambiente, sem ninguém escolher nada:
    a CAPA, gigante e desfocada, dá a temperatura de cor da página — a
    ED007 é preta e dourada, a ED005 é outra coisa, e a página inteira
-   se veste disso. Por cima, as páginas da edição ficam penduradas em
-   colunas que derivam devagar, como provas numa parede de gráfica.
-   O véu devolve o silêncio no centro, onde mora a leitura. */
+   se veste disso. À direita, e só à direita, um trilho estreito com as
+   páginas de framework DESTA edição, derivando devagar como provas numa
+   parede de gráfica. O véu devolve o silêncio onde mora a leitura. */
 function montarFundo() {
   if (!TOTAL) return;
 
@@ -241,23 +242,35 @@ function montarFundo() {
   capa.onload = () => atm.classList.add('ver');
   capa.src = pag(1, 800);
 
-  /* só páginas do trecho livre: o fundo não pode publicar o miolo travado */
-  /* no celular o mosaico não aparece (a coluna de leitura ocupa tudo), então
+  /* no celular o trilho não aparece (a coluna de leitura ocupa tudo), então
      nem monta: 16 imagens invisíveis é banda jogada fora no 4G de alguém */
   if (innerWidth < 960) return;
 
-  const teto = Math.max(6, Math.min(TOTAL, limiteEspiada || TOTAL));
-  const colunas = 7;
-  const porColuna = 4;
+  /* O TRILHO. Não é mais um sorteio de páginas quaisquer: cada edição
+     declara em `destaques` as suas páginas de FRAMEWORK — quadro, painel,
+     gráfico, exercício —, as que provam que a revista entrega método e não
+     opinião. Quem abre a ED005 vê os gráficos DA ED005. A página fala da
+     edição que está vendendo, e de nenhuma outra. */
+  const provas = (EDICAO.destaques || []).filter(n => n <= TOTAL);
+  if (!provas.length) return;
+
+  const colunas = 2;
+  const minimo = 3;              /* menos que isto e a volta fica evidente */
 
   const mosaico = $('#mosaico');
   mosaico.innerHTML = Array.from({ length: colunas }, (_, c) => {
-    const paginas = Array.from({ length: porColuna }, (_, i) => {
-      /* passo primo para as colunas não repetirem o mesmo par de páginas */
-      const n = 1 + ((c * 3 + i * 5) % teto);
-      return `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">`;
-    }).join('');
-    const seg = 74 + (c % 4) * 13;          /* cada coluna anda no seu tempo */
+    /* uma coluna leva as pares, a outra as ímpares: nenhuma repete a vizinha */
+    let fila = provas.filter((_, i) => i % colunas === c);
+    if (!fila.length) fila = provas.slice();
+    while (fila.length < minimo) fila = fila.concat(fila);
+
+    const paginas = fila.map(n =>
+      `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async"
+        width="240" height="339">`).join('');
+
+    /* a duração acompanha o tamanho da fila para as duas colunas correrem
+       na MESMA velocidade — do contrário a coluna curta parece arrastada */
+    const seg = fila.length * (25 + c * 4);
     return `<div class="coluna${c % 2 ? ' avessa' : ''}" style="--t:${seg}s">
       <div class="tira">${paginas}${paginas}</div></div>`;
   }).join('');

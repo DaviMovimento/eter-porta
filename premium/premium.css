@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211629') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211629') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211629') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608211755') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608211755') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608211755') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -17,6 +17,9 @@
      página — o defeito tipográfico mais visível que havia aqui. */
   font-synthesis-weight:none;font-synthesis-style:none;   /* a paleta é clara de propósito — não invente escuro */
   --papel:#F2EEE6;
+  /* o mesmo papel em canais crus: o véu precisa dele com transparência,
+     e trocar a paleta em cima (estetica-v2) tem que trocar o véu junto */
+  --papel-rgb:242 238 230;
   --papel-2:#E8E2D6;
   --papel-3:#DDD5C5;
   --tinta:#1E1813;
@@ -115,11 +118,15 @@ body.lendo .topo{display:none}
    ═══════════════════════════════════════════════════════════════ */
 #chegada{position:relative;min-height:calc(100svh - 3.4rem);overflow:hidden;background:var(--papel)}
 
-/* ═══ O FUNDO — a parede de provas ════════════════════════════
+/* ═══ O FUNDO — papel à esquerda, provas à direita ════════════
    Três camadas, e todas saem da própria edição: a atmosfera (a capa
-   ampliada e desfocada, que dá a cor), as provas (páginas de verdade
-   penduradas em colunas), e o véu (que devolve o silêncio no centro).
-   Nada aqui é enfeite genérico — cada edição veste a sua. */
+   ampliada e desfocada, que dá a cor), o trilho de provas (páginas de
+   framework de verdade, encostado na direita) e o véu, que devolve o
+   silêncio onde mora a leitura.
+
+   Antes as provas ficavam dos DOIS lados e o olho não sabia onde
+   pousar. Agora a página tem mão: à esquerda o papel respira com a
+   cor da capa, no meio se lê, e só à direita passam os frameworks. */
 
 .atmosfera{
   position:fixed;inset:-12%;z-index:0;pointer-events:none;
@@ -130,16 +137,29 @@ body.lendo .topo{display:none}
 }
 .atmosfera.ver{opacity:.38}
 
+/* O TRILHO. Duas colunas estreitas, ancoradas na direita, por cima do
+   véu — é a única camada do fundo que tem o direito de ser vista. */
 .mosaico{
-  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  display:flex;gap:1.5rem;padding:0 .8rem;
+  position:fixed;top:0;bottom:0;right:0;width:var(--trilho,0);
+  z-index:2;pointer-events:none;overflow:hidden;
+  display:flex;gap:.9rem;padding:0 .9rem;
   opacity:0;transition:opacity 2.4s ease;
+  /* some por dentro: contra a coluna de leitura e nas duas pontas,
+     para o trilho parecer que continua em vez de acabar cortado */
+  -webkit-mask-image:
+    linear-gradient(90deg,transparent 0,#000 26%),
+    linear-gradient(180deg,transparent 0,#000 11%,#000 84%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(90deg,transparent 0,#000 26%),
+    linear-gradient(180deg,transparent 0,#000 11%,#000 84%,transparent 100%);
+  mask-composite:intersect;
 }
 .mosaico.ver{opacity:1}
 
 .coluna{flex:1 1 0;min-width:0;overflow:hidden}
 .tira{
-  display:flex;flex-direction:column;gap:1.5rem;
+  display:flex;flex-direction:column;gap:.9rem;
   animation:deriva var(--t,80s) linear infinite;
   will-change:transform;
 }
@@ -155,28 +175,23 @@ body.lendo .topo{display:none}
 /* o laço fecha na metade porque a tira é a mesma sequência, duas vezes */
 @keyframes deriva{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 
-/* O VÉU. A conta aqui é literal: dois gradientes se SOMAM, e o que eu tinha
-   chegava a 74% de papel mesmo na beirada — por isso o mosaico existia e não
-   aparecia. Agora o eixo é horizontal, que é como a página é: coluna de
-   leitura no meio, margem livre dos dois lados. */
+/* O VÉU. Agora ele é assimétrico de propósito, porque a página é:
+   à esquerda deixa a cor da capa atravessar, no centro fecha para a
+   leitura, e à direita fecha de novo — o trilho passa por cima dele. */
 .veu{
   position:fixed;inset:0;z-index:1;pointer-events:none;
   background:
     linear-gradient(90deg,
-      rgba(242,238,230,0)    0%,
-      rgba(242,238,230,.22)  6%,
-      rgba(242,238,230,.80) 13%,
-      rgba(242,238,230,.965) 21%,
-      rgba(242,238,230,.98)  50%,
-      rgba(242,238,230,.965) 79%,
-      rgba(242,238,230,.80) 87%,
-      rgba(242,238,230,.22) 94%,
-      rgba(242,238,230,0)  100%),
+      rgb(var(--papel-rgb)/.34)  0%,
+      rgb(var(--papel-rgb)/.74) 11%,
+      rgb(var(--papel-rgb)/.94) 24%,
+      rgb(var(--papel-rgb)/.965) 62%,
+      rgb(var(--papel-rgb)/.95) 100%),
     linear-gradient(180deg,
-      rgba(242,238,230,.7) 0%,
-      rgba(242,238,230,0) 14%,
-      rgba(242,238,230,0) 86%,
-      rgba(242,238,230,.9) 100%);
+      rgb(var(--papel-rgb)/.72) 0%,
+      rgb(var(--papel-rgb)/0)  16%,
+      rgb(var(--papel-rgb)/0)  86%,
+      rgb(var(--papel-rgb)/.9) 100%);
 }
 
 /* a vinheta de ouro: o que faz a página parecer emoldurada, não recortada */
@@ -188,20 +203,17 @@ body.lendo .topo{display:none}
 }
 
 /* No celular a coluna de leitura ocupa a largura inteira: não sobra margem
-   para as provas aparecerem. Então lá o mosaico vira TEXTURA — quase um
-   grão de papel impresso — e quem veste a página é a atmosfera da capa. */
+   para as provas aparecerem. Quem veste a página lá é a atmosfera da capa —
+   que é UMA imagem, e já foi baixada de qualquer jeito. */
 @media (max-width:59.99rem){
-  /* invisível atrás da coluna de leitura e ainda assim baixava 16 imagens:
-     no celular quem veste a página é a atmosfera, que é UMA imagem — a
-     capa, que já foi baixada de qualquer jeito */
   .mosaico{display:none}
   .veu{
     background:
       linear-gradient(180deg,
-        rgba(242,238,230,.72) 0%,
-        rgba(242,238,230,.9) 22%,
-        rgba(242,238,230,.955) 45%,
-        rgba(242,238,230,.975) 100%);
+        rgb(var(--papel-rgb)/.72) 0%,
+        rgb(var(--papel-rgb)/.9) 22%,
+        rgb(var(--papel-rgb)/.955) 45%,
+        rgb(var(--papel-rgb)/.975) 100%);
   }
   .atmosfera.ver{opacity:.38}
 }
@@ -557,6 +569,10 @@ h1 em{
 @media (min-width:60rem){
   .topo{padding:.85rem 2.5rem}
   .topo-marca img{width:4.6rem}
+
+  /* o trilho tem largura declarada e a página se afasta dele por essa
+     mesma medida: um número só governa os dois, e nada encosta */
+  #chegada{--trilho:14rem;padding-right:var(--trilho)}
   .folha{
     max-width:66rem;
     display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -584,6 +600,32 @@ h1 em{
   .ficha{justify-content:flex-start}
   .convites{margin-top:1.8rem;padding-top:0}
   .pe{grid-area:auto;grid-column:1/-1;margin-top:2.5rem;text-align:center}
+}
+
+/* tela larga: o trilho pode abrir sem apertar a leitura */
+@media (min-width:82rem){ #chegada{--trilho:17.5rem} }
+@media (min-width:100rem){ #chegada{--trilho:21rem} }
+
+/* ═══════════════════════════════════════════════════════════════
+   CELULAR — a ordem que a mão lê
+   ═══════════════════════════════════════════════════════════════
+   No desktop a revista fica ao lado dos dizeres e a ordem do HTML não
+   importa. No celular importa muito: quem chega tinha a revista antes
+   de saber o que estava vendo. Agora a manchete abre a página — número,
+   título, promessa e ficha —, a demonstração vem provar o que a manchete
+   prometeu, e os dois botões nascem colados nela, onde a decisão acontece.
+   `display:contents` dissolve a caixa dos dizeres para que os filhos
+   entrem na mesma coluna flex da folha e possam ser reordenados. */
+@media (max-width:59.99rem){
+  .dizeres{display:contents}
+  .folha>.numero        {order:1;margin-top:.4rem}
+  .folha>h1             {order:2}
+  .folha>.promessa      {order:3}
+  .folha>.convite-frase {order:4}
+  .folha>.ficha         {order:5;margin-bottom:1.4rem}
+  .folha>.revista       {order:6;margin-bottom:0}
+  .folha>.convites      {order:7;margin-top:1.3rem;padding-top:0}
+  .folha>.pe            {order:8}
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1026,11 +1068,15 @@ button:disabled:hover,.btn:disabled:hover{filter:saturate(.4)}
 /* o título tinha uma fórmula que ENCOLHIA quando a tela crescia */
 h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
 
-/* piso duro: nenhum rótulo da casa abaixo de 11px */
-.pulso,.dica-faixa,.ficha,.numero,.passe-rot,.rotulo,
-.topo-nav a,.pe,#acervo .alg,#acervo .pg,.tranca-sub{
-  font-size:max(var(--r-1),1em);
-}
+/* Piso de legibilidade — e o bug que ele tinha. A regra era
+   `font-size:max(var(--r-1),1em)`, mas dentro do rótulo `1em` é o
+   tamanho HERDADO, os 16px do corpo: em vez de garantir 11px de piso,
+   ela promovia TODO rótulo a 16px. Era por isso que o rodapé e o menu
+   do topo apareciam do tamanho de texto corrido, em caixa alta e com
+   entreletra de rótulo — a forma de um rótulo no corpo de um parágrafo.
+   Cada peça agora declara o seu degrau, nenhuma abaixo dos 11px. */
+.rotulo,.passe-rot,.topo-nav a,#acervo .alg,#acervo .pg{font-size:var(--r-2)}
+.pe{font-size:var(--r-1);line-height:1.9}
 .pulso,.dica-faixa,.tranca-sub{font-size:var(--r-1);letter-spacing:var(--tk-1)}
 .ficha,.numero{font-size:var(--r-2);letter-spacing:var(--tk-2)}
 .mini .n{font-size:var(--r-1);letter-spacing:.06em}
