@@ -116,7 +116,7 @@ body.lendo .topo{display:none}
 
 .visor{
   position:relative;
-  width:100%;max-width:23rem;margin:0 auto;
+  width:100%;max-width:27rem;margin:0 auto;
   perspective:2400px;
 }
 
@@ -176,12 +176,21 @@ body.lendo .topo{display:none}
 .virador .face img{width:100%;height:100%;object-fit:cover;display:block}
 .virador .verso{transform:rotateY(180deg) translateZ(0)}
 
-/* a luz que corre pela folha: forte junto à lombada, onde o papel dobra */
+/* A luz não fica parada: uma faixa estreita CORRE pela folha, como a
+   dobra do papel encontrando a luz. É o que separa papel de placa —
+   e é só transform, que roda na placa de vídeo. */
+.virador .face{overflow:hidden}
 .virador .luz{
-  position:absolute;inset:0;opacity:0;pointer-events:none;
-  background:linear-gradient(90deg,
-    rgba(30,24,19,.42) 0%, rgba(30,24,19,.16) 22%,
-    rgba(30,24,19,.04) 55%, rgba(255,255,255,.10) 100%);
+  position:absolute;top:-10%;bottom:-10%;left:-150%;width:400%;
+  opacity:0;pointer-events:none;will-change:transform,opacity;
+  background:linear-gradient(100deg,
+    rgba(30,24,19,0)    30%,
+    rgba(30,24,19,.30)  40%,
+    rgba(30,24,19,.06)  46%,
+    rgba(255,255,255,.30) 50%,
+    rgba(30,24,19,.10)  55%,
+    rgba(30,24,19,.34)  63%,
+    rgba(30,24,19,0)    74%);
 }
 /* a sombra que a folha erguida joga na página parada embaixo */
 .pg-slot .sombra{
@@ -195,37 +204,48 @@ body.lendo .topo{display:none}
    a curva é linear — quem manda no tempo são os ângulos. */
 .virador.avanca{animation:folhaAvanca .72s linear forwards}
 .virador.volta {animation:folhaVolta  .72s linear forwards}
-.virador.avanca .frente .luz,.virador.volta  .verso  .luz{animation:luzSobe .72s ease-in forwards}
-.virador.avanca .verso  .luz,.virador.volta  .frente .luz{animation:luzDesce .72s ease-out forwards}
+.virador.avanca .frente .luz,.virador.volta  .verso  .luz{animation:dobraSai   .72s linear forwards}
+.virador.avanca .verso  .luz,.virador.volta  .frente .luz{animation:dobraEntra .72s linear forwards}
 .spread.virando-frente .pg-slot.esq .sombra,
 .spread.virando-tras   .pg-slot.dir .sombra{animation:sombraPassa .72s ease-in-out forwards}
 
 @keyframes folhaAvanca{
-  0%  {transform:rotateY(0)       skewY(0)}
-  8%  {transform:rotateY(-9deg)   skewY(.5deg)}
-  20% {transform:rotateY(-26deg)  skewY(1.1deg)}
-  34% {transform:rotateY(-49deg)  skewY(1.6deg)}
-  48% {transform:rotateY(-76deg)  skewY(1.9deg)}
-  62% {transform:rotateY(-106deg) skewY(1.8deg)}
-  74% {transform:rotateY(-134deg) skewY(1.4deg)}
-  84% {transform:rotateY(-155deg) skewY(.9deg)}
-  92% {transform:rotateY(-169deg) skewY(.4deg)}
-  100%{transform:rotateY(-180deg) skewY(0)}
+  0%  {transform:rotateY(0)       skewY(0)     rotateZ(0)      scaleY(1)}
+  8%  {transform:rotateY(-9deg)   skewY(.6deg) rotateZ(-.25deg) scaleY(.998)}
+  20% {transform:rotateY(-26deg)  skewY(1.3deg) rotateZ(-.5deg) scaleY(.994)}
+  34% {transform:rotateY(-49deg)  skewY(2deg)  rotateZ(-.7deg)  scaleY(.99)}
+  48% {transform:rotateY(-76deg)  skewY(2.4deg) rotateZ(-.75deg) scaleY(.987)}
+  62% {transform:rotateY(-106deg) skewY(2.2deg) rotateZ(-.65deg) scaleY(.989)}
+  74% {transform:rotateY(-134deg) skewY(1.7deg) rotateZ(-.45deg) scaleY(.993)}
+  84% {transform:rotateY(-155deg) skewY(1.1deg) rotateZ(-.28deg) scaleY(.996)}
+  92% {transform:rotateY(-169deg) skewY(.5deg) rotateZ(-.12deg) scaleY(.999)}
+  100%{transform:rotateY(-180deg) skewY(0)     rotateZ(0)      scaleY(1)}
 }
 @keyframes folhaVolta{
-  0%  {transform:rotateY(-180deg) skewY(0)}
-  8%  {transform:rotateY(-171deg) skewY(-.5deg)}
-  20% {transform:rotateY(-154deg) skewY(-1.1deg)}
-  34% {transform:rotateY(-131deg) skewY(-1.6deg)}
-  48% {transform:rotateY(-104deg) skewY(-1.9deg)}
-  62% {transform:rotateY(-74deg)  skewY(-1.8deg)}
-  74% {transform:rotateY(-46deg)  skewY(-1.4deg)}
-  84% {transform:rotateY(-25deg)  skewY(-.9deg)}
-  92% {transform:rotateY(-11deg)  skewY(-.4deg)}
-  100%{transform:rotateY(0)       skewY(0)}
+  0%  {transform:rotateY(-180deg) skewY(0)      rotateZ(0)      scaleY(1)}
+  8%  {transform:rotateY(-171deg) skewY(-.6deg) rotateZ(.25deg)  scaleY(.998)}
+  20% {transform:rotateY(-154deg) skewY(-1.3deg) rotateZ(.5deg)  scaleY(.994)}
+  34% {transform:rotateY(-131deg) skewY(-2deg)  rotateZ(.7deg)   scaleY(.99)}
+  48% {transform:rotateY(-104deg) skewY(-2.4deg) rotateZ(.75deg) scaleY(.987)}
+  62% {transform:rotateY(-74deg)  skewY(-2.2deg) rotateZ(.65deg) scaleY(.989)}
+  74% {transform:rotateY(-46deg)  skewY(-1.7deg) rotateZ(.45deg) scaleY(.993)}
+  84% {transform:rotateY(-25deg)  skewY(-1.1deg) rotateZ(.28deg) scaleY(.996)}
+  92% {transform:rotateY(-11deg)  skewY(-.5deg) rotateZ(.12deg)  scaleY(.999)}
+  100%{transform:rotateY(0)       skewY(0)      rotateZ(0)      scaleY(1)}
 }
-@keyframes luzSobe {0%{opacity:0} 55%{opacity:.75} 100%{opacity:1}}
-@keyframes luzDesce{0%{opacity:1} 45%{opacity:.75} 100%{opacity:0}}
+/* a dobra atravessa a folha da lombada para a borda solta */
+@keyframes dobraSai{
+  0%  {opacity:0;   transform:translateX(0)}
+  18% {opacity:.85; transform:translateX(14%)}
+  60% {opacity:1;   transform:translateX(40%)}
+  100%{opacity:.9;  transform:translateX(62%)}
+}
+@keyframes dobraEntra{
+  0%  {opacity:.9;  transform:translateX(62%)}
+  40% {opacity:1;   transform:translateX(40%)}
+  82% {opacity:.85; transform:translateX(14%)}
+  100%{opacity:0;   transform:translateX(0)}
+}
 @keyframes sombraPassa{0%{opacity:0} 45%{opacity:.9} 100%{opacity:0}}
 
 /* quem pediu menos movimento no sistema recebe a troca sem giro */
@@ -437,7 +457,7 @@ h1 em{
   }
 
   .revista{grid-area:revista;margin-bottom:0}
-  .visor{width:100%;max-width:27rem}
+  .visor{width:100%;max-width:33rem}
   .seta{display:flex}
   .faixa{margin:.6rem auto 0;padding:.9rem .3rem .4rem;scroll-snap-type:x proximity;max-width:24rem}
   .faixa::before,.faixa::after{flex:0 0 .3rem}
@@ -527,14 +547,19 @@ body.lendo{scroll-snap-type:y proximity}
 .intervalo .mono{width:2rem;margin:0 auto 1rem;opacity:.45;filter:invert(1)}
 
 .barra{
-  position:fixed;left:0;right:0;bottom:0;z-index:55;
+  /* left/top/width são reescritos pelo JS para acompanhar a janela VISUAL:
+     no zoom nativo, um position:fixed comum cresce e escorrega para fora. */
+  position:fixed;left:0;right:auto;bottom:0;z-index:55;
+  transform-origin:bottom left;
+  will-change:transform;
   display:flex;align-items:center;gap:.8rem;
   padding:.7rem .9rem calc(.7rem + env(safe-area-inset-bottom));
   background:linear-gradient(to top,rgba(15,12,9,.99),rgba(15,12,9,.93));
   border-top:1px solid rgba(240,234,224,.12);
-  transform:translateY(0);transition:transform .3s cubic-bezier(.16,1,.3,1);
+  transform:translateY(calc(-100% + var(--y,0px))) scale(var(--vv-escala,1));
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
 }
-.barra.oculta{transform:translateY(115%)}
+.barra.oculta{--y:115%}
 .barra .mono{width:1.7rem;flex:0 0 auto;opacity:.4;filter:invert(1)}
 .barra-txt{flex:1;min-width:0;font-size:.8rem;line-height:1.3;color:rgba(240,234,224,.6)}
 .barra-txt b{color:var(--ouro-claro);font-weight:600}
@@ -630,3 +655,39 @@ dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
   font:inherit;padding:.3rem .7rem;border-radius:1px;cursor:pointer;
 }
 #tarja-demo button:hover{background:var(--ouro);color:#1E1813}
+
+/* ═══ TODAS AS EDIÇÕES — com capa ════════════════════════════
+   Escolher pela capa, não por um número numa lista. */
+#acervo{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(6.4rem,1fr));
+  gap:1.1rem .8rem;list-style:none;padding:0;margin:0;
+}
+#acervo li{margin:0}
+#acervo a{
+  display:flex;flex-direction:column;gap:.32rem;
+  text-decoration:none;color:inherit;
+}
+#acervo .capinha{
+  display:block;aspect-ratio:1/1.414;overflow:hidden;
+  background:var(--papel-2);border-radius:1px;
+  box-shadow:0 1px 3px rgba(30,24,19,.22),0 8px 18px -8px rgba(30,24,19,.3);
+  transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s;
+}
+#acervo .capinha img{width:100%;height:100%;object-fit:cover;display:block}
+#acervo a:hover .capinha{transform:translateY(-3px);box-shadow:0 2px 5px rgba(30,24,19,.26),0 14px 26px -10px rgba(30,24,19,.4)}
+#acervo a.atual .capinha{box-shadow:0 0 0 2px var(--ouro-vivo),0 8px 18px -8px rgba(30,24,19,.3)}
+#acervo .embreve{
+  display:flex;align-items:center;justify-content:center;height:100%;
+  font-family:var(--rotulo);font-size:.5rem;font-style:normal;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3);
+}
+#acervo .alg{
+  font-family:var(--rotulo);font-size:.5rem;font-weight:700;
+  letter-spacing:.16em;color:var(--ouro);
+}
+#acervo a.atual .alg{color:var(--ouro-vivo)}
+#acervo .nom{font-family:var(--display);font-size:.78rem;line-height:1.25;color:var(--tinta)}
+#acervo .pg{
+  font-family:var(--rotulo);font-size:.46rem;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--tinta-3);
+}

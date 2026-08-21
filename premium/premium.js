@@ -12,7 +12,6 @@ const $ = s => document.querySelector(s);
 const url = new URLSearchParams(location.search);
 
 const CHAVE_LEAD = 'eter_lead';
-const CHAVE_ZOOM = 'eter_zoom';
 const posChave = ed => `eter_pos_${ed}`;
 
 /* quem pediu menos movimento no sistema não pode levar rolagem animada
@@ -23,7 +22,6 @@ const rolar = (el, opcoes = {}) =>
 
 let DADOS, EDICAO, PASSE, CFG, BASE = '', TOTAL = 0;
 let paginaAtual = 1, maximaLida = 0, capAtual = -1;
-let fator = 1, ultimoFator = 1.6;
 const fila = [];
 
 const pag = (n, tam) => `${BASE}edicoes/${EDICAO.n}/paginas/p${String(n).padStart(3, '0')}@${tam}.webp`;
@@ -121,7 +119,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('../edicoes.json?v=202608202055')).json();
+  DADOS = await (await fetch('../edicoes.json?v=202608211001')).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -188,10 +186,17 @@ function montarChegada() {
     $('#sub-ler').textContent = 'esta edição ainda não foi publicada';
   }
 
+  /* a capa de cada edição na lista: dá para escolher pelo que se vê,
+     não por um número. E o link preserva utm e embaixador. */
+  const comEdicao = n => { const u = new URL(location.href); u.searchParams.set('ed', n); return u.search; };
   $('#acervo').innerHTML = DADOS.edicoes.map(e => `
-    <li><a href="?ed=${e.n}">
-      <span class="alg">${e.n}</span><span class="nom">${e.titulo}</span>
-      <span class="pg">${e.paginas ? e.paginas + ' pág' : 'em breve'}</span>
+    <li><a href="${comEdicao(e.n)}" class="${e.n === EDICAO.n ? 'atual' : ''}">
+      <span class="capinha">${e.paginas
+        ? `<img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp" alt="" loading="lazy" decoding="async" width="240" height="339">`
+        : '<i class="embreve">em breve</i>'}</span>
+      <span class="alg">${e.n}</span>
+      <span class="nom">${e.titulo}</span>
+      <span class="pg">${e.paginas ? e.paginas + ' páginas' : ''}</span>
     </a></li>`).join('');
 
   /* o mosaico de fundo: páginas espalhadas pela edição, quase apagadas —
@@ -344,6 +349,10 @@ function montarEspiada() {
        travada. Agora o pedido fica na fila: se foi "próxima", guarda a
        DIREÇÃO, porque quando a vez dele chegar a folha já será outra. */
     if (virando) {
+      /* a faixa rola sozinha quando a revista vira (marcarAtivas centraliza
+         a miniatura), e essa rolagem pedia outra folha — era o que fazia a
+         página virar e voltar. Pedido da faixa não entra na fila. */
+      if (origem === 'faixa') return;
       const passo = k - folha;
       /* clique repetido SOMA: seis toques rápidos avançam seis folhas, e
          a virada acumulada vira um pulo seco em vez de seis animações */
@@ -565,9 +574,12 @@ function montarLeitor() {
     img.loading = i <= 2 ? 'eager' : 'lazy';
     img.decoding = 'async';
     if (i === 1) img.fetchPriority = 'high';
-    img.sizes = '(min-width: 56rem) 46rem, 100vw';
+    /* O zoom agora é do navegador, e ele NÃO busca uma imagem melhor ao
+       ampliar — usa a que já baixou. Por isso a leitura carrega direto a
+       maior que temos: no computador isso dobra a nitidez no zoom. */
+    img.sizes = '1400px';
     img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
-    img.src = pag(i, 800);
+    img.src = pag(i, 1400);
     img.addEventListener('load', () => img.classList.add('carregada'), { once: true });
 
     const folha = document.createElement('div');
@@ -587,10 +599,7 @@ function montarLeitor() {
   montarSumario();
   observar();
   controlarCromo();
-  ligarZoom();
-
-  const z = parseFloat(localStorage.getItem(CHAVE_ZOOM));
-  if (z > 1.02) aplicarZoom(z, 'memoria');
+  ancorarBarra();
 
   /* onde ele parou da última vez: guardado desde sempre, nunca usado */
   const parou = parseInt(localStorage.getItem(posChave(EDICAO.n)), 10);
@@ -674,7 +683,6 @@ function observar() {
 
       if (iCap >= 0 && iCap !== capAtual) {
         capAtual = iCap;
-        mostrarSelo(iCap, caps[iCap][0]);
         $('#caps')?.querySelectorAll('a').forEach(a => a.classList.toggle('atual', +a.dataset.cap === iCap));
       }
 
@@ -694,15 +702,6 @@ function observar() {
   document.querySelectorAll('.pag').forEach(el => obs.observe(el));
 }
 
-let seloTimer;
-function mostrarSelo(i, nome) {
-  const s = $('#selo-cap');
-  $('#selo-alg').textContent = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][i] || (i + 1);
-  $('#selo-nom').textContent = nome;
-  s.classList.add('ver');
-  clearTimeout(seloTimer);
-  seloTimer = setTimeout(() => s.classList.remove('ver'), 1700);
-}
 
 function controlarCromo() {
   const cromo = $('#cromo'), barra = $('#barra');
@@ -720,134 +719,32 @@ function controlarCromo() {
 
 /* ── o zoom: pinça e duplo toque; o toque simples nunca dispara ── */
 /* ═══ ZOOM ═══════════════════════════════════════════════════
-   A regra que faltava: NÃO disputar com o navegador. A pinça de dois
-   dedos, o ctrl+roda e o toque duplo já existem, funcionam nos dois
-   eixos e rodam na placa de vídeo. A versão caseira só sabia esticar
-   na horizontal, mexia nas 59 páginas a cada passo e deixava cada uma
-   com a sua própria rolagem — por isso desandava.
+   Não existe mais zoom nosso. A pinça do celular e o ctrl+roda do
+   computador já fazem isso melhor do que qualquer coisa que eu
+   escreva: dois eixos, inércia, toque duplo, tudo na placa de vídeo.
+   O que sobra para nós é só uma coisa — impedir que a barra da oferta
+   cresça e escorregue junto quando a pessoa amplia. */
 
-   O que sobra aqui é a única coisa que o navegador não faz sozinho:
-   aumentar a LARGURA DA PÁGINA (o "ajustar à largura" do PDF), com
-   uma variável só e uma panorâmica compartilhada por todas as folhas. */
+function ancorarBarra() {
+  const vv = window.visualViewport;
+  const b = $('#barra');
+  if (!vv || !b) return;
 
-let guardaZoom;             /* segura a gravação do nível até o dedo parar */
-let baseCache = 0;
+  const acompanhar = () => {
+    /* a barra vive na janela VISUAL (o pedaço que a pessoa está vendo),
+       não na página. Sem isto ela some para fora da tela no zoom. */
+    const escala = 1 / vv.scale;
+    b.style.width = vv.width + 'px';
+    b.style.left = vv.offsetLeft + 'px';
+    b.style.top = (vv.offsetTop + vv.height) + 'px';
+    b.style.bottom = 'auto';
+    b.style.setProperty('--vv-escala', escala);
+  };
 
-/* a largura de "página inteira na tela", medida na folha de verdade */
-function larguraBase() {
-  /* a folha externa não muda de tamanho com o zoom — quem cresce é a de
-     dentro. Por isso ela serve de régua do "página inteira na tela". */
-  if (!baseCache) {
-    const f = document.querySelector('.folha-p');
-    baseCache = (f && f.clientWidth) || Math.min(innerWidth - 16, 736);
-  }
-  return baseCache;
-}
-let pan = 0.5;              /* 0 = margem esquerda · 1 = margem direita */
-let espelhando = false;
-
-/* todas as folhas olham para o mesmo ponto da linha: passar de página
-   com o texto ampliado não pode jogar o leitor de volta pro começo */
-function sincronizarPan() {
-  espelhando = true;
-  document.querySelectorAll('.folha-p').forEach(f => {
-    const max = f.scrollWidth - f.clientWidth;
-    f.scrollLeft = max > 0 ? pan * max : 0;
-  });
-  requestAnimationFrame(() => { espelhando = false; });
-}
-
-let aplicarZoom = function (novo, origem, ancoraX) {
-  const antes = fator;
-  fator = Math.min(3, Math.max(1, Math.round(novo * 100) / 100));
-  if (fator > 1.02) ultimoFator = fator;
-  if (fator === antes) return;
-
-  /* Largura em PIXEL, não em porcentagem: dentro deste container a
-     porcentagem não resolve (a folha volta a caber e o zoom não sai do
-     lugar). Uma variável no pai — não 59 estilos em linha. */
-  if (fator <= 1.02) $('#paginas').style.removeProperty('--larg');
-  else $('#paginas').style.setProperty('--larg', Math.round(larguraBase() * fator) + 'px');
-  const larg = Math.round(Math.min(innerWidth, 736) * fator);
-  document.querySelectorAll('.pag').forEach(im => { im.sizes = larg + 'px'; });
-  $('#btn-zoom').classList.toggle('ativo', fator > 1.02);
-
-  if (fator <= 1.02) pan = 0.5;
-  else if (ancoraX != null) {
-    /* mantém debaixo do dedo o pedaço que estava debaixo do dedo */
-    const f = document.querySelector('.folha-p');
-    if (f) {
-      const r = f.getBoundingClientRect();
-      const dentro = Math.min(Math.max((ancoraX - r.left) / r.width, 0), 1);
-      pan = Math.min(1, Math.max(0, pan + (dentro - 0.5) * (1 - antes / fator)));
-    }
-  }
-
-  requestAnimationFrame(sincronizarPan);
-
-  clearTimeout(guardaZoom);
-  guardaZoom = setTimeout(() => {
-    localStorage.setItem(CHAVE_ZOOM, fator.toFixed(2));
-    evento('ajustou_zoom', { fator: +fator.toFixed(2), origem, pagina: paginaAtual });
-  }, 600);
-};
-
-function ligarZoom() {
-  const caixa = $('#paginas');
-  const nivel = () => { $('#zoom-n').textContent = fator > 1.02 ? Math.round(fator * 100) + '%' : ''; };
-  const _aplicar = aplicarZoom;
-  aplicarZoom = (...a) => { _aplicar(...a); nivel(); };
-
-  $('#btn-zoom').addEventListener('click', () => aplicarZoom(fator > 1.02 ? 1 : 1.6, 'lupa'));
-  $('#btn-mais').addEventListener('click', () => aplicarZoom(fator + 0.2, 'botao'));
-  $('#btn-menos').addEventListener('click', () => aplicarZoom(fator - 0.2, 'botao'));
-
-  /* arrastou uma folha para o lado: as outras acompanham */
-  let quietoPan;
-  caixa.addEventListener('scroll', e => {
-    const f = e.target.closest && e.target.closest('.folha-p');
-    if (!f || espelhando) return;
-    const max = f.scrollWidth - f.clientWidth;
-    if (max <= 0) return;
-    pan = Math.min(1, Math.max(0, f.scrollLeft / max));
-    clearTimeout(quietoPan);
-    quietoPan = setTimeout(sincronizarPan, 140);
-  }, true);
-
-  /* toque duplo só com mouse: no celular o navegador já faz o dele,
-     e interceptar aqui era justamente o que atrapalhava */
-  let ultimoToque = 0, ultimoX = 0;
-  caixa.addEventListener('pointerup', e => {
-    if (e.pointerType !== 'mouse') return;
-    if (e.target.closest('.intervalo') || !e.target.closest('.folha-p')) return;
-    const agora = Date.now();
-    if (agora - ultimoToque < 320 && Math.abs(e.clientX - ultimoX) < 40) {
-      aplicarZoom(fator > 1.02 ? 1 : 1.8, 'duplo-clique', e.clientX);
-      ultimoToque = 0;
-    } else { ultimoToque = agora; ultimoX = e.clientX; }
-  });
-
-  addEventListener('keydown', e => {
-    if (!$('#leitura').classList.contains('aberta') || document.querySelector('dialog[open]')) return;
-    const passo = { ArrowRight: 1, PageDown: 1, ArrowLeft: -1, PageUp: -1 };
-    if (e.key === ' ') { e.preventDefault(); irPara(Math.min(paginaAtual + 1, TOTAL)); }
-    else if (e.key in passo) { e.preventDefault(); irPara(Math.min(Math.max(paginaAtual + passo[e.key], 1), TOTAL)); }
-    else if (e.key === 'Home') { e.preventDefault(); irPara(1); }
-    else if (e.key === 'End') { e.preventDefault(); irPara(TOTAL); }
-    else if (e.key === '+' || e.key === '=') aplicarZoom(fator + 0.25, 'teclado');
-    else if (e.key === '-') aplicarZoom(fator - 0.25, 'teclado');
-    else if (e.key === 'Escape') voltar();
-  });
-
-  addEventListener('resize', () => {
-    baseCache = 0;
-    if (fator > 1.02) { $('#paginas').style.removeProperty('--larg'); requestAnimationFrame(() => {
-      if (fator <= 1.02) $('#paginas').style.removeProperty('--larg');
-  else $('#paginas').style.setProperty('--larg', Math.round(larguraBase() * fator) + 'px'); sincronizarPan();
-    }); }
-  });
-
-  nivel();
+  acompanhar();
+  vv.addEventListener('resize', acompanhar);
+  vv.addEventListener('scroll', acompanhar);
+  addEventListener('orientationchange', () => setTimeout(acompanhar, 300));
 }
 
 /* ═══ O PORTEIRO — uma edição por mês ═════════════════════════
