@@ -21,10 +21,13 @@ const $ = s => document.querySelector(s);
 const pontilhar = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
 const url = new URLSearchParams(location.search);
 
-/* A URL limpa aceita /e/7 e /e/007. Aqui os dois viram '007', que é como o
-   catálogo nomeia as edições — senão /e/7 não acha revista nenhuma. */
+/* A edição pode vir de dois lugares: do endereço bonito (/revista/007) ou
+   do parâmetro (?ed=007). O caminho tem prioridade, porque é ele que a
+   pessoa vê e compartilha. Os dois viram '007', que é como o catálogo
+   nomeia as edições. */
 (() => {
-  const e = url.get('ed');
+  const doCaminho = location.pathname.match(/\/(\d{1,3})\/?$/);
+  const e = (doCaminho && doCaminho[1]) || url.get('ed');
   if (e && /^\d{1,3}$/.test(e)) url.set('ed', e.padStart(3, '0'));
 })();
 
