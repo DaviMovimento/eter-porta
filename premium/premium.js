@@ -17,6 +17,13 @@ const ONDE_MORO = document.currentScript?.src || location.href;
 const $ = s => document.querySelector(s);
 const url = new URLSearchParams(location.search);
 
+/* A URL limpa aceita /e/7 e /e/007. Aqui os dois viram '007', que é como o
+   catálogo nomeia as edições — senão /e/7 não acha revista nenhuma. */
+(() => {
+  const e = url.get('ed');
+  if (e && /^\d{1,3}$/.test(e)) url.set('ed', e.padStart(3, '0'));
+})();
+
 const CHAVE_LEAD = 'eter_lead';
 const posChave = ed => `eter_pos_${ed}`;
 

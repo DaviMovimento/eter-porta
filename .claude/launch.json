@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "porta-eter",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8899", "--directory", "/Users/daviribasnogueira/Vida/20-NEGOCIO/21-ETER/projetos/porta/site"],
+      "port": 8899
+    }
+  ]
+}
