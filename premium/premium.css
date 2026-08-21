@@ -16,7 +16,8 @@
   --papel-3:#DDD5C5;
   --tinta:#1E1813;
   --tinta-2:#5A5044;
-  --tinta-3:#8E8474;
+  --tinta-3:#6E6455;   /* era #8E8474, que dava 3,18:1 sobre o papel — reprovava */
+  --erro:#8C3D22;
   --linha:rgba(30,24,19,.12);
   --linha-2:rgba(30,24,19,.2);
 
@@ -24,7 +25,8 @@
   --preto:#0F0C09;
   --sobre-escuro:#F0EAE0;
 
-  --ouro:#8F7333;
+  --ouro:#8F7333;        /* o ouro da marca: filete, borda, peça grande */
+  --ouro-texto:#7D6429;  /* o mesmo ouro, meio tom mais fundo, para TEXTO pequeno (4,87:1) */
   --ouro-vivo:#AF9153;
   --ouro-claro:#DBC7A4;
 
@@ -358,7 +360,7 @@ body.lendo .topo{display:none}
 .tranca-btn{
   display:flex;flex-direction:column;align-items:center;gap:.34rem;
   padding:1rem 1.4rem;max-width:88%;
-  background:rgba(242,238,230,.95);color:var(--ouro);
+  background:rgba(242,238,230,.95);color:var(--ouro-texto);
   border:1px solid var(--ouro);border-radius:1px;
   box-shadow:0 10px 30px rgba(30,24,19,.28);
   cursor:pointer;transition:background .2s,transform .2s;
@@ -446,7 +448,7 @@ body.lendo .topo{display:none}
   font-family:var(--rotulo);font-size:.55rem;font-weight:700;
   letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-3);
 }
-.dica-faixa b{color:var(--ouro)}
+.dica-faixa b{color:var(--ouro-texto)}
 
 /* ═══ O TEXTO ════════════════════════════════════════════════ */
 .dizeres{margin-top:1.6rem}
@@ -660,7 +662,19 @@ dialog{
   max-height:92svh;overflow:auto;
 }
 dialog::-webkit-scrollbar{display:none}
-dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
+dialog::backdrop{
+  background:rgba(20,15,10,.72);backdrop-filter:blur(5px);
+  animation:veuEntra .32s ease both;
+}
+dialog[open]{animation:caixaEntra .38s cubic-bezier(.16,1,.3,1) both}
+@keyframes veuEntra{from{opacity:0}to{opacity:1}}
+@keyframes caixaEntra{
+  from{opacity:0;transform:translateY(14px) scale(.985)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  dialog[open],dialog::backdrop{animation-duration:.01s}
+}
 .painel,.form{
   position:relative;background:var(--papel);border-radius:3px;
   padding:2rem 1.5rem 1.6rem;box-shadow:0 30px 90px rgba(20,15,10,.5);
@@ -685,14 +699,20 @@ dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
 .campo{margin-bottom:.9rem}
 .campo label{display:block;font-family:var(--rotulo);font-size:.55rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:.3rem}
 .campo input{width:100%;font-family:var(--corpo);font-size:1rem;padding:.68rem 0;border:0;border-bottom:1px solid var(--linha-2);background:transparent;color:var(--tinta);transition:border-color .25s}
-.campo input::placeholder{color:var(--tinta-3);opacity:.6}
-.campo input:focus{outline:none;border-bottom-color:var(--ouro-vivo)}
-.campo.erro input{border-bottom-color:#9B4A2C}
-.campo .msg{font-size:.7rem;color:#9B4A2C;margin-top:.28rem;display:none}
+.campo input::placeholder{color:var(--tinta-3);opacity:.78}
+.campo input:focus{border-bottom-color:var(--ouro-vivo)}
+/* o foco de teclado é a única pista de quem não usa mouse: nunca se apaga.
+   Aqui ele vira uma faixa de papel iluminado, que combina com a casa. */
+.campo input:focus-visible{
+  outline:2px solid var(--ouro);outline-offset:4px;border-radius:2px;
+  background:rgba(219,199,164,.14);
+}
+.campo.erro input{border-bottom-color:var(--erro)}
+.campo .msg{font-size:.74rem;color:var(--erro);margin-top:.28rem;display:none}
 .campo.erro .msg{display:block}
 .consent{display:flex;gap:.6rem;align-items:flex-start;font-size:.7rem;line-height:1.45;color:var(--tinta-3);margin:1rem 0 1.1rem}
 .consent input{margin-top:.15rem;accent-color:var(--ouro-vivo);flex:0 0 auto}
-.consent a{color:var(--ouro)}
+.consent a{color:var(--ouro-texto)}
 .consent b{color:var(--tinta-2)}
 
 @media (prefers-reduced-motion:reduce){
@@ -772,9 +792,187 @@ dialog::backdrop{background:rgba(20,15,10,.72);backdrop-filter:blur(5px)}
   font-family:var(--rotulo);font-size:.5rem;font-weight:700;
   letter-spacing:.16em;color:var(--ouro);
 }
-#acervo a.atual .alg{color:var(--ouro-vivo)}
+#acervo a.atual .alg{color:var(--ouro-texto)}
 #acervo .nom{font-family:var(--display);font-size:.78rem;line-height:1.25;color:var(--tinta)}
 #acervo .pg{
   font-family:var(--rotulo);font-size:.46rem;font-weight:700;
   letter-spacing:.13em;text-transform:uppercase;color:var(--tinta-3);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PÁGINAS DE TEXTO — a upsell e a política
+   Antes rodavam num segundo sistema de design, sem uma única fonte
+   da marca. Agora bebem dos mesmos tokens: quem paga R$97 não
+   atravessa para outra empresa no meio do caminho.
+   ═══════════════════════════════════════════════════════════════ */
+
+body.pagina{
+  background:var(--papel);color:var(--tinta);
+  font-family:var(--corpo);font-size:1rem;line-height:1.62;
+}
+.pagina .topo{position:static}
+
+.papelada{
+  position:relative;z-index:2;
+  width:100%;max-width:40rem;margin:0 auto;
+  padding:2.6rem 1.4rem 4rem;
+}
+.papelada .selo{
+  display:flex;flex-direction:column;align-items:center;gap:.9rem;
+  margin-bottom:2.4rem;text-align:center;
+}
+.papelada .selo img{width:4.4rem}
+.papelada .rotulo{
+  font-family:var(--rotulo);font-size:.56rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ouro-texto);
+}
+.papelada h1{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(1.9rem,5.2vw,2.7rem);line-height:1.14;
+  letter-spacing:.005em;text-wrap:balance;margin:0;
+}
+.papelada h1 em{font-family:var(--script);font-style:normal;color:var(--ouro-vivo);font-size:1.32em}
+.papelada .dek{
+  font-size:1rem;line-height:1.6;color:var(--tinta-2);
+  max-width:32rem;margin:.9rem auto 0;text-align:center;
+}
+
+.papelada h2{
+  font-family:var(--display);font-weight:400;font-size:1.16rem;
+  line-height:1.28;margin:2.6rem 0 .7rem;color:var(--tinta);
+}
+.papelada h2:first-of-type{margin-top:0}
+.papelada p{margin:0 0 1rem;color:var(--tinta-2);max-width:36rem}
+.papelada strong,.papelada b{color:var(--tinta);font-weight:600}
+.papelada ul{margin:0 0 1.2rem;padding-left:1.1rem;color:var(--tinta-2)}
+.papelada li{margin-bottom:.42rem}
+.papelada a{color:var(--ouro-texto);text-decoration:underline;text-underline-offset:3px}
+.papelada a:hover{color:var(--tinta)}
+
+.regua-fina{border:0;border-top:1px solid var(--linha);margin:2.4rem 0}
+
+.papelada .pe{
+  margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--linha);
+  font-family:var(--rotulo);font-size:.55rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3);
+  text-align:center;line-height:2;
+}
+.papelada .pe a{color:var(--tinta-3);text-decoration:none}
+.papelada .pe a:hover{color:var(--ouro-texto)}
+
+/* o que ainda falta o Davi preencher aparece assim — visível para ele,
+   nunca em forma de colchete cru para o leitor */
+.aguardando{
+  display:inline-block;padding:.1rem .5rem;border-radius:1px;
+  background:rgba(143,115,51,.12);border:1px dashed var(--ouro);
+  font-family:var(--rotulo);font-size:.62rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ouro-texto);
+}
+
+/* ── a upsell: a conta que fecha ─────────────────────────────── */
+.papelada.estreita{max-width:34rem}
+
+.confirmado{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.42rem .9rem;border-radius:2rem;
+  background:rgba(143,115,51,.1);border:1px solid rgba(143,115,51,.32);
+  font-family:var(--rotulo);font-size:.55rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ouro-texto);
+  margin:0;
+}
+.confirmado i{font-style:normal;font-size:.8rem;line-height:1}
+
+.conta{
+  margin:2.2rem 0;padding:1.5rem 1.4rem 1.2rem;
+  background:var(--papel-2);border:1px solid var(--linha);border-radius:2px;
+}
+.conta .linha{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding:.55rem 0;font-size:.92rem;color:var(--tinta-2);
+}
+.conta .linha + .linha{border-top:1px solid var(--linha)}
+.conta .linha b{font-variant-numeric:tabular-nums;color:var(--tinta);white-space:nowrap}
+.conta .risco{text-decoration:line-through;color:var(--tinta-3);font-weight:400}
+.conta .total{padding-top:.9rem;border-top:1px solid var(--linha-2)}
+.conta .total span{font-weight:600;color:var(--tinta)}
+.conta .total b{
+  font-family:var(--display);font-size:1.5rem;color:var(--ouro-vivo);line-height:1;
+}
+.conta .nota{
+  margin:.7rem 0 0;font-size:.8rem;line-height:1.5;color:var(--tinta-3);max-width:none;
+}
+
+.ganhos{margin:2.2rem 0}
+.ganhos .rotulo{margin-bottom:.9rem}
+.ganhos ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem}
+.ganhos li{
+  display:flex;flex-direction:column;gap:.12rem;
+  padding-left:1rem;border-left:2px solid var(--ouro-claro);margin:0;
+}
+.ganhos li b{font-size:.95rem;color:var(--tinta);font-weight:600}
+.ganhos li span{font-size:.85rem;color:var(--tinta-3);line-height:1.5}
+
+.fecho{margin-top:2.4rem}
+.btn.grande{width:100%;font-size:.78rem;padding:1.15rem 1.2rem}
+.sob-botao{
+  margin:.9rem auto 0;text-align:center;max-width:28rem;
+  font-size:.82rem;line-height:1.55;color:var(--tinta-3);
+}
+.erro-oferta{
+  margin:.9rem 0 0;padding:.8rem 1rem;border-radius:2px;
+  background:rgba(143,115,51,.09);border:1px solid rgba(143,115,51,.3);
+  font-size:.85rem;color:var(--tinta-2);text-align:center;max-width:none;
+}
+.erro-oferta[hidden]{display:none}
+
+.recusa{margin-top:2.4rem;text-align:center}
+.recusa a{
+  font-family:var(--rotulo);font-size:.6rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--tinta-3);text-decoration:none;border-bottom:1px solid var(--linha-2);
+  padding-bottom:.15rem;transition:color .2s,border-color .2s;
+}
+.recusa a:hover{color:var(--tinta-2);border-color:var(--tinta-3)}
+.recusa p{
+  margin:.8rem auto 0;max-width:26rem;
+  font-size:.78rem;line-height:1.5;color:var(--tinta-3);
+}
+
+
+/* ═══ ACABAMENTO ══════════════════════════════════════════════
+   O que separa "bonito" de "caro": todo alvo responde ao mouse,
+   ao teclado e ao toque — e responde do mesmo jeito em toda parte. */
+
+:where(a,button,[role=button],input,select,textarea,summary):focus-visible{
+  outline:2px solid var(--ouro);outline-offset:3px;border-radius:2px;
+}
+:where(button,[role=button],a):not(:disabled):active{transform:translateY(1px)}
+
+button:disabled,.btn:disabled,[role=button][aria-disabled=true]{
+  cursor:not-allowed;opacity:.45;filter:saturate(.4);transform:none;
+}
+button:disabled:hover,.btn:disabled:hover{filter:saturate(.4)}
+
+/* as miniaturas da faixa não davam sinal nenhum de serem clicáveis */
+.mini:hover{opacity:.88;transform:scale(.97)}
+.mini.ativa:hover{opacity:1;transform:scale(1.02)}
+.mini:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+
+/* o × dos diálogos: alvo de 44px, e reação ao mouse e ao toque */
+.fechar{
+  min-width:2.75rem;min-height:2.75rem;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;transition:background .2s,color .2s;
+}
+.fechar:hover{background:rgba(30,24,19,.07);color:var(--tinta)}
+.fechar:active{background:rgba(30,24,19,.12)}
+
+/* No celular o teclado sobe e cobria o botão de enviar. Agora a caixa
+   rola por dentro e o botão fica colado no fim do conteúdo, sempre
+   alcançável com o polegar. */
+@media (max-width:34rem){
+  dialog{max-height:88svh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  #form-dialog .form{padding-bottom:1.2rem}
+  #btn-enviar{position:sticky;bottom:0;z-index:2}
 }

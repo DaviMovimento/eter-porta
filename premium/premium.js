@@ -1074,6 +1074,18 @@ function ligar() {
     if (!jaCapturado()) { evento('desistiu_do_formulario', { onde: $('#form-dialog').dataset.onde }); aoTerminar = null; }
   });
 
+  /* clicar fora fecha: o <dialog> nativo não faz isso, e uma caixa sem
+     saída visível é a reclamação mais comum de quem não achou o × */
+  document.querySelectorAll('dialog').forEach(d => {
+    d.addEventListener('click', ev => {
+      if (ev.target !== d) return;      /* só o backdrop, nunca o conteúdo */
+      const r = d.getBoundingClientRect();
+      const fora = ev.clientX < r.left || ev.clientX > r.right
+                || ev.clientY < r.top  || ev.clientY > r.bottom;
+      if (fora) d.close();
+    });
+  });
+
   $('#form').addEventListener('submit', enviar);
   $('#f-zap').addEventListener('input', mascara);
   $('#f-nome').addEventListener('input', () => $('#c-nome').classList.remove('erro'));

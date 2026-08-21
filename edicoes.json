@@ -24,7 +24,17 @@
     "_pixel": "Só os números. Sem eles não há público de remarketing: você fala só com quem deixou o WhatsApp, e perde quem leu 30 páginas e saiu.",
     "pixelMeta": "",
     "ga4": "",
-    "_nota_anual": "O anual (checkoutAnual) é oferta de upsell 1-clique: só funciona para quem ACABOU de comprar. Por isso ele vive apenas em upsell.html, e o topo da porta vende o passe."
+    "_nota_anual": "O anual (checkoutAnual) é oferta de upsell 1-clique: só funciona para quem ACABOU de comprar. Por isso ele vive apenas em upsell.html, e o topo da porta vende o passe.",
+    "_empresa": "Dados da controladora, usados na política de privacidade e nos rodapés. Preencher uma vez, valem em todas as páginas.",
+    "empresa": {
+      "razaoSocial": "ETER COMPANY LTDA",
+      "cnpj": "37.223.854/0001-47",
+      "endereco": "",
+      "emailContato": "",
+      "emailDpo": "",
+      "responsavel": "Davi Ribas Nogueira",
+      "whatsapp": ""
+    }
   },
   "passe": {
     "rotulo": "Passe ETER · 30 dias",
