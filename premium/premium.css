@@ -10,7 +10,11 @@
 @font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2') format('woff2');font-weight:700;font-display:swap}
 
 :root{
-  color-scheme:light;   /* a paleta é clara de propósito — não invente escuro */
+  color-scheme:light;
+  /* A TRJN e a Sloop têm um peso só. Sem isto o navegador FABRICA um negrito
+     engrossando o traço, e a mesma fonte aparece em dois pesos na mesma
+     página — o defeito tipográfico mais visível que havia aqui. */
+  font-synthesis-weight:none;font-synthesis-style:none;   /* a paleta é clara de propósito — não invente escuro */
   --papel:#F2EEE6;
   --papel-2:#E8E2D6;
   --papel-3:#DDD5C5;
@@ -32,7 +36,8 @@
 
   --display:'TRJN','Trajan Pro',Georgia,serif;
   --script:'Sloop','Snell Roundhand',cursive;
-  --rotulo:'FuturaE','Futura','Avenir Next Condensed',sans-serif;
+  --rotulo:'FuturaE','Futura','Futura PT','Avenir Next','Avenir','Century Gothic','URW Gothic',
+           'Questrial','Jost',system-ui,sans-serif;
   --corpo:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
 
   --barra-h:4.4rem;
@@ -975,4 +980,146 @@ button:disabled:hover,.btn:disabled:hover{filter:saturate(.4)}
   dialog{max-height:88svh;overflow-y:auto;-webkit-overflow-scrolling:touch}
   #form-dialog .form{padding-bottom:1.2rem}
   #btn-enviar{position:sticky;bottom:0;z-index:2}
+}
+
+
+/* ═══ A ESCALA ════════════════════════════════════════════════
+   Havia 27 tamanhos absolutos, 20 deles espremidos entre 7,4px e
+   16px — o que faz uma página parecer montada em vez de desenhada.
+   Onze degraus, razão constante, e um piso: nada de texto corrido
+   abaixo de 16px, nada de rótulo abaixo de 11px. */
+:root{
+  --r-1:.6875rem;  /* 11px · rótulo mínimo legível */
+  --r-2:.75rem;    /* 12px · rótulo padrão */
+  --r-3:.8125rem;  /* 13px · rótulo grande */
+  --t-1:.875rem;   /* 14px · apoio */
+  --t-2:1rem;      /* 16px · corpo, piso do texto corrido */
+  --t-3:1.125rem;  /* 18px · corpo destacado */
+  --d-1:1.375rem;  /* 22px · título pequeno */
+  --d-2:1.75rem;   /* 28px */
+  --d-3:2.25rem;   /* 36px */
+  --d-4:3rem;      /* 48px */
+
+  /* o tracking anda junto do tamanho, e ao contrário dele */
+  --tk-1:.2em; --tk-2:.16em; --tk-3:.12em;
+
+  /* uma escala de espaço, de 4 em 4 */
+  --e1:.25rem; --e2:.5rem; --e3:.75rem; --e4:1rem;
+  --e5:1.5rem; --e6:2rem; --e7:2.5rem; --e8:3rem;
+}
+
+/* o título tinha uma fórmula que ENCOLHIA quando a tela crescia */
+h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
+
+/* piso duro: nenhum rótulo da casa abaixo de 11px */
+.pulso,.dica-faixa,.ficha,.numero,.passe-rot,.rotulo,
+.topo-nav a,.pe,#acervo .alg,#acervo .pg,.tranca-sub{
+  font-size:max(var(--r-1),1em);
+}
+.pulso,.dica-faixa,.tranca-sub{font-size:var(--r-1);letter-spacing:var(--tk-1)}
+.ficha,.numero{font-size:var(--r-2);letter-spacing:var(--tk-2)}
+.mini .n{font-size:var(--r-1);letter-spacing:.06em}
+
+/* e nenhum texto corrido abaixo de 16px no celular */
+@media (max-width:59.99rem){
+  .promessa{font-size:var(--t-3);line-height:1.55;max-width:34rem}
+  .convite-frase{font-size:var(--t-3)}
+  .campo label.consent{font-size:var(--t-1);line-height:1.55}
+  .passe-itens li b{font-size:var(--t-2)}
+  .passe-itens li span{font-size:var(--t-1)}
+}
+/* eu mesmo criei este bug ao embrulhar o consentimento num .campo:
+   `.campo label` (0,1,1) ganha de `.consent` (0,1,0) e o texto caía para
+   8,8px. Especificidade maior devolve o tamanho legível. */
+.campo label.consent{
+  font-size:var(--t-1);line-height:1.5;color:var(--tinta-2);
+  letter-spacing:normal;text-transform:none;font-family:var(--corpo);font-weight:400;
+  margin:var(--e4) 0 var(--e4);
+}
+
+/* ═══ A PRIMEIRA TELA DO CELULAR ══════════════════════════════
+   Trinta por cento da altura ia embora em miudezas entre a capa e o
+   título. O botão que vende ficava abaixo da dobra. */
+@media (max-width:34rem){
+  .folha{padding:1rem 1.1rem 2rem}
+  .marca{margin-bottom:1rem}
+  .marca img{width:4rem}
+  .faixa{padding:.6rem .5rem 0;margin-top:.2rem}
+  .dica-faixa{margin-top:.35rem}
+  .pulso{margin-top:.6rem}
+  .dizeres{margin-top:1.1rem}
+  .numero{margin-bottom:.5rem}
+  h1{margin-bottom:.6rem}
+  .promessa{margin-bottom:.9rem}
+  .convites{margin-top:1.2rem}
+}
+
+/* ═══ A FAIXA DE TABLET ═══════════════════════════════════════
+   Entre 768 e 959px a página ficava com coluna de celular e margem
+   de computador: um degrau intermediário resolve. */
+@media (min-width:48rem) and (max-width:59.99rem){
+  .folha{max-width:42rem;padding:2rem 2.5rem 2.5rem}
+  .visor{max-width:34rem}
+  .mini{flex:0 0 3.6rem}
+}
+
+/* ═══ O EIXO DO DESKTOP ═══════════════════════════════════════
+   As duas colunas não compartilhavam nenhuma linha de referência, e
+   a revista encolhia porque o teto de 33rem nunca chegava a valer. */
+@media (min-width:60rem){
+  .folha{
+    max-width:72rem;
+    grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);
+    align-items:start;gap:0 3.5rem;
+  }
+  .revista{padding-top:1.9rem}   /* alinha o topo da revista com a capitular */
+}
+
+/* a régua ficava fora do eixo porque o flex a empurrava com o texto */
+.pulso{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--e3);
+}
+.pulso .trilho{flex:none;width:100%;max-width:7rem;justify-self:center}
+.pulso #pulso-n{text-align:right}
+.pulso #pulso-cap{text-align:left}
+
+/* a barra da oferta atravessava a janela sob uma coluna de 736px */
+.barra{padding-inline:max(var(--e3),calc((100% - 46rem)/2))}
+
+/* a folha que não baixou: papel em branco com o número, nunca o ícone
+   de imagem quebrada do navegador */
+.folha-p.falhou{position:relative;min-height:60vh;background:var(--papel-2)}
+.folha-p.falhou::after{
+  content:"página " attr(data-n) " — não carregou";
+  position:absolute;inset:0;display:grid;place-content:center;
+  font-family:var(--rotulo);font-size:var(--r-1);font-weight:700;
+  letter-spacing:var(--tk-1);text-transform:uppercase;color:var(--tinta-3);
+}
+/* o consentimento agora tem estado de erro como os outros campos */
+#c-ok.erro .consent{color:var(--erro)}
+#c-ok.erro input[type=checkbox]{outline:2px solid var(--erro);outline-offset:2px}
+
+
+/* ═══ O CONVITE QUE ALCANÇA O POLEGAR ════════════════════════
+   No celular o botão que vende ficava a 1072px, com a dobra em 847:
+   ninguém que não rolasse veria a oferta. Em vez de espremer a capa —
+   que é o que vende —, o convite ganha uma faixa fixa que se apaga
+   sozinha quando o botão de verdade entra em cena. */
+.convite-fixo{
+  position:fixed;left:0;right:0;bottom:0;z-index:38;
+  padding:.7rem .9rem calc(.7rem + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--papel) 62%,rgba(242,238,230,.92));
+  border-top:1px solid var(--linha);
+  backdrop-filter:blur(10px);
+  transform:translateY(0);transition:transform .34s cubic-bezier(.16,1,.3,1);
+  display:none;
+}
+.convite-fixo.oculto{transform:translateY(115%)}
+.convite-fixo .btn{width:100%}
+body.lendo .convite-fixo,body.capturado .convite-fixo{display:none}
+
+@media (max-width:59.99rem){
+  .convite-fixo{display:block}
+  /* espaço para a faixa não cobrir o fim da página */
+  .folha{padding-bottom:5.5rem}
 }

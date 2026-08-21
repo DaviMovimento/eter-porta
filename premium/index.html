@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="premium.css?v=202608211152">
+<link rel="stylesheet" href="premium.css?v=202608211203">
 </head>
 <body>
 
@@ -78,7 +78,7 @@
         <span id="pulso-cap"></span>
       </div>
 
-      <div class="faixa" id="faixa"></div>
+      <div class="faixa" id="faixa" role="group" aria-label="Páginas desta edição"></div>
       <p class="dica-faixa" id="dica-faixa">deslize para espiar · <b>toque para ler a partir dali</b></p>
     </section>
 
@@ -116,6 +116,11 @@
     </footer>
   </div>
 </main>
+
+<!-- o convite que alcança o polegar: some quando o botão real aparece -->
+<div class="convite-fixo oculto" id="convite-fixo">
+  <button class="btn btn-ler" id="btn-ler-fixo">Ler esta edição de graça</button>
+</div>
 
 <!-- ══ TELA 2 · A LEITURA ══════════════════════════════════════ -->
 <main id="leitura">
@@ -163,26 +168,29 @@
 
     <div class="campo" id="c-nome">
       <label for="f-nome">Seu nome</label>
-      <input id="f-nome" type="text" autocomplete="given-name" placeholder="Como te chamam" enterkeyhint="next">
-      <span class="msg">Escreva seu nome.</span>
+      <input id="f-nome" aria-describedby="msg-nome" type="text" autocomplete="given-name" placeholder="Como te chamam" enterkeyhint="next">
+      <span class="msg" id="msg-nome" role="alert">Escreva seu nome.</span>
     </div>
 
     <div class="campo" id="c-mail">
       <label for="f-mail">Seu melhor e-mail</label>
-      <input id="f-mail" type="email" autocomplete="email" placeholder="voce@email.com" enterkeyhint="next">
-      <span class="msg">Escreva um e-mail válido.</span>
+      <input id="f-mail" aria-describedby="msg-mail" type="email" autocomplete="email" placeholder="voce@email.com" enterkeyhint="next">
+      <span class="msg" id="msg-mail" role="alert">Escreva um e-mail válido.</span>
     </div>
 
     <div class="campo" id="c-zap">
       <label for="f-zap">WhatsApp com DDD</label>
-      <input id="f-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 90000-0000" enterkeyhint="go">
-      <span class="msg">Precisa ter DDD e 8 ou 9 dígitos.</span>
+      <input id="f-zap" aria-describedby="msg-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 90000-0000" enterkeyhint="go">
+      <span class="msg" id="msg-zap" role="alert">Precisa ter DDD e 8 ou 9 dígitos.</span>
     </div>
 
+    <div class="campo" id="c-ok">
     <label class="consent">
-      <input type="checkbox" id="f-ok">
+      <input type="checkbox" id="f-ok" aria-describedby="msg-ok">
       <span>Autorizo a <b>ETER</b> a me enviar esta edição, as próximas, comunicações sobre a revista e <b>ofertas e publicidade</b>, por WhatsApp e e-mail. Meus dados são tratados no ManyChat (EUA), na Meta e no Google. Saio quando quiser respondendo <b>SAIR</b>. <a href="../privacidade.html" target="_blank" rel="noopener">Privacidade</a>.</span>
     </label>
+      <span class="msg" id="msg-ok" role="alert">Precisamos da sua autorização para enviar a edição.</span>
+    </div>
 
     <button class="btn btn-passe" type="submit" id="btn-enviar">Abrir a edição</button>
   </form>
@@ -204,6 +212,6 @@
   </div>
 </dialog>
 
-<script src="premium.js?v=202608211152"></script>
+<script src="premium.js?v=202608211203"></script>
 </body>
 </html>

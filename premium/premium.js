@@ -314,7 +314,9 @@ function montarEspiada() {
   function pintarFaixa() {
     faixa.innerHTML = Array.from({ length: TOTAL }, (_, i) => {
       const n = i + 1;
-      return `<button class="mini${livre(n) ? '' : ' travada'}" data-p="${n}"
+      /* 40 paradas de tabulação antes do botão de ler era um labirinto:
+         a faixa é UM alvo, e as setas do teclado andam por ela */
+      return `<button class="mini${livre(n) ? '' : ' travada'}" data-p="${n}" tabindex="-1"
         aria-label="Página ${n}${livre(n) ? '' : ' — trancada'}">
         <img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async">
         <span class="n">${n === 1 ? 'capa' : n}</span>
@@ -632,6 +634,12 @@ function montarLeitor() {
     img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
     img.src = pag(i, 1400);
     img.addEventListener('load', () => img.classList.add('carregada'), { once: true });
+    /* rede quebrando no meio da leitura não pode virar ícone de imagem
+       quebrada: a folha vira papel em branco com o número da página */
+    img.addEventListener('error', () => {
+      folha.classList.add('falhou');
+      folha.dataset.n = i;
+    }, { once: true });
 
     const folha = document.createElement('div');
     folha.className = 'folha-p';
@@ -991,11 +999,16 @@ async function enviar(e) {
   $('#c-nome').classList.toggle('erro', !nomeOk);
   $('#c-mail').classList.toggle('erro', !mailOk);
   $('#c-zap').classList.toggle('erro', !zapOk);
+  /* o leitor de tela precisa saber que o campo está inválido, não só ver */
+  [['#f-nome', nomeOk], ['#f-mail', mailOk], ['#f-zap', zapOk]].forEach(([s, ok]) =>
+    $(s).setAttribute('aria-invalid', String(!ok)));
 
   if (!nomeOk) { $('#f-nome').focus(); return; }
   if (!mailOk) { $('#f-mail').focus(); return; }
   if (!zapOk) { $('#f-zap').focus(); return; }
-  if (!$('#f-ok').checked) { $('#f-ok').focus(); return; }
+  const okMarcado = $('#f-ok').checked;
+  $('#c-ok').classList.toggle('erro', !okMarcado);
+  if (!okMarcado) { $('#f-ok').focus(); return; }
 
   const lead = {
     nome, email: mail, whatsapp: '55' + zap, edicao: EDICAO.n,
@@ -1044,6 +1057,19 @@ async function enviar(e) {
 /* ═══ LIGAÇÕES ═════════════════════════════════════════════════ */
 function ligar() {
   const lerAgora = async () => { if (await liberadoParaLer()) abrirLeitura(); };
+  $('#btn-ler-fixo')?.addEventListener('click', () => {
+    evento('clicou_ler', { origem: 'faixa-fixa' });
+    jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora);
+  });
+
+  /* a faixa se apaga quando o botão de verdade entra em cena — duas
+     ofertas idênticas na mesma tela viram ruído */
+  const real = $('#btn-ler'), fixo = $('#convite-fixo');
+  if (real && fixo && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => {
+      fixo.classList.toggle('oculto', e.isIntersecting);
+    }, { rootMargin: '-10% 0px -20% 0px' }).observe(real);
+  }
   $('#btn-ler').addEventListener('click', () => jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora));
   $('#btn-voltar').addEventListener('click', voltar);
   $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });
