@@ -19,7 +19,7 @@
     "_checkout": "true faz todo botão de compra virar lead ANTES de mandar para o pagamento. Sem isto, quem abandona o checkout some — e é justamente o público de recuperação.",
     "capturaAntesDoCheckout": true,
     "_leads": "Endereço do app da web do Apps Script (termina em /exec). Ver build/planilha-de-leads.gs.",
-    "webhookLead": "",
+    "webhookLead": "https://script.google.com/macros/s/AKfycbzkY_WfokD6PcZDhf1Uh_toXCfn2ofcYKEldfTlga9RKdlHUR3cPg_zdRxqIzVjrt3E_w/exec",
     "webhookEventos": "",
     "_pixel": "Só os números. Sem eles não há público de remarketing: você fala só com quem deixou o WhatsApp, e perde quem leu 30 páginas e saiu.",
     "pixelMeta": "",
