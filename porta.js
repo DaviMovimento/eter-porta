@@ -126,7 +126,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('edicoes.json?v=202608211412')).json();
+  DADOS = await (await fetch('edicoes.json?v=202608211415')).json();
   CFG = DADOS.config;
   PASSE = DADOS.passe;
 
