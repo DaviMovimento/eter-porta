@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Complete o ano · Revista ETER</title>
+<title>Complete o ano <i class="pt"></i> Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="premium/premium.css?v=202608211205">
+<link rel="stylesheet" href="premium/premium.css?v=202608211208">
 </head>
 <body class="pagina">
 
@@ -21,7 +21,7 @@
 
 <main class="papelada estreita">
   <div class="selo">
-    <p class="confirmado"><i aria-hidden="true">✓</i> Pagamento confirmado · o passe está ativo</p>
+    <p class="confirmado"><i aria-hidden="true">✓</i> Pagamento confirmado <i class="pt"></i> o passe está ativo</p>
     <p class="rotulo">Uma conta que só fecha hoje</p>
     <h1>Você já pagou o <em>primeiro mês</em></h1>
     <p class="dek">O acervo abriu e a edição de quarta já está no seu nome. Como você entrou de
@@ -61,8 +61,8 @@
   </div>
 
   <p class="pe">
-    <span id="pe-empresa">ETER COMPANY LTDA · CNPJ 37.223.854/0001-47</span><br>
-    <a href="privacidade.html">Privacidade</a> · <a href="./">Todas as edições</a>
+    <span id="pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
+    <a href="privacidade.html">Privacidade</a> <i class="pt"></i> <a href="./">Todas as edições</a>
   </p>
 </main>
 
@@ -87,7 +87,7 @@
 
   let c;
   try {
-    c = (await (await fetch('edicoes.json?v=202608211205')).json()).config;
+    c = (await (await fetch('edicoes.json?v=202608211208')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -102,7 +102,7 @@
 
   const e = c.empresa || {};
   document.getElementById('pe-empresa').textContent =
-    [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj].filter(Boolean).join(' · ');
+    [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj].filter(Boolean).join(' <i class="pt"></i> ');
 
   if (!c.checkoutAnual || c.checkoutAnual.includes('SEU-CHECKOUT')) {
     return naoDeu('A oferta anual ainda não está configurada. Fale com a gente — seu passe está ativo.');

@@ -487,7 +487,7 @@ h1 em{
   padding-top:1.1rem;border-top:1px solid var(--linha);
 }
 .ficha span{white-space:nowrap;display:inline-flex;align-items:center;gap:.26rem}
-.ficha span+span::before{content:"·";color:var(--ouro-vivo);margin-right:.5rem}
+.ficha span+span::before{content:"";width:.22em;height:.22em;border-radius:50%;background:var(--ouro-vivo);display:inline-block;vertical-align:middle;margin-right:.5rem}
 .ficha b{color:var(--tinta-2);font-size:.7rem}
 
 /* ═══ OS CONVITES ════════════════════════════════════════════ */
@@ -1123,3 +1123,27 @@ body.lendo .convite-fixo,body.capturado .convite-fixo{display:none}
   /* espaço para a faixa não cobrir o fim da página */
   .folha{padding-bottom:5.5rem}
 }
+
+
+/* ═══ O PONTO SEPARADOR ═══════════════════════════════════════
+   O `·` e o `°` não existem na Futura dos rótulos — e apareciam em
+   quase todo rótulo da página, trocando de fonte no meio da linha.
+   Desenhados em CSS eles param de depender de fonte para sempre,
+   e ficam melhor alinhados na caixa-alta espaçada do que o caractere. */
+.pt{
+  display:inline-block;vertical-align:middle;
+  width:.22em;height:.22em;border-radius:50%;
+  background:currentColor;opacity:.55;
+  margin:0 .55em;
+}
+.pt.ouro{background:var(--ouro-vivo);opacity:.9}
+
+/* a TRJN e a Sloop têm um peso só: declarar o peso impede o navegador
+   de fabricar um negrito engrossando o traço da capitular */
+h1,h2,h3,h4{font-weight:500}
+.intervalo h3,.painel h2,.form h2,.cromo-tit,.selo-cap .alg,.selo-cap .nom{font-weight:500}
+.intervalo h3 em{
+  font-family:var(--script);font-style:normal;font-weight:400;
+  font-size:1.5em;color:var(--ouro-claro);line-height:.8;
+}
+.papelada h1,.papelada h2{font-weight:400}

@@ -15,6 +15,10 @@
 const ONDE_MORO = document.currentScript?.src || location.href;
 
 const $ = s => document.querySelector(s);
+
+/* O `·` não existe na Futura dos rótulos: onde o texto vira HTML, ele vira
+   um ponto desenhado em CSS; onde é texto puro, vira travessão. */
+const pontilhar = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
 const url = new URLSearchParams(location.search);
 
 /* A URL limpa aceita /e/7 e /e/007. Aqui os dois viram '007', que é como o
@@ -139,7 +143,7 @@ async function iniciar() {
   EDICAO = DADOS.edicoes.find(e => e.n === url.get('ed')) || DADOS.edicoes.find(e => e.paginas) || DADOS.edicoes[0];
   TOTAL = EDICAO.paginas;
 
-  document.title = `${EDICAO.titulo} · ETER`;
+  document.title = `${EDICAO.titulo} — ETER`;
   ligarPixel();
   tarjaDemo();
   aquecerPorteiro();
@@ -173,7 +177,7 @@ function ligarPixel() {
 function montarChegada() {
   const caps = EDICAO.capitulos || [];
 
-  $('#numero').textContent = `Edição N° ${EDICAO.n}`;
+  $('#numero').textContent = `Edição ${EDICAO.n}`;
 
   const partes = EDICAO.titulo.split(' ');
   const fecho = partes.pop();
@@ -188,7 +192,7 @@ function montarChegada() {
   if (EDICAO.minutos) f.push(`<b>${EDICAO.minutos}</b> min`);
   $('#ficha').innerHTML = f.map(t => `<span>${t}</span>`).join('');
 
-  $('#passe-rot').textContent = PASSE.rotulo.replace('Passe ETER · ', 'Passe · ');
+  $('#passe-rot').innerHTML = pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '));
   $('#passe-preco').textContent = CFG.precoPasse;
   $('#passe-itens').innerHTML = PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
   $('#passe-nota').textContent = PASSE.condicao + ' ' + PASSE.credito;
@@ -564,7 +568,7 @@ function montarEspiada() {
     if (!jaCapturado()) return;
     pintarFaixa();
     legendar('destravou');       /* recentra a faixa, que o repinte zerou */
-    $('#dica-faixa').innerHTML = 'deslize para espiar · <b>toque para ler a partir dali</b>';
+    $('#dica-faixa').innerHTML = 'deslize para espiar <i class="pt"></i> <b>toque para ler a partir dali</b>';
   };
 
   pintarFaixa();
@@ -572,7 +576,7 @@ function montarEspiada() {
   legendar();
 
   if (!jaCapturado() && limiteEspiada < TOTAL) {
-    $('#dica-faixa').innerHTML = `o capítulo 1 é livre · <b>o resto abre com seu cadastro</b>`;
+    $('#dica-faixa').innerHTML = `o capítulo 1 é livre <i class="pt"></i> <b>o resto abre com seu cadastro</b>`;
   }
 }
 
@@ -690,7 +694,7 @@ function blocoFim() {
     <p>Você acabou de ler ${TOTAL} páginas de uma revista de ${CFG.precoCheio} por ano, sem pagar nada. O que muda do lado de dentro é a continuidade.</p>
     <section class="passe">
       <div class="passe-topo">
-        <span class="passe-rot">${PASSE.rotulo.replace('Passe ETER · ', 'Passe · ')}</span>
+        <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
         <span class="passe-preco">${CFG.precoPasse}</span>
       </div>
       <ul class="passe-itens">${PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('')}</ul>
@@ -704,7 +708,7 @@ function montarSumario() {
   const caps = EDICAO.capitulos;
   if (!caps?.length) { $('#btn-sumario').hidden = true; return; }
   $('#sum-tit').textContent = EDICAO.titulo;
-  $('#sum-leg').textContent = `Edição N° ${EDICAO.n} · ${TOTAL} páginas`;
+  $('#sum-leg').textContent = `Edição ${EDICAO.n} — ${TOTAL} páginas`;
   $('#caps').innerHTML = caps.map(([nome, p], i) => `
     <li><a href="#" data-pagina="${p}" data-cap="${i}">
       <span class="alg">${String(i + 1).padStart(2, '0')}</span>

@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Política de Privacidade · Revista ETER</title>
+<title>Política de Privacidade <i class="pt"></i> Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="premium/premium.css?v=202608211205">
+<link rel="stylesheet" href="premium/premium.css?v=202608211208">
 </head>
 <body class="pagina">
 
@@ -94,8 +94,8 @@
   data abaixo é atualizada.</p>
 
   <p class="pe">
-    Versão 2 · 21 de agosto de 2026<br>
-    <span id="p-pe-empresa">ETER COMPANY LTDA · CNPJ 37.223.854/0001-47</span><br>
+    Versão 2 <i class="pt"></i> 21 de agosto de 2026<br>
+    <span id="p-pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
     <a href="./">voltar para a revista</a>
   </p>
 </main>
@@ -106,7 +106,7 @@
    para o Davi — nunca um colchete cru para o leitor. */
 (async () => {
   try {
-    const cfg = (await (await fetch('edicoes.json?v=202608211205')).json()).config || {};
+    const cfg = (await (await fetch('edicoes.json?v=202608211208')).json()).config || {};
     const e = cfg.empresa || {};
     const falta = t => `<span class="aguardando">${t}</span>`;
 
@@ -123,7 +123,7 @@
       : ' — ' + falta('e-mail a preencher');
 
     document.getElementById('p-pe-empresa').textContent =
-      [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj].filter(Boolean).join(' · ');
+      [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj].filter(Boolean).join(' <i class="pt"></i> ');
   } catch (err) { console.warn('[eter] catálogo indisponível', err); }
 })();
 </script>
