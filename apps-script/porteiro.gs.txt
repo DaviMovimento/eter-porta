@@ -375,7 +375,7 @@ function limparTestes() {
   const planilha = SpreadsheetApp.getActiveSpreadsheet();
   const relatorio = [];
 
-  ['leads', 'acessos', 'assinantes', 'erros'].forEach(function (nome) {
+  ['leads', 'acessos', 'assinantes'].forEach(function (nome) {
     const aba = planilha.getSheetByName(nome);
     if (!aba) return;
     const dados = aba.getDataRange().getValues();
@@ -389,6 +389,14 @@ function limparTestes() {
     relatorio.push(nome + ': ' + apagadas + ' linha(s) de teste apagada(s), ' +
                    (aba.getLastRow() - 1) + ' linha(s) reais mantida(s)');
   });
+
+  /* a aba de erros é diagnóstico, não dado: esvazia inteira */
+  const erros = planilha.getSheetByName('erros');
+  if (erros && erros.getLastRow() > 1) {
+    const n = erros.getLastRow() - 1;
+    erros.deleteRows(2, n);
+    relatorio.push('erros: ' + n + ' registro(s) de diagnóstico limpo(s)');
+  }
 
   const texto = relatorio.join('\n');
   Logger.log(texto);
