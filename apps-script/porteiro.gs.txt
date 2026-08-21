@@ -1,0 +1,356 @@
+/**
+ * O PORTEIRO DA ETER
+ *
+ * Faz três trabalhos, e é de propósito que seja um arquivo só:
+ *
+ *   1. GRAVA o lead na aba 'leads' desta planilha, já com o CLUSTER da
+ *      árvore de links preenchido.
+ *   2. DECIDE se a pessoa pode abrir aquela edição de graça — vale uma a
+ *      cada 30 dias. Este é o único lugar do sistema que pode decidir isso
+ *      de verdade: o navegador da pessoa é a casa dela, e lá dentro
+ *      qualquer regra que eu escreva ela apaga em dois cliques.
+ *   3. GUARDA quem pagou (a Guru avisa sozinha), para assinante nunca ser
+ *      barrado pela regra do mês.
+ *
+ * ───────────────────────────────────────────────────────────────────────
+ * COMO PUBLICAR
+ *   Implantar → Nova implantação → engrenagem → App da Web
+ *   Executar como: Eu · Quem pode acessar: Qualquer pessoa   ← precisa
+ *   Implantar → Autorizar acesso → copie o URL terminado em /exec
+ *
+ * DEPOIS DE QUALQUER EDIÇÃO NESTE ARQUIVO:
+ *   Implantar → Gerenciar implantações → lápis → Versão: Nova → Implantar.
+ *   Só salvar NÃO publica a mudança. É o erro mais comum.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+
+/* ═══ CONFIGURAÇÃO ═════════════════════════════════════════════════════
+   Nada aqui é obrigatório. Do jeito que está, já funciona inteiro. */
+
+/* Quantos dias entre uma edição grátis e a próxima. */
+const DIAS_DE_ESPERA = 30;
+
+/* (opcional) Um endereço qualquer que receba uma cópia do lead em JSON,
+   na hora: ManyChat, Zapier, Make, n8n, um endpoint do WordPress. Deixe
+   em branco e o lead fica só na planilha — que já é o destino final. */
+const WEBHOOK_EXTRA = '';
+
+
+/* ═══ DAQUI PARA BAIXO NÃO PRECISA MEXER ═══════════════════════════════ */
+
+const ABA_LEADS = 'leads';
+const ABA_ACESSOS = 'acessos';
+const ABA_ASSINANTES = 'assinantes';
+
+const COLUNAS_LEADS = [
+  'quando', 'nome', 'email', 'whatsapp', 'edicao', 'onde', 'jornaleiro',
+  'utm_source', 'utm_medium', 'utm_campaign', 'pagina', 'origem', 'cluster',
+];
+
+const COLUNAS_ACESSOS = ['quando', 'email', 'whatsapp', 'assinante_manychat', 'edicao', 'libera_em'];
+
+const COLUNAS_ASSINANTES = ['quando', 'email', 'whatsapp', 'produto', 'vale_ate', 'status'];
+
+
+function doPost(e) {
+  const trava = LockService.getScriptLock();
+  try {
+    /* Sem a trava, dois cadastros no mesmo segundo escrevem na mesma linha
+       e um apaga o outro. Trinta segundos é de sobra. */
+    trava.waitLock(30000);
+
+    const d = JSON.parse(e.postData.contents);
+    const acao = d.acao || 'lead';
+
+    if (acao === 'pode_ler') return responder(podeLer(d));
+    if (acao === 'compra') return responder(registrarCompra(d));
+    /* a Guru manda o formato dela, sem campo "acao" — reconhece pelo corpo */
+    if (d.subscription || d.payment || d.contact) return responder(registrarCompra(guruParaNosso(d)));
+    return responder(registrarLead(d));
+
+  } catch (err) {
+    registrarErro(err, e);
+    /* Falha do porteiro NUNCA pode trancar um leitor: na dúvida, libera.
+       Perder um controle custa menos do que barrar quem já deu o e-mail. */
+    return responder({ ok: false, erro: String(err), liberado: true });
+  } finally {
+    try { trava.releaseLock(); } catch (_) {}
+  }
+}
+
+
+function doGet(e) {
+  /* serve para testar no navegador e para a página perguntar sem POST */
+  const p = (e && e.parameter) || {};
+  if (p.acao === 'pode_ler') return responder(podeLer(p));
+  return responder({ ok: true, vivo: true, espera: DIAS_DE_ESPERA + ' dias' });
+}
+
+
+/* ── 1 · grava o lead ────────────────────────────────────────────────── */
+
+function registrarLead(d) {
+  const aba = pegarAba(ABA_LEADS, COLUNAS_LEADS);
+
+  /* A aba 'leads' já existia antes de o e-mail entrar no formulário, e você
+     pode reordenar ou acrescentar coluna quando quiser. Por isso nada aqui
+     escreve por POSIÇÃO: lê o cabeçalho e escreve por NOME. A planilha é
+     sua, não do script. */
+  const valores = {
+    quando: new Date(),
+    nome: d.nome || '',
+    email: String(d.email || '').trim().toLowerCase(),
+    whatsapp: "'" + soDigitos(d.whatsapp || ''),   // a aspa impede o Sheets de virar número
+    edicao: d.edicao || '',
+    onde: d.onde || '',
+    jornaleiro: d.jornaleiro || '',
+    utm_source: d.utm_source || '',
+    utm_medium: d.utm_medium || '',
+    utm_campaign: d.utm_campaign || '',
+    pagina: d.pagina || '',
+    origem: d.referrer || '',
+    cluster: clusterDe(d),
+  };
+
+  const cab = cabecalho(aba, Object.keys(valores));
+  aba.appendRow(cab.map(function (c) {
+    return Object.prototype.hasOwnProperty.call(valores, c) ? valores[c] : '';
+  }));
+
+  repassar(valores, d);
+
+  /* Quem se cadastra para ler já está gastando a edição do mês. */
+  const veredito = d.edicao ? podeLer(d) : { liberado: true };
+  return Object.assign({ ok: true }, veredito);
+}
+
+
+/**
+ * Devolve o cabeçalho da aba, acrescentando as colunas que faltarem — sem
+ * mexer em nenhuma que já exista nem na ordem que você escolheu.
+ */
+function cabecalho(aba, precisa) {
+  const largura = Math.max(aba.getLastColumn(), 1);
+  let cab = aba.getRange(1, 1, 1, largura).getValues()[0]
+    .map(function (c) { return String(c).trim(); });
+
+  const faltam = precisa.filter(function (c) { return cab.indexOf(c) === -1; });
+  if (faltam.length) {
+    aba.getRange(1, cab.length + 1, 1, faltam.length).setValues([faltam])
+      .setFontWeight('bold').setBackground('#241A12').setFontColor('#DBC7A4');
+    cab = cab.concat(faltam);
+  }
+  return cab;
+}
+
+
+/**
+ * Lê o CLUSTER direto da aba 'links': é ela que define quem é PERFIL ETER,
+ * PERFIL DAVI RIBAS ou EMBAIXADORES. A régua vive num lugar só — cluster
+ * novo na árvore, e o lead já nasce com ele, sem tocar em código.
+ */
+function clusterDe(d) {
+  try {
+    const links = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('links');
+    if (!links) return '';
+    const linhas = links.getDataRange().getValues();
+    const cab = linhas[0].map(function (c) { return String(c).trim().toLowerCase(); });
+    const iCluster = cab.indexOf('cluster'), iFonte = cab.indexOf('utm_source');
+    if (iCluster < 0 || iFonte < 0) return '';
+    const fonte = String(d.utm_source || '').trim().toLowerCase();
+    if (!fonte) return '';
+    for (let i = 1; i < linhas.length; i++) {
+      if (String(linhas[i][iFonte]).trim().toLowerCase() === fonte) return linhas[i][iCluster];
+    }
+    return '';
+  } catch (_) { return ''; }
+}
+
+
+/**
+ * Entrega uma cópia do lead a quem você mandar. Se falhar, não faz barulho:
+ * o lead já está na planilha, e um repasse que cai não pode derrubar a
+ * leitura de ninguém.
+ */
+function repassar(valores, cru) {
+  if (!WEBHOOK_EXTRA) return;
+  try {
+    UrlFetchApp.fetch(WEBHOOK_EXTRA, {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify(Object.assign({}, valores, {
+        whatsapp: soDigitos(cru.whatsapp || ''),   // sem a aspa do Sheets
+        ms: cru.ms || '',
+        quando: new Date().toISOString(),
+      })),
+      muteHttpExceptions: true,
+    });
+  } catch (err) {
+    registrarErro('repasse: ' + err, null);
+  }
+}
+
+
+/* ── 2 · quem pagou entra sem passar pelo porteiro ───────────────────── */
+
+/**
+ * A Guru chama este endereço sozinha a cada compra, se você cadastrar a URL
+ * dele em Configurações → Webhooks (evento: venda aprovada). É assim que a
+ * página sabe quem pagou — sem isso, um assinante seria barrado pela regra
+ * da edição do mês como qualquer outra pessoa.
+ */
+function registrarCompra(d) {
+  const aba = pegarAba(ABA_ASSINANTES, COLUNAS_ASSINANTES);
+  const dias = d.dias || (String(d.produto || '').match(/anual|ano/i) ? 365 : 30);
+  aba.appendRow([
+    new Date(),
+    String(d.email || '').trim().toLowerCase(),
+    "'" + soDigitos(d.whatsapp || ''),
+    d.produto || '',
+    new Date(Date.now() + dias * 86400000),
+    d.status || 'ativo',
+  ]);
+  return { ok: true, registrado: true, dias: dias };
+}
+
+
+/* traduz o corpo que a Guru manda para os nomes que este arquivo usa */
+function guruParaNosso(g) {
+  const c = g.contact || {};
+  const p = g.product || {};
+  return {
+    email: c.email || '',
+    nome: c.name || '',
+    whatsapp: (c.phone_number || '') + '',
+    produto: p.name || g.product_name || '',
+    status: g.status || 'ativo',
+  };
+}
+
+
+function temPasse(email, zap) {
+  const linhas = pegarAba(ABA_ASSINANTES, COLUNAS_ASSINANTES).getDataRange().getValues().slice(1);
+  const agora = new Date();
+  return linhas.some(function (l) {
+    const mesmaPessoa = (email && String(l[1]).toLowerCase() === email)
+                     || (zap && soDigitos(l[2]) === zap);
+    const valendo = l[4] && new Date(l[4]) > agora;
+    const ativo = !String(l[5] || '').match(/cancel|reembols|estorn|charge/i);
+    return mesmaPessoa && valendo && ativo;
+  });
+}
+
+
+/* ── 3 · o porteiro: uma edição a cada 30 dias ───────────────────────── */
+
+function podeLer(d) {
+  const email = String(d.email || '').trim().toLowerCase();
+  const zap = soDigitos(d.whatsapp || '');
+  /* Quem chega pelo ManyChat não preenche formulário (é o c=1 da árvore de
+     links), então não temos e-mail nem telefone — mas o ManyChat sabe quem
+     é. Se ele mandar o id do assinante no link (&ms=...), o porteiro conta
+     a edição dessa pessoa sem que nenhum dado pessoal ande pela URL. */
+  const ms = String(d.ms || '').trim();
+  const edicao = String(d.edicao || '');
+  if (!email && !zap && !ms) return { liberado: true, motivo: 'sem identificação' };
+
+  /* assinante não passa pelo porteiro */
+  if ((email || zap) && temPasse(email, zap)) {
+    return { liberado: true, motivo: 'passe ativo', assinante: true };
+  }
+
+  const aba = pegarAba(ABA_ACESSOS, COLUNAS_ACESSOS);
+  const linhas = aba.getDataRange().getValues().slice(1);
+  const agora = new Date();
+
+  /* A mesma pessoa pode ser o mesmo e-mail OU o mesmo telefone: trocar um
+     dos dois e continuar lendo seria a fuga mais óbvia. */
+  const dela = linhas.filter(function (l) {
+    return (email && String(l[1]).toLowerCase() === email)
+        || (zap && soDigitos(l[2]) === zap)
+        || (ms && String(l[3]) === ms);
+  });
+
+  /* Já abriu ESTA edição: continua podendo ler, sempre. O que ela gastou
+     foi a escolha, não o número de visitas. */
+  const jaEsta = dela.filter(function (l) { return String(l[4]) === edicao; })[0];
+  if (jaEsta) return { liberado: true, motivo: 'é a edição que ela escolheu' };
+
+  /* Abriu OUTRA há menos de 30 dias: espera. */
+  const recentes = dela
+    .map(function (l) { return { edicao: String(l[4]), liberaEm: new Date(l[5]) }; })
+    .filter(function (a) { return a.liberaEm > agora; })
+    .sort(function (a, b) { return b.liberaEm - a.liberaEm; });
+
+  if (recentes.length) {
+    return {
+      liberado: false,
+      motivo: 'já escolheu a edição deste mês',
+      edicaoEmCurso: recentes[0].edicao,
+      liberaEm: recentes[0].liberaEm.toISOString(),
+      liberaEmBR: formatarBR(recentes[0].liberaEm),
+      diasQueFaltam: Math.ceil((recentes[0].liberaEm - agora) / 86400000),
+    };
+  }
+
+  /* Está livre: anota a escolha e abre. */
+  const liberaEm = new Date(agora.getTime() + DIAS_DE_ESPERA * 86400000);
+  aba.appendRow([agora, email, "'" + zap, ms, edicao, liberaEm]);
+  return {
+    liberado: true,
+    motivo: 'edição do mês',
+    liberaEm: liberaEm.toISOString(),
+    liberaEmBR: formatarBR(liberaEm),
+  };
+}
+
+
+/* ── utilidades ──────────────────────────────────────────────────────── */
+
+function soDigitos(s) { return String(s || '').replace(/\D/g, ''); }
+
+function formatarBR(data) {
+  return Utilities.formatDate(data, 'America/Sao_Paulo', 'dd/MM');
+}
+
+function pegarAba(nome, colunas) {
+  const planilha = SpreadsheetApp.getActiveSpreadsheet();
+  let aba = planilha.getSheetByName(nome);
+  if (!aba) {
+    aba = planilha.insertSheet(nome);
+    aba.appendRow(colunas);
+    aba.getRange(1, 1, 1, colunas.length).setFontWeight('bold')
+      .setBackground('#241A12').setFontColor('#DBC7A4');
+    aba.setFrozenRows(1);
+  }
+  return aba;
+}
+
+function registrarErro(err, e) {
+  try {
+    const p = SpreadsheetApp.getActiveSpreadsheet();
+    const erros = p.getSheetByName('erros') || p.insertSheet('erros');
+    erros.appendRow([new Date(), String(err),
+      e && e.postData ? e.postData.contents : '']);
+  } catch (_) {}
+}
+
+function responder(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+
+/* ── teste: rode esta função no editor para conferir tudo de uma vez ─── */
+function testar() {
+  const falso = {
+    nome: 'Teste da Silva', email: 'teste@exemplo.com',
+    whatsapp: '5511999998888', edicao: '007', onde: 'teste-manual',
+    utm_source: 'perfil-eter',
+  };
+  Logger.log('cluster achado: ' + clusterDe(falso));
+  Logger.log('1a vez:          ' + JSON.stringify(podeLer(falso)));
+  Logger.log('mesma edicao:    ' + JSON.stringify(podeLer(falso)));
+  falso.edicao = '006';
+  Logger.log('outra edicao:    ' + JSON.stringify(podeLer(falso)));
+}
