@@ -1148,7 +1148,15 @@ function ligar() {
 
 iniciar().catch(err => {
   console.error(err);
-  document.body.innerHTML = '<p style="padding:2rem;font-family:sans-serif">Não consegui carregar o catálogo.</p>';
+  /* Falhar também é a marca falando: fonte de sistema num parágrafo solto
+     é a página dizendo que desistiu. */
+  document.body.innerHTML = `
+    <div class="tombo">
+      <img src="${ONDE_MORO.replace(/[^/]*$/, '')}monograma.webp" alt="">
+      <h2>A revista não abriu</h2>
+      <p>Alguma coisa entre você e a gente falhou no caminho. Não é você — e não custa tentar de novo.</p>
+      <button class="btn btn-passe" onclick="location.reload()">Tentar de novo</button>
+    </div>`;
 });
 
 })();

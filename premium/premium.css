@@ -11,6 +11,7 @@
 
 :root{
   color-scheme:light;
+  --anel:0 0 0 2px var(--ouro-vivo);   /* a peça selecionada */
   /* A TRJN e a Sloop têm um peso só. Sem isto o navegador FABRICA um negrito
      engrossando o traço, e a mesma fonte aparece em dois pesos na mesma
      página — o defeito tipográfico mais visível que havia aqui. */
@@ -41,6 +42,21 @@
   --corpo:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
 
   --barra-h:4.4rem;
+
+  /* Três degraus de elevação, uma tinta só. Havia treze receitas e quatro
+     tintas diferentes — o que faz cada peça parecer de um projeto. */
+  --elev-1:0 1px 2px rgba(30,24,19,.14);
+  --elev-2:0 1px 2px rgba(30,24,19,.16), 0 10px 22px -10px rgba(30,24,19,.28);
+  --elev-3:0 2px 4px rgba(30,24,19,.2), 0 22px 44px -18px rgba(30,24,19,.4);
+
+  /* e três tempos, uma curva — havia dez durações e seis curvas */
+  --t-rapido:.18s;
+  --t-medio:.3s;
+  --t-lento:.62s;
+  --curva:cubic-bezier(.16,1,.3,1);
+
+  /* o grão do papel: sem ele o fundo é tela, não superfície */
+  --grao:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.42'/%3E%3C/svg%3E");
   --cadeado:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3Crect x='4' y='10' width='16' height='11' rx='1.6' fill='%23000'/%3E%3C/svg%3E");
 }
 
@@ -73,7 +89,7 @@ body.lendo .topo{display:none}
 .topo-nav a{
   font-family:var(--rotulo);font-size:.6rem;font-weight:700;
   letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-2);
-  text-decoration:none;transition:color .2s;
+  text-decoration:none;transition:color var(--t-rapido);
 }
 .topo-nav a:hover{color:var(--tinta)}
 .topo-nav a.destaque{
@@ -135,7 +151,7 @@ body.lendo .topo{display:none}
   /* dessaturado o bastante para não competir, vivo o bastante para
      ainda ser papel impresso e não uma mancha cinza */
   filter:saturate(.55) contrast(.98) brightness(1.02);
-  box-shadow:0 1px 2px rgba(30,24,19,.14),0 18px 32px -16px rgba(30,24,19,.38);
+  box-shadow:var(--elev-3);
 }
 /* o laço fecha na metade porque a tira é a mesma sequência, duas vezes */
 @keyframes deriva{from{transform:translateY(0)}to{transform:translateY(-50%)}}
@@ -232,8 +248,8 @@ body.lendo .topo{display:none}
 .pg-slot{
   position:relative;width:50%;height:100%;
   background:var(--papel-2);overflow:hidden;
-  box-shadow:0 1px 2px rgba(30,24,19,.2),0 16px 30px -10px rgba(30,24,19,.28);
-  transition:opacity .3s;
+  box-shadow:var(--elev-2);
+  transition:opacity var(--t-medio);
 }
 .pg-slot img{width:100%;height:100%;object-fit:cover;display:block}
 .spread.fechada .pg-slot.esq{opacity:0}
@@ -242,7 +258,7 @@ body.lendo .topo{display:none}
 .lombada{
   position:absolute;top:0;bottom:0;left:50%;width:3.4rem;z-index:4;
   transform:translateX(-50%);pointer-events:none;
-  transition:opacity .3s;
+  transition:opacity var(--t-medio);
   background:linear-gradient(90deg,
     rgba(30,24,19,0) 0%, rgba(30,24,19,.13) 38%, rgba(30,24,19,.26) 49%,
     rgba(255,255,255,.16) 51%, rgba(30,24,19,.11) 62%, rgba(30,24,19,0) 100%);
@@ -356,7 +372,7 @@ body.lendo .topo{display:none}
 .virador.travado .verso img{filter:blur(9px) saturate(.6) brightness(.94);transform:scale(1.14)}
 .tranca{
   position:absolute;inset:0;z-index:9;
-  transition:left .3s cubic-bezier(.16,1,.3,1);
+  transition:left var(--t-medio) var(--curva);
   display:flex;align-items:center;justify-content:center;
   background:linear-gradient(180deg,rgba(232,226,214,.24),rgba(30,24,19,.16));
   animation:revela .4s ease both;
@@ -367,8 +383,8 @@ body.lendo .topo{display:none}
   padding:1rem 1.4rem;max-width:88%;
   background:rgba(242,238,230,.95);color:var(--ouro-texto);
   border:1px solid var(--ouro);border-radius:1px;
-  box-shadow:0 10px 30px rgba(30,24,19,.28);
-  cursor:pointer;transition:background .2s,transform .2s;
+  box-shadow:var(--elev-2);
+  cursor:pointer;transition:background var(--t-rapido),transform .2s;
 }
 .tranca-btn:hover{background:var(--papel);transform:translateY(-1px)}
 .tranca-tit{font-family:var(--display);font-size:.86rem;letter-spacing:.02em;color:var(--tinta)}
@@ -385,8 +401,8 @@ body.lendo .topo{display:none}
   display:none;align-items:center;justify-content:center;
   background:rgba(242,238,230,.92);color:var(--tinta);
   border:1px solid var(--linha-2);font-size:1.05rem;
-  box-shadow:0 4px 14px rgba(30,24,19,.18);
-  transition:background .2s,transform .2s;
+  box-shadow:var(--elev-2);
+  transition:background var(--t-rapido),transform .2s;
 }
 .seta:not([disabled]):hover{background:var(--papel);transform:translateY(-50%) scale(1.06)}
 .seta.esq{left:-1.3rem}
@@ -403,7 +419,7 @@ body.lendo .topo{display:none}
 .pulso .trilho{
   flex:0 1 7rem;height:2px;background:var(--linha-2);border-radius:2px;position:relative;overflow:hidden;
 }
-.pulso .trilho i{position:absolute;inset:0;background:var(--ouro-vivo);transform:scaleX(var(--f,.02));transform-origin:left;transition:transform .3s}
+.pulso .trilho i{position:absolute;inset:0;background:var(--ouro-vivo);transform:scaleX(var(--f,.02));transform-origin:left;transition:transform var(--t-medio)}
 
 /* a faixa de miniaturas: deslizar com o dedo, clicar para ler */
 .faixa{
@@ -418,13 +434,13 @@ body.lendo .topo{display:none}
   flex:0 0 4.2rem;scroll-snap-align:center;
   aspect-ratio:1/1.414;border-radius:1px;overflow:hidden;
   background:var(--papel-2);position:relative;
-  box-shadow:0 1px 4px rgba(30,24,19,.18);
+  box-shadow:var(--elev-1);
   opacity:.5;transform:scale(.92);
-  transition:opacity .3s,transform .3s,box-shadow .3s;
+  transition:opacity var(--t-medio),transform .3s,box-shadow .3s;
   cursor:pointer;
 }
 .mini img{width:100%;height:100%;object-fit:cover}
-.mini.ativa{opacity:1;transform:scale(1);box-shadow:0 2px 10px rgba(30,24,19,.3),0 0 0 1px var(--ouro-vivo)}
+.mini.ativa{opacity:1;transform:scale(1);box-shadow:var(--anel),var(--elev-2)}
 /* trancada: some o texto, fica a mancha da página e o cadeado */
 .mini.travada{background:var(--papel-3);opacity:.62}
 .mini.travada.ativa{opacity:1}
@@ -497,16 +513,16 @@ h1 em{
   display:block;width:100%;text-align:center;text-decoration:none;
   font-family:var(--corpo);font-weight:600;font-size:.94rem;
   padding:.95rem 1.2rem;border-radius:2px;
-  transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .2s,filter .2s,background .2s;
+  transition:transform var(--t-rapido) var(--curva),box-shadow var(--t-rapido),filter .2s,background .2s;
 }
 .btn:active{transform:scale(.985)}
 .btn-ler{background:transparent;color:var(--tinta);border:1px solid var(--linha-2)}
 .btn-ler:hover{background:rgba(30,24,19,.045);border-color:var(--tinta-3)}
 .btn-ler .sub{display:block;font-size:.69rem;font-weight:400;color:var(--tinta-3);margin-top:.18rem}
 .btn-passe{
-  background:linear-gradient(150deg,#C9A85E 0%,var(--ouro-vivo) 46%,#836A32 100%);
+  background:linear-gradient(150deg,#C9A85E 0%,var(--ouro-vivo) 46%,#9A7C38 100%);
   color:#17110A;font-weight:700;
-  box-shadow:0 1px 2px rgba(30,24,19,.2),0 10px 26px -10px rgba(143,115,51,.6);
+  box-shadow:var(--elev-2);
 }
 .btn-passe:hover{filter:brightness(1.05)}
 
@@ -520,7 +536,7 @@ h1 em{
 .passe{
   background:var(--cafe);color:var(--sobre-escuro);
   border-radius:3px;padding:1.35rem 1.3rem 1.25rem;position:relative;overflow:hidden;
-  box-shadow:0 2px 6px rgba(30,24,19,.2),0 16px 40px -18px rgba(30,24,19,.5);
+  box-shadow:var(--elev-3);
 }
 .passe::after{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ouro-vivo),transparent)}
 .passe-topo{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding-bottom:.9rem;margin-bottom:1rem;border-bottom:1px solid rgba(219,199,164,.18)}
@@ -579,17 +595,17 @@ h1 em{
 
 .regua{position:fixed;top:0;left:0;right:0;height:2px;z-index:70;display:flex;gap:1px;padding:0 1px;background:rgba(0,0,0,.5)}
 .regua i{flex:1;background:rgba(240,234,224,.14);position:relative;overflow:hidden;border-radius:1px}
-.regua i::after{content:"";position:absolute;inset:0;background:var(--ouro-vivo);transform:scaleX(var(--f,0));transform-origin:left;transition:transform .25s ease-out}
+.regua i::after{content:"";position:absolute;inset:0;background:var(--ouro-vivo);transform:scaleX(var(--f,0));transform-origin:left;transition:transform var(--t-medio) ease-out}
 
 .cromo{
   position:fixed;top:0;left:0;right:0;z-index:60;
   display:flex;align-items:center;gap:.3rem;padding:.7rem;
   background:linear-gradient(to bottom,rgba(15,12,9,.96),rgba(15,12,9,.86) 68%,transparent);
-  transition:opacity .35s,transform .35s;
+  transition:opacity var(--t-medio),transform .35s;
 }
 .cromo.oculto{opacity:0;transform:translateY(-100%);pointer-events:none}
 .cromo-tit{flex:1;min-width:0;font-family:var(--display);font-size:.9rem;color:var(--sobre-escuro);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:.3rem}
-.ic{width:2.05rem;height:2.05rem;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:var(--ouro-claro);border-radius:50%;font-size:1rem;line-height:1;transition:background .2s,color .2s}
+.ic{width:2.05rem;height:2.05rem;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:var(--ouro-claro);border-radius:50%;font-size:1rem;line-height:1;transition:background var(--t-rapido),color .2s}
 .ic:hover{background:rgba(240,234,224,.1)}
 .ic.ativo{background:var(--ouro-vivo);color:#17110A}
 .zoom-n{
@@ -612,11 +628,11 @@ body.lendo{scroll-snap-type:y proximity}
   overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
   scroll-snap-align:start;scroll-margin-top:3.2rem;
-  border-radius:1px;box-shadow:0 1px 2px rgba(0,0,0,.6),0 12px 34px -14px rgba(0,0,0,.85);
+  border-radius:1px;box-shadow:var(--elev-3);
   background:var(--cafe);
 }
 .folha-p::-webkit-scrollbar{display:none}
-.folha-in{width:var(--larg,100%);transition:width .24s cubic-bezier(.16,1,.3,1)}
+.folha-in{width:var(--larg,100%);transition:width var(--t-medio) var(--curva)}
 
 .pag{
   width:100%;max-width:none;aspect-ratio:1/1.414;
@@ -651,7 +667,7 @@ body.lendo{scroll-snap-type:y proximity}
   background:linear-gradient(to top,rgba(15,12,9,.99),rgba(15,12,9,.93));
   border-top:1px solid rgba(240,234,224,.12);
   transform:translateY(calc(-100% + var(--y,0px))) scale(var(--vv-escala,1));
-  transition:transform .3s cubic-bezier(.16,1,.3,1);
+  transition:transform var(--t-medio) var(--curva);
 }
 .barra.oculta{--y:115%}
 .barra .mono{width:1.7rem;flex:0 0 auto;opacity:.4;filter:invert(1)}
@@ -682,14 +698,14 @@ dialog[open]{animation:caixaEntra .38s cubic-bezier(.16,1,.3,1) both}
 }
 .painel,.form{
   position:relative;background:var(--papel);border-radius:3px;
-  padding:2rem 1.5rem 1.6rem;box-shadow:0 30px 90px rgba(20,15,10,.5);
+  padding:2rem 1.5rem 1.6rem;box-shadow:var(--elev-3);
 }
 .fechar{position:absolute;top:.55rem;right:.7rem;font-size:1.35rem;line-height:1;color:var(--tinta-3);padding:.3rem .45rem}
 .painel h2,.form h2{font-family:var(--display);font-size:1.45rem;line-height:1.14;color:var(--tinta);margin-bottom:.25rem}
 .painel .leg{font-family:var(--rotulo);font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:1.2rem}
 
 .caps{list-style:none;display:flex;flex-direction:column}
-.caps a{display:flex;gap:.85rem;align-items:baseline;padding:.75rem .2rem;border-bottom:1px solid var(--linha);text-decoration:none;color:var(--tinta-2);transition:padding-left .2s,color .2s}
+.caps a{display:flex;gap:.85rem;align-items:baseline;padding:.75rem .2rem;border-bottom:1px solid var(--linha);text-decoration:none;color:var(--tinta-2);transition:padding-left var(--t-rapido),color .2s}
 .caps a:hover{padding-left:.45rem;color:var(--tinta)}
 .caps a.atual{color:var(--ouro)}
 .caps .alg{font-family:var(--display);font-size:.86rem;color:var(--ouro);flex:0 0 1.5rem}
@@ -703,7 +719,7 @@ dialog[open]{animation:caixaEntra .38s cubic-bezier(.16,1,.3,1) both}
 .form .dek2{font-size:.85rem;line-height:1.5;color:var(--tinta-2);text-align:center;margin-bottom:1.4rem}
 .campo{margin-bottom:.9rem}
 .campo label{display:block;font-family:var(--rotulo);font-size:.55rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:.3rem}
-.campo input{width:100%;font-family:var(--corpo);font-size:1rem;padding:.68rem 0;border:0;border-bottom:1px solid var(--linha-2);background:transparent;color:var(--tinta);transition:border-color .25s}
+.campo input{width:100%;font-family:var(--corpo);font-size:1rem;padding:.68rem 0;border:0;border-bottom:1px solid var(--linha-2);background:transparent;color:var(--tinta);transition:border-color var(--t-medio)}
 .campo input::placeholder{color:var(--tinta-3);opacity:.78}
 .campo input:focus{border-bottom-color:var(--ouro-vivo)}
 /* o foco de teclado é a única pista de quem não usa mouse: nunca se apaga.
@@ -734,7 +750,7 @@ dialog[open]{animation:caixaEntra .38s cubic-bezier(.16,1,.3,1) both}
   font-family:var(--rotulo);font-size:.7rem;font-weight:700;
   letter-spacing:.1em;text-transform:uppercase;
   padding:.85rem 1rem;border-radius:1px;cursor:pointer;
-  transition:border-color .2s,color .2s;
+  transition:border-color var(--t-rapido),color .2s;
 }
 .btn-fantasma:hover{border-color:var(--ouro);color:var(--ouro)}
 .btn-fantasma[hidden]{display:none}
@@ -782,12 +798,12 @@ dialog[open]{animation:caixaEntra .38s cubic-bezier(.16,1,.3,1) both}
 #acervo .capinha{
   display:block;aspect-ratio:1/1.414;overflow:hidden;
   background:var(--papel-2);border-radius:1px;
-  box-shadow:0 1px 3px rgba(30,24,19,.22),0 8px 18px -8px rgba(30,24,19,.3);
-  transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s;
+  box-shadow:var(--elev-2);
+  transition:transform var(--t-medio) var(--curva),box-shadow .25s;
 }
 #acervo .capinha img{width:100%;height:100%;object-fit:cover;display:block}
-#acervo a:hover .capinha{transform:translateY(-3px);box-shadow:0 2px 5px rgba(30,24,19,.26),0 14px 26px -10px rgba(30,24,19,.4)}
-#acervo a.atual .capinha{box-shadow:0 0 0 2px var(--ouro-vivo),0 8px 18px -8px rgba(30,24,19,.3)}
+#acervo a:hover .capinha{transform:translateY(-3px);box-shadow:var(--elev-2)}
+#acervo a.atual .capinha{box-shadow:var(--anel),var(--elev-2)}
 #acervo .embreve{
   display:flex;align-items:center;justify-content:center;height:100%;
   font-family:var(--rotulo);font-size:.5rem;font-style:normal;font-weight:700;
@@ -936,7 +952,7 @@ body.pagina{
   font-family:var(--rotulo);font-size:.6rem;font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;
   color:var(--tinta-3);text-decoration:none;border-bottom:1px solid var(--linha-2);
-  padding-bottom:.15rem;transition:color .2s,border-color .2s;
+  padding-bottom:.15rem;transition:color var(--t-rapido),border-color .2s;
 }
 .recusa a:hover{color:var(--tinta-2);border-color:var(--tinta-3)}
 .recusa p{
@@ -968,7 +984,7 @@ button:disabled:hover,.btn:disabled:hover{filter:saturate(.4)}
 .fechar{
   min-width:2.75rem;min-height:2.75rem;
   display:flex;align-items:center;justify-content:center;
-  border-radius:50%;transition:background .2s,color .2s;
+  border-radius:50%;transition:background var(--t-rapido),color .2s;
 }
 .fechar:hover{background:rgba(30,24,19,.07);color:var(--tinta)}
 .fechar:active{background:rgba(30,24,19,.12)}
@@ -1111,7 +1127,7 @@ h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
   background:linear-gradient(to top,var(--papel) 62%,rgba(242,238,230,.92));
   border-top:1px solid var(--linha);
   backdrop-filter:blur(10px);
-  transform:translateY(0);transition:transform .34s cubic-bezier(.16,1,.3,1);
+  transform:translateY(0);transition:transform var(--t-medio) var(--curva);
   display:none;
 }
 .convite-fixo.oculto{transform:translateY(115%)}
@@ -1147,3 +1163,29 @@ h1,h2,h3,h4{font-weight:500}
   font-size:1.5em;color:var(--ouro-claro);line-height:.8;
 }
 .papelada h1,.papelada h2{font-weight:400}
+
+
+/* ═══ O GRÃO ══════════════════════════════════════════════════
+   Uma superfície de papel não é uma cor chapada. O grão é o que
+   separa "fundo bege" de "papel" — e custa 0,4 KB, gerado no
+   próprio CSS, sem imagem nenhuma para baixar. */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:var(--grao);
+  opacity:.5;mix-blend-mode:multiply;
+}
+body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
+.papelada::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:var(--grao);opacity:.42;mix-blend-mode:multiply;
+}
+
+/* a tela de falha deixa de ser texto cru em fonte de sistema */
+.tombo{
+  min-height:70svh;display:grid;place-content:center;justify-items:center;
+  gap:var(--e3);padding:var(--e6) var(--e4);text-align:center;
+}
+.tombo img{width:4.4rem;opacity:.5}
+.tombo h2{font-family:var(--display);font-weight:500;font-size:var(--d-1);color:var(--tinta)}
+.tombo p{font-size:var(--t-2);color:var(--tinta-2);max-width:26rem}
+.tombo button{margin-top:var(--e2)}
