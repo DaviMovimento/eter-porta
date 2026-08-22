@@ -190,11 +190,15 @@ function montarChegada() {
   $('#promessa').textContent = EDICAO.nestaEdicao || EDICAO.subtitulo;
   if (EDICAO.convite) { $('#convite-frase').textContent = EDICAO.convite; $('#convite-frase').hidden = false; }
 
-  const f = [];
-  if (caps.length) f.push(`<b>${caps.length}</b> capítulos`);
-  if (TOTAL) f.push(`<b>${TOTAL}</b> páginas`);
-  if (EDICAO.minutos) f.push(`<b>${EDICAO.minutos}</b> min`);
-  $('#ficha').innerHTML = f.map(t => `<span>${t}</span>`).join('');
+  /* Aqui ficava a ficha técnica — capítulos, páginas, minutos. Contagem
+     não é valor: ninguém compra uma revista porque ela tem 59 páginas, e
+     dizer o tamanho antes de dizer a promessa mede o esforço em vez do
+     ganho. No lugar entra o SUBTÍTULO, que é a promessa da edição em uma
+     linha, logo abaixo do título — manchete e olho, como em revista. */
+  const olho = $('#ficha');
+  olho.className = 'dek-ed';
+  olho.textContent = EDICAO.subtitulo || '';
+  olho.hidden = !EDICAO.subtitulo;
 
   $('#passe-rot').innerHTML = pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '));
   $('#passe-preco').textContent = CFG.precoPasse;
@@ -257,7 +261,7 @@ function montarFundo() {
      colocada no lugar do funil onde ela argumenta: depois da espiada e do
      botão de graça, logo antes do preço. */
   const noCelular = innerWidth < 960;
-  const colunas = noCelular ? 1 : 2;
+  const colunas = 1;                  /* um trilho só, largo o bastante para ver */
   const minimo = noCelular ? 6 : 4;   /* menos que isto e a volta fica evidente */
 
   const mosaico = $('#mosaico');
@@ -274,8 +278,13 @@ function montarFundo() {
     if (!fila.length) fila = provas.slice();
     while (fila.length < minimo) fila = fila.concat(fila);
 
+    /* no desktop a coluna passou a ter ~280px: a miniatura de 240 esticava
+       e o quadro ficava mole. Lá vai a de 800, que são 7 arquivos únicos
+       (o laço repete as MESMAS URLs, e a segunda volta sai do cache).
+       No celular a faixa é pequena e a de 240 continua sendo a certa. */
+    const largura = noCelular ? 240 : 800;
     const paginas = fila.map(n =>
-      `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async"
+      `<img src="${pag(n, largura)}" alt="" loading="lazy" decoding="async"
         width="240" height="339">`).join('');
 
     /* a duração acompanha o tamanho da fila: assim a página anda sempre na
@@ -465,7 +474,7 @@ function montarEspiada() {
     const frente = k > folha;
 
     /* o embaçado tem que entrar ANTES do giro: a legenda só roda no fim, e
-       durante os 720ms da virada a página travada apareceria limpa na folha */
+       durante os 950ms da virada a página travada apareceria limpa na folha */
     marcarTravas(k);
 
     if (frente) {
@@ -500,7 +509,7 @@ function montarEspiada() {
       legendar(origem);
       anunciar(origem);
       seguirPendente();
-    }, semMovimento() ? 20 : 730);   /* a virada dura 720ms; sem movimento, quase nada */
+    }, semMovimento() ? 20 : 960);   /* a virada dura 950ms; sem movimento, quase nada */
   }
 
   function seguirPendente() {
