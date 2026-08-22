@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221120') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221120') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221120') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221129') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221129') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221129') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -697,14 +697,11 @@ h1 em{
    CELULAR — a ordem que a mão lê
    ═══════════════════════════════════════════════════════════════
    No desktop a revista fica ao lado dos dizeres e a ordem do HTML não
-   importa. No celular importa muito: quem chega tinha a revista antes
-   de saber o que estava vendo. Agora a manchete abre a página — número,
-   título, promessa e ficha —, a demonstração vem provar o que a manchete
-   prometeu, e os dois botões nascem colados nela, onde a decisão acontece.
-   O celular não é o desktop estreito. Lá a decisão inteira tem que caber
-   na primeira dobra: QUE edição é esta (número e título), COMO ela é
-   (a revista espiável) e O QUE fazer (o botão de graça). Só depois vem
-   o argumento — a promessa, as provas dos frameworks, e o preço.
+   importa. O celular não é o desktop estreito: lá a decisão inteira cabe
+   na primeira dobra — QUE edição é esta (número e título), O QUE ela
+   promete (o subtítulo), COMO ela é (a revista espiável) e O QUE fazer
+   (o botão de graça). Só depois vem o argumento longo, as provas dos
+   frameworks e o preço.
 
    Por isso a promessa desce. Ela tem 250px de altura no celular: mantida
    em cima, empurrava o preview e o botão para fora da tela, e o leitor
@@ -741,14 +738,24 @@ h1 em{
      As miniaturas são o índice dela, e índice não compete com o objeto —
      encolhem para metade da largura que tinham. Antes as duas coisas
      tinham quase o mesmo peso e a fila de baixo puxava o olho. */
-  .visor{max-width:19rem}
+     A conta do tamanho: o visor guarda um ESPALHADO de duas páginas, e a
+     revista fechada mostra só uma — metade da largura fica vazia. Por isso
+     a capa saía com 152px numa tela de 375. O visor agora rompe a margem
+     da folha e vai de beirada a beirada: a mesma capa passa a 187px, e o
+     espalhado aberto ocupa a tela inteira, que é o máximo honesto sem
+     empurrar o botão para fora da primeira dobra. */
+  .visor{
+    max-width:none;
+    width:calc(100% + var(--sangra)*2);
+    margin-left:calc(var(--sangra)*-1);
+  }
   .faixa{--mini:2.5rem;padding-top:.5rem}
   .dica-faixa{margin-top:.3rem}
 
-  /* as setas encostam na revista para não passar da margem da folha */
+  /* com o visor sangrado, as setas entram para dentro dele */
   .seta{width:2.9rem;height:2.9rem;font-size:1.45rem}
-  .seta.esq{left:-.85rem}
-  .seta.dir{right:-.85rem}
+  .seta.esq{left:.3rem}
+  .seta.dir{right:.3rem}
 }
 
 /* ═══════════════════════════════════════════════════════════════
