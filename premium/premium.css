@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221134') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221134') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221134') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221137') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221137') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221137') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1260,8 +1260,13 @@ h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
    de computador: um degrau intermediário resolve. */
 @media (min-width:48rem) and (max-width:59.99rem){
   .folha{--sangra:2.5rem;max-width:42rem;padding:2rem var(--sangra) 2.5rem}
-  .visor{max-width:34rem}
-  .mini{flex:0 0 3.6rem}
+  /* aqui sobra margem: o visor não precisa sangrar, e precisa DESFAZER a
+     sangria do celular — largura e margem inclusive, senão ele fica preso
+     no teto de 34rem mas deslocado 40px para a esquerda */
+  .visor{max-width:34rem;width:100%;margin-left:auto}
+  .faixa{--mini:3.6rem}
+  .seta.esq{left:-1.4rem}
+  .seta.dir{right:-1.4rem}
 }
 
 /* ═══ O EIXO DO DESKTOP ═══════════════════════════════════════
