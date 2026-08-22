@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221129') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221129') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221129') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221134') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221134') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221134') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -737,7 +737,8 @@ h1 em{
   /* A HIERARQUIA DA ESPIADA. A revista é o herói da dobra: ela cresce.
      As miniaturas são o índice dela, e índice não compete com o objeto —
      encolhem para metade da largura que tinham. Antes as duas coisas
-     tinham quase o mesmo peso e a fila de baixo puxava o olho. */
+     tinham quase o mesmo peso e a fila de baixo puxava o olho.
+
      A conta do tamanho: o visor guarda um ESPALHADO de duas páginas, e a
      revista fechada mostra só uma — metade da largura fica vazia. Por isso
      a capa saía com 152px numa tela de 375. O visor agora rompe a margem
