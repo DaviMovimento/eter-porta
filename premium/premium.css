@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221114') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221114') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221114') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608221120') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608221120') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608221120') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -668,6 +668,15 @@ h1 em{
   .dica-faixa{max-width:24rem;margin-left:auto;margin-right:auto}
 
   .dizeres{grid-area:dizeres;margin-top:0;display:flex;flex-direction:column}
+  /* manchete, olho, texto: o subtítulo vem colado no título, não depois
+     do parágrafo. No HTML ele ocupa o lugar da antiga ficha, lá embaixo —
+     então a ordem é declarada aqui, e não herdada da árvore. */
+  .dizeres>.numero{order:1}
+  .dizeres>h1{order:2}
+  .dizeres>.dek-ed{order:3}
+  .dizeres>.promessa{order:4}
+  .dizeres>.convite-frase{order:5}
+  .dizeres>.convites{order:6}
   .numero,h1,.promessa,.convite-frase,.dek-ed{text-align:left}
   .numero{justify-content:flex-start}
   .numero::before{display:none}
