@@ -1113,9 +1113,24 @@ function ligar() {
      ofertas idênticas na mesma tela viram ruído */
   const real = $('#btn-ler'), fixo = $('#convite-fixo');
   if (real && fixo && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => {
-      fixo.classList.toggle('oculto', e.isIntersecting);
-    }, { rootMargin: '-10% 0px -20% 0px' }).observe(real);
+    /* A margem era '-20%' embaixo, o que descontava 162px numa tela de 812:
+       o botão de verdade caía DENTRO da dobra e mesmo assim contava como
+       fora, e o leitor via a mesma oferta duas vezes, uma em cima da outra.
+       A conta certa não é uma porcentagem da tela — é a altura da própria
+       barra: o botão real só está escondido quando está atrás dela. */
+    const desconto = () => Math.round(fixo.getBoundingClientRect().height) || 92;
+    let observador;
+    const observar = () => {
+      observador?.disconnect();
+      observador = new IntersectionObserver(([e]) => {
+        fixo.classList.toggle('oculto', e.isIntersecting);
+      }, { rootMargin: `0px 0px -${desconto() + 8}px 0px` });
+      observador.observe(real);
+    };
+    observar();
+    /* girar o aparelho muda a altura da barra e, com ela, a conta */
+    addEventListener('resize', () => clearTimeout(observar.t) ||
+      (observar.t = setTimeout(observar, 250)));
   }
   $('#btn-ler').addEventListener('click', () => jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora));
   $('#btn-voltar').addEventListener('click', voltar);
