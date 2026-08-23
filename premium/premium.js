@@ -294,7 +294,9 @@ function montarFundo() {
      brilho, grão, vinheta). Uma por edição, em `edicoes/00X/fundo.webp`.
      Se a arte não existir, cai na capa desfocada, que é o que havia. */
   const atm = $('#atmosfera');
-  const arte = `${BASE}edicoes/${EDICAO.n}/fundo.webp`;
+  /* a arte também leva carimbo: trocá-la sem trocar a URL deixa o
+     navegador com a versão velha para sempre */
+  const arte = `${BASE}edicoes/${EDICAO.n}/fundo.webp?v=202608231426`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${arte}")`;
