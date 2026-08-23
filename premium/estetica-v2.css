@@ -11,7 +11,7 @@
    chamadas no sistema visual, não a bold normal que eu tinha posto. */
 @font-face{
   font-family:'FuturaMarca';
-  src:url('fontes/futura-cond-xb.woff2?v=202608231332') format('woff2');
+  src:url('fontes/futura-cond-xb.woff2?v=202608231335') format('woff2');
   font-weight:800;font-display:swap;
 }
 
@@ -70,7 +70,11 @@
 /* ── O BLOCO DO PASSE ganha o verde da marca ────────────────────
    Era café inventado por mim. O verde profundo é o que a ETER
    define, e ele dá ao bloco o registro de página impressa cara. */
-.passe{background:var(--verde)}
+/* O bloco do passe fica verde, mas com um filete de ouro por dentro: sem
+   ele, o botão verde da ação e o card verde do preço viravam uma mancha
+   escura só, e o botão perdia o isolamento que o faz ser achado. O filete
+   diz "isto é um quadro", enquanto o botão continua sendo uma peça. */
+.passe{background:var(--verde);box-shadow:inset 0 0 0 1px rgba(137,114,60,.3)}
 .intervalo{background:var(--verde)}
 
 /* ── O VINHO entra onde há urgência ─────────────────────────────
