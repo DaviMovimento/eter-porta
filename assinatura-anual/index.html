@@ -6,7 +6,7 @@
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="../premium/premium.css?v=202608231956">
+<link rel="stylesheet" href="../premium/premium.css?v=202608232008">
 </head>
 <body class="pagina">
 
@@ -36,11 +36,6 @@
     que você acabou de pagar, e o ano inteiro em vez de trinta dias.</p>
   </section>
 
-  <figure class="mockup">
-    <img src="../premium/mockup-assinatura.webp" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
-      width="1680" height="670" decoding="async">
-  </figure>
-
   <section class="ganhos" id="tudo-que-acessa">
     <p class="rotulo">Tudo que você acessa ao assinar</p>
     <ul id="itens-assinatura"></ul>
@@ -55,6 +50,11 @@
       <li><b>O preço de hoje travado</b><span>a ETER reajusta, e quem entrou antes não é alcançado</span></li>
     </ul>
   </section>
+
+  <figure class="mockup">
+    <img src="../premium/mockup-assinatura.webp" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+      width="1680" height="670" decoding="async">
+  </figure>
 
   <div class="fecho">
     <button class="btn btn-passe grande" id="btn-anual">
@@ -97,7 +97,7 @@
 
   let c;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608231956')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608232008')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -113,7 +113,7 @@
   /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
      lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
   try {
-    const cat = await (await fetch('../edicoes.json?v=202608231956')).json();
+    const cat = await (await fetch('../edicoes.json?v=202608232008')).json();
     const its = (cat.assinatura && cat.assinatura.itens) || [];
     const ul = document.getElementById('itens-assinatura');
     if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>

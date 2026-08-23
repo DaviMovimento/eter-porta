@@ -39,10 +39,13 @@ const COPY_CASA = {
     'distintas do próprio repertório para criar e monetizar ideias, conteúdos e ' +
     'marcas autorais.',
   ],                                                                  // 1.3
+  /* Os botões ficaram só com a linha principal. A segunda linha dividia a
+     atenção no exato ponto em que a página pede UMA decisão — e o que ela
+     dizia (minutos, "um mês de acesso") já está dito na oferta logo abaixo. */
   lerTit: 'LER ESTA EDIÇÃO INTEIRA, DE GRAÇA',
-  lerSub: min => `${min} minutos. Sem cartão.`,                       // 1.4
+  lerSub: () => '',                                                    // 1.4
   passeTit: 'ADQUIRIR O PASSE, R$97',
-  passeSub: 'Um mês de acesso total.',
+  passeSub: '',
   espiada: 'Complete seu cadastro para ler a edição completa',
   /* 1.5, com um ajuste: "tudo aberto" foi reprovado no botão, e deixar a
      expressão viva aqui faria a página dizer duas coisas sobre a mesma
@@ -264,10 +267,23 @@ function montarChegada() {
      barata que o sistema tem, e ela custava zero para ser dita. */
   const btLer = $('#btn-ler');
   btLer.firstChild.textContent = COPY_CASA.lerTit + ' ';
-  $('#sub-ler').textContent = EDICAO.minutos ? COPY_CASA.lerSub(EDICAO.minutos) : 'Sem cartão.';
+  $('#sub-ler').remove();
   document.querySelectorAll('[data-passe="capa"]').forEach(b => {
-    b.innerHTML = `${COPY_CASA.passeTit}<span class="sub">${COPY_CASA.passeSub}</span>`;
+    b.textContent = COPY_CASA.passeTit;
   });
+
+  /* O mockup do deck entra ACIMA do preço, nas três aparições da oferta:
+     é a coisa que mostra o que se compra antes de dizer quanto custa. */
+  const caixaPasse = document.querySelector('.passe');
+  if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
+    const f = document.createElement('figure');
+    f.className = 'mock-passe';
+    f.innerHTML = `<img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp"
+      alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
+      width="1680" height="670" decoding="async">`;
+    caixaPasse.prepend(f);
+    f.querySelector('img').decode?.().catch(() => {});
+  }
 
   $('#passe-rot').innerHTML = pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '));
   $('#passe-preco').textContent = CFG.precoPasse;
@@ -338,6 +354,10 @@ function abrirOferta(origem) {
         <img class="mono" src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}monograma.webp" alt="" width="256" height="256">
         <p class="oferta-lede">${COPY_CASA.apresenta}</p>
         <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
+        <figure class="mock-passe">
+          <img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp"
+            alt="Tudo que você acessa ao assinar" width="1680" height="670" decoding="async">
+        </figure>
         <figure class="oferta-capas">
           ${DADOS.edicoes.filter(e => e.paginas).slice(0, 4).map((e, i) =>
             `<img class="oc c${i + 1}" src="${BASE}edicoes/${e.n}/paginas/p001@240.webp"
@@ -348,8 +368,7 @@ function abrirOferta(origem) {
         <ul class="oferta-itens">
           ${PASSE.itens.map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('')}
         </ul>
-        <button class="btn btn-passe" data-passe="oferta">${COPY_CASA.passeTit}
-          <span class="sub">${COPY_CASA.passeSub}</span></button>
+        <button class="btn btn-passe" data-passe="oferta">${COPY_CASA.passeTit}</button>
         <p class="oferta-pe">${PASSE.condicao || ''}</p>
       </div>`;
     document.body.append(cx);
@@ -428,7 +447,7 @@ function montarTempos() {
   const bp = document.createElement('button');
   bp.className = 'btn btn-passe btn-passe-hero';
   bp.dataset.passe = 'capa';
-  bp.innerHTML = `${COPY_CASA.passeTit}<span class="sub">${COPY_CASA.passeSub}</span>`;
+  bp.textContent = COPY_CASA.passeTit;
   acoes.append(bp);
   capa.append(acoes);
 
@@ -530,7 +549,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608231956`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232008`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1010,12 +1029,14 @@ function blocoFim() {
     <h3>A próxima sai <em>quarta</em></h3>
     <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
     <section class="passe">
+      <figure class="mock-passe"><img src="../premium/mockup-assinatura.webp"
+        alt="Tudo que você acessa" width="1680" height="670" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
         <span class="passe-preco">${CFG.precoPasse}</span>
       </div>
       <ul class="passe-itens">${PASSE.itens.map(([a, g]) => `<li><b>${a}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')}</ul>
-      <button class="btn btn-passe" data-passe="fim">${COPY_CASA.passeTit}<span class="sub">${COPY_CASA.passeSub}</span></button>
+      <button class="btn btn-passe" data-passe="fim">${COPY_CASA.passeTit}</button>
       <p class="passe-nota">${[PASSE.condicao, PASSE.credito].filter(Boolean).join(' ')}</p>
     </section>`;
   return d;
@@ -1412,27 +1433,12 @@ function ligar() {
 
   /* a faixa se apaga quando o botão de verdade entra em cena — duas
      ofertas idênticas na mesma tela viram ruído */
-  const real = $('#btn-ler'), fixo = $('#convite-fixo');
-  if (real && fixo && 'IntersectionObserver' in window) {
-    /* A margem era '-20%' embaixo, o que descontava 162px numa tela de 812:
-       o botão de verdade caía DENTRO da dobra e mesmo assim contava como
-       fora, e o leitor via a mesma oferta duas vezes, uma em cima da outra.
-       A conta certa não é uma porcentagem da tela — é a altura da própria
-       barra: o botão real só está escondido quando está atrás dela. */
-    const desconto = () => Math.round(fixo.getBoundingClientRect().height) || 92;
-    let observador;
-    const observar = () => {
-      observador?.disconnect();
-      observador = new IntersectionObserver(([e]) => {
-        fixo.classList.toggle('oculto', e.isIntersecting);
-      }, { rootMargin: `0px 0px -${desconto() + 8}px 0px` });
-      observador.observe(real);
-    };
-    observar();
-    /* girar o aparelho muda a altura da barra e, com ela, a conta */
-    addEventListener('resize', () => clearTimeout(observar.t) ||
-      (observar.t = setTimeout(observar, 250)));
-  }
+  /* O CONVITE FLUTUANTE FOI REMOVIDO. Ele existia porque o botão real
+     ficava abaixo da dobra no celular; agora os dois botões estão dentro
+     dela, e uma faixa fixa repetindo o mesmo convite virou uma terceira
+     oferta da mesma coisa, tapando o fim da página. */
+  $('#convite-fixo')?.remove();
+
   $('#btn-ler').addEventListener('click', () => jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora));
   $('#btn-voltar').addEventListener('click', voltar);
   $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });

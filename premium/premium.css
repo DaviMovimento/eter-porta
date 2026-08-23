@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231956') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231956') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231956') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232008') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232008') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232008') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2096,3 +2096,112 @@ body.inicio,body.biblioteca{background:var(--papel)}
 @media (max-width:34rem){
   .capa-inicio h1{font-size:1.72rem;max-width:none}
 }
+
+
+/* ═══ O ACERTO FINO — barra, botões, rodapé ═══════════════════ */
+
+/* A barra ganhou uma terceira porta (Home), então cada uma encolhe: três
+   alvos numa faixa de 375px só cabem se nenhum deles for grande. */
+.topo-nav{gap:.9rem}
+.topo-nav a{font-size:var(--r-1);letter-spacing:.09em;padding:.4rem .5rem}
+.topo-nav a.destaque{padding:.5rem .8rem;font-size:var(--r-1)}
+.topo-nav a.atual-nav{color:var(--tinta);border-bottom:1px solid var(--ouro-vivo)}
+@media (max-width:34rem){
+  .topo{padding:.5rem .7rem;gap:.5rem}
+  .topo-marca img{width:3.4rem}
+  .topo-nav{gap:.5rem}
+  .topo-nav a{font-size:.62rem;letter-spacing:.06em;padding:.35rem .3rem;min-height:40px}
+  .topo-nav a.destaque{padding:.4rem .55rem}
+}
+
+/* Os dois botões, sem segunda linha: mais altos, mais claros, e com o
+   contorno que os separa da imagem por trás. */
+.btn-ler,.btn-passe{padding:1.15rem 1.1rem;font-size:.88rem;line-height:1.15}
+.acoes .btn{display:flex;align-items:center;justify-content:center;text-align:center}
+.btn-ler{
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255/.16),
+    0 2px 4px rgb(var(--tinta-rgb)/.3),
+    0 16px 34px -12px rgb(var(--tinta-rgb)/.55);
+}
+.btn-passe{
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255/.34),
+    0 2px 4px rgb(var(--tinta-rgb)/.28),
+    0 16px 34px -12px rgb(var(--tinta-rgb)/.5);
+}
+
+/* O rodapé é assinatura, não conteúdo: o menor degrau da escala. */
+.pe,.papelada .pe{font-size:.6rem;line-height:1.9;letter-spacing:.1em}
+
+/* A headline da home: a cursiva é muito mais baixa que as romanas e abria
+   um vão no meio da frase. Compensado no próprio elemento. */
+.capa-inicio h1 em{display:inline-block;margin:0 .06em -.12em;line-height:.78}
+.capa-inicio h1{line-height:1.14}
+@media (max-width:34rem){ .capa-inicio h1 em{margin-bottom:-.18em} }
+
+
+/* ═══ O MOCKUP DENTRO DA OFERTA ═══════════════════════════════
+   A composição do deck — revista, acervo, a chamada de vídeo, a comunidade
+   e o copiloto — entra ANTES do preço: mostra o que se compra antes de
+   dizer quanto custa. Sangra as bordas do card, como imagem de produto. */
+.mock-passe{margin:-1.2rem -1.2rem 1.1rem;padding:0;overflow:hidden;border-radius:2px 2px 0 0}
+.mock-passe img{display:block;width:100%;height:auto}
+.oferta .mock-passe{margin:-.4rem -1.2rem 1rem}
+
+/* ═══ A PROMESSA NA PRIMEIRA DOBRA DO CELULAR ═════════════════
+   No desktop a sinopse fica na coluna do texto, dentro da dobra. No celular
+   ela tinha descido para depois dos botões — e a primeira dobra ficava sem
+   dizer do que a edição trata. Ela volta para logo abaixo do preview e das
+   páginas, com corpo menor, que é o que a faz caber. */
+@media (max-width:59.99rem){
+  .capa>.promessa{
+    order:5;margin:.9rem auto 0;font-size:.92rem;line-height:1.52;
+    max-width:32rem;
+  }
+  .capa>.dica-faixa{order:6;margin-top:.8rem}
+  .capa>.acoes{order:7}
+}
+
+/* ═══ A ESTANTE NO CELULAR ════════════════════════════════════
+   A grade de duas colunas virava uma coluna, e a capa de 5,4rem ao lado de
+   um texto estreito deixava vãos que picavam a leitura. No celular a capa
+   encolhe e o texto ganha a largura de que precisa. */
+@media (max-width:47.99rem){
+  .estante a,.estante .indisp{
+    grid-template-columns:4.2rem 1fr;gap:0 .9rem;padding:.8rem;
+    align-items:center;
+  }
+  .estante .capinha{grid-row:1 / span 4;align-self:start}
+  .estante .nom{font-size:1.06rem;line-height:1.18;margin:.15rem 0 .25rem}
+  .estante .sub-ed{font-size:.8rem;line-height:1.4}
+  .estante .chamada{margin-top:.4rem;font-size:.6rem}
+  .estante{gap:.8rem}
+  .papelada .selo .dek{font-size:.95rem;line-height:1.55}
+}
+
+
+/* ═══ A REVISTA DA HOME ═══════════════════════════════════════
+   Uma revista fechada parece uma imagem: ninguém clica. Ela abre sozinha e
+   vai virando, como na página da edição — só que aqui, sem a maquinaria do
+   giro em três dimensões, porque o que a home precisa provar é que existe
+   miolo, não simular papel. Duas camadas trocando por opacidade. */
+.revista-home{
+  position:relative;margin:0 auto 1.4rem;padding:0;
+  width:min(17rem, 62vw);aspect-ratio:1/1.414;
+}
+.pg-home{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  border-radius:1px;opacity:0;transition:opacity .9s ease;
+  box-shadow:0 3px 8px rgb(0 0 0/.45), 0 30px 64px -22px rgb(0 0 0/.75);
+  outline:1px solid rgb(255 255 255/.08);outline-offset:-1px;
+}
+.pg-home.vis{opacity:1}
+@media (min-width:60rem){ .revista-home{width:20rem} }
+
+/* com a revista no palco, a prateleira vira acervo: menor e mais discreta */
+.capa-inicio .prateleira{opacity:.92}
+.capa-inicio>.revista-home{order:4}
+.capa-inicio>.prateleira{order:5}
+.capa-inicio>.dica-faixa{order:6}
+.capa-inicio>.acoes{order:7}

@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608231956">
+<link rel="stylesheet" href="premium/premium.css?v=202608232008">
 </head>
 <body class="pagina inicio">
 
@@ -18,6 +18,7 @@
   </a>
   <span class="topo-tag">Bem-vindo à <em>Vanguarda</em></span>
   <nav class="topo-nav">
+    <a href="./" class="atual-nav">Home</a>
     <a href="biblioteca">Todas as edições</a>
     <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
   </nav>
@@ -36,17 +37,20 @@
       o seu conteúdo autoral.
     </p>
 
+    <figure class="revista-home" id="revista-home" aria-label="A edição desta semana">
+      <img class="pg-home a" id="pg-a" alt="" width="600" height="849" decoding="async">
+      <img class="pg-home b" id="pg-b" alt="" width="600" height="849" decoding="async">
+    </figure>
+
     <figure class="prateleira" id="prateleira" aria-label="As edições publicadas"></figure>
     <p class="dica-faixa">Escolha uma edição e leia inteira, de graça</p>
 
     <div class="acoes">
       <a class="btn btn-ler" href="biblioteca">
         RESGATAR A LEITURA GRATUITA
-        <span class="sub">escolha a edição · sem cartão</span>
       </a>
       <button class="btn btn-passe btn-passe-hero" id="btn-passe-home">
         ADQUIRIR O PASSE, R$97
-        <span class="sub">Um mês de acesso total.</span>
       </button>
     </div>
   </section>
@@ -74,13 +78,16 @@
 <!-- ══ A OFERTA ═══════════════════════════════════════════════ -->
 <section class="oferta-home">
   <div class="passe" id="passe-home">
+    <figure class="mock-passe">
+      <img src="premium/mockup-assinatura.webp" alt="Tudo que você acessa ao assinar"
+        width="1680" height="670" decoding="async">
+    </figure>
     <div class="passe-topo">
       <span class="passe-rot" id="passe-rot"></span>
       <span class="passe-preco" id="passe-preco"></span>
     </div>
     <ul class="passe-itens" id="passe-itens"></ul>
-    <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE, R$97
-      <span class="sub">Um mês de acesso total.</span></button>
+    <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE, R$97</button>
     <p class="passe-nota" id="passe-nota"></p>
   </div>
   <p class="fecho-home">A próxima edição entra na quarta. Comece pela que te trouxe até aqui.</p>
@@ -99,7 +106,7 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608231956')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608232008')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -130,11 +137,39 @@
   if (e.razaoSocial) pe.innerHTML = [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj]
     .filter(Boolean).join(' <i class="pt"></i> ');
 
-  /* o fundo: a arte da edição mais nova veste a home */
   const nova = pub.slice().sort((a, b) => b.n.localeCompare(a.n))[0];
+
+  /* A REVISTA ABRINDO SOZINHA. A da semana começa fechada e, dois segundos
+     depois, passa a virar de três em três — o mesmo ritmo da página de
+     edição. Duas camadas trocam por opacidade, que é o que roda na placa de
+     vídeo; nada de repintar a tela a cada quadro. Qualquer toque cancela. */
+  if (nova && nova.paginas) {
+    const A = document.getElementById('pg-a'), B = document.getElementById('pg-b');
+    const pag = n => `${BASE}edicoes/${nova.n}/paginas/p${String(n).padStart(3,'0')}@800.webp`;
+    let n = 1, frente = A, tras = B, parado = false;
+    A.src = pag(1); A.classList.add('vis'); A.decode?.().catch(() => {});
+    ['pointerdown','keydown','wheel','touchstart'].forEach(ev =>
+      addEventListener(ev, () => { parado = true; }, { once: true, passive: true }));
+    const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const passo = () => {
+      if (parado || quieto) return;
+      const prox = n + 1 > 12 ? 1 : n + 1;   /* as doze primeiras, em laço */
+      const im = new Image();
+      im.onload = () => {
+        tras.src = im.src; tras.classList.add('vis'); frente.classList.remove('vis');
+        [frente, tras] = [tras, frente]; n = prox;
+        setTimeout(passo, 3000);
+      };
+      im.onerror = () => setTimeout(passo, 3000);
+      im.src = pag(prox);
+    };
+    if (!quieto) setTimeout(passo, 2000);
+  }
+
+  /* o fundo: a arte da edição mais nova veste a home */
   if (nova) {
     const atm = document.getElementById('atmosfera');
-    const arte = `${BASE}edicoes/${nova.n}/parede.webp?v=202608231956`;
+    const arte = `${BASE}edicoes/${nova.n}/parede.webp?v=202608232008`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;
