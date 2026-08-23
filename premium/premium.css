@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231349') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231349') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231349') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231352') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231352') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231352') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -209,16 +209,24 @@ body.lendo .topo{display:none}
    que é a capa desfocada. A casa é fixa, só a porta muda. */
 .veu{
   position:fixed;inset:0;z-index:2;pointer-events:none;
-  background-color:rgb(var(--papel-rgb)/.985);
   background-image:
-    /* A COR DA EDIÇÃO, entrando pela dobra. O matiz vem da capa (o JS
-       mede e grava --cor-edicao-h); sem ele, cai no ouro da casa. É o
-       que liga a mesa à parede: a mesma cor que veste o fundo à esquerda
-       atravessa a beirada da folha. */
+    /* A COR DA EDIÇÃO, entrando pela dobra. Tentei tirar o matiz da capa
+       por amostragem e o resultado foi honesto demais para usar: sete das
+       oito capas caem entre 22° e 39° — são todas quentes, e a diferença
+       entre elas é imperceptível. Quem separa uma edição da outra é a
+       CAPA, não um número. Então a folha fica translúcida na beirada
+       esquerda e deixa a própria capa desfocada atravessar; do 15% em
+       diante ela fecha, e a leitura acontece sobre papel. O matiz medido
+       fica como reforço — na ED004, a única vermelha, ele aparece. */
+    linear-gradient(90deg,
+      rgb(var(--papel-rgb)/.80) 0%,
+      rgb(var(--papel-rgb)/.94) 7%,
+      rgb(var(--papel-rgb)/.985) 15%,
+      rgb(var(--papel-rgb)/.985) 100%),
     linear-gradient(103deg,
-      hsl(var(--cor-edicao-h,40) 46% 46% / .13) 0%,
-      hsl(var(--cor-edicao-h,40) 46% 46% / .05) 18%,
-      transparent 46%),
+      hsl(var(--cor-edicao-h,40) 46% 46% / .10) 0%,
+      hsl(var(--cor-edicao-h,40) 46% 46% / .04) 20%,
+      transparent 48%),
     radial-gradient(120% 62% at 62% -14%,
       rgb(var(--ouro-rgb)/.11) 0%, rgb(var(--ouro-rgb)/.035) 42%, transparent 72%),
     repeating-linear-gradient(90deg,
