@@ -222,7 +222,7 @@ function montarChegada() {
         : '<i class="embreve">em breve</i>'}</span>
       <span class="alg">${e.n}</span>
       <span class="nom">${e.titulo}</span>
-      <span class="pg">${e.paginas ? e.paginas + ' páginas' : ''}</span>
+      <span class="pg">${e.paginas ? '' : 'em breve'}</span>
     </a></li>`).join('');
 
   montarFundo();
@@ -726,7 +726,7 @@ function blocoFim() {
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="rot">Contracapa</p>
     <h3>A próxima sai <em>quarta</em></h3>
-    <p>Você acabou de ler ${TOTAL} páginas de uma revista de ${CFG.precoCheio} por ano, sem pagar nada. O que muda do lado de dentro é a continuidade.</p>
+    <p>Você acabou de ler, inteira e sem pagar nada, uma edição de uma revista de ${CFG.precoCheio} por ano. O que muda do lado de dentro é a continuidade.</p>
     <section class="passe">
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -743,7 +743,7 @@ function montarSumario() {
   const caps = EDICAO.capitulos;
   if (!caps?.length) { $('#btn-sumario').hidden = true; return; }
   $('#sum-tit').textContent = EDICAO.titulo;
-  $('#sum-leg').textContent = `Edição ${EDICAO.n} — ${TOTAL} páginas`;
+  $('#sum-leg').textContent = `Edição ${EDICAO.n}`;
   $('#caps').innerHTML = caps.map(([nome, p], i) => `
     <li><a href="#" data-pagina="${p}" data-cap="${i}">
       <span class="alg">${String(i + 1).padStart(2, '0')}</span>
