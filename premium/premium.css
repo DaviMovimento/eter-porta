@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231850') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231850') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231850') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231853') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231853') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231853') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1839,3 +1839,74 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 .oferta-itens li b{font-weight:600}
 .oferta-itens li span{display:block;font-size:.8rem;color:var(--tinta-3);margin-top:.1rem}
 .oferta-pe{font-size:var(--t-1);color:var(--tinta-3);margin-top:.8rem;line-height:1.5}
+
+
+/* ═══ O ANTEPARO SOBRE A PAREDE ═══════════════════════════════
+   A colagem é MUITO mais movimentada que uma imagem só: onde uma foto
+   tinha áreas calmas, a parede tem tipografia, contraste e detalhe em
+   todo canto. Com o anteparo antigo o texto claro caía em cima de página
+   clara e sumia. Ele fica mais fundo, e no celular vira vertical, porque
+   lá o texto ocupa a largura toda e não há "lado" para poupar. */
+@media (min-width:60rem){
+  .veu{
+    background-image:
+      linear-gradient(101deg,
+        rgb(var(--tinta-rgb)/.42) 0%,
+        rgb(var(--tinta-rgb)/.58) 30%,
+        rgb(var(--tinta-rgb)/.84) 58%,
+        rgb(var(--tinta-rgb)/.92) 100%),
+      linear-gradient(180deg,
+        rgb(var(--tinta-rgb)/.50) 0%, rgb(var(--tinta-rgb)/.12) 24%,
+        rgb(var(--tinta-rgb)/.12) 72%, rgb(var(--tinta-rgb)/.58) 100%);
+  }
+}
+@media (max-width:59.99rem){
+  .veu{
+    background-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;
+    background-image:
+      linear-gradient(180deg,
+        rgb(var(--tinta-rgb)/.66) 0%,
+        rgb(var(--tinta-rgb)/.80) 34%,
+        rgb(var(--tinta-rgb)/.86) 62%,
+        rgb(var(--tinta-rgb)/.92) 100%);
+  }
+}
+
+/* ═══ A TIPOGRAFIA DA CAPA ════════════════════════════════════
+   Tudo que mora sobre a parede é claro. A sinopse era o único bloco que
+   tinha ficado com a cor de tinta sobre papel — e sobre a colagem ela
+   simplesmente sumia. */
+.capa .promessa{
+  color:rgb(255 255 255/.88);text-shadow:0 1px 16px rgb(var(--tinta-rgb)/.7);
+  max-width:34rem;margin-inline:auto;
+}
+.capa .convite-frase{color:var(--ouro-claro)}
+.capa .pulso{color:rgb(255 255 255/.6)}
+.capa .dica-faixa{
+  color:rgb(255 255 255/.82);text-shadow:0 1px 12px rgb(var(--tinta-rgb)/.7);
+  margin-top:.7rem;
+}
+
+/* ═══ A ORDEM DA CAPA NO CELULAR ══════════════════════════════
+   Os elementos mudaram de pai (agora vivem em `.capa`), então as regras
+   antigas, presas a `.dizeres >`, deixaram de casar. No celular a sinopse
+   desce para depois dos botões: em cima ela empurrava o preview e a ação
+   para fora da primeira dobra, que é o que a página não pode perder. */
+@media (max-width:59.99rem){
+  .capa{display:flex;flex-direction:column}
+  .capa>.numero  {order:1}
+  .capa>h1       {order:2}
+  .capa>.dek-ed  {order:3}
+  .capa>.revista {order:4}
+  .capa>.acoes   {order:5}
+  .capa>.promessa{order:6;margin-top:1.6rem;font-size:1rem;line-height:1.6}
+}
+@media (min-width:60rem){
+  .capa .promessa{
+    grid-column:2;grid-row:4;text-align:left;margin:0 0 1.4rem;max-width:30rem;
+    font-size:1rem;line-height:1.62;
+  }
+  .capa .acoes{grid-column:2;grid-row:5}
+  .capa{grid-template-rows:auto auto auto auto auto}
+  .capa .revista{grid-row:1 / span 5}
+}
