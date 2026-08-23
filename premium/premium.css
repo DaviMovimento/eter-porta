@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231617') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231617') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231617') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231622') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231622') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231622') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1672,9 +1672,9 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
   box-shadow:0 2px 6px rgb(0 0 0/.5), 0 30px 70px -22px rgb(0 0 0/.8);
   outline:1px solid rgb(255 255 255/.07);outline-offset:-1px;
 }
-.alto.a1{top:-3.5rem;left:-3rem;transform:rotate(-4deg);width:23rem;opacity:.92}
-.alto.a2{bottom:-6rem;right:-2.5rem;transform:rotate(5deg);width:21rem;opacity:.86}
-.alto.a3{top:38%;right:19%;transform:rotate(-2deg);width:14rem;opacity:.52}
+.alto.a1{top:3rem;left:2rem;transform:rotate(-4deg);width:22rem;opacity:.92}
+.alto.a2{bottom:3rem;right:2rem;transform:rotate(5deg);width:20rem;opacity:.86}
+.alto.a3{top:30%;right:26%;transform:rotate(-2deg);width:13rem;opacity:.42}
 
 /* ═══ AS PROVAS — finitas, completas, paradas ═════════════════
    Eram catorze imagens vivas numa camada animada: 48 MB de bitmap que o
@@ -1700,8 +1700,8 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 .prova:hover{transform:rotate(0) translateY(-6px);z-index:3}
 
 @media (max-width:59.99rem){
-  .alto.a1{width:15rem;top:-2rem;left:-2.5rem}
-  .alto.a2{width:13rem;bottom:-3rem;right:-2rem}
+  .alto.a1{width:11rem;top:1.5rem;left:.8rem}
+  .alto.a2{width:10rem;bottom:1.5rem;right:.8rem}
   .alto.a3{display:none}
   .provas{flex-wrap:nowrap;padding:1.8rem .8rem .4rem}
   .prova.p1{width:10.5rem} .prova.p2{width:11rem;margin-left:-1.1rem}

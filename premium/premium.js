@@ -333,10 +333,10 @@ function montarFundo() {
   altos.className = 'altos';
   altos.setAttribute('aria-hidden', 'true');
   altos.innerHTML = [1, 2, 3].map(i =>
-    `<img class="alto a${i}" src="${BASE}edicoes/${EDICAO.n}/hl-${i}.webp?v=1"
-      alt="" decoding="async" ${i === 1 ? '' : 'loading="lazy"'}>`).join('');
+    `<img class="alto a${i}" src="${BASE}edicoes/${EDICAO.n}/hl-${i}.webp?v=1" alt="">`).join('');
   $('#atmosfera').after(altos);
   /* sem as peças, a página continua de pé sobre o chão de marca */
+  altos.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
   altos.querySelector('.a1').addEventListener('load', () => altos.classList.add('ver'), { once: true });
   altos.querySelector('.a1').addEventListener('error', () => altos.remove(), { once: true });
   $('#atmosfera').classList.add('chao', 'ver');
@@ -366,9 +366,16 @@ function montarFundo() {
   mosaico.className = 'provas';
   mosaico.innerHTML = provas.slice(0, 4).map((n, i) =>
     `<figure class="prova p${i + 1}">
-       <img src="${pag(n, 800)}" alt="" decoding="async" loading="lazy"
-         width="800" height="1131">
+       <img src="${pag(n, 800)}" alt="" width="800" height="1131">
      </figure>`).join('');
+
+  /* SEM `lazy`, e com decodificação FORÇADA. O defeito era este: a imagem
+     baixava (`complete` verdadeiro, `naturalWidth` certo) e mesmo assim o
+     Chrome não a rasterizava — a prova aparecia como retângulo branco com
+     sombra. Chamar `decode()` na mão pinta na hora; conferido ao vivo, as
+     três apareceram no mesmo quadro. São quatro arquivos de ~60 KB: não
+     há nada a economizar adiando. */
+  mosaico.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
 
   /* só acende quando há o que mostrar — nada de piscar papel vazio */
   const primeira = mosaico.querySelector('img');
