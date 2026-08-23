@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231352') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231352') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231352') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231418') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231418') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231418') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -156,8 +156,8 @@ body.lendo .topo{display:none}
   opacity:0;transition:opacity 2.4s ease;
   /* só as pontas de cima e de baixo: o lado direito quem resolve é a
      folha, e o esquerdo é a beirada da parede, que pode ser beirada */
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 84%,transparent 100%);
-  mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 84%,transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 6%,#000 93%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 6%,#000 93%,transparent 100%);
 }
 .mosaico.ver{opacity:1}
 
@@ -750,7 +750,7 @@ h1 em{
 
   /* o mosaico tem largura declarada e a página se afasta dele por essa
      mesma medida: um número só governa os dois, e nada encosta */
-  #chegada{--trilho:11rem;padding-left:var(--trilho)}
+  #chegada{--trilho:15rem;padding-left:var(--trilho)}
 
   /* A FOLHA SOBREPOSTA. O véu deixa de ser lavado e vira uma superfície:
      papel opaco começando onde o mosaico acaba, com um fio de tinta na
@@ -813,8 +813,8 @@ h1 em{
 /* Tela larga: o trilho cresce, mas com teto. A conta é literal — a coluna
    mede `--trilho + 0,8rem`, e a miniatura de origem tem 240px: passar de
    14rem é esticar imagem, que é exatamente o que deixa o quadro mole. */
-@media (min-width:82rem){ #chegada{--trilho:12rem} }
-@media (min-width:100rem){ #chegada{--trilho:12.8rem} }
+@media (min-width:82rem){ #chegada{--trilho:17rem} }
+@media (min-width:100rem){ #chegada{--trilho:18.5rem} }
 
 /* ═══════════════════════════════════════════════════════════════
    CELULAR — a ordem que a mão lê

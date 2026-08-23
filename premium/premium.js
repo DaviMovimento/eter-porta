@@ -341,8 +341,13 @@ function montarFundo() {
        baixadas. O trilho mostrava as duas primeiras e, conforme a tira
        subia, trazia buracos brancos no lugar das outras catorze. São 6 KB
        cada; a prioridade baixa mantém a capa na frente da fila. */
+    /* com o trilho largo de novo, a de 240 esticava 30% e a folha ficava
+       mole. Volta a de 800 — agora sem `lazy`, que era o que fazia sete
+       delas nunca chegarem e a oitava demorar 17s. São ~8 arquivos únicos;
+       o laço repete as MESMAS URLs e a segunda volta sai do cache. */
+    const largura = noCelular ? 240 : 800;
     const paginas = fila.map(n =>
-      `<img src="${pag(n, 240)}" alt="" decoding="async" fetchpriority="low"
+      `<img src="${pag(n, largura)}" alt="" decoding="async" fetchpriority="low"
         width="240" height="339">`).join('');
 
     /* a duração acompanha o tamanho da fila: assim a página anda sempre na
