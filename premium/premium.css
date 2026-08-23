@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231856') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231856') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231856') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231859') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231859') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231859') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1727,11 +1727,19 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 
 
 /* ═══ 1.1 · a assinatura da casa, no topo ═════════════════════ */
+/* A saudação da casa. Fica colada no logo, num fio de ouro, e a palavra
+   que importa vem na cursiva da marca — a mesma que assina as capas. Sem
+   caixa alta e sem entreletra: é um cumprimento, não um rótulo. */
 .topo-tag{
-  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
-  text-transform:uppercase;color:var(--tinta-3);
+  display:inline-flex;align-items:baseline;gap:.3em;
+  font-family:var(--display);font-size:.94rem;letter-spacing:0;
+  text-transform:none;color:var(--tinta-2);
   margin-left:1rem;padding-left:1rem;border-left:1px solid var(--linha-2);
   white-space:nowrap;
+}
+.topo-tag em{
+  font-family:var(--script);font-style:normal;font-size:1.5em;
+  line-height:.8;color:var(--ouro-texto);position:relative;top:.06em;
 }
 @media (max-width:59.99rem){ .topo-tag{display:none} }
 

@@ -189,7 +189,10 @@ async function iniciar() {
   if (marca && !document.querySelector('.topo-tag')) {
     const tag = document.createElement('span');
     tag.className = 'topo-tag';
-    tag.textContent = COPY_CASA.topo;
+    /* a saudação da casa, com "Vanguarda" na cursiva da marca — a mesma
+       Sloop que assina os títulos das capas. É o cumprimento do deck, dito
+       na tipografia do deck. */
+    tag.innerHTML = 'Bem-vindo à <em>Vanguarda</em>';
     marca.after(tag);
   }
 
