@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231421') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231421') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231421') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231424') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231424') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231424') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -214,9 +214,9 @@ body.lendo .topo{display:none}
      que foi exatamente a queixa. Agora ela é translúcida sobre um desfoque
      do que está atrás: a cor e as formas da edição atravessam, e o texto
      continua sobre uma superfície uniforme o bastante para ser lido. */
-  background-color:rgb(var(--papel-rgb)/.82);
-  -webkit-backdrop-filter:blur(34px) saturate(1.15);
-  backdrop-filter:blur(34px) saturate(1.15);
+  background-color:rgb(var(--papel-rgb)/.90);
+  -webkit-backdrop-filter:blur(46px) saturate(1.1) brightness(1.06);
+  backdrop-filter:blur(46px) saturate(1.1) brightness(1.06);
   background-image:
     /* A COR DA EDIÇÃO, entrando pela dobra. Tentei tirar o matiz da capa
        por amostragem e o resultado foi honesto demais para usar: sete das
@@ -228,9 +228,9 @@ body.lendo .topo{display:none}
        fica como reforço — na ED004, a única vermelha, ele aparece. */
     linear-gradient(90deg,
       rgb(var(--papel-rgb)/0) 0%,
-      rgb(var(--papel-rgb)/.09) 9%,
-      rgb(var(--papel-rgb)/.15) 20%,
-      rgb(var(--papel-rgb)/.15) 100%),
+      rgb(var(--papel-rgb)/.04) 6%,
+      rgb(var(--papel-rgb)/.07) 16%,
+      rgb(var(--papel-rgb)/.07) 100%),
     linear-gradient(103deg,
       hsl(var(--cor-edicao-h,40) 46% 46% / .10) 0%,
       hsl(var(--cor-edicao-h,40) 46% 46% / .04) 20%,
