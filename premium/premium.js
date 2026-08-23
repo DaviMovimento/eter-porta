@@ -278,13 +278,14 @@ function montarFundo() {
     if (!fila.length) fila = provas.slice();
     while (fila.length < minimo) fila = fila.concat(fila);
 
-    /* no desktop a coluna passou a ter ~280px: a miniatura de 240 esticava
-       e o quadro ficava mole. Lá vai a de 800, que são 7 arquivos únicos
-       (o laço repete as MESMAS URLs, e a segunda volta sai do cache).
-       No celular a faixa é pequena e a de 240 continua sendo a certa. */
-    const largura = noCelular ? 240 : 800;
+    /* A miniatura é sempre a de 240. Cheguei a servir a de 800 no desktop
+       para ganhar nitidez e o preço foi absurdo: 60 KB por página, oito
+       páginas, e a última só apareceu 17 SEGUNDOS depois — o trilho ficava
+       branco justamente na primeira impressão, que é para o que ele existe.
+       A largura do trilho é que se ajusta à miniatura (ver --trilho no CSS),
+       nunca o contrário: assim ela nunca estica e o peso fica em 6 KB. */
     const paginas = fila.map(n =>
-      `<img src="${pag(n, largura)}" alt="" loading="lazy" decoding="async"
+      `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async"
         width="240" height="339">`).join('');
 
     /* a duração acompanha o tamanho da fila: assim a página anda sempre na
