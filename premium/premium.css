@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231931') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231931') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231931') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231935') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231935') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231935') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1933,4 +1933,20 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
   .capa .dica-faixa{grid-column:1;grid-row:6;margin-top:.6rem;align-self:start}
   .capa{grid-template-rows:auto auto auto auto auto auto}
   .capa .revista{grid-row:1 / span 5}
+}
+
+
+/* ═══ O MOCKUP DA ASSINATURA ══════════════════════════════════
+   A composição do deck, recortada e servida a 1680px para aparecer a
+   ~840px: o dobro exato, que é o que a tela retina pede. Sangra as
+   margens da coluna porque é imagem de produto, não ilustração. */
+.papelada .mockup{
+  margin:2rem calc(var(--sangra-pap,1.4rem)*-1) 2.2rem;
+}
+.papelada .mockup img{
+  display:block;width:100%;height:auto;
+  box-shadow:0 2px 6px rgb(var(--tinta-rgb)/.16), 0 26px 60px -26px rgb(var(--tinta-rgb)/.4);
+}
+@media (min-width:60rem){
+  .papelada .mockup{margin-inline:0;border-radius:2px;overflow:hidden}
 }

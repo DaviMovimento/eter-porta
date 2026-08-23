@@ -998,15 +998,15 @@ function blocoFim() {
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="rot">Contracapa</p>
     <h3>A próxima sai <em>quarta</em></h3>
-    <p>Você acabou de ler, inteira e sem pagar nada, uma edição de uma revista de ${CFG.precoCheio} por ano. O que muda do lado de dentro é a continuidade.</p>
+    <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
     <section class="passe">
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
         <span class="passe-preco">${CFG.precoPasse}</span>
       </div>
-      <ul class="passe-itens">${PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('')}</ul>
-      <button class="btn btn-passe" data-passe="fim">Adquirir passe</button>
-      <p class="passe-nota">${PASSE.condicao} ${PASSE.credito}</p>
+      <ul class="passe-itens">${PASSE.itens.map(([a, g]) => `<li><b>${a}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')}</ul>
+      <button class="btn btn-passe" data-passe="fim">${COPY_CASA.passeTit}<span class="sub">${COPY_CASA.passeSub}</span></button>
+      <p class="passe-nota">${[PASSE.condicao, PASSE.credito].filter(Boolean).join(' ')}</p>
     </section>`;
   return d;
 }

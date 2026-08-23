@@ -7,8 +7,8 @@
     "precoPasse": "R$97",
     "_anual": "A segunda oferta, que roda na página de upsell logo depois do passe pago. Na Guru: produto de R$900, parcelamento em até 12x com os juros por conta do cliente — a parcela cai em ~R$87, menor que o passe.",
     "checkoutAnual": "https://clkdmg.site/subscribe/eter-upsell/1click",
-    "precoAnual": "R$900",
-    "parcelaAnual": "12× de R$87",
+    "precoAnual": "R$897",
+    "parcelaAnual": "12× de R$87,90",
     "precoCheio": "R$997",
     "_anualDireto": "O link de venda DIRETA do anual (para o botão Assinar do topo). O checkoutAnual acima é o 1-clique, que só funciona para quem JÁ comprou — não serve para tráfego frio.",
     "_captura": "Como o lead é pego. 'whatsapp' abre a conversa e a janela de 24h (mensagem grátis depois). 'formulario' pega nome e zap na página, mas NÃO abre a janela — toda mensagem sua depois vira template pago.",
@@ -34,7 +34,8 @@
       "emailDpo": "davi@eter.company",
       "responsavel": "Davi Ribas Nogueira",
       "whatsapp": ""
-    }
+    },
+    "mensalAnual": "R$87,90 por mês"
   },
   "passe": {
     "rotulo": "Passe ETER · 30 dias",
@@ -420,5 +421,42 @@
         ]
       ]
     }
-  ]
+  ],
+  "assinatura": {
+    "rotulo": "Assinatura ETER · 1 ano",
+    "itens": [
+      [
+        "A Revista ETER",
+        "toda semana: leituras culturais, estudos de caso brasileiros, frameworks autorais e exercícios práticos"
+      ],
+      [
+        "O acervo completo",
+        "todas as edições, as novas e as anteriores, sempre à mão"
+      ],
+      [
+        "A biblioteca de ferramentas",
+        "métodos e exercícios para aplicar imediatamente"
+      ],
+      [
+        "Encontros semanais ao vivo",
+        "análise cultural, hotseat com os membros, convidado da ETER e hotseat com o Davi"
+      ],
+      [
+        "A comunidade Vanguarda",
+        "grupos por nicho, fórum e a possibilidade de virar colunista"
+      ],
+      [
+        "Participação na curadoria",
+        "bastidores, pauta das próximas edições e coautoria em conteúdos"
+      ],
+      [
+        "O grupo de membros",
+        "comunidade no WhatsApp, com conexão direta com os fundadores"
+      ],
+      [
+        "Vanguard.IA",
+        "o copiloto alimentado com todo o conteúdo da ETER, disponível 24/7"
+      ]
+    ]
+  }
 }

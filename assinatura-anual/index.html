@@ -6,7 +6,7 @@
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="../premium/premium.css?v=202608231931">
+<link rel="stylesheet" href="../premium/premium.css?v=202608231935">
 </head>
 <body class="pagina">
 
@@ -31,9 +31,19 @@
 
   <section class="conta" aria-label="A conta">
     <div class="linha"><span>Assinatura anual da ETER</span><b class="risco" id="cheio">R$997</b></div>
-    <div class="linha"><span>Você acabou de pagar</span><b id="pago">− R$97</b></div>
-    <div class="linha total"><span>Falta para travar o ano</span><b id="parcela">12× de R$87</b></div>
-    <p class="nota">Cada parcela sai <b>menor</b> do que o passe que você acabou de pagar.</p>
+    <div class="linha total"><span>Nesta página</span><b id="parcela">R$897</b></div>
+    <p class="nota">À vista, ou <b id="mensal">R$87,90 por mês</b> — menos do que o passe
+    que você acabou de pagar, e o ano inteiro em vez de trinta dias.</p>
+  </section>
+
+  <figure class="mockup">
+    <img src="../premium/mockup-assinatura.webp" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+      width="1680" height="670" decoding="async">
+  </figure>
+
+  <section class="ganhos" id="tudo-que-acessa">
+    <p class="rotulo">Tudo que você acessa ao assinar</p>
+    <ul id="itens-assinatura"></ul>
   </section>
 
   <section class="ganhos">
@@ -48,9 +58,9 @@
 
   <div class="fecho">
     <button class="btn btn-passe grande" id="btn-anual">
-      Travar o ano — <span id="btn-preco">12× de R$87</span>
+      Assinar o ano — <span id="btn-preco">R$897</span>
     </button>
-    <p class="sob-botao">Ou <b id="pix-preco">R$900</b> à vista no Pix, que sai mais barato.
+    <p class="sob-botao"><b id="pix-preco">R$897</b> à vista no Pix, ou parcelado no cartão.
     Não renova sozinho: quando o ano acabar, você decide de novo.</p>
     <p class="erro-oferta" id="erro-oferta" hidden></p>
   </div>
@@ -87,18 +97,28 @@
 
   let c;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608231931')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608231935')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
   }
 
-  const texto = (id, v) => { if (v) document.getElementById(id).textContent = v; };
+  const texto = (id, v) => { const e = document.getElementById(id); if (e && v) e.textContent = v; };
   texto('cheio', c.precoCheio);
-  texto('pago', c.precoPasse && '− ' + c.precoPasse);
-  texto('parcela', c.parcelaAnual || c.precoAnual);
-  texto('btn-preco', c.parcelaAnual || c.precoAnual);
+  texto('parcela', c.precoAnual);
+  texto('mensal', c.mensalAnual || c.parcelaAnual);
+  texto('btn-preco', c.precoAnual);
   texto('pix-preco', c.precoAnual);
+
+  /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
+     lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
+  try {
+    const cat = await (await fetch('../edicoes.json?v=202608231935')).json();
+    const its = (cat.assinatura && cat.assinatura.itens) || [];
+    const ul = document.getElementById('itens-assinatura');
+    if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>
+      `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('');
+  } catch (err) { console.warn('[eter] entregáveis indisponíveis', err); }
 
   const e = c.empresa || {};
   document.getElementById('pe-empresa').textContent =
@@ -114,7 +134,7 @@
     /* mantém o rastro da compra original: qual edição trouxe a pessoa */
     u.searchParams.set('src', p.get('src') || 'upsell');
     u.searchParams.set('sck', 'upsell-anual');
-    if (window.fbq) fbq('track', 'AddToCart', { value: 900, currency: 'BRL' });
+    if (window.fbq) fbq('track', 'AddToCart', { value: 897, currency: 'BRL' });
     bt.disabled = true;
     bt.textContent = 'Abrindo o pagamento…';
     location.href = u;
