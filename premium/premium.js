@@ -45,6 +45,11 @@ const COPY_CASA = {
   lerTit: 'LER ESTA EDIÇÃO INTEIRA, DE GRAÇA',
   lerSub: () => '',                                                    // 1.4
   passeTit: 'ADQUIRIR O PASSE, R$97',
+  /* o botão de cima NÃO leva preço: ele ainda não explicou o que se
+     compra, e repetir o número duas vezes na mesma tela o barateia.
+     O R$97 aparece uma vez só, dentro da oferta. */
+  passeTitCurto: 'ADQUIRIR O PASSE',
+  chamadaOferta: 'Adquira o passe de 30 dias para ler uma edição nova por semana, abrir todas as que já foram publicadas e participar dos encontros ao vivo.',
   passeSub: '',
   espiada: 'Complete seu cadastro para ler a edição completa',
   /* 1.5, com um ajuste: "tudo aberto" foi reprovado no botão, e deixar a
@@ -55,7 +60,6 @@ const COPY_CASA = {
   trava: (data) => `Você já leu a sua edição deste mês.\nVolte em ${data}, ou abra tudo agora por R$97.`, // 1.6
   cadeadoTit: 'O resto da edição',
   cadeadoSub: 'complete seu cadastro · leitura gratuita',
-  fecho: 'A próxima edição entra na quarta. Comece pela que te trouxe até aqui.', // 1.8-A
 };
 
 /* O `·` não existe na Futura dos rótulos: onde o texto vira HTML, ele vira
@@ -194,6 +198,7 @@ async function iniciar() {
 
   document.title = `${EDICAO.titulo} — ETER`;
   /* 1.1 — a assinatura da casa, ao lado do logo */
+  saudacaoDeChegada();
   const marca = document.querySelector('.topo-marca');
   if (marca && !document.querySelector('.topo-tag')) {
     const tag = document.createElement('span');
@@ -269,7 +274,7 @@ function montarChegada() {
   btLer.firstChild.textContent = COPY_CASA.lerTit + ' ';
   $('#sub-ler').remove();
   document.querySelectorAll('[data-passe="capa"]').forEach(b => {
-    b.textContent = COPY_CASA.passeTit;
+    b.textContent = COPY_CASA.passeTitCurto;
   });
 
   /* O mockup do deck entra ACIMA do preço, nas três aparições da oferta:
@@ -278,7 +283,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp?v=202608232028"
+    f.innerHTML = `<img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp?v=202608232046"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -354,11 +359,12 @@ function abrirOferta(origem) {
     cx.innerHTML = `
       <div class="painel oferta">
         <button type="button" class="fechar" data-fecha="oferta-dialog" aria-label="Fechar">×</button>
-        <img class="mono" src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}monograma.webp" alt="" width="256" height="256">
+        <img class="marca-oferta" src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}logo.webp"
+          alt="ETER" width="900" height="240">
         <p class="oferta-lede">${COPY_CASA.apresenta}</p>
         <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
         <figure class="mock-passe">
-          <img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp?v=202608232028"
+          <img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp?v=202608232046"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <figure class="oferta-capas">
@@ -366,6 +372,7 @@ function abrirOferta(origem) {
             `<img class="oc c${i + 1}" src="${BASE}edicoes/${e.n}/paginas/p001@240.webp"
                alt="" width="240" height="339">`).join('')}
         </figure>
+        <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
         <p class="oferta-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}
           <b>${CFG.precoPasse}</b></p>
         <ul class="oferta-itens">
@@ -450,7 +457,7 @@ function montarTempos() {
   const bp = document.createElement('button');
   bp.className = 'btn btn-passe btn-passe-hero';
   bp.dataset.passe = 'capa';
-  bp.textContent = COPY_CASA.passeTit;
+  bp.textContent = COPY_CASA.passeTitCurto;
   acoes.append(bp);
   capa.append(acoes);
 
@@ -552,7 +559,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232028`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232046`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1017,7 +1024,7 @@ function blocoMeio() {
   d.innerHTML = `
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="rot">Um intervalo</p>
-    <h3>Toda quarta nasce uma <em>nova</em></h3>
+    <h3>Toda semana nasce uma <em>nova</em></h3>
     <p>Esta você lê inteira, de graça. O passe abre as próximas quatro, os encontros ao vivo e o acervo completo — e você segue lendo esta aqui do mesmo jeito.</p>
     <button class="btn btn-passe" data-passe="intervalo">Adquirir passe — ${CFG.precoPasse}</button>`;
   return d;
@@ -1029,10 +1036,11 @@ function blocoFim() {
   d.innerHTML = `
     <img class="mono" src="monograma.webp" alt="" width="256" height="256">
     <p class="rot">Contracapa</p>
-    <h3>A próxima sai <em>quarta</em></h3>
+    <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
+    <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="../premium/mockup-assinatura.webp?v=202608232028"
+      <figure class="mock-passe"><img src="../premium/mockup-assinatura.webp?v=202608232046"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1106,6 +1114,14 @@ function observar() {
   document.querySelectorAll('.pag').forEach(el => obs.observe(el));
 }
 
+
+/* A saudação da barra é de chegada, não um rótulo: no celular ela ocupa
+   espaço que o botão precisa, então some assim que a página rola. */
+function saudacaoDeChegada() {
+  const marcar = () => document.body.classList.toggle('rolou', scrollY > 24);
+  addEventListener('scroll', marcar, { passive: true });
+  marcar();
+}
 
 function controlarCromo() {
   const cromo = $('#cromo'), barra = $('#barra');
@@ -1299,9 +1315,9 @@ async function liberadoParaLer() {
 let aoTerminar = null;
 
 const COPY = {
-  leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.', 'Abrir a edição'],
+  leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima edição.', 'Abrir a edição'],
   trancada: ['O resto da edição abre aqui', '', 'Destravar a edição'],
-  espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima quarta.', 'Ler a partir daqui'],
+  espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima edição.', 'Ler a partir daqui'],
   checkout: ['Para onde mandamos seu acesso?', 'Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.', 'Continuar para o pagamento'],
 };
 

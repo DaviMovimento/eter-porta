@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232028') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232028') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232028') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232046') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232046') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232046') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2192,3 +2192,85 @@ body.inicio,body.biblioteca{background:var(--papel)}
 .capa-inicio>.prateleira{order:4}
 .capa-inicio>.dica-faixa{order:5}
 .capa-inicio>.acoes{order:6}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   A OFERTA VIRA PAPEL
+   O card era verde-escuro, e nele os itens ficavam em creme a 60% de
+   opacidade: texto que existe e não se lê — a queixa de "está escuro,
+   não aparece". Como a oferta agora mora sobre o papel nas quatro
+   superfícies (home, biblioteca, edição e upsell), o card acompanha:
+   fundo de papel, filete de ouro, tinta cheia nos itens, e o preço no
+   Verde Eter, que é a cor da casa e o maior contraste da paleta sobre
+   este fundo. Um só desenho de oferta em todo o funil.
+   ═══════════════════════════════════════════════════════════════ */
+.passe{
+  background:var(--papel);color:var(--tinta);
+  box-shadow:var(--elev-2), inset 0 0 0 1px var(--linha);
+}
+.passe::after{background:linear-gradient(90deg,transparent,var(--ouro),transparent);height:2px}
+.passe-topo{border-bottom-color:var(--linha)}
+.passe-rot{color:var(--ouro-texto)}
+/* o preço: Verde Eter, o corpo maior de tudo no card */
+.passe-preco{color:var(--acao);font-size:2.1rem;font-weight:400}
+.passe-itens li{color:var(--tinta-2)}
+.passe-itens li::before{background:var(--ouro)}
+.passe-itens b{color:var(--tinta)}
+.passe-nota{color:var(--tinta-3)}
+/* dentro da contracapa escura o card continua de papel — é ele que
+   precisa ser lido, e o verde ao redor passa a ser moldura */
+.intervalo .passe{box-shadow:var(--elev-3), inset 0 0 0 1px rgba(175,145,83,.35)}
+
+/* A CHAMADA DA OFERTA. Antes do card, dizendo em uma frase o que se
+   compra — sem ela o preço chega antes da promessa. */
+.oferta-chamada{
+  max-width:30rem;margin:0 auto 1.2rem;text-align:center;
+  font-family:var(--display);font-size:1.12rem;line-height:1.42;
+  color:var(--tinta);text-wrap:balance;
+}
+.intervalo .oferta-chamada{color:var(--sobre-escuro);margin-bottom:1.1rem}
+#oferta-dialog .oferta-chamada{font-size:1rem;margin-bottom:.9rem}
+
+/* a logo da casa abre a caixa da oferta: o monograma sozinho não diz
+   de quem é a oferta para quem chegou pelo anúncio */
+.marca-oferta{
+  display:block;width:5.6rem;height:auto;margin:0 auto 1.1rem;
+}
+#oferta-dialog .mono{display:none}
+
+/* ═══ A SAUDAÇÃO, AO LADO DA LOGO ═════════════════════════════
+   Ela tinha ganhado uma faixa própria no celular, o que empurrava a
+   barra para três linhas. Volta para o lado da logo, e some quando a
+   página rola: é um cumprimento de chegada, não um rótulo permanente. */
+@media (max-width:59.99rem){
+  .topo-tag{
+    order:0;flex:0 1 auto;margin:0 0 0 .7rem;padding:0 0 0 .7rem;
+    border-top:0;border-left:1px solid var(--linha-2);
+    font-size:.82rem;overflow:hidden;
+    max-width:12rem;opacity:1;
+    transition:max-width .3s var(--curva), opacity .25s, margin .3s, padding .3s;
+  }
+  body.rolou .topo-tag{max-width:0;opacity:0;margin-left:0;padding-left:0;border-left-width:0}
+  /* com a saudação na primeira linha, os três alvos ganham a segunda
+     inteira — e passam a caber com folga em 375px */
+  .topo-nav{order:3;flex:1 0 100%;justify-content:center;gap:.9rem;margin-top:.55rem;
+            padding-top:.55rem;border-top:1px solid var(--linha)}
+}
+@media (max-width:22rem){ .topo-tag{display:none} }
+
+/* a prateleira do celular estava miúda demais para se ler como acervo */
+@media (max-width:34rem){
+  .lombada-capa{width:5.9rem}
+  .lombada-capa+.lombada-capa{margin-left:-1.5rem}
+}
+
+/* ═══ A BIBLIOTECA: o selo mais compacto ══════════════════════
+   O título quebrava em três linhas soltas e o texto abria mais largo
+   que ele. Agora os dois têm a mesma medida e o bloco fecha quadrado. */
+.biblioteca .papelada .selo{gap:.7rem;margin-bottom:2rem}
+.biblioteca .papelada h1{font-size:clamp(1.75rem,6.2vw,2.4rem);max-width:16em}
+.biblioteca .papelada .dek{max-width:30rem;font-size:.95rem;line-height:1.62}
+@media (max-width:34rem){
+  .biblioteca .papelada h1{font-size:1.7rem;max-width:12em}
+  .biblioteca .papelada .dek{font-size:.9rem;text-align:center}
+}

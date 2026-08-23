@@ -6,7 +6,7 @@
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="premium/premium.css?v=202608232028">
+<link rel="stylesheet" href="premium/premium.css?v=202608232046">
 </head>
 <body class="pagina">
 
@@ -24,7 +24,7 @@
     <p class="confirmado"><i aria-hidden="true">✓</i> Pagamento confirmado <i class="pt"></i> o passe está ativo</p>
     <p class="rotulo">Uma conta que só fecha hoje</p>
     <h1>Você já pagou o <em>primeiro mês</em></h1>
-    <p class="dek">O acervo abriu e a edição de quarta já está no seu nome. Como você entrou de
+    <p class="dek">O acervo abriu e a edição da semana já está no seu nome. Como você entrou de
     qualquer forma, existe uma conta que só vale a pena fazer <b>agora</b>, nesta página, e não
     daqui a trinta dias.</p>
   </div>
@@ -44,7 +44,7 @@
   <section class="ganhos">
     <p class="rotulo">O que muda ao completar</p>
     <ul>
-      <li><b>52 edições em vez de 4</b><span>uma revista nova por quarta, o ano inteiro</span></li>
+      <li><b>52 edições em vez de 4</b><span>uma revista nova por semana, o ano inteiro</span></li>
       <li><b>Todos os encontros ao vivo</b><span>e não só os quatro do passe</span></li>
       <li><b>O acervo aberto para sempre</b><span>em vez de fechar no trigésimo dia</span></li>
       <li><b>O preço de hoje travado</b><span>a ETER reajusta, e quem entrou antes não é alcançado</span></li>
@@ -52,7 +52,7 @@
   </section>
 
   <figure class="mockup">
-    <img src="premium/mockup-assinatura.webp?v=202608232028" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+    <img src="premium/mockup-assinatura.webp?v=202608232046" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
       width="794" height="485" decoding="async">
   </figure>
 
@@ -72,7 +72,7 @@
 
   <p class="pe">
     <span id="pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="privacidade.html">Privacidade</a> <i class="pt"></i> <a href="./">Todas as edições</a>
+    <a href="privacidade.html">Privacidade</a>
   </p>
 </main>
 
@@ -97,7 +97,7 @@
 
   let c;
   try {
-    c = (await (await fetch('edicoes.json?v=202608232028')).json()).config;
+    c = (await (await fetch('edicoes.json?v=202608232046')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -115,7 +115,7 @@
   /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
      lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
   try {
-    const cat = await (await fetch('edicoes.json?v=202608232028')).json();
+    const cat = await (await fetch('edicoes.json?v=202608232046')).json();
     const its = (cat.assinatura && cat.assinatura.itens) || [];
     const ul = document.getElementById('itens-assinatura');
     if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>

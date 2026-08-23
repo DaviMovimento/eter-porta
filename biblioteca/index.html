@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../premium/premium.css?v=202608232028">
+<link rel="stylesheet" href="../premium/premium.css?v=202608232046">
 </head>
 <body class="pagina biblioteca">
 
@@ -28,8 +28,9 @@
   <div class="selo">
     <p class="rotulo">A biblioteca</p>
     <h1>Escolha a edição que você vai <em>ler</em></h1>
-    <p class="dek">Uma delas abre inteira, de graça, agora — sem cartão. Com o passe, todas
-    abrem de uma vez, e a de quarta chega junto.</p>
+    <p class="dek">A ETER publica novas edições semanalmente, traduzindo a complexidade da nova
+    economia em ferramentas aplicáveis para posicionar o seu conteúdo autoral.
+    Escolha uma edição para ler gratuitamente agora.</p>
   </div>
 
   <div class="filtro-bib">
@@ -39,8 +40,11 @@
   <ul class="estante" id="estante"></ul>
 
   <section class="oferta-home">
+    <p class="oferta-chamada">Adquira o passe de 30 dias para ler uma edição nova por semana,
+    abrir todas as que já foram publicadas e participar dos encontros ao vivo.</p>
+
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202608232028" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202608232046" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -56,8 +60,7 @@
 
   <p class="pe">
     <span id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="../">Home</a>
-    <a href="biblioteca" class="atual-nav">Todas as edições</a> <i class="pt"></i> <a href="../privacidade">Privacidade</a>
+    <a href="../privacidade">Privacidade</a>
   </p>
 </main>
 
@@ -67,7 +70,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('../edicoes.json?v=202608232028')).json(); }
+  try { D = await (await fetch('../edicoes.json?v=202608232046')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -123,6 +126,10 @@
     u.searchParams.set('sck', origem);
     location.href = u;
   };
+
+  /* a saudação da barra é de chegada: some assim que a página rola */
+  const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
+  addEventListener('scroll', rolagem, { passive: true }); rolagem();
   document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('bib-oferta'));
   document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('bib-topo'); });
 })();

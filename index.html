@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608232028">
+<link rel="stylesheet" href="premium/premium.css?v=202608232046">
 </head>
 <body class="pagina inicio">
 
@@ -44,20 +44,13 @@
       <a class="btn btn-ler" href="biblioteca">
         RESGATAR A LEITURA GRATUITA
       </a>
-      <button class="btn btn-passe btn-passe-hero" id="btn-passe-home">
-        ADQUIRIR O PASSE, R$97
-      </button>
+      <button class="btn btn-passe btn-passe-hero" id="btn-passe-home">ADQUIRIR O PASSE</button>
     </div>
   </section>
 </main>
 
 <!-- ══ A CASA ═════════════════════════════════════════════════ -->
 <section class="casa">
-  <p class="casa-lede">Inteligência cultural e repertório polímata para quem vive ou quer viver das próprias ideias.</p>
-  <p class="casa-sub">A revista semanal e a comunidade que lê e traduz o futuro da nova economia
-  em clareza, direção e ferramentas aplicáveis, para você se posicionar de forma única e
-  monetizar o seu conteúdo autoral.</p>
-
   <div class="casa-polimata">
     <h2>O que é repertório de polímata?</h2>
     <p>Polímata era como se chamavam os homens e as mulheres do Renascimento: pensadores,
@@ -72,8 +65,11 @@
 
 <!-- ══ A OFERTA ═══════════════════════════════════════════════ -->
 <section class="oferta-home">
+  <p class="oferta-chamada">Adquira o passe de 30 dias para ler uma edição nova por semana,
+  abrir todas as que já foram publicadas e participar dos encontros ao vivo.</p>
+
   <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608232028" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608232046" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe" id="passe-home">
@@ -85,11 +81,10 @@
     <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE, R$97</button>
     <p class="passe-nota" id="passe-nota"></p>
   </div>
-  <p class="fecho-home">A próxima edição entra na quarta. Comece pela que te trouxe até aqui.</p>
 </section>
 
 <footer class="pe">
-  <p><a href="biblioteca">todas as edições</a> <i class="pt"></i> <a href="privacidade.html">privacidade</a></p>
+  <p><a href="privacidade.html">Privacidade</a></p>
   <p id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</p>
 </footer>
 
@@ -101,7 +96,7 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608232028')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608232046')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -138,7 +133,7 @@
   /* o fundo: a arte da edição mais nova veste a home */
   if (nova) {
     const atm = document.getElementById('atmosfera');
-    const arte = `${BASE}edicoes/${nova.n}/parede.webp?v=202608232028`;
+    const arte = `${BASE}edicoes/${nova.n}/parede.webp?v=202608232046`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;
@@ -155,6 +150,10 @@
     (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem });
     location.href = u;
   };
+
+  /* a saudação da barra é de chegada: some assim que a página rola */
+  const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
+  addEventListener('scroll', rolagem, { passive: true }); rolagem();
   document.getElementById('btn-passe-home').addEventListener('click', () => irPagar('home-hero'));
   document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('home-oferta'));
   document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('home-topo'); });
