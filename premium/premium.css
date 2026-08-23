@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231507') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231507') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231507') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231616') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231616') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231616') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -150,11 +150,8 @@ body.lendo .topo{display:none}
    um efeito atrás dele. São duas camadas iguais que se revezam — quem tem
    `acesa` está à vista, quem não tem espera apagada por baixo —, e uma
    regra só governa as duas. */
-.atmosfera.arte{
-  inset:0;filter:none;background-position:center;background-size:cover;
-  transform:none;opacity:0;transition:opacity 2.6s ease;
-}
-.atmosfera.arte.acesa{opacity:1}
+
+
 
 /* O MOSAICO. Ancorado na esquerda e mais largo do que a faixa que lhe
    cabe: a folha entra por cima e come a sobra, então as provas somem
@@ -299,24 +296,10 @@ body.lendo .topo{display:none}
      fundo. E ela mora onde argumenta — depois da espiada e do botão de
      graça, imediatamente antes do preço, que é onde o leitor pergunta
      "o que eu levo por R$97?" e a resposta aparece em imagem. */
-  .mosaico.faixa-de-provas{
-    position:static;width:auto;height:9.5rem;
-    display:block;padding:0;margin:.4rem 0 .2rem;
-    /* rompe a margem da folha: a faixa vai de beirada a beirada */
-    margin-left:calc(var(--sangra,1.4rem)*-1);
-    margin-right:calc(var(--sangra,1.4rem)*-1);
-    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);
-    mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);
-  }
-  .faixa-de-provas .coluna{height:100%;margin-top:0}
-  .faixa-de-provas .tira{
-    flex-direction:row;height:100%;
-    animation-name:deriva-lado;
-  }
-  .faixa-de-provas .tira img{
-    width:auto;height:100%;box-shadow:var(--elev-2);
-    margin:0 .7rem 0 0;        /* o vão à direita, pelo mesmo motivo do laço */
-  }
+  
+  
+  
+  
 }
 @keyframes deriva-lado{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
@@ -324,7 +307,7 @@ body.lendo .topo{display:none}
    `.tira` solto (0,1,0): quem pediu para o movimento parar continuava
    vendo a faixa correr. Os dois seletores, para os dois desenhos. */
 @media (prefers-reduced-motion:reduce){
-  .tira,.faixa-de-provas .tira{animation:none}
+  .tira,
 }
 
 .folha{
@@ -865,7 +848,7 @@ h1 em{
   /* a faixa é ordenada pela CLASSE, não pelo pai: no celular ela muda de
      lugar na árvore (vai para dentro dos convites) e um seletor com `>`
      deixaria de casar — ela voltaria para a ordem 0, no topo de tudo */
-  .mosaico.faixa-de-provas{order:8}
+  
   .convites>.ou           {order:9;margin:.2rem 0 .6rem}
   .convites>.passe        {order:10}
   .folha>.pe              {order:11}
@@ -1562,7 +1545,7 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 #chegada{background:var(--papel)}
 
 /* a arte cobre exatamente a primeira tela, não a página inteira */
-.atmosfera.arte{position:absolute;top:0;left:0;right:0;bottom:auto;height:100svh}
+
 
 /* O ANTEPARO. Ele deixa de ser papel opaco e vira sombra dirigida: escurece
    o lado onde mora o texto e deixa o lado da imagem respirar. É o que torna
@@ -1616,23 +1599,11 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 
 /* A FILEIRA DE PROVAS, em qualquer tela. A página aparece INTEIRA — era
    isto que faltava: a tira lateral vinha cortada ao meio pela coluna. */
-.mosaico.faixa-de-provas{
-  position:static;width:auto;height:15rem;
-  display:block;padding:0;margin:1.8rem 0 0;opacity:0;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
-  mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
-}
-.mosaico.faixa-de-provas.ver{opacity:1}
-.faixa-de-provas .coluna{height:100%;margin-top:0;overflow:hidden}
-.faixa-de-provas .tira{
-  flex-direction:row;height:100%;
-  animation-name:deriva-lado;
-}
-.faixa-de-provas .tira img{
-  width:auto;height:100%;margin:0 1.1rem 0 0;
-  outline:1px solid var(--linha);outline-offset:-1px;
-  box-shadow:var(--elev-2);filter:saturate(.78) contrast(1.02);
-}
+
+
+
+
+
 
 /* ─── TEMPO 3 · A OFERTA ───────────────────────────────────── */
 .dizeres{
@@ -1656,7 +1627,7 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
   .capa .visor{max-width:31rem}
   .miolo,.dizeres,.folha>.pe{max-width:none}
   .dizeres{max-width:34rem}
-  .mosaico.faixa-de-provas{height:19rem}
+  
 }
 
 /* na capa, a manchete e o olho ficam agrupados na coluna da direita */
@@ -1668,3 +1639,77 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
   .capa .dek-ed{grid-row:3;align-self:start}
   .capa .btn-ler{grid-row:4;align-self:start}
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   O CHÃO DE MARCA E OS HIGHLIGHTS
+   ═══════════════════════════════════════════════════════════════
+   A conta que mandou refazer: numa tela `dpr 2`, um fundo fotográfico em
+   sangria precisa de ~3.400px de largura para não borrar. Eu servia 1.800
+   e ainda desfocava — dava exatamente o borrão que se via. Agora o chão é
+   MATÉRIA (gradiente, brilho e grão: CSS, nítido de graça) e a fotografia
+   entra como três PEÇAS COMPLETAS, cada uma exibida a ~380px a partir de
+   um arquivo de 760px, que é o dobro exato. Nada estica. */
+.atmosfera.chao{
+  position:absolute;top:0;left:0;right:0;bottom:auto;height:100svh;
+  filter:none;transform:none;opacity:0;
+  background-color:var(--tinta);
+  background-image:
+    radial-gradient(78% 54% at 74% 6%, rgb(var(--ouro-rgb)/.30) 0%, transparent 68%),
+    radial-gradient(64% 60% at 12% 96%, rgb(var(--ouro-rgb)/.14) 0%, transparent 70%),
+    linear-gradient(168deg, #221410 0%, #14100E 46%, #0D0C0B 100%);
+}
+.atmosfera.chao.ver{opacity:1}
+
+.altos{
+  position:absolute;top:0;left:0;right:0;height:100svh;
+  z-index:1;pointer-events:none;overflow:hidden;
+  opacity:0;transition:opacity 1.6s ease;
+}
+.altos.ver{opacity:1}
+.alto{
+  position:absolute;display:block;width:19rem;height:auto;border-radius:2px;
+  box-shadow:0 2px 6px rgb(0 0 0/.5), 0 30px 70px -22px rgb(0 0 0/.8);
+  outline:1px solid rgb(255 255 255/.07);outline-offset:-1px;
+}
+.alto.a1{top:-3.5rem;left:-3rem;transform:rotate(-4deg);width:23rem;opacity:.92}
+.alto.a2{bottom:-6rem;right:-2.5rem;transform:rotate(5deg);width:21rem;opacity:.86}
+.alto.a3{top:38%;right:19%;transform:rotate(-2deg);width:14rem;opacity:.52}
+
+/* ═══ AS PROVAS — finitas, completas, paradas ═════════════════
+   Eram catorze imagens vivas numa camada animada: 48 MB de bitmap que o
+   compositor não aguentava, e a página aparecia como caixa branca. E, por
+   ser tira infinita, nunca mostrava a folha inteira. Quatro provas sobre
+   a mesa resolvem os dois de uma vez. */
+.provas{
+  display:flex;justify-content:center;align-items:flex-start;
+  gap:0;padding:2.4rem 1.2rem .6rem;margin:0;
+  opacity:0;transition:opacity 1.2s ease;
+}
+.provas.ver{opacity:1}
+.prova{margin:0;flex:0 0 auto;transition:transform .4s var(--curva)}
+.prova img{
+  display:block;width:100%;height:auto;background:var(--papel-2);
+  box-shadow:0 1px 3px rgb(var(--tinta-rgb)/.2), 0 18px 40px -16px rgb(var(--tinta-rgb)/.45);
+  outline:1px solid var(--linha);outline-offset:-1px;
+}
+.prova.p1{width:14rem;transform:rotate(-3.2deg)}
+.prova.p2{width:15rem;transform:rotate(1.6deg);margin-left:-1.6rem;z-index:2}
+.prova.p3{width:14.5rem;transform:rotate(-1.2deg);margin-left:-1.6rem}
+.prova.p4{width:13.5rem;transform:rotate(3deg);margin-left:-1.6rem}
+.prova:hover{transform:rotate(0) translateY(-6px);z-index:3}
+
+@media (max-width:59.99rem){
+  .alto.a1{width:15rem;top:-2rem;left:-2.5rem}
+  .alto.a2{width:13rem;bottom:-3rem;right:-2rem}
+  .alto.a3{display:none}
+  .provas{flex-wrap:nowrap;padding:1.8rem .8rem .4rem}
+  .prova.p1{width:10.5rem} .prova.p2{width:11rem;margin-left:-1.1rem}
+  .prova.p3{width:10.5rem;margin-left:-1.1rem} .prova.p4{display:none}
+}
+@media (min-width:82rem){
+  .alto.a1{width:27rem} .alto.a2{width:25rem} .alto.a3{width:17rem}
+  .prova.p1{width:16rem} .prova.p2{width:17rem}
+  .prova.p3{width:16.5rem} .prova.p4{width:15.5rem}
+}
+@media (prefers-reduced-motion:reduce){ .prova{transition:none} }

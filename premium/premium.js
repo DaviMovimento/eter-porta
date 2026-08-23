@@ -322,50 +322,24 @@ function corDaEdicao() {
 function montarFundo() {
   if (!TOTAL) return;
 
-  /* O FUNDO DA EDIÇÃO — seis quadros que se revezam.
-     Era uma composição fixa, montada de UM capítulo só: a página ficava
-     com a cara de um pedaço da revista, não da revista. Agora são seis
-     artes da própria edição alternando devagar, e com o tempo a edição
-     inteira passa pelo fundo. Duas camadas empilhadas trocam por opacidade
-     — só opacidade roda na placa de vídeo — e o quadro seguinte é baixado
-     alguns segundos antes de entrar, então nunca há espera visível. */
-  const QUADROS = 6, PAUSA = 11000;
-  const arteN = i => `${BASE}edicoes/${EDICAO.n}/fundo-${i}.webp?v=1`;
-  const atm = $('#atmosfera');
-
-  const primeiro = new Image();
-  primeiro.onload = () => {
-    atm.style.backgroundImage = `url("${arteN(1)}")`;
-    atm.classList.add('arte', 'ver', 'acesa');
-    girarFundo();
-  };
-  /* sem as artes, cai na capa desfocada — que é o que havia antes */
-  primeiro.onerror = () => {
-    atm.style.backgroundImage = `url("${pag(1, 800)}")`;
-    atm.classList.add('ver');
-  };
-  primeiro.src = arteN(1);
-
-  function girarFundo() {
-    if (semMovimento()) return;          /* quem pediu quieto fica com um quadro */
-    const b = document.createElement('div');
-    b.className = 'atmosfera arte ver';
-    b.setAttribute('aria-hidden', 'true');
-    atm.after(b);
-    let i = 1, alvo = b, fundo = atm;
-    setInterval(() => {
-      const prox = (i % QUADROS) + 1;
-      const pre = new Image();
-      pre.onload = () => {
-        alvo.style.backgroundImage = `url("${arteN(prox)}")`;
-        alvo.classList.add('acesa');
-        fundo.classList.remove('acesa');
-        [alvo, fundo] = [fundo, alvo];
-        i = prox;
-      };
-      pre.src = arteN(prox);
-    }, PAUSA);
-  }
+  /* O FUNDO. A conta que mandou refazer isto: numa tela retina, um fundo
+     fotográfico em sangria precisa de ~3.400px para não borrar — ou pesa
+     demais, ou fica mole. Então o chão deixa de ser foto e passa a ser
+     MATÉRIA DE MARCA (gradiente e grão, no CSS: nítido de graça), e a
+     fotografia entra como TRÊS PEÇAS COMPLETAS, cada uma exibida perto do
+     tamanho nativo. Nada estica, nada borra, e a edição continua vestindo
+     a sua própria página. */
+  const altos = document.createElement('div');
+  altos.className = 'altos';
+  altos.setAttribute('aria-hidden', 'true');
+  altos.innerHTML = [1, 2, 3].map(i =>
+    `<img class="alto a${i}" src="${BASE}edicoes/${EDICAO.n}/hl-${i}.webp?v=1"
+      alt="" decoding="async" ${i === 1 ? '' : 'loading="lazy"'}>`).join('');
+  $('#atmosfera').after(altos);
+  /* sem as peças, a página continua de pé sobre o chão de marca */
+  altos.querySelector('.a1').addEventListener('load', () => altos.classList.add('ver'), { once: true });
+  altos.querySelector('.a1').addEventListener('error', () => altos.remove(), { once: true });
+  $('#atmosfera').classList.add('chao', 'ver');
 
   corDaEdicao();
 
@@ -383,33 +357,22 @@ function montarFundo() {
      nenhuma — então a parede deita e vira uma FAIXA que corre de lado,
      colocada no lugar do funil onde ela argumenta: depois da espiada e do
      botão de graça, logo antes do preço. */
-  /* A FILEIRA DE PROVAS. Era uma tira vertical na lateral, e ela tinha um
-     defeito que nenhum ajuste resolvia: a folha de leitura comia 3rem da
-     coluna, então a página de framework aparecia sempre pela METADE. Uma
-     tira lateral, num layout com coluna opaca ao lado, nunca mostra a
-     página inteira. Agora ela é uma fileira que corre de lado, com a
-     página inteira à vista e altura própria — infinita no movimento,
-     completa na leitura. */
-  const minimo = 6;
-
+  /* AS PROVAS. Era uma tira infinita com catorze imagens vivas numa só
+     camada animada: 48 MB de bitmap que o compositor não aguentava, e as
+     páginas apareciam como caixas brancas. E, por ser infinita, nunca
+     mostrava a página inteira — sempre havia uma entrando e uma saindo.
+     Agora são QUATRO, paradas, completas e nítidas: provas sobre a mesa. */
   const mosaico = $('#mosaico');
-  mosaico.classList.add('faixa-de-provas');
-  mosaico.innerHTML = (() => {
-    let f = provas.slice();
-    while (f.length < minimo) f = f.concat(f);
-    const paginas = f.map(n =>
-      `<img src="${pag(n, 800)}" alt="" decoding="async" fetchpriority="low"
-        width="240" height="339">`).join('');
-    const seg = f.length * 11;
-    return `<div class="coluna" style="--t:${seg}s">
-      <div class="tira">${paginas}${paginas}</div></div>`;
-  })();
+  mosaico.className = 'provas';
+  mosaico.innerHTML = provas.slice(0, 4).map((n, i) =>
+    `<figure class="prova p${i + 1}">
+       <img src="${pag(n, 800)}" alt="" decoding="async" loading="lazy"
+         width="800" height="1131">
+     </figure>`).join('');
 
   /* só acende quando há o que mostrar — nada de piscar papel vazio */
   const primeira = mosaico.querySelector('img');
-  const acender = () => requestAnimationFrame(() => {
-    mosaico.classList.add('ver'); $('#atmosfera').classList.add('ver');
-  });
+  const acender = () => mosaico.classList.add('ver');
   if (primeira && primeira.complete) acender();
   else primeira?.addEventListener('load', acender, { once: true });
   setTimeout(acender, 2500);               /* rede de segurança */
