@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231441') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231441') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231441') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231443') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231443') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231443') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -784,7 +784,10 @@ h1 em{
      dois lados dizendo o que está em cima e o que está embaixo. */
   #chegada{--margem:9rem}
   .veu{
-    left:var(--trilho);right:var(--margem);top:0;bottom:0;inset:auto;
+    /* o `inset:auto` tem que vir ANTES: é atalho das quatro e zera
+       tudo que vier antes dele. Colocado no fim, apagava o left e o
+       right desta mesma regra e a folha nascia com largura zero. */
+    inset:auto;left:var(--trilho);right:var(--margem);top:0;bottom:0;
     box-shadow:
       -1px 0 0 rgb(var(--tinta-rgb)/.16),
        1px 0 0 rgb(var(--tinta-rgb)/.16),

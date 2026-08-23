@@ -302,7 +302,7 @@ function montarFundo() {
   const primeiro = new Image();
   primeiro.onload = () => {
     atm.style.backgroundImage = `url("${arteN(1)}")`;
-    atm.classList.add('arte', 'ver');
+    atm.classList.add('arte', 'ver', 'acesa');
     girarFundo();
   };
   /* sem as artes, cai na capa desfocada — que é o que havia antes */
@@ -315,7 +315,7 @@ function montarFundo() {
   function girarFundo() {
     if (semMovimento()) return;          /* quem pediu quieto fica com um quadro */
     const b = document.createElement('div');
-    b.className = 'atmosfera arte ver troca';
+    b.className = 'atmosfera arte ver';
     b.setAttribute('aria-hidden', 'true');
     atm.after(b);
     let i = 1, alvo = b, fundo = atm;
