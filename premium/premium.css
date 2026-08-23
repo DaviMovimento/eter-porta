@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232022') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232022') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232022') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232028') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232028') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232028') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1941,10 +1941,12 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
    ~840px: o dobro exato, que é o que a tela retina pede. Sangra as
    margens da coluna porque é imagem de produto, não ilustração. */
 .papelada .mockup{margin:1.4rem 0 1.8rem}
-.papelada .mockup img{
-  display:block;width:100%;height:auto;
-  filter:drop-shadow(0 20px 34px rgb(var(--tinta-rgb)/.34));
-}
+/* SEM `drop-shadow`. O filtro sobre um WebP grande com transparência força
+   um buffer que o Chrome simplesmente não rasteriza: a imagem carregava,
+   desenhava em canvas, e a tela ficava vazia. Testado ao vivo — tirar o
+   filtro fez a peça aparecer no mesmo quadro. E ela não precisa dele: as
+   sombras dos aparelhos já vêm desenhadas no arquivo. */
+.papelada .mockup img{display:block;width:100%;height:auto}
 @media (min-width:60rem){
   .papelada .mockup{margin-inline:0;border-radius:2px;overflow:hidden}
 }
@@ -2147,8 +2149,7 @@ body.inicio,body.biblioteca{background:var(--papel)}
    dentro do card, os aparelhos flutuam sobre o próprio card. Por isso ele
    não sangra as bordas nem precisa de recorte. */
 .mock-passe{margin:0 0 -.6rem;padding:0;position:relative;z-index:2}
-.mock-passe img{display:block;width:100%;height:auto;
-  filter:drop-shadow(0 18px 30px rgb(0 0 0/.45))}
+.mock-passe img{display:block;width:100%;height:auto}
 
 /* ═══ A PROMESSA NA PRIMEIRA DOBRA DO CELULAR ═════════════════
    No desktop a sinopse fica na coluna do texto, dentro da dobra. No celular
