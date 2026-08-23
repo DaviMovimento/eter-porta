@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231443') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231443') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231443') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231507') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231507') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231507') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -769,34 +769,14 @@ h1 em{
 
   /* o mosaico tem largura declarada e a página se afasta dele por essa
      mesma medida: um número só governa os dois, e nada encosta */
-  #chegada{--trilho:15rem;padding-left:var(--trilho)}
+
 
   /* A FOLHA SOBREPOSTA. O véu deixa de ser lavado e vira uma superfície:
      papel opaco começando onde o mosaico acaba, com um fio de tinta na
      dobra e uma sombra funda por baixo. É essa sombra que diz ao olho o
      que está atrás e o que está por cima — sem ela as duas coisas
      dividem o mesmo plano e a leitura briga com o fundo. */
-  /* A FOLHA VIRA COLUNA. Enquanto ela sangrava até a borda direita, não
-     sobrava tela nenhuma para o fundo — e um fundo que não se vê não é
-     fundo. Agora ela para antes da margem, e a arte da edição aparece dos
-     dois lados: à esquerda com o trilho por cima, à direita limpa. A
-     revista fica sobre a arte como página sobre a mesa, com sombra dos
-     dois lados dizendo o que está em cima e o que está embaixo. */
-  #chegada{--margem:9rem}
-  .veu{
-    /* o `inset:auto` tem que vir ANTES: é atalho das quatro e zera
-       tudo que vier antes dele. Colocado no fim, apagava o left e o
-       right desta mesma regra e a folha nascia com largura zero. */
-    inset:auto;left:var(--trilho);right:var(--margem);top:0;bottom:0;
-    box-shadow:
-      -1px 0 0 rgb(var(--tinta-rgb)/.16),
-       1px 0 0 rgb(var(--tinta-rgb)/.16),
-      -16px 0 30px -12px rgb(var(--tinta-rgb)/.42),
-       16px 0 30px -12px rgb(var(--tinta-rgb)/.42),
-        0 0 90px -20px rgb(var(--tinta-rgb)/.30);
-  }
-  /* a coluna de conteúdo respeita a margem nova */
-  #chegada{padding-right:var(--margem)}
+
   /* A DISPOSIÇÃO, e por quê. O olho ocidental entra no alto à esquerda e
      desce em Z. À esquerda a revista, que é o objeto — o olho pousa numa
      imagem antes de pousar em texto. À direita a coluna que fala, na
@@ -846,8 +826,8 @@ h1 em{
 /* Tela larga: o trilho cresce, mas com teto. A conta é literal — a coluna
    mede `--trilho + 0,8rem`, e a miniatura de origem tem 240px: passar de
    14rem é esticar imagem, que é exatamente o que deixa o quadro mole. */
-@media (min-width:82rem){ #chegada{--trilho:17rem;--margem:12rem} }
-@media (min-width:100rem){ #chegada{--trilho:18.5rem;--margem:16rem} }
+
+
 
 /* ═══════════════════════════════════════════════════════════════
    CELULAR — a ordem que a mão lê
@@ -1563,3 +1543,128 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 .convite-fixo.oculto,.cromo.oculto,.barra.oculta{visibility:hidden}
 .convite-fixo,.cromo,.barra{transition:transform var(--t-medio) var(--curva),visibility 0s linear var(--t-medio)}
 .convite-fixo:not(.oculto),.cromo:not(.oculto),.barra:not(.oculta){visibility:visible;transition-delay:0s}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   OS TRÊS TEMPOS — a estrutura nova
+   ═══════════════════════════════════════════════════════════════
+   O problema não era ajuste, era composição: arte, trilho, revista,
+   texto e botão disputavam a mesma tela, e cada um que crescia cortava
+   outro. A saída não é dividir a tela em camadas — é dividir a leitura
+   em TEMPOS, que é como revista funciona.
+
+   TEMPO 1, a CAPA: a arte da edição é o chão, em sangria, e sobre ela
+   flutuam só três coisas — o objeto, a manchete e a ação. Tipografia
+   clara sobre a imagem, com anteparo dirigido para o lado do texto.
+   TEMPO 2, o MIOLO, e TEMPO 3, a OFERTA: papel, tinta escura.
+   ═══════════════════════════════════════════════════════════════ */
+
+#chegada{background:var(--papel)}
+
+/* a arte cobre exatamente a primeira tela, não a página inteira */
+.atmosfera.arte{position:absolute;top:0;left:0;right:0;bottom:auto;height:100svh}
+
+/* O ANTEPARO. Ele deixa de ser papel opaco e vira sombra dirigida: escurece
+   o lado onde mora o texto e deixa o lado da imagem respirar. É o que torna
+   a tipografia clara legível sem tapar a arte. */
+.veu{
+  position:absolute;top:0;left:0;right:0;bottom:auto;height:100svh;
+  z-index:1;backdrop-filter:none;-webkit-backdrop-filter:none;
+  background-color:transparent;
+  background-image:
+    linear-gradient(101deg,
+      rgb(var(--tinta-rgb)/.28) 0%,
+      rgb(var(--tinta-rgb)/.42) 34%,
+      rgb(var(--tinta-rgb)/.72) 62%,
+      rgb(var(--tinta-rgb)/.84) 100%),
+    linear-gradient(180deg,
+      rgb(var(--tinta-rgb)/.42) 0%, transparent 22%,
+      transparent 74%, rgb(var(--tinta-rgb)/.46) 100%);
+}
+.veu::after{display:none}
+.vinheta{display:none}
+
+.folha{max-width:none;padding:0;display:block}
+
+/* ─── TEMPO 1 · A CAPA ─────────────────────────────────────── */
+.capa{
+  position:relative;z-index:4;
+  min-height:calc(100svh - 3.4rem);
+  display:flex;flex-direction:column;justify-content:center;
+  gap:0;padding:2rem 1.4rem 3rem;
+  color:var(--papel);
+}
+.capa .numero{color:var(--ouro-claro);margin-bottom:.5rem}
+.capa .numero::before,.capa .numero::after{background:linear-gradient(90deg,transparent,var(--ouro-claro))}
+.capa .numero::after{background:linear-gradient(270deg,transparent,var(--ouro-claro))}
+.capa h1{color:var(--papel);margin-bottom:.7rem;text-shadow:0 2px 24px rgb(var(--tinta-rgb)/.55)}
+.capa h1 em{color:var(--ouro-claro)}
+.capa .dek-ed{color:rgb(255 255 255/.90);margin-bottom:1.6rem;text-shadow:0 1px 14px rgb(var(--tinta-rgb)/.5)}
+.capa .revista{margin:0 0 1.7rem}
+.capa .btn-ler{max-width:26rem;margin:0 auto}
+
+/* a seta de folhear ganha peso sobre imagem */
+.capa .seta{background:rgb(var(--papel-rgb)/.94)}
+
+/* ─── TEMPO 2 · O MIOLO ────────────────────────────────────── */
+.miolo{
+  position:relative;z-index:4;background:var(--papel);
+  padding:2.6rem 0 2.2rem;
+}
+.miolo .pulso{margin-top:0}
+.miolo .faixa{margin-left:auto;margin-right:auto}
+
+/* A FILEIRA DE PROVAS, em qualquer tela. A página aparece INTEIRA — era
+   isto que faltava: a tira lateral vinha cortada ao meio pela coluna. */
+.mosaico.faixa-de-provas{
+  position:static;width:auto;height:15rem;
+  display:block;padding:0;margin:1.8rem 0 0;opacity:0;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+}
+.mosaico.faixa-de-provas.ver{opacity:1}
+.faixa-de-provas .coluna{height:100%;margin-top:0;overflow:hidden}
+.faixa-de-provas .tira{
+  flex-direction:row;height:100%;
+  animation-name:deriva-lado;
+}
+.faixa-de-provas .tira img{
+  width:auto;height:100%;margin:0 1.1rem 0 0;
+  outline:1px solid var(--linha);outline-offset:-1px;
+  box-shadow:var(--elev-2);filter:saturate(.78) contrast(1.02);
+}
+
+/* ─── TEMPO 3 · A OFERTA ───────────────────────────────────── */
+.dizeres{
+  position:relative;z-index:4;background:var(--papel);
+  display:block;max-width:31rem;margin:0 auto;padding:0 1.4rem 1rem;
+}
+.folha>.pe{position:relative;z-index:4;background:var(--papel);padding-bottom:1.4rem;margin-top:0}
+.convites{margin-top:0;padding-top:0;display:flex;flex-direction:column;gap:.6rem}
+
+@media (min-width:60rem){
+  .capa{
+    display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+    align-items:center;gap:0 4.5rem;
+    max-width:78rem;margin:0 auto;padding:2rem 3rem 3rem;
+  }
+  .capa .revista{grid-column:1;margin:0}
+  .capa .numero{grid-column:2;grid-row:1;align-self:end;justify-content:flex-start;text-align:left}
+  .capa .numero::before{display:none}
+  .capa h1,.capa .dek-ed,.capa .btn-ler{grid-column:2;text-align:left}
+  .capa .btn-ler{margin:0;max-width:24rem}
+  .capa .visor{max-width:31rem}
+  .miolo,.dizeres,.folha>.pe{max-width:none}
+  .dizeres{max-width:34rem}
+  .mosaico.faixa-de-provas{height:19rem}
+}
+
+/* na capa, a manchete e o olho ficam agrupados na coluna da direita */
+@media (min-width:60rem){
+  .capa{grid-template-rows:auto auto auto auto}
+  .capa .revista{grid-row:1 / span 4}
+  .capa .numero{grid-row:1;align-self:end;margin-bottom:.4rem}
+  .capa h1{grid-row:2;align-self:start}
+  .capa .dek-ed{grid-row:3;align-self:start}
+  .capa .btn-ler{grid-row:4;align-self:start}
+}

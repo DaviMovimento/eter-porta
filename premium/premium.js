@@ -226,7 +226,41 @@ function montarChegada() {
     </a></li>`).join('');
 
   montarFundo();
+  montarTempos();
 
+}
+
+/* ═══ OS TRÊS TEMPOS ══════════════════════════════════════════
+   A página parou de empilhar camadas e passou a organizar tempos, que é
+   como revista funciona. TEMPO 1, a capa: a arte da edição é o chão, e
+   sobre ela flutuam o objeto (a revista), a manchete e o botão — nada
+   mais. TEMPO 2, o miolo: papel, o índice de páginas e a fileira de
+   frameworks. TEMPO 3, a oferta: papel, o preço.
+
+   Aqui a capa ganha uma caixa própria, porque ela precisa medir uma tela
+   inteira; os outros dois seguem no fluxo, sobre papel. Mover os nós é
+   mais honesto do que duplicar marcação: a fonte continua sendo uma só. */
+function montarTempos() {
+  const folha = document.querySelector('#chegada .folha');
+  if (!folha || folha.querySelector('.capa')) return;
+
+  const capa = document.createElement('section');
+  capa.className = 'capa';
+  folha.prepend(capa);
+  ['#numero', '#titulo', '#ficha', '#revista', '#btn-ler']
+    .forEach(s => { const e = folha.querySelector(s); if (e) capa.append(e); });
+
+  /* o índice de páginas desce para o miolo: sobre a arte ele era ruído,
+     sobre papel ele é o que deixa escolher por onde entrar */
+  const miolo = document.createElement('section');
+  miolo.className = 'miolo';
+  ['#pulso-n', '#trilho'];
+  const pulso = folha.querySelector('.pulso') || capa.querySelector('.pulso');
+  const faixa = capa.querySelector('.faixa') || folha.querySelector('.faixa');
+  const dica  = capa.querySelector('.dica-faixa') || folha.querySelector('.dica-faixa');
+  [pulso, faixa, dica].forEach(e => e && miolo.append(e));
+  miolo.append($('#mosaico'));
+  capa.after(miolo);
 }
 
 /* ═══ A COR DA EDIÇÃO ═════════════════════════════════════════
@@ -349,52 +383,27 @@ function montarFundo() {
      nenhuma — então a parede deita e vira uma FAIXA que corre de lado,
      colocada no lugar do funil onde ela argumenta: depois da espiada e do
      botão de graça, logo antes do preço. */
-  const noCelular = innerWidth < 960;
-  const colunas = 1;                  /* um trilho só, largo o bastante para ver */
-  const minimo = noCelular ? 6 : 4;   /* menos que isto e a volta fica evidente */
+  /* A FILEIRA DE PROVAS. Era uma tira vertical na lateral, e ela tinha um
+     defeito que nenhum ajuste resolvia: a folha de leitura comia 3rem da
+     coluna, então a página de framework aparecia sempre pela METADE. Uma
+     tira lateral, num layout com coluna opaca ao lado, nunca mostra a
+     página inteira. Agora ela é uma fileira que corre de lado, com a
+     página inteira à vista e altura própria — infinita no movimento,
+     completa na leitura. */
+  const minimo = 6;
 
   const mosaico = $('#mosaico');
-  mosaico.classList.toggle('faixa-de-provas', noCelular);
-
-  /* no celular ele deixa de ser fundo e passa a ser um bloco da página,
-     entre o botão de graça e o preço — por isso muda de lugar na árvore.
-     A âncora é o "ou entre inteiro", que é exatamente a dobradiça entre
-     as duas ofertas; se ela não existir, o bloco fica onde estava. */
-  if (noCelular) $('.convites .ou')?.before(mosaico);
-
-  mosaico.innerHTML = Array.from({ length: colunas }, (_, c) => {
-    let fila = provas.filter((_, i) => i % colunas === c);
-    if (!fila.length) fila = provas.slice();
-    while (fila.length < minimo) fila = fila.concat(fila);
-
-    /* A miniatura é sempre a de 240. Cheguei a servir a de 800 no desktop
-       para ganhar nitidez e o preço foi absurdo: 60 KB por página, oito
-       páginas, e a última só apareceu 17 SEGUNDOS depois — o trilho ficava
-       branco justamente na primeira impressão, que é para o que ele existe.
-       A largura do trilho é que se ajusta à miniatura (ver --trilho no CSS),
-       nunca o contrário: assim ela nunca estica e o peso fica em 6 KB. */
-    /* SEM `loading=lazy`, e a razão importa: o carregamento preguiçoso
-       decide pelo que está dentro da JANELA do documento. Estas imagens
-       vivem num elemento fixo e andam por `transform` — para o navegador
-       elas nunca entram na janela, então as que começam fora NUNCA eram
-       baixadas. O trilho mostrava as duas primeiras e, conforme a tira
-       subia, trazia buracos brancos no lugar das outras catorze. São 6 KB
-       cada; a prioridade baixa mantém a capa na frente da fila. */
-    /* com o trilho largo de novo, a de 240 esticava 30% e a folha ficava
-       mole. Volta a de 800 — agora sem `lazy`, que era o que fazia sete
-       delas nunca chegarem e a oitava demorar 17s. São ~8 arquivos únicos;
-       o laço repete as MESMAS URLs e a segunda volta sai do cache. */
-    const largura = noCelular ? 240 : 800;
-    const paginas = fila.map(n =>
-      `<img src="${pag(n, largura)}" alt="" decoding="async" fetchpriority="low"
+  mosaico.classList.add('faixa-de-provas');
+  mosaico.innerHTML = (() => {
+    let f = provas.slice();
+    while (f.length < minimo) f = f.concat(f);
+    const paginas = f.map(n =>
+      `<img src="${pag(n, 800)}" alt="" decoding="async" fetchpriority="low"
         width="240" height="339">`).join('');
-
-    /* a duração acompanha o tamanho da fila: assim a página anda sempre na
-       mesma velocidade, seja a edição de cinco frameworks ou a de oito */
-    const seg = fila.length * (noCelular ? 9 : 25 + c * 4);
-    return `<div class="coluna${c % 2 ? ' avessa' : ''}" style="--t:${seg}s">
+    const seg = f.length * 11;
+    return `<div class="coluna" style="--t:${seg}s">
       <div class="tira">${paginas}${paginas}</div></div>`;
-  }).join('');
+  })();
 
   /* só acende quando há o que mostrar — nada de piscar papel vazio */
   const primeira = mosaico.querySelector('img');
