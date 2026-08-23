@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../premium/premium.css?v=202608231946">
+<link rel="stylesheet" href="../premium/premium.css?v=202608231947">
 </head>
 <body class="pagina biblioteca">
 
@@ -62,11 +62,15 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('../edicoes.json?v=202608231946')).json(); }
+  try { D = await (await fetch('../edicoes.json?v=202608231947')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
   const BASE = C.baseImagens || './';
+  /* esta página é servida de dois lugares — /biblioteca.html na raiz e
+     /biblioteca/ com endereço limpo. O link para a edição tem de subir um
+     nível no segundo caso, senão vira /biblioteca/007, que não existe. */
+  const ACIMA = /\/biblioteca\/?$/.test(location.pathname) ? '../' : '';
 
   /* a ordem de leitura abre; o botão inverte. Quem vem conhecer começa do
      começo, quem é de casa quer a última — são duas pessoas diferentes. */
@@ -86,7 +90,7 @@
         <span class="sub-ed">${e.subtitulo || ''}</span>
         ${e.paginas ? '<span class="chamada">Ler de graça</span>' : ''}`;
       return e.paginas
-        ? `<li><a href="${e.n}">${dentro}</a></li>`
+        ? `<li><a href="${ACIMA}${e.n}">${dentro}</a></li>`
         : `<li><span class="indisp">${dentro}</span></li>`;
     }).join('');
     bt.textContent = crescente ? 'da mais antiga para a mais nova' : 'da mais nova para a mais antiga';

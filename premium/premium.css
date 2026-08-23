@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231946') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231946') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231946') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231947') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231947') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231947') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1949,4 +1949,128 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 }
 @media (min-width:60rem){
   .papelada .mockup{margin-inline:0;border-radius:2px;overflow:hidden}
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   A HOME E A BIBLIOTECA
+   ═══════════════════════════════════════════════════════════════
+   A raiz deixou de ser a página de uma edição. Quem chega sem ter escolhido
+   revista precisa, nesta ordem: saber o que é a ETER, ver que existe acervo,
+   e ter duas saídas — escolher a edição gratuita ou comprar o passe. */
+
+body.inicio,body.biblioteca{background:var(--papel)}
+
+#capa-home{position:relative;min-height:calc(100svh - 3.4rem);overflow:hidden}
+#capa-home .atmosfera{position:absolute;inset:0;height:100%}
+#capa-home .veu{position:absolute;inset:0;height:100%}
+
+.capa-inicio{
+  position:relative;z-index:4;color:var(--papel);
+  min-height:calc(100svh - 3.4rem);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:2.4rem 1.4rem 3rem;max-width:60rem;margin:0 auto;
+}
+.capa-inicio .numero{
+  color:var(--ouro-claro);justify-content:center;margin-bottom:.8rem;
+}
+.capa-inicio h1{
+  color:var(--papel);margin-bottom:.9rem;
+  text-shadow:0 2px 24px rgb(var(--tinta-rgb)/.6);
+}
+.capa-inicio h1 em{color:var(--ouro-claro)}
+.capa-inicio .dek-ed{
+  color:rgb(255 255 255/.88);max-width:36rem;margin:0 auto 2rem;
+  text-shadow:0 1px 14px rgb(var(--tinta-rgb)/.6);font-size:1.05rem;line-height:1.5;
+}
+.capa-inicio .dica-faixa{
+  color:rgb(255 255 255/.8);margin:.9rem 0 1.4rem;
+  text-shadow:0 1px 12px rgb(var(--tinta-rgb)/.7);
+}
+.capa-inicio .acoes{width:100%;max-width:34rem}
+
+/* A PRATELEIRA. As capas como lombadas numa estante: o acervo virando
+   argumento antes de qualquer frase sobre ele. */
+.prateleira{
+  display:flex;justify-content:center;align-items:flex-end;
+  margin:0;padding:0;flex-wrap:nowrap;
+}
+.lombada-capa{
+  display:block;flex:0 0 auto;width:6.2rem;
+  transition:transform .35s var(--curva);
+}
+.lombada-capa+.lombada-capa{margin-left:-1.7rem}
+.lombada-capa img{
+  display:block;width:100%;height:auto;border-radius:1px;
+  box-shadow:0 2px 5px rgb(0 0 0/.45), 0 18px 40px -16px rgb(0 0 0/.7);
+  outline:1px solid rgb(255 255 255/.08);outline-offset:-1px;
+}
+.lombada-capa.l0{transform:rotate(-4deg)}
+.lombada-capa.l1{transform:rotate(1.5deg)}
+.lombada-capa.l2{transform:rotate(-1.5deg)}
+.lombada-capa.l3{transform:rotate(4deg)}
+.lombada-capa:hover{transform:translateY(-10px) rotate(0);z-index:3}
+@media (min-width:60rem){ .lombada-capa{width:8.4rem} }
+@media (max-width:34rem){
+  .lombada-capa{width:4.6rem}
+  .lombada-capa+.lombada-capa{margin-left:-1.3rem}
+}
+
+/* a oferta, no pé das duas páginas */
+.oferta-home{
+  position:relative;z-index:4;background:var(--papel);
+  padding:1rem 1.4rem 2.4rem;max-width:34rem;margin:0 auto;
+}
+.fecho-home{
+  text-align:center;font-family:var(--display);font-size:1.05rem;
+  line-height:1.4;color:var(--tinta-2);margin:1.8rem auto 0;max-width:30rem;
+}
+
+/* ═══ A ESTANTE ═══════════════════════════════════════════════ */
+.filtro-bib{display:flex;justify-content:center;margin:0 0 1.4rem}
+.estante{list-style:none;margin:0 0 2.4rem;padding:0;display:grid;gap:1.4rem}
+.estante li{margin:0}
+.estante a,.estante .indisp{
+  display:grid;grid-template-columns:5.4rem 1fr;gap:0 1.1rem;
+  align-items:start;text-decoration:none;color:inherit;
+  padding:.9rem;border:1px solid var(--linha);border-radius:2px;
+  background:var(--papel);transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.estante a:hover{
+  border-color:var(--ouro-vivo);transform:translateY(-2px);
+  box-shadow:0 10px 26px -14px rgb(var(--tinta-rgb)/.4);
+}
+.estante .capinha{grid-row:1 / span 4;display:block}
+.estante .capinha img{
+  display:block;width:100%;height:auto;border-radius:1px;
+  box-shadow:var(--elev-1);outline:1px solid var(--linha);outline-offset:-1px;
+}
+.estante .embreve{
+  display:grid;place-content:center;aspect-ratio:1/1.414;background:var(--papel-2);
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-3);font-style:normal;
+}
+.estante .alg{
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:var(--tk-2);
+  text-transform:uppercase;color:var(--ouro-texto);
+}
+.estante .nom{
+  display:block;font-family:var(--display);font-size:1.22rem;line-height:1.2;
+  color:var(--tinta);margin:.2rem 0 .3rem;
+}
+.estante .sub-ed{
+  display:block;font-size:var(--t-1);line-height:1.5;color:var(--tinta-3);
+}
+.estante .chamada{
+  display:inline-block;margin-top:.5rem;
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--acao);
+}
+.estante .indisp{opacity:.55}
+@media (min-width:48rem){
+  .estante{grid-template-columns:1fr 1fr;gap:1.2rem}
+}
+@media (min-width:75rem){
+  .estante{grid-template-columns:1fr 1fr 1fr}
+  .papelada:has(.estante){max-width:66rem}
 }
