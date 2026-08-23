@@ -284,8 +284,15 @@ function montarFundo() {
        branco justamente na primeira impressão, que é para o que ele existe.
        A largura do trilho é que se ajusta à miniatura (ver --trilho no CSS),
        nunca o contrário: assim ela nunca estica e o peso fica em 6 KB. */
+    /* SEM `loading=lazy`, e a razão importa: o carregamento preguiçoso
+       decide pelo que está dentro da JANELA do documento. Estas imagens
+       vivem num elemento fixo e andam por `transform` — para o navegador
+       elas nunca entram na janela, então as que começam fora NUNCA eram
+       baixadas. O trilho mostrava as duas primeiras e, conforme a tira
+       subia, trazia buracos brancos no lugar das outras catorze. São 6 KB
+       cada; a prioridade baixa mantém a capa na frente da fila. */
     const paginas = fila.map(n =>
-      `<img src="${pag(n, 240)}" alt="" loading="lazy" decoding="async"
+      `<img src="${pag(n, 240)}" alt="" decoding="async" fetchpriority="low"
         width="240" height="339">`).join('');
 
     /* a duração acompanha o tamanho da fila: assim a página anda sempre na

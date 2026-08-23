@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231257') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231257') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231257') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231332') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231332') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231332') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -24,6 +24,12 @@
   --papel-3:#DDD5C5;
   --tinta:#1E1813;
   --tinta-rgb:30 24 19;   /* a tinta em canais crus, para a sombra da folha */
+  --ouro-rgb:143 115 51;  /* o ouro em canais crus, para a malha do fundo */
+  /* A COR DA AÇÃO. O botão que abre a leitura é o evento de conversão da
+     página inteira — ele é o Verde Eter, chapado, e é a única peça da
+     página que usa esta cor. Isolamento é o que faz o olho achá-lo. */
+  --acao:#0F1F18;
+  --acao-clara:#1B3226;
   --tinta-2:#5A5044;
   --tinta-3:#6E6455;   /* era #8E8474, que dava 3,18:1 sobre o papel — reprovava */
   --erro:#8C3D22;
@@ -137,7 +143,7 @@ body.lendo .topo{display:none}
   opacity:0;transition:opacity 2.4s ease;
   transform:translateZ(0);
 }
-.atmosfera.ver{opacity:.38}
+.atmosfera.ver{opacity:.52}
 
 /* O MOSAICO. Ancorado na esquerda e mais largo do que a faixa que lhe
    cabe: a folha entra por cima e come a sobra, então as provas somem
@@ -159,11 +165,17 @@ body.lendo .topo{display:none}
 /* o desencontro que faz virar mosaico: sem ele são duas listas lado a
    lado, com ele as folhas se intercalam como provas numa parede */
 .coluna.avessa{margin-top:-5.5rem}
+/* O vão vai na IMAGEM, não no `gap` — e é isto que fecha o laço. A tira é
+   a mesma sequência duas vezes e a volta é `translateY(-50%)`. Com `gap`, a
+   altura é 2N·img + (2N−1)·vão, e metade disso fica meio vão CURTA do ponto
+   certo: a cada volta a tira dava um pulinho de 9px. Com a margem dentro do
+   item a altura é exatamente 2N·(img+vão), e a metade cai no lugar. */
 .tira{
-  display:flex;flex-direction:column;gap:1.2rem;
+  display:flex;flex-direction:column;
   animation:deriva var(--t,80s) linear infinite;
   will-change:transform;
 }
+.tira img{margin-bottom:1.2rem}
 .coluna.avessa .tira{animation-direction:reverse}
 .tira img{
   width:100%;aspect-ratio:1/1.414;object-fit:cover;display:block;
@@ -181,14 +193,56 @@ body.lendo .topo{display:none}
 /* O VÉU. No celular é o que sempre foi: um lavado de papel que abaixa
    a atmosfera para o texto ficar legível. No desktop (mais abaixo) ele
    deixa de ser lavado e vira A FOLHA — opaca, com sombra na beirada. */
+/* ═══ O FUNDO DA CASA ═════════════════════════════════════════
+   Faltava fundo: a área de leitura era um bege chapado, e bege chapado
+   não é papel — é um div. Agora ela tem três camadas, e nenhuma delas é
+   enfeite genérico: todas saem da própria ETER.
+
+   1. A MALHA EDITORIAL. O grid da revista, ampliado e quase invisível:
+      colunas de 9rem e linha de base de 2,4rem em ouro a 4%. É a planta
+      da página impressa servindo de textura da página web.
+   2. O BRILHO. A ação "Glow" da marca virada em luz quente entrando pelo
+      alto, como página sob luminária.
+   3. O MONOGRAMA (no ::after), gigante, sangrando pela direita a 3,5%.
+
+   A quarta camada é a única que MUDA de edição para edição: a atmosfera,
+   que é a capa desfocada. A casa é fixa, só a porta muda. */
 .veu{
   position:fixed;inset:0;z-index:2;pointer-events:none;
-  background:
-    linear-gradient(180deg,
-      rgb(var(--papel-rgb)/.72) 0%,
-      rgb(var(--papel-rgb)/.9) 22%,
-      rgb(var(--papel-rgb)/.955) 45%,
-      rgb(var(--papel-rgb)/.975) 100%);
+  background-color:rgb(var(--papel-rgb)/.985);
+  background-image:
+    radial-gradient(120% 62% at 62% -14%,
+      rgb(var(--ouro-rgb)/.10) 0%, rgb(var(--ouro-rgb)/.03) 42%, transparent 72%),
+    repeating-linear-gradient(90deg,
+      rgb(var(--ouro-rgb)/.042) 0 1px, transparent 1px 9rem),
+    repeating-linear-gradient(180deg,
+      rgb(var(--ouro-rgb)/.022) 0 1px, transparent 1px 2.4rem);
+}
+/* o monograma da casa, do tamanho de uma marca-d'água de papel timbrado */
+.veu::after{
+  content:"";position:absolute;
+  right:-6rem;bottom:-12rem;width:46rem;height:46rem;
+  background:url('monograma.webp') center/contain no-repeat;
+  opacity:.035;
+}
+
+/* no celular a folha é translúcida: a malha entra mais leve, para não
+   competir com a atmosfera que atravessa por baixo */
+@media (max-width:59.99rem){
+  .veu{
+    background-color:transparent;
+    background-image:
+      repeating-linear-gradient(90deg,
+        rgb(var(--ouro-rgb)/.03) 0 1px, transparent 1px 7rem),
+      repeating-linear-gradient(180deg,
+        rgb(var(--ouro-rgb)/.016) 0 1px, transparent 1px 2.4rem),
+      linear-gradient(180deg,
+        rgb(var(--papel-rgb)/.72) 0%,
+        rgb(var(--papel-rgb)/.9) 22%,
+        rgb(var(--papel-rgb)/.955) 45%,
+        rgb(var(--papel-rgb)/.975) 100%);
+  }
+  .veu::after{right:-9rem;bottom:-14rem;width:34rem;height:34rem;opacity:.03}
 }
 
 /* a vinheta de ouro: o que faz a página parecer emoldurada, não recortada */
@@ -221,10 +275,13 @@ body.lendo .topo{display:none}
   }
   .faixa-de-provas .coluna{height:100%;margin-top:0}
   .faixa-de-provas .tira{
-    flex-direction:row;height:100%;gap:.7rem;
+    flex-direction:row;height:100%;
     animation-name:deriva-lado;
   }
-  .faixa-de-provas .tira img{width:auto;height:100%;box-shadow:var(--elev-2)}
+  .faixa-de-provas .tira img{
+    width:auto;height:100%;box-shadow:var(--elev-2);
+    margin:0 .7rem 0 0;        /* o vão à direita, pelo mesmo motivo do laço */
+  }
 }
 @keyframes deriva-lado{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
@@ -593,9 +650,47 @@ h1 em{
   transition:transform var(--t-rapido) var(--curva),box-shadow var(--t-rapido),filter .2s,background .2s;
 }
 .btn:active{transform:scale(.985)}
-.btn-ler{background:transparent;color:var(--tinta);border:1px solid var(--linha-2)}
-.btn-ler:hover{background:rgba(30,24,19,.045);border-color:var(--tinta-3)}
-.btn-ler .sub{display:block;font-size:.69rem;font-weight:400;color:var(--tinta-3);margin-top:.18rem}
+/* O BOTÃO QUE ABRE A LEITURA. Ele era um contorno vazio ao lado de um
+   botão dourado chapado — ou seja, a página gritava a oferta PAGA e
+   sussurrava a gratuita, que é justamente o evento que captura o leitor.
+   Efeito de isolamento (von Restorff): o olho acha o que é diferente de
+   tudo à volta. Numa página de papel bege e filete de ouro, o que é
+   diferente é uma massa verde escura, chapada, em caixa alta. É a única
+   peça da página com esta cor — e por isso ela não tem concorrente. */
+.btn-ler{
+  background:var(--acao);color:var(--sobre-escuro);border:none;
+  font-family:var(--rotulo);font-weight:700;
+  text-transform:uppercase;letter-spacing:.14em;font-size:.82rem;
+  padding:1.15rem 1.2rem;
+  position:relative;overflow:hidden;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255/.10),
+    0 1px 2px rgb(var(--tinta-rgb)/.22),
+    0 14px 30px -12px rgb(var(--tinta-rgb)/.45);
+}
+/* o lustro: uma banda de luz que atravessa o botão, como verniz sobre
+   papel escuro. Só transform e opacity — não repinta a página. */
+.btn-ler::after{
+  content:"";position:absolute;top:-60%;bottom:-60%;left:-40%;width:28%;
+  background:linear-gradient(100deg,
+    transparent, rgb(255 255 255/.16) 45%, rgb(255 255 255/.24) 52%, transparent);
+  transform:translateX(0) skewX(-14deg);
+  animation:lustro 5.5s cubic-bezier(.4,0,.2,1) infinite;
+  pointer-events:none;
+}
+@keyframes lustro{
+  0%,62%{transform:translateX(0) skewX(-14deg);opacity:0}
+  66%   {opacity:1}
+  92%,100%{transform:translateX(480%) skewX(-14deg);opacity:0}
+}
+.btn-ler:hover{background:var(--acao-clara)}
+.btn-ler:hover::after{animation-duration:2.2s}
+.btn-ler .sub{
+  display:block;font-family:var(--corpo);font-size:.72rem;font-weight:400;
+  text-transform:none;letter-spacing:normal;
+  color:rgb(255 255 255/.62);margin-top:.3rem;
+}
+@media (prefers-reduced-motion:reduce){ .btn-ler::after{animation:none;opacity:0} }
 .btn-passe{
   background:linear-gradient(150deg,#C9A85E 0%,var(--ouro-vivo) 46%,#9A7C38 100%);
   color:#17110A;font-weight:700;
@@ -638,7 +733,7 @@ h1 em{
 
   /* o mosaico tem largura declarada e a página se afasta dele por essa
      mesma medida: um número só governa os dois, e nada encosta */
-  #chegada{--trilho:12.5rem;padding-left:var(--trilho)}
+  #chegada{--trilho:11rem;padding-left:var(--trilho)}
 
   /* A FOLHA SOBREPOSTA. O véu deixa de ser lavado e vira uma superfície:
      papel opaco começando onde o mosaico acaba, com um fio de tinta na
@@ -647,18 +742,27 @@ h1 em{
      dividem o mesmo plano e a leitura briga com o fundo. */
   .veu{
     left:var(--trilho);right:0;top:0;bottom:0;inset:auto;
-    background:rgb(var(--papel-rgb)/.985);
     box-shadow:
       -1px 0 0 rgb(var(--tinta-rgb)/.16),
       -14px 0 26px -10px rgb(var(--tinta-rgb)/.40),
       -40px 0 80px -26px rgb(var(--tinta-rgb)/.26);
   }
+  /* A DISPOSIÇÃO, e por quê. O olho ocidental entra no alto à esquerda e
+     desce em Z. À esquerda a revista, que é o objeto — o olho pousa numa
+     imagem antes de pousar em texto. À direita a coluna que fala, na
+     ordem em que a decisão se forma: quem é (número), o que é (título),
+     o que promete (o olho), por que (o parágrafo) e o que fazer (o botão
+     verde) — que fecha o Z no canto onde a varredura termina.
+
+     A folha ganha 4rem de recuo à esquerda: com o mosaico mais estreito,
+     ela ficava encostada nele e as duas coisas viravam uma só mancha. O
+     respiro é o que separa a parede da mesa. */
   .folha{
     max-width:66rem;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);
     grid-template-areas:"revista dizeres";
-    gap:0 3.5rem;align-content:center;align-items:center;
-    padding:2rem 2.5rem 2.5rem;
+    gap:0 4rem;align-content:center;align-items:center;
+    padding:2rem 2.5rem 2.5rem 6rem;
   }
 
   .revista{grid-area:revista;margin-bottom:0}
@@ -692,8 +796,8 @@ h1 em{
 /* Tela larga: o trilho cresce, mas com teto. A conta é literal — a coluna
    mede `--trilho + 0,8rem`, e a miniatura de origem tem 240px: passar de
    14rem é esticar imagem, que é exatamente o que deixa o quadro mole. */
-@media (min-width:82rem){ #chegada{--trilho:13.2rem} }
-@media (min-width:100rem){ #chegada{--trilho:14rem} }
+@media (min-width:82rem){ #chegada{--trilho:12rem} }
+@media (min-width:100rem){ #chegada{--trilho:12.8rem} }
 
 /* ═══════════════════════════════════════════════════════════════
    CELULAR — a ordem que a mão lê

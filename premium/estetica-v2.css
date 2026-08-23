@@ -11,7 +11,7 @@
    chamadas no sistema visual, não a bold normal que eu tinha posto. */
 @font-face{
   font-family:'FuturaMarca';
-  src:url('fontes/futura-cond-xb.woff2?v=202608231257') format('woff2');
+  src:url('fontes/futura-cond-xb.woff2?v=202608231332') format('woff2');
   font-weight:800;font-display:swap;
 }
 
@@ -45,6 +45,9 @@
 
   /* o café e o preto que eu tinha inventado dão lugar ao verde da marca */
   --cafe:var(--verde);
+  --acao:var(--verde);          /* o botão da leitura é o Verde Eter */
+  --acao-clara:#1B3226;
+  --ouro-rgb:137 114 60;        /* o dourado da marca, para a malha do fundo */
   --sobre-escuro:#F7F1E4;
   --erro:var(--vinho);
 
