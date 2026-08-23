@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231947') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231947') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231947') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231950') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231950') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231950') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1988,6 +1988,16 @@ body.inicio,body.biblioteca{background:var(--papel)}
   text-shadow:0 1px 12px rgb(var(--tinta-rgb)/.7);
 }
 .capa-inicio .acoes{width:100%;max-width:34rem}
+
+/* A home usa a classe `.capa`, e com ela herdou as ordens do celular da
+   página de edição — onde a prateleira não existe e por isso ficava com
+   ordem ZERO, ou seja, antes do título. Cada peça daqui declara a sua. */
+.capa-inicio>.numero      {order:1}
+.capa-inicio>h1           {order:2}
+.capa-inicio>.dek-ed      {order:3}
+.capa-inicio>.prateleira  {order:4}
+.capa-inicio>.dica-faixa  {order:5}
+.capa-inicio>.acoes       {order:6}
 
 /* A PRATELEIRA. As capas como lombadas numa estante: o acervo virando
    argumento antes de qualquer frase sobre ele. */
