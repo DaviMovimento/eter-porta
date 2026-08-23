@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232008') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232008') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232008') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232009') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232009') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232009') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2181,27 +2181,12 @@ body.inicio,body.biblioteca{background:var(--papel)}
 }
 
 
-/* ═══ A REVISTA DA HOME ═══════════════════════════════════════
-   Uma revista fechada parece uma imagem: ninguém clica. Ela abre sozinha e
-   vai virando, como na página da edição — só que aqui, sem a maquinaria do
-   giro em três dimensões, porque o que a home precisa provar é que existe
-   miolo, não simular papel. Duas camadas trocando por opacidade. */
-.revista-home{
-  position:relative;margin:0 auto 1.4rem;padding:0;
-  width:min(17rem, 62vw);aspect-ratio:1/1.414;
-}
-.pg-home{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  border-radius:1px;opacity:0;transition:opacity .9s ease;
-  box-shadow:0 3px 8px rgb(0 0 0/.45), 0 30px 64px -22px rgb(0 0 0/.75);
-  outline:1px solid rgb(255 255 255/.08);outline-offset:-1px;
-}
-.pg-home.vis{opacity:1}
-@media (min-width:60rem){ .revista-home{width:20rem} }
-
-/* com a revista no palco, a prateleira vira acervo: menor e mais discreta */
-.capa-inicio .prateleira{opacity:.92}
-.capa-inicio>.revista-home{order:4}
-.capa-inicio>.prateleira{order:5}
-.capa-inicio>.dica-faixa{order:6}
-.capa-inicio>.acoes{order:7}
+/* ═══ A BIBLIOTECA NA HOME ════════════════════════════════════
+   A revista que abre e vira sozinha é da PRÉVIA de cada edição, onde ela
+   prova que existe miolo. Na home o trabalho é outro: escolher. Então o
+   palco é a estante — as oito capas, cada uma um link direto para a sua
+   página, sem etapa no meio. */
+.capa-inicio .prateleira{margin:.4rem auto 0}
+.capa-inicio>.prateleira{order:4}
+.capa-inicio>.dica-faixa{order:5}
+.capa-inicio>.acoes{order:6}
