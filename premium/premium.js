@@ -288,11 +288,23 @@ function corDaEdicao() {
 function montarFundo() {
   if (!TOTAL) return;
 
+  /* O FUNDO DA EDIÇÃO. Não é mais a capa borrada: é uma ARTE montada a
+     partir das páginas de abertura de capítulo da própria revista — a
+     direção de arte da edição, tratada na identidade da casa (viragem,
+     brilho, grão, vinheta). Uma por edição, em `edicoes/00X/fundo.webp`.
+     Se a arte não existir, cai na capa desfocada, que é o que havia. */
   const atm = $('#atmosfera');
-  atm.style.backgroundImage = `url("${pag(1, 800)}")`;
-  const capa = new Image();
-  capa.onload = () => atm.classList.add('ver');
-  capa.src = pag(1, 800);
+  const arte = `${BASE}edicoes/${EDICAO.n}/fundo.webp`;
+  const teste = new Image();
+  teste.onload = () => {
+    atm.style.backgroundImage = `url("${arte}")`;
+    atm.classList.add('arte', 'ver');
+  };
+  teste.onerror = () => {
+    atm.style.backgroundImage = `url("${pag(1, 800)}")`;
+    atm.classList.add('ver');
+  };
+  teste.src = arte;
 
   corDaEdicao();
 
