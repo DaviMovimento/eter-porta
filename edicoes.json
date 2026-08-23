@@ -40,20 +40,24 @@
     "rotulo": "Passe ETER · 30 dias",
     "itens": [
       [
-        "4 edições novas",
-        "uma por quarta, no seu WhatsApp"
+        "Uma edição nova toda semana",
+        ""
       ],
       [
-        "4 encontros ao vivo",
-        "quarta à noite, com o Davi — e ficam gravados"
+        "O acervo completo, desde a primeira",
+        ""
       ],
       [
-        "8 edições anteriores",
-        "o acervo inteiro, aberto desde o primeiro dia"
+        "Quatro encontros ao vivo por mês",
+        "com o seu caso na mesa"
       ],
       [
-        "A sala dos leitores",
-        "o grupo no WhatsApp, com os outros assinantes"
+        "A comunidade e o grupo no WhatsApp",
+        ""
+      ],
+      [
+        "Participação nas pautas",
+        ""
       ]
     ],
     "condicao": "Cobrança única no Pix. Não renova sozinho.",
@@ -66,7 +70,11 @@
       "subtitulo": "A poesia como tecnologia de marca: o que Ariano Suassuna sabia sobre construir algo que dura.",
       "nestaEdicao": "Você irá entender por que, no exato momento em que a inteligência artificial produz conteúdo infinito, as palavras estão perdendo a vida — e por que a capacidade de encantar corações e mentes através delas se tornou o ativo mais raro e valioso da nova economia.",
       "paginas": 39,
-      "destaques": [11, 17, 26],
+      "destaques": [
+        11,
+        17,
+        26
+      ],
       "minutos": 32,
       "capitulos": [
         [
@@ -102,7 +110,15 @@
       "nestaEdicao": "Você vai entender por que a vida e o mercado funcionam como um teatro, em que os seus resultados dependem menos de quem você é e mais da percepção das pessoas certas sobre você. E vai sair destas páginas com o método dos grandes dramaturgos e roteiristas de cinema para construir personagens inesquecíveis.",
       "convite": "Leia, construa, e entre em cena. A plateia já está sentada.",
       "paginas": 59,
-      "destaques": [15, 36, 23, 26, 40, 42, 10],
+      "destaques": [
+        15,
+        36,
+        23,
+        26,
+        40,
+        42,
+        10
+      ],
       "minutos": 53,
       "capitulos": [
         [
@@ -141,7 +157,16 @@
       "subtitulo": "Como antecipar, construir e liderar os movimentos culturais que dominam o mercado.",
       "nestaEdicao": "Você vai entender por que multidões inteiras se reúnem em torno de uma única pessoa, e por que a guerra que decide o futuro da nova economia não é travada entre produtos, mas entre narrativas. E vai acessar o passo a passo para criar e liderar o seu próprio movimento.",
       "paginas": 56,
-      "destaques": [25, 47, 34, 31, 35, 21, 10, 18],
+      "destaques": [
+        25,
+        47,
+        34,
+        31,
+        35,
+        21,
+        10,
+        18
+      ],
       "minutos": 46,
       "capitulos": [
         [
@@ -177,7 +202,16 @@
       "nestaEdicao": "Você vai entender por que o país que diz odiar vendedores é, ao mesmo tempo, um dos maiores e melhores vendedores do planeta — e por que esse paradoxo é, na verdade, a maior vantagem competitiva do empreendedor capaz de compreender a estrutura cultural, social e linguística por trás de como o brasileiro compra e vende.",
       "convite": "Leia, aplique, e venda mais. Sem parecer que está vendendo.",
       "paginas": 52,
-      "destaques": [24, 11, 14, 32, 37, 39, 41, 43],
+      "destaques": [
+        24,
+        11,
+        14,
+        32,
+        37,
+        39,
+        41,
+        43
+      ],
       "minutos": 45,
       "capitulos": [
         [
@@ -212,7 +246,16 @@
       "subtitulo": "Os arquétipos, a engenharia do desejo e a semiótica dos algoritmos.",
       "nestaEdicao": "Você vai conhecer a mecânica oculta do desejo, desde os arquétipos até a semiótica dos algoritmos, e aprender a usá-la a seu favor para construir uma estética impossível de ser ignorada para sua marca.",
       "paginas": 56,
-      "destaques": [8, 45, 15, 18, 27, 11, 40, 50],
+      "destaques": [
+        8,
+        45,
+        15,
+        18,
+        27,
+        11,
+        40,
+        50
+      ],
       "minutos": 48,
       "capitulos": [
         [
@@ -251,7 +294,15 @@
       "subtitulo": "O manual rebelde de inteligência artificial para empreendedores criativos.",
       "nestaEdicao": "Você vai entender por que o domínio da linguagem é, neste momento histórico, o divisor de águas definitivo entre a elite criativa que constrói a nova economia e a massa que será consumida pela mediocridade dos algoritmos.",
       "paginas": 52,
-      "destaques": [16, 9, 13, 18, 29, 32, 7],
+      "destaques": [
+        16,
+        9,
+        13,
+        18,
+        29,
+        32,
+        7
+      ],
       "minutos": 45,
       "capitulos": [
         [
@@ -290,7 +341,14 @@
       "subtitulo": "Como construir uma marca autoral e desejada na era da superficialidade.",
       "nestaEdicao": "Você vai entender por que, na era da inteligência artificial, tudo tem se tornado tão superficial — e como ser mais uma entre muitas cópias é um gigantesco risco financeiro e reputacional para seu negócio. Além disso, vai acessar o passo a passo para construir uma marca autoral impossível de ser copiada e ignorada pelo seu mercado.",
       "paginas": 43,
-      "destaques": [15, 28, 17, 22, 19, 27],
+      "destaques": [
+        15,
+        28,
+        17,
+        22,
+        19,
+        27
+      ],
       "minutos": 38,
       "capitulos": [
         [
@@ -325,7 +383,11 @@
       "subtitulo": "A revolução cultural 2027–2034 e a vantagem injusta do empreendedor brasileiro.",
       "nestaEdicao": "Você vai entender por que os empreendedores brasileiros são, neste momento histórico, os indivíduos mais bem posicionados do mundo para construir riqueza. Entre 2027 e 2034, o Brasil pode protagonizar a maior transferência de riqueza da nossa geração — e você verá qual é a vantagem competitiva específica do empreendedor brasileiro na era da IA.",
       "paginas": 43,
-      "destaques": [11, 15, 35],
+      "destaques": [
+        11,
+        15,
+        35
+      ],
       "minutos": 35,
       "capitulos": [
         [

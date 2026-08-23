@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231622') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231622') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231622') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231850') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231850') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231850') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1650,6 +1650,17 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
    MATÉRIA (gradiente, brilho e grão: CSS, nítido de graça) e a fotografia
    entra como três PEÇAS COMPLETAS, cada uma exibida a ~380px a partir de
    um arquivo de 760px, que é o dobro exato. Nada estica. */
+/* a colagem que cobre tudo: uma parede de páginas da própria edição,
+   montada em grade de tijolo com ladrilhos em resolução quase nativa —
+   por isso ela é nítida, ao contrário de uma foto esticada para caber. */
+.atmosfera.parede{
+  position:absolute;top:0;left:0;right:0;bottom:auto;height:100svh;
+  filter:none;transform:none;opacity:0;
+  background-size:cover;background-position:center;
+  background-color:#0E0B0A;
+}
+.atmosfera.parede.ver{opacity:1}
+
 .atmosfera.chao{
   position:absolute;top:0;left:0;right:0;bottom:auto;height:100svh;
   filter:none;transform:none;opacity:0;
@@ -1713,3 +1724,118 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
   .prova.p3{width:16.5rem} .prova.p4{width:15.5rem}
 }
 @media (prefers-reduced-motion:reduce){ .prova{transition:none} }
+
+
+/* ═══ 1.1 · a assinatura da casa, no topo ═════════════════════ */
+.topo-tag{
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-3);
+  margin-left:1rem;padding-left:1rem;border-left:1px solid var(--linha-2);
+  white-space:nowrap;
+}
+@media (max-width:59.99rem){ .topo-tag{display:none} }
+
+/* o logotipo cresce: era a menor peça da barra e é a marca */
+.topo-marca img{width:6.4rem}
+@media (max-width:34rem){ .topo-marca img{width:4.6rem} }
+
+/* ═══ 1.2 e 1.3 · a apresentação da casa ══════════════════════ */
+.casa{
+  position:relative;z-index:4;background:var(--papel);
+  padding:3rem 1.4rem 2.4rem;
+}
+.casa-lede,.casa-sub,.casa-polimata{max-width:38rem;margin-inline:auto}
+.casa-lede{
+  font-family:var(--display);font-size:1.55rem;line-height:1.24;
+  color:var(--tinta);text-wrap:balance;margin-bottom:.9rem;
+}
+.casa-sub{font-size:1rem;line-height:1.6;color:var(--tinta-2);margin-bottom:2.2rem}
+.casa-polimata{
+  border-top:1px solid var(--linha);padding-top:1.6rem;
+}
+.casa-polimata h2{
+  font-family:var(--rotulo);font-size:var(--r-2);letter-spacing:var(--tk-2);
+  text-transform:uppercase;color:var(--ouro-texto);margin-bottom:.9rem;
+}
+.casa-polimata p{font-size:.95rem;line-height:1.66;color:var(--tinta-2);margin-bottom:.8rem}
+@media (min-width:60rem){
+  .casa{padding:4.5rem 3rem 3.5rem}
+  .casa-lede{font-size:2rem}
+  .casa-lede,.casa-sub{max-width:44rem}
+  .casa-polimata{max-width:44rem;columns:2;column-gap:2.6rem}
+  .casa-polimata h2{column-span:all}
+}
+
+/* o subtítulo do botão do passe, agora que ele tem um */
+.btn-passe .sub{
+  display:block;font-family:var(--corpo);font-size:.72rem;font-weight:400;
+  text-transform:none;letter-spacing:normal;color:rgb(0 0 0/.55);margin-top:.24rem;
+}
+
+
+/* ═══ O ACERVO ════════════════════════════════════════════════ */
+.ordem-acervo{
+  display:block;margin:0 auto 1rem;padding:.42rem .8rem;
+  background:transparent;border:1px solid var(--linha-2);border-radius:2px;
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-3);cursor:pointer;
+  min-height:44px;
+}
+.ordem-acervo:hover{border-color:var(--tinta-3);color:var(--tinta-2)}
+.ordem-acervo::before{content:"↕ ";opacity:.6}
+#acervo .sub-ed{
+  display:block;font-size:var(--t-1);line-height:1.45;color:var(--tinta-3);
+  margin-top:.2rem;
+}
+
+
+/* ═══ AS DUAS SAÍDAS ══════════════════════════════════════════
+   Lado a lado no desktop, empilhadas no celular. A proporção não é meio a
+   meio: o gratuito é maior porque é o evento que captura o leitor, e o
+   pago é o atalho de quem já decidiu. Duas escolhas, não três — mais do
+   que isso, na hora da decisão, é custo. */
+.acoes{display:flex;flex-direction:column;gap:.7rem;margin-top:1rem}
+.acoes .btn-ler{flex:1 1 auto}
+.acoes .btn-passe-hero{flex:0 1 auto}
+@media (min-width:60rem){
+  .acoes{flex-direction:row;align-items:stretch;gap:.9rem;max-width:34rem}
+  .acoes .btn-ler{flex:1.35 1 0}
+  .acoes .btn-passe-hero{flex:1 1 0}
+  .acoes .btn{display:flex;flex-direction:column;justify-content:center}
+}
+
+
+/* ═══ A CAIXA DA OFERTA ═══════════════════════════════════════ */
+.oferta{text-align:center;max-width:30rem}
+.oferta-lede{
+  font-family:var(--display);font-size:1.32rem;line-height:1.26;
+  color:var(--tinta);text-wrap:balance;margin:.4rem 0 .7rem;
+}
+.oferta-sub{font-size:.92rem;line-height:1.58;color:var(--tinta-2);margin-bottom:1.4rem}
+.oferta-capas{
+  display:flex;justify-content:center;align-items:flex-end;
+  margin:0 0 1.4rem;padding:0;
+}
+.oferta-capas .oc{
+  width:5.4rem;height:auto;border-radius:1px;
+  box-shadow:0 1px 3px rgb(var(--tinta-rgb)/.22), 0 14px 30px -12px rgb(var(--tinta-rgb)/.45);
+  outline:1px solid var(--linha);outline-offset:-1px;
+}
+.oferta-capas .c1{transform:rotate(-7deg)}
+.oferta-capas .c2{transform:rotate(-2.5deg);margin-left:-1.5rem;z-index:2}
+.oferta-capas .c3{transform:rotate(2.5deg);margin-left:-1.5rem;z-index:3}
+.oferta-capas .c4{transform:rotate(7deg);margin-left:-1.5rem}
+.oferta-rot{
+  font-family:var(--rotulo);font-size:var(--r-2);letter-spacing:var(--tk-2);
+  text-transform:uppercase;color:var(--tinta-3);margin-bottom:.9rem;
+}
+.oferta-rot b{color:var(--tinta);font-size:1.5rem;display:block;margin-top:.2rem;font-family:var(--display);letter-spacing:0}
+.oferta-itens{list-style:none;margin:0 0 1.4rem;padding:0;text-align:left}
+.oferta-itens li{
+  padding:.6rem 0;border-bottom:1px solid var(--linha);
+  font-size:.95rem;color:var(--tinta);
+}
+.oferta-itens li:last-child{border-bottom:0}
+.oferta-itens li b{font-weight:600}
+.oferta-itens li span{display:block;font-size:.8rem;color:var(--tinta-3);margin-top:.1rem}
+.oferta-pe{font-size:var(--t-1);color:var(--tinta-3);margin-top:.8rem;line-height:1.5}

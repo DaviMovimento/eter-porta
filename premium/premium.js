@@ -16,6 +16,39 @@ const ONDE_MORO = document.currentScript?.src || location.href;
 
 const $ = s => document.querySelector(s);
 
+/* ═══ A COPY APROVADA ═════════════════════════════════════════
+   Vem do dossiê de 23/08, fechado sobre 103 compradores e 1.472 leads.
+   Está aqui, junta e nomeada pelo número do dossiê, porque copy aprovada
+   espalhada pelo código é copy que ninguém acha para revisar. O que muda
+   por edição continua vindo do catálogo; o que é da casa mora aqui. */
+const COPY_CASA = {
+  topo:      'A revista de quem vive das próprias ideias',           // 1.1
+  apresenta: 'Repertório de polímata para quem vive ou quer viver das próprias ideias.',
+  apresentaSub:
+    'A revista semanal e a comunidade que lê e traduz o futuro da nova economia ' +
+    'em clareza, direção e ferramentas aplicáveis, para você se posicionar de ' +
+    'forma única e monetizar o seu conteúdo autoral.',                // 1.2
+  polimataTit: 'O que é repertório de polímata?',
+  polimata: [
+    'Polímata era como se chamavam os homens e as mulheres do Renascimento: ' +
+    'pensadores, empreendedores e artistas que dominavam diferentes áreas do ' +
+    'conhecimento para criar obras autorais.',
+    'Na era da inteligência artificial, em que todos estudam os mesmos assuntos, ' +
+    'usam as mesmas ferramentas e repetem os mesmos clichês, o ativo mais raro, ' +
+    'e por isso o mais valioso, passou a ser a capacidade de articular áreas ' +
+    'distintas do próprio repertório para criar e monetizar ideias, conteúdos e ' +
+    'marcas autorais.',
+  ],                                                                  // 1.3
+  lerTit: 'LER ESTA EDIÇÃO INTEIRA, DE GRAÇA',
+  lerSub: min => `${min} minutos. Sem cartão.`,                       // 1.4
+  passeTit: 'ADQUIRIR O PASSE, R$97',
+  passeSub: '30 dias com tudo aberto.',
+  espiada: 'Complete seu cadastro para ler a edição completa',
+  portao: 'As outras oito estão aqui, e uma nova chega toda semana.\n' +
+          'Trinta dias com tudo aberto: R$97, R$24 por edição.',      // 1.5
+  fecho: 'A próxima edição entra na quarta. Comece pela que te trouxe até aqui.', // 1.8-A
+};
+
 /* O `·` não existe na Futura dos rótulos: onde o texto vira HTML, ele vira
    um ponto desenhado em CSS; onde é texto puro, vira travessão. */
 const pontilhar = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -41,6 +74,9 @@ const rolar = (el, opcoes = {}) =>
   el?.scrollIntoView({ behavior: semMovimento() ? 'auto' : 'smooth', block: 'start', ...opcoes });
 
 let DADOS, EDICAO, PASSE, CFG, BASE = '', TOTAL = 0;
+/* a espiada vive num fecho; isto é a maçaneta que ela deixa de fora, para
+   a animação automática poder virar a folha sem furar o encapsulamento */
+let ESPIADA = null;
 let paginaAtual = 1, maximaLida = 0, capAtual = -1;
 const fila = [];
 
@@ -148,6 +184,15 @@ async function iniciar() {
   TOTAL = EDICAO.paginas;
 
   document.title = `${EDICAO.titulo} — ETER`;
+  /* 1.1 — a assinatura da casa, ao lado do logo */
+  const marca = document.querySelector('.topo-marca');
+  if (marca && !document.querySelector('.topo-tag')) {
+    const tag = document.createElement('span');
+    tag.className = 'topo-tag';
+    tag.textContent = COPY_CASA.topo;
+    marca.after(tag);
+  }
+
   ligarPixel();
   tarjaDemo();
   aquecerPorteiro();
@@ -155,6 +200,7 @@ async function iniciar() {
   montarChegada();
   montarEspiada();
   ligar();
+  espiadaSozinha();
   evento('viu_porta', { titulo: EDICAO.titulo, capturado: jaCapturado() });
 }
 
@@ -200,6 +246,16 @@ function montarChegada() {
   olho.textContent = EDICAO.subtitulo || '';
   olho.hidden = !EDICAO.subtitulo;
 
+  /* 1.4 — os dois botões, na redação aprovada. O `{minutos}` já existia no
+     catálogo e nunca aparecia na tela: é a prova de esforço baixo mais
+     barata que o sistema tem, e ela custava zero para ser dita. */
+  const btLer = $('#btn-ler');
+  btLer.firstChild.textContent = COPY_CASA.lerTit + ' ';
+  $('#sub-ler').textContent = EDICAO.minutos ? COPY_CASA.lerSub(EDICAO.minutos) : 'Sem cartão.';
+  document.querySelectorAll('[data-passe="capa"]').forEach(b => {
+    b.innerHTML = `${COPY_CASA.passeTit}<span class="sub">${COPY_CASA.passeSub}</span>`;
+  });
+
   $('#passe-rot').innerHTML = pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '));
   $('#passe-preco').textContent = CFG.precoPasse;
   $('#passe-itens').innerHTML = PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
@@ -215,19 +271,112 @@ function montarChegada() {
   /* a capa de cada edição na lista: dá para escolher pelo que se vê,
      não por um número. E o link preserva utm e embaixador. */
   const comEdicao = n => { const u = new URL(location.href); u.searchParams.set('ed', n); return u.search; };
-  $('#acervo').innerHTML = DADOS.edicoes.map(e => `
-    <li><a href="${comEdicao(e.n)}" class="${e.n === EDICAO.n ? 'atual' : ''}">
-      <span class="capinha">${e.paginas
-        ? `<img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp" alt="" loading="lazy" decoding="async" width="240" height="339">`
-        : '<i class="embreve">em breve</i>'}</span>
-      <span class="alg">${e.n}</span>
-      <span class="nom">${e.titulo}</span>
-      <span class="pg">${e.paginas ? '' : 'em breve'}</span>
-    </a></li>`).join('');
+
+  /* O ACERVO. Estava só da mais nova para a mais antiga, e quem chega
+     querendo conhecer a revista quer começar do começo. Agora abre na
+     ordem de leitura (001 → 008) e tem o botão que inverte — porque as
+     duas ordens servem a duas pessoas diferentes: quem vai conhecer lê
+     do início, quem já é de casa quer ver a última. E cada linha ganha o
+     subtítulo, que é o que faz escolher: o número não diz nada. */
+  let acervoCrescente = true;
+  const pintarAcervo = () => {
+    const eds = DADOS.edicoes.slice().sort((a, b) =>
+      acervoCrescente ? a.n.localeCompare(b.n) : b.n.localeCompare(a.n));
+    $('#acervo').innerHTML = eds.map(e => `
+      <li><a href="${comEdicao(e.n)}" class="${e.n === EDICAO.n ? 'atual' : ''}">
+        <span class="capinha">${e.paginas
+          ? `<img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp" alt="" loading="lazy" decoding="async" width="240" height="339">`
+          : '<i class="embreve">em breve</i>'}</span>
+        <span class="alg">${e.n}</span>
+        <span class="nom">${e.titulo}</span>
+        <span class="sub-ed">${e.subtitulo || ''}</span>
+      </a></li>`).join('');
+    const b = $('#ordem-acervo');
+    if (b) b.textContent = acervoCrescente ? 'da mais antiga para a mais nova' : 'da mais nova para a mais antiga';
+  };
+  const cxAcervo = $('#acervo')?.parentElement;
+  if (cxAcervo && !$('#ordem-acervo')) {
+    const b = document.createElement('button');
+    b.id = 'ordem-acervo'; b.className = 'ordem-acervo'; b.type = 'button';
+    b.addEventListener('click', () => { acervoCrescente = !acervoCrescente; pintarAcervo(); });
+    $('#acervo').before(b);
+  }
+  pintarAcervo();
 
   montarFundo();
   montarTempos();
 
+}
+
+/* ═══ A OFERTA, NUMA CAIXA ════════════════════════════════════
+   O botão do topo mandava direto para o pagamento — pedia a compra antes
+   de dizer o que era a compra. Agora ele abre a oferta inteira numa caixa:
+   a promessa da casa, o que entra no passe, o preço, a revista em imagem,
+   e só então o botão que leva ao checkout. É a mesma ordem da página, em
+   um quadro só, para quem decidiu antes de rolar. */
+function abrirOferta(origem) {
+  let cx = $('#oferta-dialog');
+  if (!cx) {
+    cx = document.createElement('dialog');
+    cx.id = 'oferta-dialog';
+    cx.innerHTML = `
+      <div class="painel oferta">
+        <button type="button" class="fechar" data-fecha="oferta-dialog" aria-label="Fechar">×</button>
+        <img class="mono" src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}monograma.webp" alt="" width="256" height="256">
+        <p class="oferta-lede">${COPY_CASA.apresenta}</p>
+        <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
+        <figure class="oferta-capas">
+          ${DADOS.edicoes.filter(e => e.paginas).slice(0, 4).map((e, i) =>
+            `<img class="oc c${i + 1}" src="${BASE}edicoes/${e.n}/paginas/p001@240.webp"
+               alt="" width="240" height="339">`).join('')}
+        </figure>
+        <p class="oferta-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}
+          <b>${CFG.precoPasse}</b></p>
+        <ul class="oferta-itens">
+          ${PASSE.itens.map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('')}
+        </ul>
+        <button class="btn btn-passe" data-passe="oferta">${COPY_CASA.passeTit}
+          <span class="sub">${COPY_CASA.passeSub}</span></button>
+        <p class="oferta-pe">${PASSE.condicao || ''}</p>
+      </div>`;
+    document.body.append(cx);
+    cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
+    cx.querySelector('[data-passe]').addEventListener('click', () => irParaCheckout('oferta'));
+    cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
+    cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
+  }
+  cx.showModal();
+  evento('abriu_oferta', { origem });
+}
+
+/* ═══ A ESPIADA QUE ANDA SOZINHA ══════════════════════════════
+   Ninguém clica numa revista fechada: ela parece uma imagem. Dois segundos
+   depois de a página abrir, ela vira sozinha para o sumário — que é o
+   primeiro lugar onde a revista mostra que TEM coisa dentro — e daí em
+   diante vira de três em três segundos, até bater no cadeado. Lá ela para,
+   porque o cadeado é o argumento, não um obstáculo a atravessar.
+
+   Qualquer toque da pessoa cancela: a partir do momento em que ela assume
+   o controle, a página não mexe mais sozinha. E quem pediu menos movimento
+   no sistema não recebe nada disto. */
+function espiadaSozinha() {
+  if (semMovimento() || !TOTAL) return;
+
+  let relogio = null, morta = false;
+  const parar = () => { morta = true; clearTimeout(relogio); };
+
+  /* o primeiro gesto da pessoa manda: seta, miniatura, arraste, tecla */
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev =>
+    addEventListener(ev, parar, { once: true, passive: true }));
+
+  const passo = () => {
+    if (morta || !ESPIADA || document.body.classList.contains('lendo')) return;
+    const proxima = ESPIADA.atual() + 1;
+    if (proxima > ESPIADA.maxima()) return;   /* bateu no cadeado: fica */
+    ESPIADA.ir(proxima, 'sozinha');
+    relogio = setTimeout(passo, 3000);
+  };
+  relogio = setTimeout(passo, 2000);
 }
 
 /* ═══ OS TRÊS TEMPOS ══════════════════════════════════════════
@@ -247,20 +396,60 @@ function montarTempos() {
   const capa = document.createElement('section');
   capa.className = 'capa';
   folha.prepend(capa);
-  ['#numero', '#titulo', '#ficha', '#revista', '#btn-ler']
+  /* A ordem da capa é a ordem em que a decisão se forma: quem é (número),
+     o que é (título), o que promete (subtítulo), do que trata (a sinopse),
+     como é (a revista) e o que fazer (o botão). No celular a sinopse desce
+     para depois do botão — ver o CSS —, porque lá ela empurraria o preview
+     e a ação para fora da primeira dobra. */
+  ['#numero', '#titulo', '#ficha', '#promessa', '#revista']
     .forEach(s => { const e = folha.querySelector(s); if (e) capa.append(e); });
+
+  /* OS DOIS BOTÕES, juntos. O do passe só existia no card lá embaixo — quem
+     já estava decidido a comprar tinha de rolar a página inteira para achar
+     onde. Agora as duas saídas ficam lado a lado no desktop e empilhadas no
+     celular, com o gratuito dominante: ele é o evento que captura, e o pago
+     é a saída de quem já sabe o que quer. */
+  const acoes = document.createElement('div');
+  acoes.className = 'acoes';
+  acoes.append(folha.querySelector('#btn-ler') || capa.querySelector('#btn-ler'));
+  const bp = document.createElement('button');
+  bp.className = 'btn btn-passe btn-passe-hero';
+  bp.dataset.passe = 'capa';
+  bp.innerHTML = `${COPY_CASA.passeTit}<span class="sub">${COPY_CASA.passeSub}</span>`;
+  acoes.append(bp);
+  capa.append(acoes);
 
   /* o índice de páginas desce para o miolo: sobre a arte ele era ruído,
      sobre papel ele é o que deixa escolher por onde entrar */
+  /* a dica volta para DEBAIXO do preview, que é onde ela é lida: no pé da
+     página ela chegava depois da decisão. E deixa de anunciar o que é
+     livre para dizer o que fazer. */
+  const dicaCapa = folha.querySelector('.dica-faixa');
+  if (dicaCapa) { dicaCapa.textContent = COPY_CASA.espiada; capa.append(dicaCapa); }
+
   const miolo = document.createElement('section');
   miolo.className = 'miolo';
   ['#pulso-n', '#trilho'];
   const pulso = folha.querySelector('.pulso') || capa.querySelector('.pulso');
   const faixa = capa.querySelector('.faixa') || folha.querySelector('.faixa');
-  const dica  = capa.querySelector('.dica-faixa') || folha.querySelector('.dica-faixa');
-  [pulso, faixa, dica].forEach(e => e && miolo.append(e));
+  [pulso, faixa].forEach(e => e && miolo.append(e));
   miolo.append($('#mosaico'));
   capa.after(miolo);
+
+  /* 1.2 e 1.3 — a apresentação da casa entra DEPOIS dos botões, e a ordem
+     tem razão: quem chega na página de uma edição veio por aquele tema, e
+     o institucional só responde a pergunta que ele passa a ter depois de
+     ver o específico. */
+  const casa = document.createElement('section');
+  casa.className = 'casa';
+  casa.innerHTML = `
+    <p class="casa-lede">${COPY_CASA.apresenta}</p>
+    <p class="casa-sub">${COPY_CASA.apresentaSub}</p>
+    <div class="casa-polimata">
+      <h2>${COPY_CASA.polimataTit}</h2>
+      ${COPY_CASA.polimata.map(p => `<p>${p}</p>`).join('')}
+    </div>`;
+  miolo.after(casa);
 }
 
 /* ═══ A COR DA EDIÇÃO ═════════════════════════════════════════
@@ -322,24 +511,21 @@ function corDaEdicao() {
 function montarFundo() {
   if (!TOTAL) return;
 
-  /* O FUNDO. A conta que mandou refazer isto: numa tela retina, um fundo
-     fotográfico em sangria precisa de ~3.400px para não borrar — ou pesa
-     demais, ou fica mole. Então o chão deixa de ser foto e passa a ser
-     MATÉRIA DE MARCA (gradiente e grão, no CSS: nítido de graça), e a
-     fotografia entra como TRÊS PEÇAS COMPLETAS, cada uma exibida perto do
-     tamanho nativo. Nada estica, nada borra, e a edição continua vestindo
-     a sua própria página. */
-  const altos = document.createElement('div');
-  altos.className = 'altos';
-  altos.setAttribute('aria-hidden', 'true');
-  altos.innerHTML = [1, 2, 3].map(i =>
-    `<img class="alto a${i}" src="${BASE}edicoes/${EDICAO.n}/hl-${i}.webp?v=1" alt="">`).join('');
-  $('#atmosfera').after(altos);
-  /* sem as peças, a página continua de pé sobre o chão de marca */
-  altos.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
-  altos.querySelector('.a1').addEventListener('load', () => altos.classList.add('ver'), { once: true });
-  altos.querySelector('.a1').addEventListener('error', () => altos.remove(), { once: true });
-  $('#atmosfera').classList.add('chao', 'ver');
+  /* O FUNDO. Eram três peças soltas sobre um gradiente, e davam sensação de
+     FALTA — parte da tela sem nada. Agora é uma parede: vinte e duas páginas
+     da própria edição em grade de tijolo, giradas e sobrepostas, cobrindo
+     cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
+     nativa (800px num quadro de 2560), em vez de uma foto esticada. */
+  const atm = $('#atmosfera');
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=1`;
+  const teste = new Image();
+  teste.onload = () => {
+    atm.style.backgroundImage = `url("${parede}")`;
+    atm.classList.add('parede', 'ver');
+  };
+  teste.onerror = () => { atm.classList.add('chao', 'ver'); };
+  teste.src = parede;
+  teste.decode?.().catch(() => {});
 
   corDaEdicao();
 
@@ -592,6 +778,8 @@ function montarEspiada() {
       seguirPendente();
     }, semMovimento() ? 20 : 960);   /* a virada dura 950ms; sem movimento, quase nada */
   }
+
+  ESPIADA = { atual: () => folha, maxima: folhaMaxima, ir: irParaFolha };
 
   function seguirPendente() {
     if (!pendente) return;
@@ -1243,7 +1431,7 @@ function ligar() {
      o passe, e mora na página de upsell, depois da compra. */
   $('#nav-passe').addEventListener('click', e => {
     e.preventDefault();
-    irParaCheckout('topo');
+    abrirOferta('topo');
   });
 
   $('#mes-passe').addEventListener('click', () => {
