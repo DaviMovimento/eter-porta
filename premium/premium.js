@@ -42,7 +42,7 @@ const COPY_CASA = {
   lerTit: 'LER ESTA EDIÇÃO INTEIRA, DE GRAÇA',
   lerSub: min => `${min} minutos. Sem cartão.`,                       // 1.4
   passeTit: 'ADQUIRIR O PASSE, R$97',
-  passeSub: '30 dias com tudo aberto.',
+  passeSub: 'Um mês de acesso total.',
   espiada: 'Complete seu cadastro para ler a edição completa',
   portao: 'As outras oito estão aqui, e uma nova chega toda semana.\n' +
           'Trinta dias com tudo aberto: R$97, R$24 por edição.',      // 1.5
@@ -262,7 +262,7 @@ function montarChegada() {
   $('#passe-rot').innerHTML = pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '));
   $('#passe-preco').textContent = CFG.precoPasse;
   $('#passe-itens').innerHTML = PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
-  $('#passe-nota').textContent = PASSE.condicao + ' ' + PASSE.credito;
+  $('#passe-nota').textContent = [PASSE.condicao, PASSE.credito].filter(Boolean).join(' ');
   $('#barra-txt').innerHTML = `O passe abre <b>todo o acervo</b> — ${CFG.precoPasse}`;
 
   if (!TOTAL) {
