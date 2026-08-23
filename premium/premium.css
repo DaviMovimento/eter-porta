@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231344') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231344') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231344') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231349') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231349') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231349') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -606,9 +606,10 @@ body.lendo .topo{display:none}
 .dizeres{margin-top:1.6rem}
 
 .numero{
+  color:var(--ouro-texto);
   display:flex;align-items:center;justify-content:center;gap:.8rem;
   font-family:var(--rotulo);font-size:.58rem;font-weight:700;
-  letter-spacing:.3em;text-transform:uppercase;color:var(--ouro);
+  letter-spacing:.3em;text-transform:uppercase;
   margin-bottom:.9rem;
 }
 .numero::before,.numero::after{content:"";height:1px;width:1.8rem;background:linear-gradient(90deg,transparent,var(--ouro-vivo))}
@@ -1310,8 +1311,11 @@ button:disabled:hover,.btn:disabled:hover{filter:saturate(.4)}
   --e5:1.5rem; --e6:2rem; --e7:2.5rem; --e8:3rem;
 }
 
-/* o título tinha uma fórmula que ENCOLHIA quando a tela crescia */
-h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
+/* Esta regra vinha DEPOIS dos blocos de media query, com a mesma
+   especificidade — então ela vencia em toda largura e as duas escalas
+   calibradas (celular e desktop) nunca valiam. Fica como piso, e quem
+   manda são os blocos: por isso `:where`, que zera a especificidade. */
+:where(h1){font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
 
 /* Piso de legibilidade — e o bug que ele tinha. A regra era
    `font-size:max(var(--r-1),1em)`, mas dentro do rótulo `1em` é o
@@ -1321,6 +1325,10 @@ h1{font-size:clamp(2.25rem, 5vw + 1rem, 3.25rem)}
    entreletra de rótulo — a forma de um rótulo no corpo de um parágrafo.
    Cada peça agora declara o seu degrau, nenhuma abaixo dos 11px. */
 .rotulo,.passe-rot,.topo-nav a,#acervo .alg,#acervo .pg{font-size:var(--r-2)}
+/* o piso de 11px valia para uns e não para outros: estes ficavam em 8,8px,
+   inclusive os rótulos do formulário que pede o dado */
+.campo label,.ou,.painel .leg,.intervalo .rot,.caps .pg,.pagina-n,
+#acervo .embreve{font-size:var(--r-1)}
 .pe{font-size:var(--r-1);line-height:1.9}
 
 /* na tela pequena a barra do topo é o gargalo: logo, um link e o botão
@@ -1493,3 +1501,24 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
 .tombo h2{font-family:var(--display);font-weight:500;font-size:var(--d-1);color:var(--tinta)}
 .tombo p{font-size:var(--t-2);color:var(--tinta-2);max-width:26rem}
 .tombo button{margin-top:var(--e2)}
+
+
+/* ═══ ALVOS DE TOQUE ══════════════════════════════════════════
+   A régua é 44px — abaixo disso o dedo erra. Estavam abaixo: as
+   miniaturas da faixa (40px), os ícones do cromo da leitura (33px) e
+   o botão do passe na barra do topo do celular (31px). O `.fechar`
+   das caixas já fazia certo e serviu de modelo. */
+.ic{min-width:44px;min-height:44px}
+.faixa .mini{min-height:44px}
+@media (max-width:34rem){
+  .topo-nav a{min-height:44px;display:inline-flex;align-items:center}
+}
+/* o consentimento é o clique que autoriza o envio do dado: merece alvo */
+.campo label.consent input[type=checkbox]{width:1.15rem;height:1.15rem;flex:0 0 auto}
+
+/* ═══ FOCO QUE NÃO SOBREVIVE AO ESCONDIDO ═════════════════════
+   Barra e cromo saem de cena por transform — e continuavam tabuláveis.
+   O foco sumia para um botão invisível. */
+.convite-fixo.oculto,.cromo.oculto,.barra.oculta{visibility:hidden}
+.convite-fixo,.cromo,.barra{transition:transform var(--t-medio) var(--curva),visibility 0s linear var(--t-medio)}
+.convite-fixo:not(.oculto),.cromo:not(.oculto),.barra:not(.oculta){visibility:visible;transition-delay:0s}

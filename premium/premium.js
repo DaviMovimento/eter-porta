@@ -975,7 +975,12 @@ async function consultarPorteiro(edicao) {
   const g = vereditoSalvo();
   if (g && g.edicao === edicao && g.quem === ((l && l.email) || ms) && g.ate && Date.now() < g.ate) return g.veredito;
 
-  if (porteiroEmVoo && porteiroEmVoo.edicao === edicao) return porteiroEmVoo.promessa;
+  /* quem pega carona numa consulta em voo tem que herdar a MESMA rede de
+     segurança: sem o catch, a rejeição chegava crua ao segundo chamador,
+     `liberadoParaLer` estourava e o botão ficava em "Abrindo a edição…"
+     para sempre — o oposto exato da regra de falhar aberto */
+  if (porteiroEmVoo && porteiroEmVoo.edicao === edicao)
+    return porteiroEmVoo.promessa.catch(() => ({ liberado: true, motivo: 'porteiro fora do ar' }));
 
   try {
     const promessa = fetch(CFG.webhookLead, {
@@ -1019,11 +1024,15 @@ function mostrarPorteiro(v) {
    faz a resposta já estar aqui quando ela clicar — a espera some sem que
    nada fique mais rápido. */
 function aquecerPorteiro() {
-  /* só faz sentido para quem já é conhecido — visitante novo ainda vai
-     preencher o formulário, e aquela gravação já traz o veredito junto */
-  if (!CFG.webhookLead) return;
-  if (!leadSalvo() && !url.get('ms')) return;
-  consultarPorteiro(EDICAO.n).catch(() => {});
+  /* DESLIGADO, e o motivo é caro: do outro lado, `pode_ler` não é uma
+     pergunta — ele GRAVA a linha e tranca os 30 dias no ato. Aquecer no
+     carregamento significava que só ABRIR a página queimava a edição do
+     mês: quem recebia o link da ED008 no WhatsApp, não lia nada e ia ver
+     a ED007 no acervo, levava a parede "você já escolheu a do mês".
+     Volta a existir quando o Apps Script separar consultar de consumir
+     (o remendo está em build/planilha-de-leads.gs, precisa de novo
+     Implantar). Até lá, a espera de 2–5s no clique é o preço certo. */
+  return;
 }
 
 /* devolve true quando pode seguir; senão mostra as duas saídas */
@@ -1107,9 +1116,17 @@ async function enviar(e) {
   $('#c-ok').classList.toggle('erro', !okMarcado);
   if (!okMarcado) { $('#f-ok').focus(); return; }
 
+  const onde = $('#form-dialog').dataset.onde || 'capa';
+  /* Do outro lado, `registrarLead` gasta a edição do mês sempre que
+     recebe `edicao`. Quem preencheu o formulário para COMPRAR o passe e
+     desistiu do pagamento saía barrado da leitura gratuita sem nunca ter
+     lido nada. O cadastro do checkout entra sem edição: ele é lead, não
+     é leitura. */
+  const paraComprar = onde.startsWith('checkout');
   const lead = {
-    nome, email: mail, whatsapp: '55' + zap, edicao: EDICAO.n,
-    onde: $('#form-dialog').dataset.onde || 'capa',
+    nome, email: mail, whatsapp: '55' + zap,
+    edicao: paraComprar ? '' : EDICAO.n,
+    onde,
     jornaleiro: url.get('j') || null, ms: url.get('ms') || null,
     utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
     /* paginaAtual só anda na leitura; na espiada a página é a da folha */
@@ -1118,6 +1135,13 @@ async function enviar(e) {
 
   const bt = $('#btn-enviar');
   bt.disabled = true; bt.textContent = 'Abrindo…';
+
+  /* O Apps Script frio leva 2 a 5 segundos. Se a pessoa apertar Esc nesse
+     meio, ela DESISTIU — e mesmo assim a continuação abria a leitura por
+     cima dela. A marca é lida depois do await; o cadastro continua sendo
+     gravado, porque o dado já foi dado. */
+  const dialogo = $('#form-dialog');
+  const marca = (dialogo.dataset.envio = String(Date.now()));
 
   /* A gravação do lead JÁ devolve o veredito do porteiro. Ler essa resposta
      economiza uma segunda ida ao Google — e são 2 a 5 segundos por ida,
@@ -1142,9 +1166,12 @@ async function enviar(e) {
     edicao: EDICAO.n, quem: lead.email, veredito, ate: Date.now() + 6e5,
   }));
   evento('virou_lead', { onde: lead.onde });
-  $('#form-dialog').close();
   bt.disabled = false;
   destravar();
+
+  /* desistiu no meio da espera: grava o lead e não abre nada por cima */
+  if (dialogo.dataset.envio !== marca || !dialogo.open) { aoTerminar = null; return; }
+  dialogo.close();
 
   if (aoTerminar) { const f = aoTerminar; aoTerminar = null; f(); return; }
   if (!veredito || veredito.liberado) abrirLeitura();
@@ -1216,6 +1243,8 @@ function ligar() {
   /* o Esc do <dialog> fecha por fora dos listeners: sem isto, quem desiste
      pelo teclado some da conta sem deixar rastro */
   $('#form-dialog').addEventListener('close', () => {
+    /* invalida um envio que ainda esteja em voo: quem fechou, desistiu */
+    delete $('#form-dialog').dataset.envio;
     if (!jaCapturado()) { evento('desistiu_do_formulario', { onde: $('#form-dialog').dataset.onde }); aoTerminar = null; }
   });
 
