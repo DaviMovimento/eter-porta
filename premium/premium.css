@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231853') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231853') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231853') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231856') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231856') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231856') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1894,12 +1894,15 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
    para fora da primeira dobra, que é o que a página não pode perder. */
 @media (max-width:59.99rem){
   .capa{display:flex;flex-direction:column}
-  .capa>.numero  {order:1}
-  .capa>h1       {order:2}
-  .capa>.dek-ed  {order:3}
-  .capa>.revista {order:4}
-  .capa>.acoes   {order:5}
-  .capa>.promessa{order:6;margin-top:1.6rem;font-size:1rem;line-height:1.6}
+  /* a dica não tinha ordem e caía em ZERO — ou seja, no topo de tudo,
+     anunciando o cadastro antes de a pessoa saber que revista é esta */
+  .capa>.numero     {order:1}
+  .capa>h1          {order:2}
+  .capa>.dek-ed     {order:3}
+  .capa>.revista    {order:4}
+  .capa>.dica-faixa {order:5}
+  .capa>.acoes      {order:6}
+  .capa>.promessa   {order:7;margin-top:1.6rem;font-size:1rem;line-height:1.6}
 }
 @media (min-width:60rem){
   .capa .promessa{
@@ -1907,6 +1910,8 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
     font-size:1rem;line-height:1.62;
   }
   .capa .acoes{grid-column:2;grid-row:5}
-  .capa{grid-template-rows:auto auto auto auto auto}
+  /* no desktop a dica pertence à coluna da revista, colada nela */
+  .capa .dica-faixa{grid-column:1;grid-row:6;margin-top:.6rem;align-self:start}
+  .capa{grid-template-rows:auto auto auto auto auto auto}
   .capa .revista{grid-row:1 / span 5}
 }
