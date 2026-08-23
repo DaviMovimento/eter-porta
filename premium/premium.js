@@ -280,7 +280,7 @@ function montarChegada() {
     f.className = 'mock-passe';
     f.innerHTML = `<img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
-      width="1680" height="670" decoding="async">`;
+      width="794" height="485" decoding="async">`;
     caixaPasse.prepend(f);
     f.querySelector('img').decode?.().catch(() => {});
   }
@@ -356,7 +356,7 @@ function abrirOferta(origem) {
         <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
         <figure class="mock-passe">
           <img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp"
-            alt="Tudo que você acessa ao assinar" width="1680" height="670" decoding="async">
+            alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <figure class="oferta-capas">
           ${DADOS.edicoes.filter(e => e.paginas).slice(0, 4).map((e, i) =>
@@ -549,7 +549,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232009`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232012`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1030,7 +1030,7 @@ function blocoFim() {
     <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
     <section class="passe">
       <figure class="mock-passe"><img src="../premium/mockup-assinatura.webp"
-        alt="Tudo que você acessa" width="1680" height="670" decoding="async"></figure>
+        alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
         <span class="passe-preco">${CFG.precoPasse}</span>

@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232009') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232009') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232009') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232012') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232012') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232012') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1940,12 +1940,10 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
    A composição do deck, recortada e servida a 1680px para aparecer a
    ~840px: o dobro exato, que é o que a tela retina pede. Sangra as
    margens da coluna porque é imagem de produto, não ilustração. */
-.papelada .mockup{
-  margin:2rem calc(var(--sangra-pap,1.4rem)*-1) 2.2rem;
-}
+.papelada .mockup{margin:1.4rem 0 1.8rem}
 .papelada .mockup img{
   display:block;width:100%;height:auto;
-  box-shadow:0 2px 6px rgb(var(--tinta-rgb)/.16), 0 26px 60px -26px rgb(var(--tinta-rgb)/.4);
+  filter:drop-shadow(0 20px 34px rgb(var(--tinta-rgb)/.34));
 }
 @media (min-width:60rem){
   .papelada .mockup{margin-inline:0;border-radius:2px;overflow:hidden}
@@ -2142,12 +2140,15 @@ body.inicio,body.biblioteca{background:var(--papel)}
 
 
 /* ═══ O MOCKUP DENTRO DA OFERTA ═══════════════════════════════
-   A composição do deck — revista, acervo, a chamada de vídeo, a comunidade
-   e o copiloto — entra ANTES do preço: mostra o que se compra antes de
-   dizer quanto custa. Sangra as bordas do card, como imagem de produto. */
-.mock-passe{margin:-1.2rem -1.2rem 1.1rem;padding:0;overflow:hidden;border-radius:2px 2px 0 0}
-.mock-passe img{display:block;width:100%;height:auto}
-.oferta .mock-passe{margin:-.4rem -1.2rem 1rem}
+   A composição — revista, acervo, a chamada de vídeo, a comunidade e o
+   copiloto — entra ANTES do preço: mostra o que se compra antes de dizer
+   quanto custa. O arquivo veio da página antiga e tem FUNDO TRANSPARENTE,
+   o que muda tudo: em vez de um retângulo com o fundo de outra peça colado
+   dentro do card, os aparelhos flutuam sobre o próprio card. Por isso ele
+   não sangra as bordas nem precisa de recorte. */
+.mock-passe{margin:0 0 .6rem;padding:0}
+.mock-passe img{display:block;width:100%;height:auto;
+  filter:drop-shadow(0 18px 30px rgb(0 0 0/.45))}
 
 /* ═══ A PROMESSA NA PRIMEIRA DOBRA DO CELULAR ═════════════════
    No desktop a sinopse fica na coluna do texto, dentro da dobra. No celular
