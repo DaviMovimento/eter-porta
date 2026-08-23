@@ -23,7 +23,7 @@ const $ = s => document.querySelector(s);
    por edição continua vindo do catálogo; o que é da casa mora aqui. */
 const COPY_CASA = {
   topo:      'A revista de quem vive das próprias ideias',           // 1.1
-  apresenta: 'Repertório de polímata para quem vive ou quer viver das próprias ideias.',
+  apresenta: 'Inteligência cultural e repertório polímata para quem vive ou quer viver das próprias ideias.',
   apresentaSub:
     'A revista semanal e a comunidade que lê e traduz o futuro da nova economia ' +
     'em clareza, direção e ferramentas aplicáveis, para você se posicionar de ' +
@@ -44,8 +44,14 @@ const COPY_CASA = {
   passeTit: 'ADQUIRIR O PASSE, R$97',
   passeSub: 'Um mês de acesso total.',
   espiada: 'Complete seu cadastro para ler a edição completa',
+  /* 1.5, com um ajuste: "tudo aberto" foi reprovado no botão, e deixar a
+     expressão viva aqui faria a página dizer duas coisas sobre a mesma
+     oferta. Vale "acesso total", que é a redação que ficou. */
   portao: 'As outras oito estão aqui, e uma nova chega toda semana.\n' +
-          'Trinta dias com tudo aberto: R$97, R$24 por edição.',      // 1.5
+          'Um mês de acesso total: R$97, R$24 por edição.',           // 1.5
+  trava: (data) => `Você já leu a sua edição deste mês.\nVolte em ${data}, ou abra tudo agora por R$97.`, // 1.6
+  cadeadoTit: 'O resto da edição',
+  cadeadoSub: 'complete seu cadastro · leitura gratuita',
   fecho: 'A próxima edição entra na quarta. Comece pela que te trouxe até aqui.', // 1.8-A
 };
 
@@ -200,6 +206,10 @@ async function iniciar() {
   tarjaDemo();
   aquecerPorteiro();
   calcularLimite();      /* antes do mosaico: ele também obedece ao cadeado */
+  const ct = document.querySelector('.tranca-tit'), cs = document.querySelector('.tranca-sub');
+  if (ct) ct.textContent = COPY_CASA.cadeadoTit;
+  if (cs) cs.innerHTML = COPY_CASA.cadeadoSub.replace(' · ', ' <i class="pt"></i> ');
+
   montarChegada();
   montarEspiada();
   ligar();
@@ -1220,12 +1230,12 @@ async function consultarPorteiro(edicao) {
 function mostrarPorteiro(v) {
   const outra = v.edicaoEmCurso ? `ED${v.edicaoEmCurso}` : 'a que você abriu';
   const dias = v.diasQueFaltam;
-  $('#mes-dek').textContent =
-    `A leitura gratuita é uma edição a cada 30 dias, e a sua deste mês é a ${outra} — ` +
-    `que continua aberta, inteira, quando você quiser. Esta aqui abre ` +
-    (v.liberaEmBR ? `em ${v.liberaEmBR}` : 'em breve') +
-    (dias ? `, daqui a ${dias} ${dias === 1 ? 'dia' : 'dias'}.` : '.');
-  $('#mes-pe').textContent = `Com o passe, as duas abrem agora — e o acervo inteiro junto, por ${PASSE?.preco || 'R$97'}.`;
+  /* 1.6 — a trava, na redação do dossiê. A data vem do porteiro; sem ela,
+     a frase não mente: diz "em breve" em vez de inventar um dia. */
+  $('#mes-dek').textContent = COPY_CASA.trava(v.liberaEmBR || 'breve');
+  $('#mes-pe').textContent =
+    `A sua deste mês é a ${outra}, que continua aberta, inteira, quando você quiser.` +
+    (dias ? ` Esta aqui abre daqui a ${dias} ${dias === 1 ? 'dia' : 'dias'}.` : '');
   $('#mes-voltar').hidden = !v.edicaoEmCurso;
   $('#mes-voltar').textContent = v.edicaoEmCurso ? `Voltar para a ED${v.edicaoEmCurso}` : 'Voltar';
   $('#mes-dialog').dataset.edicao = v.edicaoEmCurso || '';

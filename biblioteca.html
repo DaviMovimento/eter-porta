@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A biblioteca — Revista ETER</title>
+<meta name="description" content="Todas as edições da ETER. Escolha uma e leia inteira, de graça.">
+<meta name="theme-color" content="#F2EEE6">
+
+<link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="premium/premium.css?v=202608231946">
+</head>
+<body class="pagina biblioteca">
+
+<header class="topo">
+  <a class="topo-marca" href="./" aria-label="ETER — início">
+    <img src="premium/logo.webp" alt="ETER" width="900" height="240">
+  </a>
+  <span class="topo-tag">Bem-vindo à <em>Vanguarda</em></span>
+  <nav class="topo-nav">
+    <a href="./">Início</a>
+    <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
+  </nav>
+</header>
+
+<main class="papelada">
+  <div class="selo">
+    <p class="rotulo">A biblioteca</p>
+    <h1>Escolha a edição que você vai <em>ler</em></h1>
+    <p class="dek">Uma delas abre inteira, de graça, agora — sem cartão. Com o passe, todas
+    abrem de uma vez, e a de quarta chega junto.</p>
+  </div>
+
+  <div class="filtro-bib">
+    <button type="button" id="ordem" class="ordem-acervo"></button>
+  </div>
+
+  <ul class="estante" id="estante"></ul>
+
+  <section class="oferta-home">
+    <div class="passe">
+      <div class="passe-topo">
+        <span class="passe-rot" id="passe-rot"></span>
+        <span class="passe-preco" id="passe-preco"></span>
+      </div>
+      <ul class="passe-itens" id="passe-itens"></ul>
+      <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE, R$97
+        <span class="sub">Um mês de acesso total.</span></button>
+      <p class="passe-nota" id="passe-nota"></p>
+    </div>
+  </section>
+
+  <p class="pe">
+    <span id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
+    <a href="./">Início</a> <i class="pt"></i> <a href="privacidade.html">Privacidade</a>
+  </p>
+</main>
+
+<script>
+/* A BIBLIOTECA. Uma página, uma decisão: qual edição. Cada capa leva à
+   porta daquela edição, onde a leitura gratuita acontece. O passe fica no
+   pé, para quem já concluiu que quer todas. */
+(async () => {
+  let D;
+  try { D = await (await fetch('edicoes.json?v=202608231946')).json(); }
+  catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
+
+  const C = D.config, P = D.passe;
+  const BASE = C.baseImagens || './';
+
+  /* a ordem de leitura abre; o botão inverte. Quem vem conhecer começa do
+     começo, quem é de casa quer a última — são duas pessoas diferentes. */
+  let crescente = true;
+  const bt = document.getElementById('ordem');
+  const pintar = () => {
+    const eds = D.edicoes.slice().sort((a, b) =>
+      crescente ? a.n.localeCompare(b.n) : b.n.localeCompare(a.n));
+    document.getElementById('estante').innerHTML = eds.map(e => {
+      const capa = e.paginas
+        ? `<img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp" alt="" width="240" height="339" loading="lazy" decoding="async">`
+        : '<i class="embreve">em breve</i>';
+      const dentro = `
+        <span class="capinha">${capa}</span>
+        <span class="alg">Edição ${e.n}</span>
+        <span class="nom">${e.titulo}</span>
+        <span class="sub-ed">${e.subtitulo || ''}</span>
+        ${e.paginas ? '<span class="chamada">Ler de graça</span>' : ''}`;
+      return e.paginas
+        ? `<li><a href="${e.n}">${dentro}</a></li>`
+        : `<li><span class="indisp">${dentro}</span></li>`;
+    }).join('');
+    bt.textContent = crescente ? 'da mais antiga para a mais nova' : 'da mais nova para a mais antiga';
+    document.querySelectorAll('#estante img').forEach(i => i.decode?.().catch(() => {}));
+  };
+  bt.addEventListener('click', () => { crescente = !crescente; pintar(); });
+  pintar();
+
+  const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
+  document.getElementById('passe-rot').innerHTML = pontos(P.rotulo.replace('Passe ETER · ', 'Passe · '));
+  document.getElementById('passe-preco').textContent = C.precoPasse;
+  document.getElementById('passe-itens').innerHTML = P.itens
+    .map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('');
+  document.getElementById('passe-nota').textContent =
+    [P.condicao, P.credito].filter(Boolean).join(' ');
+
+  const e = C.empresa || {};
+  if (e.razaoSocial) document.getElementById('pe-empresa').innerHTML =
+    [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj].filter(Boolean).join(' <i class="pt"></i> ');
+
+  const irPagar = origem => {
+    const u = new URL(C.checkoutPasse);
+    u.searchParams.set('src', 'biblioteca');
+    u.searchParams.set('sck', origem);
+    location.href = u;
+  };
+  document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('bib-oferta'));
+  document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('bib-topo'); });
+})();
+</script>
+</body>
+</html>
