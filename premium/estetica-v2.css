@@ -11,7 +11,7 @@
    chamadas no sistema visual, não a bold normal que eu tinha posto. */
 @font-face{
   font-family:'FuturaMarca';
-  src:url('fontes/futura-cond-xb.woff2?v=202608231616') format('woff2');
+  src:url('fontes/futura-cond-xb.woff2?v=202608231617') format('woff2');
   font-weight:800;font-display:swap;
 }
 
@@ -96,9 +96,9 @@
   filter:saturate(.5) contrast(.96) brightness(1.04)
          sepia(.18) hue-rotate(-8deg);
 }
-.atmosfera:not(.arte){filter:blur(90px) saturate(1.35) brightness(1.1) hue-rotate(-6deg)}
-/* a arte já sai tratada do forno: nada de filtro por cima dela */
-.atmosfera.arte{filter:none}
+.atmosfera:not(.chao){filter:blur(90px) saturate(1.35) brightness(1.1) hue-rotate(-6deg)}
+/* o chão de marca é gradiente puro: filtro nele só custaria repintura */
+.atmosfera.chao{filter:none}
 
 /* a aberração cromática: uma franja finíssima de verde e magenta na
    borda da revista, como impressão fora de registro */
