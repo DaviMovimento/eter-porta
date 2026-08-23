@@ -288,25 +288,50 @@ function corDaEdicao() {
 function montarFundo() {
   if (!TOTAL) return;
 
-  /* O FUNDO DA EDIÇÃO. Não é mais a capa borrada: é uma ARTE montada a
-     partir das páginas de abertura de capítulo da própria revista — a
-     direção de arte da edição, tratada na identidade da casa (viragem,
-     brilho, grão, vinheta). Uma por edição, em `edicoes/00X/fundo.webp`.
-     Se a arte não existir, cai na capa desfocada, que é o que havia. */
+  /* O FUNDO DA EDIÇÃO — seis quadros que se revezam.
+     Era uma composição fixa, montada de UM capítulo só: a página ficava
+     com a cara de um pedaço da revista, não da revista. Agora são seis
+     artes da própria edição alternando devagar, e com o tempo a edição
+     inteira passa pelo fundo. Duas camadas empilhadas trocam por opacidade
+     — só opacidade roda na placa de vídeo — e o quadro seguinte é baixado
+     alguns segundos antes de entrar, então nunca há espera visível. */
+  const QUADROS = 6, PAUSA = 11000;
+  const arteN = i => `${BASE}edicoes/${EDICAO.n}/fundo-${i}.webp?v=1`;
   const atm = $('#atmosfera');
-  /* a arte também leva carimbo: trocá-la sem trocar a URL deixa o
-     navegador com a versão velha para sempre */
-  const arte = `${BASE}edicoes/${EDICAO.n}/fundo.webp?v=202608231430`;
-  const teste = new Image();
-  teste.onload = () => {
-    atm.style.backgroundImage = `url("${arte}")`;
+
+  const primeiro = new Image();
+  primeiro.onload = () => {
+    atm.style.backgroundImage = `url("${arteN(1)}")`;
     atm.classList.add('arte', 'ver');
+    girarFundo();
   };
-  teste.onerror = () => {
+  /* sem as artes, cai na capa desfocada — que é o que havia antes */
+  primeiro.onerror = () => {
     atm.style.backgroundImage = `url("${pag(1, 800)}")`;
     atm.classList.add('ver');
   };
-  teste.src = arte;
+  primeiro.src = arteN(1);
+
+  function girarFundo() {
+    if (semMovimento()) return;          /* quem pediu quieto fica com um quadro */
+    const b = document.createElement('div');
+    b.className = 'atmosfera arte ver troca';
+    b.setAttribute('aria-hidden', 'true');
+    atm.after(b);
+    let i = 1, alvo = b, fundo = atm;
+    setInterval(() => {
+      const prox = (i % QUADROS) + 1;
+      const pre = new Image();
+      pre.onload = () => {
+        alvo.style.backgroundImage = `url("${arteN(prox)}")`;
+        alvo.classList.add('acesa');
+        fundo.classList.remove('acesa');
+        [alvo, fundo] = [fundo, alvo];
+        i = prox;
+      };
+      pre.src = arteN(prox);
+    }, PAUSA);
+  }
 
   corDaEdicao();
 

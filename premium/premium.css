@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231430') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231430') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231430') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231441') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231441') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231441') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -145,6 +145,17 @@ body.lendo .topo{display:none}
 }
 .atmosfera.ver{opacity:.52}
 
+/* A ARTE DA EDIÇÃO. Quando existe, a camada deixa de ser um borrão da capa
+   e passa a ser a imagem inteira, em sangria: ela é o fundo da página, não
+   um efeito atrás dele. São duas camadas iguais que se revezam — quem tem
+   `acesa` está à vista, quem não tem espera apagada por baixo —, e uma
+   regra só governa as duas. */
+.atmosfera.arte{
+  inset:0;filter:none;background-position:center;background-size:cover;
+  transform:none;opacity:0;transition:opacity 2.6s ease;
+}
+.atmosfera.arte.acesa{opacity:1}
+
 /* O MOSAICO. Ancorado na esquerda e mais largo do que a faixa que lhe
    cabe: a folha entra por cima e come a sobra, então as provas somem
    POR BAIXO dela em vez de acabarem cortadas numa linha reta. */
@@ -214,9 +225,9 @@ body.lendo .topo{display:none}
      que foi exatamente a queixa. Agora ela é translúcida sobre um desfoque
      do que está atrás: a cor e as formas da edição atravessam, e o texto
      continua sobre uma superfície uniforme o bastante para ser lido. */
-  background-color:rgb(var(--papel-rgb)/.87);
-  -webkit-backdrop-filter:blur(46px) saturate(1.1) brightness(1.06);
-  backdrop-filter:blur(46px) saturate(1.1) brightness(1.06);
+  background-color:rgb(var(--papel-rgb)/.975);
+  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px);
   background-image:
     /* A COR DA EDIÇÃO, entrando pela dobra. Tentei tirar o matiz da capa
        por amostragem e o resultado foi honesto demais para usar: sete das
@@ -765,13 +776,24 @@ h1 em{
      dobra e uma sombra funda por baixo. É essa sombra que diz ao olho o
      que está atrás e o que está por cima — sem ela as duas coisas
      dividem o mesmo plano e a leitura briga com o fundo. */
+  /* A FOLHA VIRA COLUNA. Enquanto ela sangrava até a borda direita, não
+     sobrava tela nenhuma para o fundo — e um fundo que não se vê não é
+     fundo. Agora ela para antes da margem, e a arte da edição aparece dos
+     dois lados: à esquerda com o trilho por cima, à direita limpa. A
+     revista fica sobre a arte como página sobre a mesa, com sombra dos
+     dois lados dizendo o que está em cima e o que está embaixo. */
+  #chegada{--margem:9rem}
   .veu{
-    left:var(--trilho);right:0;top:0;bottom:0;inset:auto;
+    left:var(--trilho);right:var(--margem);top:0;bottom:0;inset:auto;
     box-shadow:
       -1px 0 0 rgb(var(--tinta-rgb)/.16),
-      -14px 0 26px -10px rgb(var(--tinta-rgb)/.40),
-      -40px 0 80px -26px rgb(var(--tinta-rgb)/.26);
+       1px 0 0 rgb(var(--tinta-rgb)/.16),
+      -16px 0 30px -12px rgb(var(--tinta-rgb)/.42),
+       16px 0 30px -12px rgb(var(--tinta-rgb)/.42),
+        0 0 90px -20px rgb(var(--tinta-rgb)/.30);
   }
+  /* a coluna de conteúdo respeita a margem nova */
+  #chegada{padding-right:var(--margem)}
   /* A DISPOSIÇÃO, e por quê. O olho ocidental entra no alto à esquerda e
      desce em Z. À esquerda a revista, que é o objeto — o olho pousa numa
      imagem antes de pousar em texto. À direita a coluna que fala, na
@@ -821,8 +843,8 @@ h1 em{
 /* Tela larga: o trilho cresce, mas com teto. A conta é literal — a coluna
    mede `--trilho + 0,8rem`, e a miniatura de origem tem 240px: passar de
    14rem é esticar imagem, que é exatamente o que deixa o quadro mole. */
-@media (min-width:82rem){ #chegada{--trilho:17rem} }
-@media (min-width:100rem){ #chegada{--trilho:18.5rem} }
+@media (min-width:82rem){ #chegada{--trilho:17rem;--margem:12rem} }
+@media (min-width:100rem){ #chegada{--trilho:18.5rem;--margem:16rem} }
 
 /* ═══════════════════════════════════════════════════════════════
    CELULAR — a ordem que a mão lê
