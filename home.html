@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608231950">
+<link rel="stylesheet" href="premium/premium.css?v=202608231956">
 </head>
 <body class="pagina inicio">
 
@@ -29,8 +29,7 @@
   <div class="veu" aria-hidden="true"></div>
 
   <section class="capa capa-inicio">
-    <p class="numero">A revista de quem vive das próprias ideias</p>
-    <h1>Inteligência cultural e <em>repertório polímata</em></h1>
+    <h1>Inteligência cultural e <em>repertório polímata</em> para quem vive das próprias ideias</h1>
     <p class="dek-ed" id="promessa-home">
       A revista semanal e a comunidade que lê e traduz o futuro da nova economia em clareza,
       direção e ferramentas aplicáveis, para você se posicionar de forma única e monetizar
@@ -100,7 +99,7 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608231950')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608231956')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -135,7 +134,7 @@
   const nova = pub.slice().sort((a, b) => b.n.localeCompare(a.n))[0];
   if (nova) {
     const atm = document.getElementById('atmosfera');
-    const arte = `${BASE}edicoes/${nova.n}/parede.webp?v=202608231950`;
+    const arte = `${BASE}edicoes/${nova.n}/parede.webp?v=202608231956`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;

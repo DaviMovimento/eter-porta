@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231950') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231950') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231950') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231956') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231956') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231956') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1992,7 +1992,6 @@ body.inicio,body.biblioteca{background:var(--papel)}
 /* A home usa a classe `.capa`, e com ela herdou as ordens do celular da
    página de edição — onde a prateleira não existe e por isso ficava com
    ordem ZERO, ou seja, antes do título. Cada peça daqui declara a sua. */
-.capa-inicio>.numero      {order:1}
 .capa-inicio>h1           {order:2}
 .capa-inicio>.dek-ed      {order:3}
 .capa-inicio>.prateleira  {order:4}
@@ -2083,4 +2082,17 @@ body.inicio,body.biblioteca{background:var(--papel)}
 @media (min-width:75rem){
   .estante{grid-template-columns:1fr 1fr 1fr}
   .papelada:has(.estante){max-width:66rem}
+}
+
+
+/* A headline da home é uma FRASE inteira, não duas palavras: no corpo do
+   título de edição ela viraria um muro. Um degrau abaixo, medida travada
+   e as linhas equilibradas. */
+.capa-inicio h1{
+  font-size:clamp(1.9rem, 3.4vw + .5rem, 3rem);
+  max-width:20ch;margin-inline:auto;text-wrap:balance;line-height:1.06;
+}
+.capa-inicio h1 em{font-size:1.18em;line-height:.9}
+@media (max-width:34rem){
+  .capa-inicio h1{font-size:1.72rem;max-width:none}
 }
