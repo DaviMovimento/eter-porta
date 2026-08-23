@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231859') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231859') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231859') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231901') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231901') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231901') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1741,7 +1741,18 @@ body.lendo::before{opacity:0}   /* na leitura, o papel é o da revista */
   font-family:var(--script);font-style:normal;font-size:1.5em;
   line-height:.8;color:var(--ouro-texto);position:relative;top:.06em;
 }
-@media (max-width:59.99rem){ .topo-tag{display:none} }
+/* No celular a saudação não cabe na mesma linha: logo, cumprimento, acervo
+   e o botão que vende somam mais que 375px. Em vez de escondê-la, ela ganha
+   uma faixa própria logo abaixo da barra — continua no topo, continua limpa,
+   e não espreme o botão que é a razão da barra existir. */
+@media (max-width:59.99rem){
+  .topo-tag{
+    order:3;flex:1 0 100%;margin:.5rem 0 0;padding:.5rem 0 0;
+    border-left:0;border-top:1px solid var(--linha);
+    justify-content:center;font-size:.88rem;
+  }
+  .topo{flex-wrap:wrap}
+}
 
 /* o logotipo cresce: era a menor peça da barra e é a marca */
 .topo-marca img{width:6.4rem}

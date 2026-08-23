@@ -6,7 +6,7 @@
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="../premium/premium.css?v=202608231859">
+<link rel="stylesheet" href="../premium/premium.css?v=202608231901">
 </head>
 <body class="pagina">
 
@@ -87,7 +87,7 @@
 
   let c;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608231859')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608231901')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
