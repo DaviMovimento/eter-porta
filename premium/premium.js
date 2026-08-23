@@ -229,6 +229,54 @@ function montarChegada() {
 
 }
 
+/* ═══ A COR DA EDIÇÃO ═════════════════════════════════════════
+   O fundo da casa é fixo — a malha da revista, o monograma, o brilho.
+   O que muda de edição para edição é a COR, e ela não é escolhida por
+   ninguém: sai da capa. Amostro a capa num canvas de 24×34, jogo fora o
+   que é papel e o que é sombra, e fico com o tom que domina o que sobra.
+   A ED007 devolve o dourado da máscara, a ED005 o verde da folhagem, a
+   ED002 o vermelho do quadro. Uma linha de CSS lê o resultado.
+
+   Se a amostragem falhar por qualquer motivo, o CSS já tem um padrão e
+   a página não muda de aparência — o fundo simplesmente não se veste. */
+function corDaEdicao() {
+  const im = new Image();
+  im.crossOrigin = 'anonymous';
+  im.onload = () => {
+    try {
+      const L = 24, A = 34;
+      const cv = document.createElement('canvas');
+      cv.width = L; cv.height = A;
+      const cx = cv.getContext('2d', { willReadFrequently: true });
+      cx.drawImage(im, 0, 0, L, A);
+      const px = cx.getImageData(0, 0, L, A).data;
+
+      /* 24 caixas de 15° cada, com peso pela saturação: o pixel mais
+         colorido pesa mais que o quase-cinza que só faz volume */
+      const caixas = new Float64Array(24), somaH = new Float64Array(24);
+      for (let i = 0; i < px.length; i += 4) {
+        const r = px[i] / 255, g = px[i + 1] / 255, b = px[i + 2] / 255;
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2;
+        if (l < .1 || l > .88) continue;              /* sombra e estouro fora */
+        const d = mx - mn;
+        if (!d) continue;
+        const s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+        if (s < .14) continue;                        /* cinza não tem cor */
+        let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+        h = (h * 60 + 360) % 360;
+        const c = Math.floor(h / 15);
+        caixas[c] += s; somaH[c] += h * s;
+      }
+      let melhor = -1, pico = 0;
+      for (let c = 0; c < 24; c++) if (caixas[c] > pico) { pico = caixas[c]; melhor = c; }
+      if (melhor < 0 || pico < 1) return;             /* capa sem cor dominante */
+      const h = Math.round(somaH[melhor] / caixas[melhor]);
+      document.documentElement.style.setProperty('--cor-edicao-h', h);
+    } catch (err) { console.warn('[porta] cor da edição indisponível', err); }
+  };
+  im.src = pag(1, 240);
+}
+
 /* ═══ A REVISTA ESPIÁVEL ═══════════════════════════════════════ */
 /* ═══ O FUNDO ═════════════════════════════════════════════════
    Cada edição traz o seu próprio ambiente, sem ninguém escolher nada:
@@ -245,6 +293,8 @@ function montarFundo() {
   const capa = new Image();
   capa.onload = () => atm.classList.add('ver');
   capa.src = pag(1, 800);
+
+  corDaEdicao();
 
   /* AS PROVAS. Não é mais um sorteio de páginas quaisquer: cada edição
      declara em `destaques` as suas páginas de FRAMEWORK — quadro, painel,
