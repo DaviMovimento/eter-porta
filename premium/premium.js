@@ -296,7 +296,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* a arte também leva carimbo: trocá-la sem trocar a URL deixa o
      navegador com a versão velha para sempre */
-  const arte = `${BASE}edicoes/${EDICAO.n}/fundo.webp?v=202608231426`;
+  const arte = `${BASE}edicoes/${EDICAO.n}/fundo.webp?v=202608231430`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${arte}")`;

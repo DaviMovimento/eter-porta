@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231426') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231426') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231426') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608231430') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608231430') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608231430') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -214,7 +214,7 @@ body.lendo .topo{display:none}
      que foi exatamente a queixa. Agora ela é translúcida sobre um desfoque
      do que está atrás: a cor e as formas da edição atravessam, e o texto
      continua sobre uma superfície uniforme o bastante para ser lido. */
-  background-color:rgb(var(--papel-rgb)/.90);
+  background-color:rgb(var(--papel-rgb)/.87);
   -webkit-backdrop-filter:blur(46px) saturate(1.1) brightness(1.06);
   backdrop-filter:blur(46px) saturate(1.1) brightness(1.06);
   background-image:
