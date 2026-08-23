@@ -96,7 +96,9 @@
   filter:saturate(.5) contrast(.96) brightness(1.04)
          sepia(.18) hue-rotate(-8deg);
 }
-.atmosfera{filter:blur(90px) saturate(1.35) brightness(1.1) hue-rotate(-6deg)}
+.atmosfera:not(.arte){filter:blur(90px) saturate(1.35) brightness(1.1) hue-rotate(-6deg)}
+/* a arte já sai tratada do forno: nada de filtro por cima dela */
+.atmosfera.arte{filter:none}
 
 /* a aberração cromática: uma franja finíssima de verde e magenta na
    borda da revista, como impressão fora de registro */

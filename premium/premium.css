@@ -209,6 +209,14 @@ body.lendo .topo{display:none}
    que é a capa desfocada. A casa é fixa, só a porta muda. */
 .veu{
   position:fixed;inset:0;z-index:2;pointer-events:none;
+  /* PAPEL FOSCO, não painel opaco. Enquanto a folha era chapada, a arte da
+     edição ficava escondida atrás dela e a página parecia um bege liso —
+     que foi exatamente a queixa. Agora ela é translúcida sobre um desfoque
+     do que está atrás: a cor e as formas da edição atravessam, e o texto
+     continua sobre uma superfície uniforme o bastante para ser lido. */
+  background-color:rgb(var(--papel-rgb)/.82);
+  -webkit-backdrop-filter:blur(34px) saturate(1.15);
+  backdrop-filter:blur(34px) saturate(1.15);
   background-image:
     /* A COR DA EDIÇÃO, entrando pela dobra. Tentei tirar o matiz da capa
        por amostragem e o resultado foi honesto demais para usar: sete das
@@ -219,10 +227,10 @@ body.lendo .topo{display:none}
        diante ela fecha, e a leitura acontece sobre papel. O matiz medido
        fica como reforço — na ED004, a única vermelha, ele aparece. */
     linear-gradient(90deg,
-      rgb(var(--papel-rgb)/.80) 0%,
-      rgb(var(--papel-rgb)/.94) 7%,
-      rgb(var(--papel-rgb)/.985) 15%,
-      rgb(var(--papel-rgb)/.985) 100%),
+      rgb(var(--papel-rgb)/0) 0%,
+      rgb(var(--papel-rgb)/.09) 9%,
+      rgb(var(--papel-rgb)/.15) 20%,
+      rgb(var(--papel-rgb)/.15) 100%),
     linear-gradient(103deg,
       hsl(var(--cor-edicao-h,40) 46% 46% / .10) 0%,
       hsl(var(--cor-edicao-h,40) 46% 46% / .04) 20%,
