@@ -6,7 +6,7 @@
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="premium/premium.css?v=202608232015">
+<link rel="stylesheet" href="premium/premium.css?v=202608232019">
 </head>
 <body class="pagina">
 
@@ -52,7 +52,7 @@
   </section>
 
   <figure class="mockup">
-    <img src="premium/mockup-assinatura.webp?v=202608232015" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+    <img src="premium/mockup-assinatura.webp?v=202608232019" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
       width="794" height="485" decoding="async">
   </figure>
 
@@ -97,7 +97,7 @@
 
   let c;
   try {
-    c = (await (await fetch('edicoes.json?v=202608232015')).json()).config;
+    c = (await (await fetch('edicoes.json?v=202608232019')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -113,7 +113,7 @@
   /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
      lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
   try {
-    const cat = await (await fetch('edicoes.json?v=202608232015')).json();
+    const cat = await (await fetch('edicoes.json?v=202608232019')).json();
     const its = (cat.assinatura && cat.assinatura.itens) || [];
     const ul = document.getElementById('itens-assinatura');
     if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>

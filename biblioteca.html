@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608232015">
+<link rel="stylesheet" href="premium/premium.css?v=202608232019">
 </head>
 <body class="pagina biblioteca">
 
@@ -39,9 +39,13 @@
   <ul class="estante" id="estante"></ul>
 
   <section class="oferta-home">
+    <figure class="mock-passe">
+      <img src="premium/mockup-assinatura.webp?v=202608232019" alt="Tudo que você acessa ao assinar"
+        width="794" height="485" decoding="async">
+    </figure>
     <div class="passe">
       <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608232015" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608232019" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe-topo">
@@ -67,7 +71,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608232015')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608232019')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
