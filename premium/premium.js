@@ -161,12 +161,13 @@ if (url.get('reset') === '1') {
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
    daria o e-mail. */
 const jaCapturado = () => {
-  /* O ?c=1 vem do ManyChat, para quem já se cadastrou lá não preencher o
-     formulário de novo. Sozinho ele abria a revista inteira para qualquer
-     um que digitasse o parâmetro na barra de endereços. Agora ele só vale
-     acompanhado do ?ms, o identificador do assinante — que o ManyChat
-     manda junto e ninguém adivinha. */
-  if (url.get('c') === '1' && url.get('ms')) return true;
+  /* O ?c=1 vem do ManyChat: quem recebe o link no direct já se cadastrou
+     lá, e obrigar o formulário de novo seria pedir duas vezes o que já se
+     tem. Os links de campanha da planilha usam c=1 sozinho — exigir o ?ms
+     junto quebraria todos eles. O custo é que o parâmetro digitado à mão
+     também pula o formulário; a tranca de verdade é o porteiro do
+     servidor, não este atalho. */
+  if (url.get('c') === '1') return true;
   const l = leadSalvo();
   return !!(l && l.nome && l.email && l.whatsapp);
 };
@@ -209,7 +210,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608240959', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241016', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -303,7 +304,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608240959"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241016"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -391,7 +392,7 @@ function abrirOferta(origem) {
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608240959"
+          <img src="${CASA}mockup-assinatura.webp?v=202608241016"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -588,7 +589,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608240959`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608241016`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1090,7 +1091,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608240959"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241016"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
