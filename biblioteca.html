@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608232339">
+<link rel="stylesheet" href="premium/premium.css?v=202608232340">
 </head>
 <body class="pagina biblioteca">
 
@@ -43,7 +43,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608232339" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608232340" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -69,7 +69,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608232339')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608232340')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -104,7 +104,7 @@
     document.querySelectorAll('#estante img').forEach(i => i.decode?.().catch(() => {}));
   };
   document.querySelectorAll('.mock-passe img').forEach(i => i.decode?.().catch(() => {}));
-  bt.addEventListener('click', () => { crescente = !crescente; pintar(); });
+  bt.addEventListener('click', () => { crescente = !crescente; pintar(); rastrear(); });
   pintar();
 
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -126,6 +126,25 @@
     u.searchParams.set('sck', j ? `${origem}-${j}` : origem);
     location.href = u;
   };
+
+
+  /* O RASTRO SOBREVIVE AO CLIQUE. Os links de saída eram literais, e quem
+     chegava com utm e com o ?j de embaixador perdia os dois logo no
+     primeiro toque — a leitura, o lead e a venda que viessem depois
+     nasciam órfãos. Agora cada saída leva a busca inteira junto, do mesmo
+     jeito que a página de edição já faz. */
+  const comRastro = alvo => {
+    const u = new URL(alvo, location.href);
+    const veio = new URLSearchParams(location.search);
+    for (const [k, v] of veio) if (!u.searchParams.has(k)) u.searchParams.set(k, v);
+    return u.pathname + u.search;
+  };
+  const rastrear = () => document.querySelectorAll('a[href]').forEach(a => {
+    const h = a.getAttribute('href');
+    if (!h || /^(https?:|#|mailto:|tel:)/.test(h)) return;
+    a.setAttribute('href', comRastro(h));
+  });
+  rastrear();
 
   /* a saudação da barra é de chegada: some assim que a página rola */
   const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
