@@ -5,101 +5,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#F2EEE6">
 <link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
 <link rel="apple-touch-icon" href="../premium/favicon-180.png">
-<meta name="theme-color" content="#F2EEE6">
-<script defer src="../premium/calor.js?v=202608241304"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202608241304">
+<script defer src="../premium/calor.js?v=202608241423"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202608241423">
 </head>
 <body class="pagina">
 
 <header class="topo">
-  <a class="topo-marca" href="../" aria-label="ETER — início">
+  <a class="topo-marca" href="/revista/" aria-label="ETER — início">
     <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
   </a>
-
 </header>
 
 <main class="papelada estreita">
+
+  <!-- ═══ A ORDEM DA PÁGINA, ditada pelo Rei: confirmação → presente →
+       promessa → mockup → entregáveis → PREÇO (uma vez, grande) → botão
+       verde → só o passe → o que muda ═══ -->
+
   <div class="selo">
-    <p class="confirmado"><i aria-hidden="true">✓</i> Pagamento confirmado <i class="pt"></i> o passe está ativo</p>
-    <p class="rotulo">Uma conta que só fecha hoje</p>
-    <h1>Você já pagou o <em>primeiro mês</em></h1>
-    <p class="dek">O acervo abriu e a edição da semana já está no seu nome. Como você entrou de
-    qualquer forma, existe uma conta que só vale a pena fazer <b>agora</b>, nesta página, e não
-    daqui a trinta dias.</p>
+    <p class="confirmado"><i aria-hidden="true">✓</i> Pagamento confirmado <i class="pt"></i> seu passe de 30 dias está ativo</p>
+    <p class="rotulo rotulo-forte">PRESENTE LIBERADO</p>
+    <h1>Parabéns — e tem mais uma <em>coisa</em></h1>
+    <p class="dek">Por ter entrado hoje, você ganhou uma <b>condição especial para a assinatura
+    anual</b> da ETER. Ela vale agora, nesta página.</p>
   </div>
 
-  <section class="conta" aria-label="A conta">
-    <div class="linha"><span>Assinatura anual da ETER</span><b class="risco" id="cheio">R$997</b></div>
-    <div class="linha total"><span>Nesta página</span><b id="parcela">R$897</b></div>
-    <p class="nota">À vista no Pix, ou <b id="mensal">em 12× de R$87,90</b> no cartão — o ano
-    inteiro em vez de trinta dias.</p>
-  </section>
-
-  <section class="ganhos">
-    <p class="rotulo">O que muda ao completar o ano</p>
-    <ul>
-      <li><b>12 meses de acesso, não 30 dias</b><span>52 edições novas em vez de 4, e o acervo aberto o ano inteiro</span></li>
-      <li><b>A comunidade Vanguarda — só no anual</b><span>plataforma fechada e o grupo de membros no WhatsApp, com os fundadores</span></li>
-      <li><b>Participação na curadoria — só no anual</b><span>bastidores, pauta das próximas edições e coautoria em conteúdos</span></li>
-      <li><b>Todos os encontros ao vivo do ano</b><span>e não só os quatro do primeiro mês</span></li>
-      <li><b>O preço de hoje travado</b><span>a ETER reajusta, e quem entrou antes não é alcançado</span></li>
-    </ul>
-  </section>
-
-  <section class="ganhos" id="tudo-que-acessa">
-    <p class="rotulo">Tudo que a assinatura de 12 meses abre</p>
-    <ul id="itens-assinatura"></ul>
-  </section>
-
   <figure class="mockup">
-    <img src="../premium/mockup-assinatura.webp?v=202608241304" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+    <img src="../premium/mockup-assinatura.webp" alt="Tudo que a assinatura anual abre"
       width="794" height="485" decoding="async">
   </figure>
 
+  <section class="ganhos mesa-oferta">
+    <p class="rotulo">A assinatura anual abre, por 12 meses</p>
+    <ul id="itens-assinatura" class="itens-curto"></ul>
+  </section>
+
+  <section class="preco-unico" aria-label="O preço">
+    <span class="de">de <s id="preco-cheio">R$997</s> por</span>
+    <span class="por" id="preco-anual">R$897</span>
+    <span class="como">à vista no Pix, ou <b id="preco-parcela">em 12× de R$87,90</b> no cartão
+    <i class="pt"></i> 12 meses de acesso <i class="pt"></i> não renova sozinho</span>
+  </section>
+
   <div class="fecho">
-    <button class="btn btn-passe grande" id="btn-anual">
-      ASSINAR ANUAL — <span id="btn-preco">R$897</span>
-    </button>
-    <p class="sob-botao"><b id="pix-preco">R$897</b> à vista no Pix, ou <b id="mensal-2">em 12× de R$87,90</b> no
-    cartão. 12 meses de acesso; não renova sozinho.</p>
+    <button class="btn btn-ler grande" id="btn-anual">ASSINAR ANUAL</button>
     <button class="btn btn-fantasma grande" id="btn-nao">APENAS ACESSAR O PASSE</button>
-    <p class="sob-botao">Seu passe de 30 dias continua ativo de qualquer jeito.
-    Esta condição só existe nesta página.</p>
+    <p class="sob-botao">Seu passe de 30 dias já está ativo.</p>
     <p class="erro-oferta" id="erro-oferta" hidden></p>
   </div>
 
+  <section class="ganhos">
+    <p class="rotulo">O que muda no seu acesso ao assinar</p>
+    <ul>
+      <li><b>12 meses em vez de 30 dias</b><span>52 edições novas e o acervo aberto o ano inteiro</span></li>
+      <li><b>A comunidade Vanguarda</b><span>plataforma fechada: grupos por nicho, fórum e a chance de virar colunista</span></li>
+      <li><b>Participação na curadoria</b><span>bastidores, pauta das próximas edições e coautoria em conteúdos</span></li>
+      <li><b>Gravação de todos os encontros ao vivo</b><span>perdeu a hora, assiste quando puder</span></li>
+    </ul>
+  </section>
 
   <p class="pe">
     <span id="pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="../privacidade">Privacidade</a>
+    <a href="/revista/privacidade/">Privacidade</a>
   </p>
 </main>
 
 <script>
 /* Lê tudo do mesmo edicoes.json que a porta usa: mexeu lá, mudou aqui.
-   Nenhum preço fica escrito em dois lugares. */
+   O preço aparece UMA vez na página — neste bloco, e em mais nenhum. */
 (async () => {
   const erro = document.getElementById('erro-oferta');
   const bt = document.getElementById('btn-anual');
-  const naoDeu = msg => {
-    /* O botão nunca fica mudo: se o catálogo falhar, ele diz o que houve
-       em vez de não responder ao clique. */
-    erro.textContent = msg;
-    erro.hidden = false;
-    bt.disabled = true;
-  };
+  const naoDeu = msg => { erro.textContent = msg; erro.hidden = false; bt.disabled = true; };
 
   document.getElementById('btn-nao').addEventListener('click', e => {
     e.preventDefault();
-    /* absoluto: o relativo quebrava dentro da pasta /assinatura-anual/ */
     location.href = '/revista/confirmado/';
   });
 
-  let c;
+  let c, cat;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608241304')).json()).config;
+    cat = await (await fetch('../edicoes.json?v=202608241423')).json();
+    c = cat.config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -108,25 +98,16 @@
   document.querySelectorAll('.mockup img').forEach(i => i.decode?.().catch(() => {}));
 
   const texto = (id, v) => { const e = document.getElementById(id); if (e && v) e.textContent = v; };
-  texto('cheio', c.precoCheio);
-  texto('parcela', c.precoAnual);
-  texto('mensal', c.mensalAnual || c.parcelaAnual);
-  texto('mensal-2', c.mensalAnual || c.parcelaAnual);
-  texto('btn-preco', c.precoAnual);
-  texto('pix-preco', c.precoAnual);
+  texto('preco-cheio', c.precoCheio);
+  texto('preco-anual', c.precoAnual);
+  texto('preco-parcela', c.mensalAnual || c.parcelaAnual);
 
-  /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
-     lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
-  try {
-    const cat = await (await fetch('../edicoes.json?v=202608241304')).json();
-    const its = (cat.assinatura && cat.assinatura.itens) || [];
-    const ul = document.getElementById('itens-assinatura');
-    if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>
-      `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('');
-  } catch (err) { console.warn('[eter] entregáveis indisponíveis', err); }
+  const its = (cat.assinatura && cat.assinatura.itens) || [];
+  const ul = document.getElementById('itens-assinatura');
+  if (ul && its.length) ul.innerHTML = its.map(([a]) => `<li>${a}</li>`).join('');
 
   const e = c.empresa || {};
-  document.getElementById('pe-empresa').innerHTML =
+  if (e.razaoSocial) document.getElementById('pe-empresa').innerHTML =
     [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj].filter(Boolean).join(' <i class="pt"></i> ');
 
   if (!c.checkoutAnual || c.checkoutAnual.includes('SEU-CHECKOUT')) {
@@ -136,9 +117,9 @@
   bt.addEventListener('click', () => {
     const p = new URLSearchParams(location.search);
     const u = new URL(c.checkoutAnual);
-    /* mantém o rastro da compra original: qual edição trouxe a pessoa */
     u.searchParams.set('src', p.get('src') || 'upsell');
     u.searchParams.set('sck', 'upsell-anual');
+    for (const [k, v] of p) if (k.startsWith('utm_')) u.searchParams.set(k, v);
     if (window.fbq) fbq('track', 'AddToCart', { value: 897, currency: 'BRL' });
     bt.disabled = true;
     bt.textContent = 'Abrindo o pagamento…';

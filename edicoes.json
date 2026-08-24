@@ -458,35 +458,39 @@
     }
   ],
   "assinatura": {
-    "rotulo": "Assinatura ETER · 12 meses de acesso",
+    "rotulo": "Assinatura ETER · 12 meses",
     "itens": [
       [
-        "A Revista ETER, 12 meses",
-        "uma edição nova toda semana — 52 no ano"
+        "A Revista ETER toda semana",
+        ""
       ],
       [
         "Acesso ao acervo completo",
-        "todas as edições, as novas e as anteriores, durante os 12 meses"
+        ""
       ],
       [
-        "A biblioteca de ferramentas",
-        "métodos e exercícios para aplicar imediatamente"
+        "Biblioteca de ferramentas",
+        ""
       ],
       [
-        "Encontros semanais ao vivo o ano inteiro",
-        "análise cultural, hotseat com os membros, convidado da ETER e hotseat com o Davi"
+        "Encontros semanais ao vivo",
+        ""
       ],
       [
-        "A comunidade Vanguarda — só no anual",
-        "plataforma fechada: grupos por nicho, fórum e a chance de virar colunista"
+        "Gravação de todos os encontros",
+        ""
       ],
       [
-        "O grupo de membros no WhatsApp — só no anual",
-        "conexão direta com os fundadores"
+        "Comunidade Vanguarda",
+        ""
       ],
       [
-        "Participação na curadoria — só no anual",
-        "bastidores, pauta das próximas edições e coautoria em conteúdos"
+        "Grupo de membros no WhatsApp",
+        ""
+      ],
+      [
+        "Participação na curadoria",
+        ""
       ]
     ]
   }

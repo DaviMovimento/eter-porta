@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241304') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241304') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241304') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241423') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241423') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241423') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2631,3 +2631,44 @@ html{background:var(--papel)}
   #oferta-dialog .mock-passe img, #mes-dialog .mock-passe img{max-height:9dvh}
   #oferta-dialog .oferta-chamada{display:block;font-size:.78rem}
 }
+
+
+/* ═══ O UPSELL, REDESENHADO ═══════════════════════════════════ */
+.rotulo-forte{
+  display:inline-block;font-size:.72rem !important;letter-spacing:.26em !important;
+  color:var(--papel) !important;background:var(--verde);
+  padding:.45rem .9rem;border-radius:2px;margin-bottom:.3rem;
+}
+
+/* a mesa de oferta: os entregáveis curtos, em duas colunas */
+.itens-curto{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:.45rem .9rem;
+}
+.itens-curto li{
+  font-size:.85rem;font-weight:600;color:var(--tinta);
+  padding-left:1rem;position:relative;line-height:1.35;
+}
+.itens-curto li::before{
+  content:"";position:absolute;left:.05rem;top:.45em;
+  width:.3rem;height:.3rem;border-radius:50%;background:var(--ouro);
+}
+@media (max-width:26rem){ .itens-curto{grid-template-columns:1fr} }
+.mesa-oferta{margin-bottom:.6rem}
+
+/* O PREÇO, UMA VEZ, GRANDE — abaixo dos entregáveis */
+.preco-unico{
+  text-align:center;margin:1.2rem 0 1.4rem;
+  display:flex;flex-direction:column;gap:.15rem;
+}
+.preco-unico .de{font-size:.9rem;color:var(--tinta-3)}
+.preco-unico .de s{color:var(--tinta-3)}
+.preco-unico .por{
+  font-family:var(--display);font-size:3.4rem;line-height:1;
+  color:var(--verde-preco);
+}
+.preco-unico .como{font-size:.8rem;color:var(--tinta-2);max-width:26rem;margin:0 auto}
+
+/* o mockup do upsell respira menos: a página é uma oferta, não um pôster */
+.papelada .mockup{margin:1.2rem 0 1.4rem}
+.papelada .mockup img{display:block;width:100%;height:auto;max-height:34dvh;object-fit:contain}
