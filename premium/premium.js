@@ -233,7 +233,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241452', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241458', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -327,7 +327,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241452"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241458"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -691,7 +691,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241452`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241458`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -708,7 +708,15 @@ function montarFundo() {
      gráfico, exercício —, as que provam que a revista entrega método e não
      opinião. Quem abre a ED005 vê os gráficos DA ED005. A página fala da
      edição que está vendendo, e de nenhuma outra. */
-  const provas = (EDICAO.destaques || []).filter(n => n <= TOTAL);
+  /* A REGRA VALE ATÉ NA VITRINE DO FUNDO: só o capítulo 1 aparece nítido.
+     Os destaques além dele saem; se sobrar pouco, as páginas de arte do
+     próprio capítulo 1 completam o quadro. */
+  const caps = EDICAO.capitulos || [];
+  const limite = caps[1] ? caps[1][1] - 1 : Math.max(4, Math.ceil(TOTAL / 3));
+  let provas = (EDICAO.destaques || []).filter(n => n <= TOTAL && n <= limite);
+  for (let n = 3; provas.length < 4 && n <= limite; n++) {
+    if (!provas.includes(n)) provas.push(n);
+  }
   if (!provas.length) return;
 
   /* O mesmo material, dois desenhos. No desktop sobra margem à esquerda e
@@ -1260,7 +1268,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241452"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241458"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
