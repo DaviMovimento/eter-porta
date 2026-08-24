@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241201') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241201') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241201') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241221') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241221') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241221') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2564,3 +2564,48 @@ body.lendo{background:#0F0C09}
    mostrava o branco do <html> além das bordas. O html veste o papel da
    casa; na leitura, o JavaScript o escurece. */
 html{background:var(--papel)}
+
+/* ═══ O POPUP ÚNICO DO PASSE, NUMA DOBRA ══════════════════════
+   Mockup, oferta, três campos e o botão — tudo visível sem rolar num
+   celular de 812px. Os campos são compactos: sem rótulo em cima (o
+   placeholder diz o que é) e com a régua fina da casa. */
+.oferta-campos{display:flex;flex-direction:column;gap:.35rem;margin:.2rem 0 .1rem}
+.oferta-campos .campo{margin:0}
+.oferta-campos .campo input[type="text"],
+.oferta-campos .campo input[type="email"],
+.oferta-campos .campo input[type="tel"]{
+  width:100%;font-size:.92rem;padding:.42rem .1rem;
+  background:transparent;border:0;border-bottom:1px solid var(--linha-2);
+  color:var(--tinta);
+}
+.oferta-campos .campo input:focus{outline:0;border-bottom-color:var(--ouro)}
+.oferta-campos .campo .msg{display:none;font-size:.66rem;color:var(--erro,#B3261E)}
+.oferta-campos .campo.erro .msg{display:block}
+.oferta-campos .campo.erro input{border-bottom-color:var(--erro,#B3261E)}
+.oferta-campos .consent{
+  display:flex;gap:.5rem;align-items:flex-start;
+  font-size:.62rem;line-height:1.38;color:var(--tinta-3);margin-top:.25rem;
+}
+.oferta-campos .consent input{margin-top:.15rem;flex:0 0 auto}
+.oferta-campos .consent a{color:var(--ouro-texto)}
+
+/* a saída anual: presente, discreta, embaixo do botão */
+.oferta-anual{
+  display:block;text-align:center;margin-top:.55rem;
+  font-size:.72rem;line-height:1.4;color:var(--tinta-3);
+  text-decoration:underline;text-underline-offset:2px;
+}
+.oferta-anual:hover{color:var(--ouro-texto)}
+
+/* com os campos dentro, o quadro aperta o resto um degrau */
+#oferta-dialog .painel.oferta, #mes-dialog .painel.oferta{gap:.42rem}
+#oferta-dialog .mock-passe img{max-height:clamp(5rem,17dvh,10rem)}
+#oferta-dialog .oferta-itens{flex-direction:row;flex-wrap:wrap;gap:.2rem .8rem;justify-content:center}
+#oferta-dialog .oferta-itens li{padding-left:.85rem;font-size:.72rem}
+#oferta-dialog .oferta-itens li::before{top:.42em}
+#oferta-dialog .oferta-chamada{font-size:.84rem;margin-bottom:0}
+#oferta-dialog .oferta-rot{text-align:center}
+@media (max-height:44rem){
+  #oferta-dialog .mock-passe{display:none}
+  #oferta-dialog .oferta-chamada{display:block}
+}

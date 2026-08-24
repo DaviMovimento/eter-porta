@@ -198,6 +198,14 @@ function irParaCheckout(origem) {
   seguir(origem);
 }
 
+function seguirSemLead(origem) {
+  const destino = linkCheckout(origem);
+  evento('foi_ao_checkout', { origem });
+  despachar();
+  if (CFG.checkoutPasse.includes('SEU-CHECKOUT')) { alert('Checkout não configurado.\n\n' + destino); return; }
+  location.href = destino;
+}
+
 function seguir(origem) {
   const destino = linkCheckout(origem);
   evento('foi_ao_checkout', { origem });
@@ -225,7 +233,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241201', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241221', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -319,7 +327,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241201"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241221"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -397,42 +405,115 @@ function montarChegada() {
    e só então o botão que leva ao checkout. É a mesma ordem da página, em
    um quadro só, para quem decidiu antes de rolar. */
 function abrirOferta(origem) {
+  /* ═══ UM POPUP SÓ ═══════════════════════════════════════════
+     Eram dois quadros em fila — a oferta e depois o formulário — dizendo
+     quase a mesma coisa. Agora é um: mockup, o que o passe entrega, os
+     três campos e o botão que vai ao pagamento, tudo numa dobra. Quem já
+     se cadastrou não vê campo nenhum: só a oferta e o botão. */
   let cx = $('#oferta-dialog');
   if (!cx) {
     cx = document.createElement('dialog');
     cx.id = 'oferta-dialog';
     cx.innerHTML = `
-      <div class="painel oferta">
+      <form class="painel oferta" id="oferta-form" novalidate>
         <button type="button" class="fechar" data-fecha="oferta-dialog" aria-label="Fechar">×</button>
-        <img class="marca-oferta" src="${CASA}logo.webp"
-          alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608241201"
-            alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
+          <img src="${CASA}mockup-assinatura.webp"
+            alt="Tudo que o passe abre" width="794" height="485" decoding="async">
         </figure>
-        <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
         <p class="oferta-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}
           <b>${CFG.precoPasse}</b></p>
+        <p class="oferta-chamada">30 dias de acesso total. Não renova: cobrança única.</p>
         <ul class="oferta-itens">
-          ${PASSE.itens.map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('')}
+          ${PASSE.itens.map(([a]) => `<li><b>${a}</b></li>`).join('')}
         </ul>
-        <button class="btn btn-passe" data-passe="oferta">${COPY_CASA.passeTit}</button>
-        <p class="oferta-pe">${PASSE.condicao || ''}</p>
-      </div>`;
+        <div class="oferta-campos" id="oferta-campos">
+          <div class="campo" id="oc-nome">
+            <input id="of-nome" type="text" autocomplete="given-name" placeholder="Seu nome" enterkeyhint="next" aria-label="Seu nome">
+            <span class="msg" role="alert">Escreva seu nome.</span>
+          </div>
+          <div class="campo" id="oc-mail">
+            <input id="of-mail" type="email" autocomplete="email" placeholder="Seu melhor e-mail" enterkeyhint="next" aria-label="Seu melhor e-mail">
+            <span class="msg" role="alert">Escreva um e-mail válido.</span>
+          </div>
+          <div class="campo" id="oc-zap">
+            <input id="of-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="WhatsApp com DDD" enterkeyhint="go" aria-label="WhatsApp com DDD">
+            <span class="msg" role="alert">Precisa ter DDD e 8 ou 9 dígitos.</span>
+          </div>
+          <div class="campo" id="oc-ok">
+            <label class="consent">
+              <input type="checkbox" id="of-ok">
+              <span>Autorizo a <b>ETER</b> a me enviar a edição, comunicações e ofertas por
+              WhatsApp e e-mail. Saio quando quiser respondendo <b>SAIR</b>.
+              <a href="${CASA.replace('premium/', '')}privacidade.html" target="_blank" rel="noopener">Privacidade</a>.</span>
+            </label>
+            <span class="msg" role="alert">Precisamos da sua autorização.</span>
+          </div>
+        </div>
+        <button class="btn btn-passe" id="oferta-seguir" type="submit">ASSINAR O PASSE — ${CFG.precoPasse}</button>
+        <a class="oferta-anual" id="oferta-anual" href="#">Prefere o ano inteiro? Assinatura anual — ${CFG.precoAnual} à vista ou ${CFG.parcelaAnual || '12× de R$87,90'}</a>
+      </form>`;
     document.body.append(cx);
     cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
-    /* o botão da caixa é o único que segue para o pagamento; os de fora
-       abrem a caixa. Ele precisa de listener próprio E de parar o clique,
-       senão o delegado do body reabre a caixa por cima. */
-    cx.querySelector('[data-passe]').addEventListener('click', ev => {
-      ev.stopPropagation();
-      cx.close();
-      irParaCheckout('oferta');
-    });
     cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
     cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
+
+    const zap = cx.querySelector('#of-zap');
+    zap.addEventListener('input', () => {
+      const d = zap.value.replace(/\D/g, '').slice(0, 11);
+      zap.value = d.length <= 2 ? d
+        : d.length <= 7 ? `(${d.slice(0, 2)}) ${d.slice(2)}`
+        : `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+      cx.querySelector('#oc-zap').classList.remove('erro');
+    });
+
+    cx.querySelector('#oferta-form').addEventListener('submit', ev => {
+      ev.preventDefault(); ev.stopPropagation();
+      const orig = cx.dataset.origem || 'oferta';
+      if (jaCapturado()) { cx.close(); seguir(orig); return; }
+      const v = id => cx.querySelector(id).value.trim();
+      const erra = (id, sim) => cx.querySelector(id).classList.toggle('erro', sim);
+      const nome = v('#of-nome'), mail = v('#of-mail');
+      const dig = v('#of-zap').replace(/\D/g, '');
+      erra('#oc-nome', !nome);
+      erra('#oc-mail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
+      erra('#oc-zap', !(dig.length === 10 || dig.length === 11));
+      erra('#oc-ok', !cx.querySelector('#of-ok').checked);
+      if (cx.querySelector('.campo.erro')) return;
+      const lead = {
+        nome, email: mail, whatsapp: '55' + dig,
+        edicao: '', onde: `checkout-${orig}`,
+        jornaleiro: url.get('j') || null, ms: url.get('ms') || null,
+        utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
+        pagina: paginaAtual || 0, referrer: document.referrer || '', em: new Date().toISOString(),
+      };
+      localStorage.setItem(CHAVE_LEAD, JSON.stringify(lead));
+      evento('virou_lead', { onde: lead.onde });
+      /* keepalive: a gravação sobrevive à troca de página para o checkout */
+      if (CFG.webhookLead) try {
+        fetch(CFG.webhookLead, { method: 'POST', keepalive: true,
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(lead) });
+      } catch (e) {}
+      cx.close();
+      seguirSemLead(orig);
+    });
+
+    cx.querySelector('#oferta-anual').addEventListener('click', ev => {
+      ev.preventDefault();
+      evento('clicou_anual', { origem: cx.dataset.origem || 'oferta' });
+      const u = new URL(CFG.checkoutAnual);
+      u.searchParams.set('src', `ed${EDICAO.n}`);
+      const j = url.get('j');
+      u.searchParams.set('sck', j ? `anual-${j}` : 'anual');
+      for (const [k, vv] of Object.entries(utmsDaUrl())) u.searchParams.set(k, vv);
+      location.href = u;
+    });
   }
+  /* quem já deu os dados não os dá de novo */
+  cx.querySelector('#oferta-campos').hidden = jaCapturado();
+  cx.dataset.origem = origem;
   cx.showModal();
+  setTimeout(() => { if (!jaCapturado()) cx.querySelector('#of-nome').focus(); }, 120);
   evento('abriu_oferta', { origem });
 }
 
@@ -622,7 +703,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241201`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241221`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1157,7 +1238,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241201"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241221"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

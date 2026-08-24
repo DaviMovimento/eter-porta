@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = async () => D ||
-    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241201`)).json());
+    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241221`)).json());
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -36,7 +36,12 @@
     return u.toString();
   }
 
-  /* ── a caixa da oferta ──────────────────────────────────────── */
+  /* ── a caixa da oferta: um popup só, com o formulário dentro ── */
+  const capturado = () => {
+    try { const l = JSON.parse(localStorage.getItem('eter_lead') || 'null');
+          return !!(l && l.nome && l.email && l.whatsapp); } catch (e) { return false; }
+  };
+
   async function abrirOferta(origem) {
     const d = await catalogo();
     const C = d.config, P = d.passe;
@@ -45,130 +50,108 @@
       cx = document.createElement('dialog');
       cx.id = 'oferta-dialog';
       cx.innerHTML = `
-        <div class="painel oferta">
+        <form class="painel oferta" id="oferta-form" novalidate>
           <button type="button" class="fechar" aria-label="Fechar">×</button>
-          <img class="marca-oferta" src="${CASA}logo.webp" alt="ETER" width="900" height="240">
           <figure class="mock-passe">
-            <img src="${CASA}mockup-assinatura.webp" alt="Tudo que você acessa"
+            <img src="${CASA}mockup-assinatura.webp" alt="Tudo que o passe abre"
               width="794" height="485" decoding="async">
           </figure>
-          <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
           <p class="oferta-rot">${pontos(P.rotulo.replace('Passe ETER · ', 'Passe · '))}
             <b>${C.precoPasse}</b></p>
+          <p class="oferta-chamada">30 dias de acesso total. Não renova: cobrança única.</p>
           <ul class="oferta-itens">
-            ${P.itens.map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('')}
+            ${P.itens.map(([a]) => `<li><b>${a}</b></li>`).join('')}
           </ul>
-          <button class="btn btn-passe" id="oferta-seguir">ADQUIRIR O PASSE</button>
-          <p class="oferta-pe">${P.condicao || ''}</p>
-        </div>`;
+          <div class="oferta-campos" id="oferta-campos">
+            <div class="campo" id="oc-nome">
+              <input id="of-nome" type="text" autocomplete="given-name" placeholder="Seu nome" aria-label="Seu nome">
+              <span class="msg" role="alert">Escreva seu nome.</span>
+            </div>
+            <div class="campo" id="oc-mail">
+              <input id="of-mail" type="email" autocomplete="email" placeholder="Seu melhor e-mail" aria-label="Seu melhor e-mail">
+              <span class="msg" role="alert">Escreva um e-mail válido.</span>
+            </div>
+            <div class="campo" id="oc-zap">
+              <input id="of-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="WhatsApp com DDD" aria-label="WhatsApp com DDD">
+              <span class="msg" role="alert">Precisa ter DDD e 8 ou 9 dígitos.</span>
+            </div>
+            <div class="campo" id="oc-ok">
+              <label class="consent">
+                <input type="checkbox" id="of-ok">
+                <span>Autorizo a <b>ETER</b> a me enviar a edição, comunicações e ofertas por
+                WhatsApp e e-mail. Saio quando quiser respondendo <b>SAIR</b>.
+                <a href="${RAIZ}privacidade/" target="_blank" rel="noopener">Privacidade</a>.</span>
+              </label>
+              <span class="msg" role="alert">Precisamos da sua autorização.</span>
+            </div>
+          </div>
+          <button class="btn btn-passe" id="oferta-seguir" type="submit">ASSINAR O PASSE — ${C.precoPasse}</button>
+          <a class="oferta-anual" id="oferta-anual" href="#">Prefere o ano inteiro? Assinatura anual — ${C.precoAnual} à vista ou ${C.parcelaAnual || '12× de R$87,90'}</a>
+        </form>`;
       document.body.append(cx);
       cx.querySelector('.fechar').addEventListener('click', () => cx.close());
       cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
-      cx.querySelector('#oferta-seguir').addEventListener('click', () => {
-        cx.close();
-        pedirDados(origem);
-      });
       cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
-    }
-    cx.dataset.origem = origem;
-    cx.showModal();
-    (window.dataLayer = window.dataLayer || []).push({ event: 'abriu_oferta', origem, pagina: PAGINA });
-  }
 
-  /* ── o formulário, entre a decisão e o pagamento ────────────── */
-  async function pedirDados(origem) {
-    const d = await catalogo();
-    const C = d.config;
-    let fx = document.getElementById('form-dialog');
-    if (!fx) {
-      fx = document.createElement('dialog');
-      fx.id = 'form-dialog';
-      fx.innerHTML = `
-        <form class="form" id="form-casa" novalidate>
-          <button type="button" class="fechar" aria-label="Fechar">×</button>
-          <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
-          <h2>Para onde mandamos seu acesso?</h2>
-          <p class="dek2">Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.</p>
-          <div class="campo" id="c-nome">
-            <label for="f-nome">Seu nome</label>
-            <input id="f-nome" type="text" autocomplete="given-name" placeholder="Como te chamam" enterkeyhint="next">
-            <span class="msg" role="alert">Escreva seu nome.</span>
-          </div>
-          <div class="campo" id="c-mail">
-            <label for="f-mail">Seu melhor e-mail</label>
-            <input id="f-mail" type="email" autocomplete="email" placeholder="voce@email.com" enterkeyhint="next">
-            <span class="msg" role="alert">Escreva um e-mail válido.</span>
-          </div>
-          <div class="campo" id="c-zap">
-            <label for="f-zap">WhatsApp com DDD</label>
-            <input id="f-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 90000-0000" enterkeyhint="go">
-            <span class="msg" role="alert">Precisa ter DDD e 8 ou 9 dígitos.</span>
-          </div>
-          <div class="campo" id="c-ok">
-            <label class="consent">
-              <input type="checkbox" id="f-ok">
-              <span>Autorizo a <b>ETER</b> a me enviar comunicações sobre a revista e
-              <b>ofertas</b>, por WhatsApp e e-mail. Saio quando quiser respondendo
-              <b>SAIR</b>. <a href="${RAIZ}privacidade/" target="_blank" rel="noopener">Privacidade</a>.</span>
-            </label>
-            <span class="msg" role="alert">Precisamos da sua autorização.</span>
-          </div>
-          <button class="btn btn-passe" id="btn-enviar" type="submit">Continuar para o pagamento</button>
-        </form>`;
-      document.body.append(fx);
-      fx.querySelector('.fechar').addEventListener('click', () => fx.close());
-      fx.addEventListener('click', ev => { if (ev.target === fx) fx.close(); });
-
-      /* a máscara do telefone, a mesma régua da página de edição */
-      const zap = fx.querySelector('#f-zap');
+      const zap = cx.querySelector('#of-zap');
       zap.addEventListener('input', () => {
-        const d = zap.value.replace(/\D/g, '').slice(0, 11);
-        zap.value = d.length > 6 ? `(${d.slice(0, 2)}) ${d.slice(2, -4)}-${d.slice(-4)}`
-                  : d.length > 2 ? `(${d.slice(0, 2)}) ${d.slice(2)}` : d;
+        const dg = zap.value.replace(/\D/g, '').slice(0, 11);
+        zap.value = dg.length <= 2 ? dg
+          : dg.length <= 7 ? `(${dg.slice(0, 2)}) ${dg.slice(2)}`
+          : `(${dg.slice(0, 2)}) ${dg.slice(2, 7)}-${dg.slice(7)}`;
+        cx.querySelector('#oc-zap').classList.remove('erro');
       });
 
-      fx.querySelector('#form-casa').addEventListener('submit', async ev => {
+      cx.querySelector('#oferta-form').addEventListener('submit', ev => {
         ev.preventDefault();
-        const v = id => fx.querySelector(id).value.trim();
-        const erra = (id, sim) => fx.querySelector(id).classList.toggle('erro', sim);
-        const nome = v('#f-nome'), mail = v('#f-mail');
-        const dig = v('#f-zap').replace(/\D/g, '');
-        const ok = fx.querySelector('#f-ok').checked;
-        erra('#c-nome', !nome);
-        erra('#c-mail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
-        erra('#c-zap', !(dig.length === 10 || dig.length === 11));
-        erra('#c-ok', !ok);
-        if (fx.querySelector('.campo.erro')) return;
-
-        const bt = fx.querySelector('#btn-enviar');
-        bt.disabled = true; bt.textContent = 'Abrindo o pagamento…';
+        const orig = cx.dataset.origem || 'oferta';
+        const irAoCheckout = () => { cx.close(); location.href = linkCheckout(C, orig); };
+        if (capturado()) { 
+          (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem: orig, pagina: PAGINA });
+          irAoCheckout(); return;
+        }
+        const v = id => cx.querySelector(id).value.trim();
+        const erra = (id, sim) => cx.querySelector(id).classList.toggle('erro', sim);
+        const nome = v('#of-nome'), mail = v('#of-mail');
+        const dig = v('#of-zap').replace(/\D/g, '');
+        erra('#oc-nome', !nome);
+        erra('#oc-mail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
+        erra('#oc-zap', !(dig.length === 10 || dig.length === 11));
+        erra('#oc-ok', !cx.querySelector('#of-ok').checked);
+        if (cx.querySelector('.campo.erro')) return;
         const p = busca();
         const lead = {
-          nome, email: mail, whatsapp: '55' + dig,
-          edicao: '',                       /* comprar não consome a edição do mês */
-          onde: `checkout-${PAGINA}-${fx.dataset.origem || 'oferta'}`,
+          nome, email: mail, whatsapp: '55' + dig, edicao: '',
+          onde: `checkout-${PAGINA}-${orig}`,
           jornaleiro: p.get('j') || null, ms: p.get('ms') || null,
           utm_source: p.get('utm_source') || '', utm_medium: p.get('utm_medium') || '',
           utm_campaign: p.get('utm_campaign') || '',
           pagina: 0, referrer: document.referrer || '', em: new Date().toISOString(),
         };
-        /* o lead vai ANTES do redirecionamento: quem abandonar o checkout
-           fica na planilha, que é o público da recuperação */
-        try {
-          if (C.webhookLead) await fetch(C.webhookLead, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(lead),
-          });
-        } catch (e) { /* a venda não espera a planilha */ }
         try { localStorage.setItem('eter_lead', JSON.stringify(lead)); } catch (e) {}
-        (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem: fx.dataset.origem, pagina: PAGINA });
-        location.href = linkCheckout(C, fx.dataset.origem || 'oferta');
+        if (C.webhookLead) try {
+          fetch(C.webhookLead, { method: 'POST', keepalive: true,
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(lead) });
+        } catch (e) {}
+        (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem: orig, pagina: PAGINA });
+        irAoCheckout();
+      });
+
+      cx.querySelector('#oferta-anual').addEventListener('click', ev => {
+        ev.preventDefault();
+        const p = busca(); const j = p.get('j');
+        const u = new URL(C.checkoutAnual);
+        u.searchParams.set('src', PAGINA);
+        u.searchParams.set('sck', j ? `anual-${j}` : 'anual');
+        for (const [k, vv] of p) if (k.startsWith('utm_')) u.searchParams.set(k, vv);
+        location.href = u;
       });
     }
-    fx.dataset.origem = origem;
-    fx.showModal();
-    setTimeout(() => fx.querySelector('#f-nome').focus(), 120);
+    cx.querySelector('#oferta-campos').hidden = capturado();
+    cx.dataset.origem = origem;
+    cx.showModal();
+    setTimeout(() => { if (!capturado()) cx.querySelector('#of-nome').focus(); }, 120);
+    (window.dataLayer = window.dataLayer || []).push({ event: 'abriu_oferta', origem, pagina: PAGINA });
   }
 
   window.abrirOfertaCasa = abrirOferta;
