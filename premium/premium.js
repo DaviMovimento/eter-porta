@@ -235,7 +235,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241259', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241304', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -329,7 +329,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241259"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241304"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -693,7 +693,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241259`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241304`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1231,7 +1231,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241259"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241304"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

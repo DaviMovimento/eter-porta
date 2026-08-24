@@ -8,8 +8,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
 <link rel="apple-touch-icon" href="../premium/favicon-180.png">
 <meta name="theme-color" content="#F2EEE6">
-<script defer src="../premium/calor.js?v=202608241259"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202608241259">
+<script defer src="../premium/calor.js?v=202608241304"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202608241304">
 </head>
 <body class="pagina">
 
@@ -54,7 +54,7 @@
   </section>
 
   <figure class="mockup">
-    <img src="../premium/mockup-assinatura.webp?v=202608241259" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+    <img src="../premium/mockup-assinatura.webp?v=202608241304" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
       width="794" height="485" decoding="async">
   </figure>
 
@@ -93,12 +93,13 @@
 
   document.getElementById('btn-nao').addEventListener('click', e => {
     e.preventDefault();
-    location.href = 'confirmado.html';
+    /* absoluto: o relativo quebrava dentro da pasta /assinatura-anual/ */
+    location.href = '/revista/confirmado/';
   });
 
   let c;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608241259')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608241304')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -117,7 +118,7 @@
   /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
      lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
   try {
-    const cat = await (await fetch('../edicoes.json?v=202608241259')).json();
+    const cat = await (await fetch('../edicoes.json?v=202608241304')).json();
     const its = (cat.assinatura && cat.assinatura.itens) || [];
     const ul = document.getElementById('itens-assinatura');
     if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>
