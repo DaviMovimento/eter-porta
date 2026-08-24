@@ -152,7 +152,7 @@ const leadSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_LEA
    sempre, o cadastro feito depois do reset nunca colaria e a pessoa levaria
    o popup na cara de novo. */
 if (url.get('reset') === '1') {
-  localStorage.removeItem(CHAVE_LEAD);
+  Object.keys(localStorage).filter(k => k.startsWith('eter_')).forEach(k => localStorage.removeItem(k));
   /* tira o parâmetro da barra: senão cada recarga limpa de novo e o cadastro
      feito depois do reset nunca cola */
   const limpa = new URL(location.href); limpa.searchParams.delete('reset');
@@ -192,7 +192,7 @@ function linkCheckout(origem) {
 function irParaCheckout(origem) {
   evento('clicou_passe', { origem, pagina: paginaAtual, profundidade: pct() });
   if (CFG.capturaAntesDoCheckout !== false && !jaCapturado()) {
-    pedirDados(`checkout-${origem}`, () => seguir(origem));
+    pedirDados(`checkout-${origem}`, () => seguirSemLead(origem));
     return;
   }
   seguir(origem);
@@ -233,7 +233,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241439', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241452', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -327,7 +327,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241439"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241452"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -346,7 +346,7 @@ function montarChegada() {
   if (!TOTAL) {
     $('#btn-ler').disabled = true;
     $('#btn-ler').firstChild.textContent = 'Em breve';
-    $('#sub-ler').textContent = 'esta edição ainda não foi publicada';
+    const _sl = $('#sub-ler'); if (_sl) _sl.textContent = 'esta edição ainda não foi publicada';
   }
 
   /* a capa de cada edição na lista: dá para escolher pelo que se vê,
@@ -454,7 +454,7 @@ function abrirOferta(origem) {
       </form>`;
     document.body.append(cx);
     cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
-    cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
+    cx.addEventListener('click', ev => { if (ev.target === cx && backdropValido(cx)) cx.close(); });
     cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
 
     const zap = cx.querySelector('#of-zap');
@@ -500,7 +500,7 @@ function abrirOferta(origem) {
   /* quem já deu os dados não os dá de novo */
   cx.querySelector('#oferta-campos').hidden = jaCapturado();
   cx.dataset.origem = origem;
-  if (!cx.open) cx.showModal();
+  abrirDialogo(cx);
   setTimeout(() => { if (!jaCapturado()) cx.querySelector('#of-nome').focus(); }, 120);
   evento('abriu_oferta', { origem });
 }
@@ -691,7 +691,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241439`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241452`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1095,7 +1095,8 @@ function montarEspiada() {
   legendar();
 
   if (!jaCapturado() && limiteEspiada < TOTAL) {
-    $('#dica-faixa').innerHTML = '';
+    /* a dica certa já foi decidida por estado de captura na montagem;
+       apagar aqui silenciava o convite ao visitante novo */
   }
 }
 
@@ -1118,7 +1119,33 @@ function abrirNaPagina(n) {
 /* ═══ TELA 2 · A LEITURA ═══════════════════════════════════════ */
 let montado = false;
 
+function consumirEdicao() {
+  /* a escolha do mês se gasta quando a leitura de fato abre. Uma vez por
+     edição por aparelho; o script antigo ignora a ação (vira linha de
+     log), o novo grava — o deploy fica seguro nos dois mundos. */
+  try {
+    const marca = 'eter_consumiu_' + EDICAO.n;
+    if (localStorage.getItem(marca)) return;
+    const l = leadSalvo(); const ms = url.get('ms') || '';
+    if (!CFG.webhookLead || (!l && !ms)) return;
+    localStorage.setItem(marca, '1');
+    fetch(CFG.webhookLead, {
+      method: 'POST', keepalive: true,
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ acao: 'consumir', email: l?.email, whatsapp: l?.whatsapp, ms, edicao: EDICAO.n }),
+    });
+  } catch (e) {}
+}
+
+function abrirDialogo(d) {
+  if (!d || d.open) return;
+  d.dataset.abriuEm = String(Date.now());
+  d.showModal();
+}
+const backdropValido = d => Date.now() - (+d.dataset.abriuEm || 0) > 500;
+
 function abrirLeitura() {
+  consumirEdicao();
   /* o zoom arrastado revela o que estiver atrás do papel: pinta o <html>
      da cor da leitura para nunca aparecer um vão branco */
   document.documentElement.style.background = '#0F0C09';
@@ -1233,7 +1260,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241439"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241452"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1299,7 +1326,6 @@ function observar() {
       if (p <= maximaLida) continue;
       maximaLida = p;
       clearTimeout(guardando);
-      guardando = setTimeout(() => localStorage.setItem(posChave(EDICAO.n), maximaLida), 700);
       for (const m of [...marcos]) if (pct() >= m) { marcos.delete(m); evento('leu_ate', { porcento: m, pagina: p }); }
     }
   }, { rootMargin: '-45% 0px -45% 0px' });
@@ -1476,7 +1502,7 @@ function mostrarPorteiro(v) {
   $('#mes-voltar').hidden = !v.edicaoEmCurso;
   $('#mes-voltar').textContent = v.edicaoEmCurso ? `Voltar para a ED${v.edicaoEmCurso}` : 'Voltar';
   $('#mes-dialog').dataset.edicao = v.edicaoEmCurso || '';
-  if (!$('#mes-dialog').open) $('#mes-dialog').showModal();
+  if (!$('#mes-dialog').open) abrirDialogo($('#mes-dialog'));
   evento('bateu_no_porteiro', { edicaoEmCurso: v.edicaoEmCurso || null, dias: dias || null });
 }
 
@@ -1541,7 +1567,7 @@ function pedirDados(onde, depois = null) {
     : `Preencha o formulário abaixo para liberar a ED ${EDICAO.n} na íntegra.`;
   $('#btn-enviar').textContent = bt;
   $('#form-dialog').dataset.onde = onde;
-  $('#form-dialog').showModal();
+  abrirDialogo($('#form-dialog'));
   setTimeout(() => $('#f-nome').focus(), 120);
   evento('viu_formulario', { onde });
   return false;
@@ -1634,12 +1660,18 @@ async function enviar(e) {
   }) : Promise.resolve(null);
 
   envio.then(veredito => {
-    if (veredito) localStorage.setItem(CHAVE_MES, JSON.stringify({
+    /* o veredito de um cadastro de COMPRA (edicao vazia) não é um veredito
+       de leitura: cacheá-lo furava o porteiro por dez minutos */
+    if (veredito && !paraComprar) localStorage.setItem(CHAVE_MES, JSON.stringify({
       edicao: EDICAO.n, quem: lead.email, veredito, ate: Date.now() + 6e5,
     }));
     /* a leitura já está aberta; só a negativa interrompe */
     if (veredito && !veredito.liberado && !paraComprar) { voltar(); mostrarPorteiro(veredito); }
   });
+
+  /* a resposta deste envio JÁ é o veredito do porteiro: registrar como
+     consulta em voo evita o segundo POST em paralelo no Apps Script frio */
+  if (!paraComprar) porteiroEmVoo = { edicao: EDICAO.n, promessa: envio.then(v => v || { liberado: true }) };
 
   if (aoTerminar) { const f = aoTerminar; aoTerminar = null; f(); return; }
   abrirLeitura();
@@ -1668,7 +1700,7 @@ function ligar() {
     jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora);
   });
   $('#btn-voltar').addEventListener('click', voltar);
-  $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });
+  $('#btn-sumario').addEventListener('click', () => { abrirDialogo($('#sumario-dialog')); evento('abriu_sumario', { pagina: paginaAtual }); });
   const abrirAcervo = e => { e.preventDefault(); $('#acervo-dialog').showModal(); evento('abriu_acervo'); };
   $('#ver-edicoes').addEventListener('click', abrirAcervo);
   $('#nav-acervo').addEventListener('click', abrirAcervo);
@@ -1720,7 +1752,7 @@ function ligar() {
       const r = d.getBoundingClientRect();
       const fora = ev.clientX < r.left || ev.clientX > r.right
                 || ev.clientY < r.top  || ev.clientY > r.bottom;
-      if (fora) d.close();
+      if (fora) backdropValido(d) && d.close();
     });
   });
 

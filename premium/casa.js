@@ -15,8 +15,8 @@
   const PAGINA = document.body.classList.contains('biblioteca') ? 'biblioteca' : 'home';
 
   let D = null;
-  const catalogo = async () => D ||
-    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241439`)).json());
+  const catalogo = () => D ||
+    (D = fetch(`${RAIZ}edicoes.json?v=202608241452`).then(r => r.json()));
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -96,7 +96,9 @@
         </form>`;
       document.body.append(cx);
       cx.querySelector('.fechar').addEventListener('click', () => cx.close());
-      cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
+      cx.addEventListener('click', ev => {
+        if (ev.target === cx && Date.now() - (+cx.dataset.abriuEm || 0) > 500) cx.close();
+      });
       cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
 
       const zap = cx.querySelector('#of-zap');
@@ -149,7 +151,7 @@
     cx.querySelector('#oferta-campos').hidden = capturado();
     cx.classList.toggle('so-form', !!direto);
     cx.dataset.origem = origem;
-    if (!cx.open) cx.showModal();
+    if (!cx.open) { cx.dataset.abriuEm = String(Date.now()); cx.showModal(); }
     setTimeout(() => { if (!capturado()) cx.querySelector('#of-nome').focus(); }, 120);
     (window.dataLayer = window.dataLayer || []).push({ event: 'abriu_oferta', origem, pagina: PAGINA });
   }
