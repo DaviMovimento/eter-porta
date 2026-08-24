@@ -13,6 +13,14 @@
    página está. currentScript só existe enquanto o arquivo avalia: por isso
    guardo agora, não depois. */
 const ONDE_MORO = document.currentScript?.src || location.href;
+/* A PASTA DOS ATIVOS DA CASA, em endereço absoluto. O código escolhia o
+   prefixo perguntando se ONDE_MORO continha '/premium/' — e como ele é o
+   src do PRÓPRIO script, que mora em premium/, a resposta era sempre sim
+   e o caminho saía relativo à PÁGINA. Em /revista/007/ isso virava
+   /revista/007/logo.webp: a logo e o mockup da caixa da oferta nunca
+   apareceram em nenhuma página de edição. Derivar da URL do script
+   acerta em todas as pastas de uma vez. */
+const CASA = ONDE_MORO.replace(/[^/]*$/, '');
 
 const $ = s => document.querySelector(s);
 
@@ -283,7 +291,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp?v=202608232106"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232109"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -359,12 +367,12 @@ function abrirOferta(origem) {
     cx.innerHTML = `
       <div class="painel oferta">
         <button type="button" class="fechar" data-fecha="oferta-dialog" aria-label="Fechar">×</button>
-        <img class="marca-oferta" src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}logo.webp"
+        <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <p class="oferta-lede">${COPY_CASA.apresenta}</p>
         <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
         <figure class="mock-passe">
-          <img src="${ONDE_MORO.includes('/premium/') ? '' : 'premium/'}mockup-assinatura.webp?v=202608232106"
+          <img src="${CASA}mockup-assinatura.webp?v=202608232109"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <figure class="oferta-capas">
@@ -559,7 +567,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232106`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232109`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1022,7 +1030,7 @@ function blocoMeio() {
   const d = document.createElement('div');
   d.className = 'intervalo';
   d.innerHTML = `
-    <img class="mono" src="monograma.webp" alt="" width="256" height="256">
+    <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
     <p class="rot">Um intervalo</p>
     <h3>Toda semana nasce uma <em>nova</em></h3>
     <p>Esta você lê inteira, de graça. O passe abre as próximas quatro, os encontros ao vivo e o acervo completo — e você segue lendo esta aqui do mesmo jeito.</p>
@@ -1034,13 +1042,13 @@ function blocoFim() {
   const d = document.createElement('div');
   d.className = 'intervalo';
   d.innerHTML = `
-    <img class="mono" src="monograma.webp" alt="" width="256" height="256">
+    <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
     <p class="rot">Contracapa</p>
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
     <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="../premium/mockup-assinatura.webp?v=202608232106"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232109"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1535,7 +1543,7 @@ iniciar().catch(err => {
      é a página dizendo que desistiu. */
   document.body.innerHTML = `
     <div class="tombo">
-      <img src="${ONDE_MORO.replace(/[^/]*$/, '')}monograma.webp" alt="">
+      <img src="${CASA}monograma.webp" alt="">
       <h2>A revista não abriu</h2>
       <p>Alguma coisa entre você e a gente falhou no caminho. Não é você — e não custa tentar de novo.</p>
       <button class="btn btn-passe" onclick="location.reload()">Tentar de novo</button>
