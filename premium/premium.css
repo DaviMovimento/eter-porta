@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232100') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232100') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232100') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232103') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232103') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232103') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2304,3 +2304,22 @@ body.inicio,body.biblioteca{background:var(--papel)}
 .biblioteca .papelada h1{max-width:10.5em}
 .biblioteca .papelada h1 em{font-size:1.5em;line-height:.7}
 .biblioteca .papelada .dek{max-width:27rem}
+
+/* A PRATELEIRA NO CELULAR VIRA CARROSSEL. Oito capas num tamanho que se
+   lê não cabem em 375px: centralizadas, sobravam para os dois lados e a
+   pessoa só via cinco, com a última cortada — parecendo defeito. Agora a
+   faixa sangra de ponta a ponta e ROLA: as capas ficam maiores e todas
+   as oito continuam alcançáveis. A folga vertical existe porque o
+   overflow horizontal também corta em cima e embaixo, e as capas são
+   giradas. */
+@media (max-width:59.99rem){
+  .capa-inicio .prateleira{
+    width:100vw;margin-inline:calc(50% - 50vw);
+    justify-content:flex-start;overflow-x:auto;overscroll-behavior-x:contain;
+    padding:1.1rem 1.4rem 1.3rem;scrollbar-width:none;
+    scroll-snap-type:x proximity;
+  }
+  .capa-inicio .prateleira::-webkit-scrollbar{display:none}
+  .capa-inicio .lombada-capa{width:6.6rem;scroll-snap-align:center}
+  .capa-inicio .lombada-capa+.lombada-capa{margin-left:-1.6rem}
+}
