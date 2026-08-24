@@ -13,6 +13,23 @@
    página está. currentScript só existe enquanto o arquivo avalia: por isso
    guardo agora, não depois. */
 const ONDE_MORO = document.currentScript?.src || location.href;
+/* o vigia de versão: o celular guarda HTML velho por dias; aqui a página
+   compara a própria versão com a do servidor e se recarrega UMA vez */
+(() => {
+  try {
+    const minha = (ONDE_MORO.match(/[?&]v=(\d+)/) || [])[1];
+    if (!minha || sessionStorage.getItem('eter_recarregou')) return;
+    fetch(ONDE_MORO.replace(/premium\.js.*/, 'versao.txt') + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.text() : '')
+      .then(v => {
+        v = v.trim();
+        if (v && /^\d+$/.test(v) && v > minha) {
+          sessionStorage.setItem('eter_recarregou', '1');
+          location.reload();
+        }
+      }).catch(() => {});
+  } catch (e) {}
+})();
 /* A PASTA DOS ATIVOS DA CASA, em endereço absoluto. O código escolhia o
    prefixo perguntando se ONDE_MORO continha '/premium/' — e como ele é o
    src do PRÓPRIO script, que mora em premium/, a resposta era sempre sim
@@ -233,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241458', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241500', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -327,7 +344,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241458"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241500"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -691,7 +708,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241458`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241500`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1268,7 +1285,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241458"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241500"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1492,6 +1509,9 @@ async function consultarPorteiro(edicao) {
 }
 
 function mostrarPorteiro(v) {
+  /* primeiro fecha a leitura, depois mostra a parede: fechar o popup
+     devolve à chegada, nunca à revista liberada por engano */
+  voltar();
   const outra = v.edicaoEmCurso ? `ED${v.edicaoEmCurso}` : 'a que você abriu';
   const dias = v.diasQueFaltam;
   /* 1.6 — a trava, na redação do dossiê. A data vem do porteiro; sem ela,
