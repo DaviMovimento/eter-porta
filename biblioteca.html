@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608232122">
+<link rel="stylesheet" href="premium/premium.css?v=202608232142">
 </head>
 <body class="pagina biblioteca">
 
@@ -30,7 +30,7 @@
     <h1>Escolha a edição que você&nbsp;vai&nbsp;<em>ler</em></h1>
     <p class="dek">A ETER publica novas edições semanalmente, traduzindo a complexidade da nova
     economia em ferramentas aplicáveis para posicionar o seu conteúdo autoral.
-    Escolha uma edição para ler gratuitamente agora.</p>
+    Uma delas você lê inteira, de graça — e a cada 30 dias pode escolher outra.</p>
   </div>
 
   <div class="filtro-bib">
@@ -40,10 +40,10 @@
   <ul class="estante" id="estante"></ul>
 
   <section class="oferta-home">
-    <p class="oferta-chamada">O passe abre a ETER inteira por 30 dias: você começa hoje pela edição que quiser, continua recebendo a nova toda semana e entra nos encontros ao vivo enquanto o mês corre.</p>
+    <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608232122" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608232142" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -52,7 +52,7 @@
         <span class="passe-preco" id="passe-preco"></span>
       </div>
       <ul class="passe-itens" id="passe-itens"></ul>
-      <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE, R$97</button>
+      <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE</button>
       <p class="passe-nota" id="passe-nota"></p>
     </div>
   </section>
@@ -69,7 +69,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608232122')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608232142')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;

@@ -52,19 +52,22 @@ const COPY_CASA = {
      dizia (minutos, "um mês de acesso") já está dito na oferta logo abaixo. */
   lerTit: 'LER ESTA EDIÇÃO INTEIRA, DE GRAÇA',
   lerSub: () => '',                                                    // 1.4
-  passeTit: 'ADQUIRIR O PASSE, R$97',
-  /* o botão de cima NÃO leva preço: ele ainda não explicou o que se
-     compra, e repetir o número duas vezes na mesma tela o barateia.
-     O R$97 aparece uma vez só, dentro da oferta. */
+  /* O BOTÃO NÃO LEVA PREÇO EM LUGAR NENHUM. Dentro da oferta o número
+     já está no alto do card, em verde, três linhas acima — repeti-lo no
+     rótulo era ler o mesmo R$97 duas vezes na mesma caixa. Fora dela o
+     botão ainda não explicou o que se compra. Uma aparição, no card. */
+  passeTit: 'ADQUIRIR O PASSE',
   passeTitCurto: 'ADQUIRIR O PASSE',
-  chamadaOferta: 'O passe abre a ETER inteira por 30 dias: você começa hoje pela edição que quiser, continua recebendo a nova toda semana e entra nos encontros ao vivo enquanto o mês corre.',
+  chamadaOferta: 'Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.',
   passeSub: '',
   espiada: 'Complete seu cadastro para ler a edição completa',
   /* 1.5, com um ajuste: "tudo aberto" foi reprovado no botão, e deixar a
      expressão viva aqui faria a página dizer duas coisas sobre a mesma
      oferta. Vale "acesso total", que é a redação que ficou. */
-  portao: 'As outras oito estão aqui, e uma nova chega toda semana.\n' +
-          'Um mês de acesso total: R$97, R$24 por edição.',           // 1.5
+  /* a contagem sai do catálogo: escrita à mão ela erra hoje (são OUTRAS
+     sete, não oito) e volta a errar a cada edição publicada */
+  portao: () => `As outras ${porExtenso(publicadas() - 1)} estão aqui, e uma nova chega toda semana.\n`
+          + `Um mês de acesso total: ${CFG.precoPasse}, ${CFG.porEdicao || 'R$24'} por edição.`,  // 1.5
   trava: (data) => `Você já leu a sua edição deste mês.\nVolte em ${data}, ou abra tudo agora por R$97.`, // 1.6
   cadeadoTit: 'O resto da edição',
   cadeadoSub: 'complete seu cadastro · leitura gratuita',
@@ -84,6 +87,10 @@ const url = new URLSearchParams(location.search);
   const e = (doCaminho && doCaminho[1]) || url.get('ed');
   if (e && /^\d{1,3}$/.test(e)) url.set('ed', e.padStart(3, '0'));
 })();
+
+/* quantas edições estão publicadas de verdade — a contagem do acervo
+   sai daqui, nunca escrita à mão no meio de uma frase */
+const publicadas = () => DADOS.edicoes.filter(e => e.paginas).length;
 
 const CHAVE_LEAD = 'eter_lead';
 const posChave = ed => `eter_pos_${ed}`;
@@ -291,7 +298,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232122"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232142"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -315,7 +322,16 @@ function montarChegada() {
 
   /* a capa de cada edição na lista: dá para escolher pelo que se vê,
      não por um número. E o link preserva utm e embaixador. */
-  const comEdicao = n => { const u = new URL(location.href); u.searchParams.set('ed', n); return u.search; };
+  /* O link do acervo tem de trocar o CAMINHO, não o parâmetro: quem manda
+     na edição é a pasta (/revista/007/), e mexer só no ?ed deixava a pessoa
+     presa na mesma revista por mais que clicasse. A busca inteira viaja
+     junto para não perder utm nem código de embaixador. */
+  const comEdicao = n => {
+    const u = new URL(`../${n}/`, location.href);
+    u.search = location.search;
+    u.searchParams.delete('ed');
+    return u.pathname + u.search;
+  };
 
   /* O ACERVO. Estava só da mais nova para a mais antiga, e quem chega
      querendo conhecer a revista quer começar do começo. Agora abre na
@@ -369,10 +385,8 @@ function abrirOferta(origem) {
         <button type="button" class="fechar" data-fecha="oferta-dialog" aria-label="Fechar">×</button>
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
-        <p class="oferta-lede">${COPY_CASA.apresenta}</p>
-        <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608232122"
+          <img src="${CASA}mockup-assinatura.webp?v=202608232142"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -386,7 +400,9 @@ function abrirOferta(origem) {
       </div>`;
     document.body.append(cx);
     cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
-    cx.querySelector('[data-passe]').addEventListener('click', () => irParaCheckout('oferta'));
+    /* sem listener próprio aqui: o <dialog> é filho do body e o delegado
+       de [data-passe] já apanha este clique — os dois juntos disparavam
+       o checkout duas vezes e contavam a intenção em dobro */
     cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
     cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
   }
@@ -470,7 +486,12 @@ function montarTempos() {
      página ela chegava depois da decisão. E deixa de anunciar o que é
      livre para dizer o que fazer. */
   const dicaCapa = folha.querySelector('.dica-faixa');
-  if (dicaCapa) { dicaCapa.textContent = COPY_CASA.espiada; capa.append(dicaCapa); }
+  /* quem já se cadastrou não pode continuar sendo mandado se cadastrar:
+     o texto só era reposto por destravar(), que roda depois do envio */
+  if (dicaCapa) {
+    dicaCapa.textContent = jaCapturado() ? '' : COPY_CASA.espiada;
+    capa.append(dicaCapa);
+  }
 
   const miolo = document.createElement('section');
   miolo.className = 'miolo';
@@ -562,7 +583,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232122`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232142`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1040,10 +1061,9 @@ function blocoFim() {
     <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
     <p class="rot">Contracapa</p>
     <h3>A próxima sai <em>semana que vem</em></h3>
-    <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
-    <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
+    <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232122"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232142"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1487,8 +1507,12 @@ function ligar() {
     evento('porteiro_voltou', { para: n });
     /* troca SÓ a edição: reescrever a URL do zero apagava o utm e o código
        do embaixador, e a venda que viesse depois nasceria órfã */
-    const ir = new URL(location.href);
-    ir.searchParams.set('ed', n);
+    /* mesma armadilha do acervo: trocar o ?ed não muda de edição quando o
+       caminho manda. O botão que existe para tirar a pessoa da parede
+       estava devolvendo ela para a mesma parede. */
+    const ir = new URL(`../${n}/`, location.href);
+    ir.search = location.search;
+    ir.searchParams.delete('ed');
     location.href = ir.toString();
   });
 

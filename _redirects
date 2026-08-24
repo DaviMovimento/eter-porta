@@ -1,18 +1,27 @@
-# URLs limpas. Funciona no Cloudflare Pages e no Netlify sem alteração.
+# URLs limpas para hospedagem estática (Cloudflare Pages, Netlify).
+# No domínio quem manda é o .htaccess — este arquivo é o espelho dele,
+# para o dia em que a porta for servida de um CDN.
 #
-# Em vez de mandar "eter.com/?ed=004" no Instagram, você manda "eter.com/e/004".
-# É mais curto, cabe na bio, e não parece endereço de sistema.
+# Em vez de mandar "eterbrasil.com/revista/?ed=004" no Instagram, você
+# manda "eterbrasil.com/revista/e/004". Cabe na bio e não parece sistema.
 
-/e/:numero   /index.html?ed=:numero   200
-/e/          /index.html              200
+# a edição mora numa PASTA, não num parâmetro. A raiz virou a home, e a
+# home não lê ?ed — mandar para lá era despejar toda campanha na porta
+# da frente em vez da edição anunciada.
+/e/:numero   /:numero/                301
+/e/          /                        301
 
 # atalhos por nome, para quando o link vai escrito num carrossel
-/mascaras    /index.html?ed=007       302
-/coracoes    /index.html?ed=004       302
-/autoral     /index.html?ed=002       302
-/verbo       /index.html?ed=003       302
-/decada      /index.html?ed=001       302
+/decada      /001/                    301
+/autoral     /002/                    301
+/verbo       /003/                    301
+/coracoes    /004/                    301
+/brasileiro  /005/                    301
+/multidoes   /006/                    301
+/mascaras    /007/                    301
+/versos      /008/                    301
 
 # páginas de apoio com endereço decente
-/privacidade /privacidade.html        200
-/obrigado    /upsell.html             200
+/privacidade /privacidade/            200
+/obrigado    /assinatura-anual/       200
+/upsell      /assinatura-anual/       301

@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232122') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232122') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232122') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232142') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232142') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232142') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2357,3 +2357,76 @@ body.rolou .topo-nav a.destaque{
   background:var(--ouro-vivo);color:#17110A;box-shadow:none;
 }
 body.rolou .topo-nav a.destaque:hover{filter:brightness(1.06)}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   A BARRA DO CELULAR — consertos da auditoria
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. ABAIXO DE ~337px O MENU ESTOURAVA A TELA. `.topo-nav` levava
+   `flex:1 0 100%` (shrink zero) e os três rótulos vinham com
+   `white-space:nowrap`: a largura mínima somava 329px num espaço de
+   297px, e o botão de ouro ficava cortado pela direita. Deixar o nav
+   encolher resolve sem tirar nenhum alvo da barra. */
+@media (max-width:59.99rem){
+  .topo-nav{flex:1 1 100%;min-width:0;flex-wrap:nowrap}
+  .topo-nav a{min-width:0}
+}
+/* em tela muito estreita o rótulo longo encurta em vez de empurrar */
+@media (max-width:23.5rem){
+  .topo-nav{gap:.4rem}
+  .topo-nav a{padding:.35rem .28rem;white-space:nowrap}
+  .topo-nav a[href$="biblioteca"]{font-size:0}
+  .topo-nav a[href$="biblioteca"]::after{content:"EDIÇÕES";font-size:.7rem}
+}
+
+/* 2. O ALVO DE TOQUE TINHA 40px. A seção "alvos de toque" já cravava
+   44px, mas esta media query, 595 linhas depois e com a mesma
+   especificidade, derrubava para 40. Vale o piso. */
+@media (max-width:34rem){
+  .topo-nav a{min-height:44px;display:flex;align-items:center}
+  /* e o rótulo volta ao piso de 11px que o próprio arquivo declara:
+     estava em 9,92px, encolhido para caber — o espaço se resolve no
+     espaçamento, não no corpo da letra */
+  .topo-nav a{font-size:var(--r-1);letter-spacing:.06em}
+}
+
+/* 3. ROLOU, A BARRA VOLTA A UMA LINHA. A saudação sai, mas o nav
+   continuava em `flex:1 0 100%` e ficava na segunda linha para
+   sempre: 105px de barra grudada, 13% da tela, o tempo todo. */
+@media (max-width:59.99rem){
+  body.rolou .topo-nav{
+    order:0;flex:0 1 auto;margin-top:0;padding-top:0;border-top:0;
+  }
+  .topo-nav{transition:margin .3s var(--curva), padding .3s var(--curva)}
+}
+
+/* 4. O BOTÃO QUE VENDE CAÍA FORA DA PRIMEIRA DOBRA. A capa reservava
+   3,4rem para a barra, e no celular ela mede o dobro por causa da
+   segunda linha. A altura da barra passa a ser um número só, medido
+   em cada largura, e a dobra desconta exatamente ele. */
+:root{ --barra-h:3.4rem }
+@media (max-width:59.99rem){ :root{ --barra-h:6.6rem } }
+.capa-inicio{min-height:calc(100svh - var(--barra-h))}
+@media (max-width:34rem){
+  /* e a dobra encolhe onde dá, para os dois botões caberem inteiros */
+  .capa-inicio{padding-top:1.4rem;padding-bottom:1.6rem}
+  .capa-inicio .dek-ed{margin-bottom:1.2rem}
+  .capa-inicio .prateleira{padding-top:.7rem;padding-bottom:.8rem}
+  .capa-inicio .dica-faixa{margin:.6rem 0 .9rem}
+  .acoes{gap:.6rem}
+  .btn-ler,.btn-passe{padding:.95rem 1rem}
+}
+
+/* a recepção do upsell: onde a pessoa acessa o que acabou de comprar */
+.recepcao{
+  margin:2.2rem 0 1.4rem;padding:1.2rem 1.3rem;
+  background:var(--papel-2);border-radius:3px;
+  box-shadow:inset 0 0 0 1px var(--linha);
+}
+.recepcao .rotulo{margin-bottom:.5rem}
+.recepcao p{margin:0 0 .6rem;font-size:.92rem;line-height:1.6;color:var(--tinta-2)}
+.recepcao p:last-child{margin:0}
+.recepcao a{color:var(--ouro-texto);font-weight:600;text-decoration:none;
+            border-bottom:1px solid var(--ouro)}
+.recepcao a:hover{color:var(--tinta)}

@@ -6,7 +6,7 @@
 <title>Complete o ano — Revista ETER</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="../premium/premium.css?v=202608232122">
+<link rel="stylesheet" href="../premium/premium.css?v=202608232142">
 </head>
 <body class="pagina">
 
@@ -32,8 +32,8 @@
   <section class="conta" aria-label="A conta">
     <div class="linha"><span>Assinatura anual da ETER</span><b class="risco" id="cheio">R$997</b></div>
     <div class="linha total"><span>Nesta página</span><b id="parcela">R$897</b></div>
-    <p class="nota">À vista, ou <b id="mensal">R$87,90 por mês</b> — menos do que o passe
-    que você acabou de pagar, e o ano inteiro em vez de trinta dias.</p>
+    <p class="nota">À vista no Pix, ou <b id="mensal">em 12× de R$87,90</b> no cartão — o ano
+    inteiro em vez de trinta dias.</p>
   </section>
 
   <section class="ganhos" id="tudo-que-acessa">
@@ -46,13 +46,13 @@
     <ul>
       <li><b>52 edições em vez de 4</b><span>uma revista nova por semana, o ano inteiro</span></li>
       <li><b>Todos os encontros ao vivo</b><span>e não só os quatro do passe</span></li>
-      <li><b>O acervo aberto para sempre</b><span>em vez de fechar no trigésimo dia</span></li>
+      <li><b>O acervo aberto o ano inteiro</b><span>em vez de fechar no trigésimo dia</span></li>
       <li><b>O preço de hoje travado</b><span>a ETER reajusta, e quem entrou antes não é alcançado</span></li>
     </ul>
   </section>
 
   <figure class="mockup">
-    <img src="../premium/mockup-assinatura.webp?v=202608232122" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+    <img src="../premium/mockup-assinatura.webp?v=202608232142" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
       width="794" height="485" decoding="async">
   </figure>
 
@@ -69,6 +69,14 @@
     <a href="#" id="btn-nao">Não, quero só os trinta dias do passe</a>
     <p>O seu passe continua ativo de qualquer jeito. Esta oferta some ao sair desta página.</p>
   </div>
+
+  <section class="recepcao">
+    <p class="rotulo">Onde você acessa</p>
+    <p>A revista, a comunidade e os encontros ao vivo ficam no <b>Curseduca</b>. O acesso
+    chega no e-mail que você usou na compra, em poucos minutos. Se não chegar, confira o
+    spam e fale com a gente pelo mesmo e-mail.</p>
+    <p><a href="https://eterbrasil.curseduca.pro/" target="_blank" rel="noopener">Abrir a plataforma</a></p>
+  </section>
 
   <p class="pe">
     <span id="pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
@@ -97,7 +105,7 @@
 
   let c;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608232122')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608232142')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -115,7 +123,7 @@
   /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
      lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
   try {
-    const cat = await (await fetch('../edicoes.json?v=202608232122')).json();
+    const cat = await (await fetch('../edicoes.json?v=202608232142')).json();
     const its = (cat.assinatura && cat.assinatura.itens) || [];
     const ul = document.getElementById('itens-assinatura');
     if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>
