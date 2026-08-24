@@ -12,19 +12,13 @@ a{color:#7D6429}</style>
 <body>
 <p>Levando você para a revista…<br><a id="ir" href="/revista/">continuar</a></p>
 <script>
-/* A PONTE DOS LINKS PUBLICADOS. Trinta e quatro links de campanha —
-   ManyChat, bio do Instagram, carrosséis — apontam para /e/?ed=001, o
-   endereço de quando a porta morava aqui. A porta foi para /revista/ e
-   cada edição ganhou pasta própria: sem esta ponte, todo esse tráfego
-   pago cai em 404. Aqui não dá para usar reescrita de servidor porque a
-   hospedagem ignora o .htaccess desta conta, então a ponte é uma pasta
-   de verdade com este arquivo dentro. */
+/* a forma que está nas campanhas: /e/?ed=001 */
 (() => {
   const p = new URLSearchParams(location.search);
   const bruto = (p.get('ed') || '').replace(/\D/g, '');
   const destino = bruto ? `/revista/${bruto.padStart(3, '0')}/` : '/revista/';
-  /* o ?ed já virou caminho; o resto da busca segue viagem, senão o utm e
-     o código do embaixador morrem na ponte e a venda nasce órfã */
+  /* o ?ed já virou caminho; o resto da busca segue viagem, senão o utm e o
+     código do embaixador morrem na ponte e a venda nasce órfã */
   p.delete('ed');
   const resto = p.toString();
   const url = destino + (resto ? '?' + resto : '');
