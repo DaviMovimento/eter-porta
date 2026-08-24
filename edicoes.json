@@ -67,6 +67,48 @@
   },
   "edicoes": [
     {
+      "n": "009",
+      "titulo": "O Futuro Simples",
+      "subtitulo": "O paradoxo da nova geração, economia das comunidades e a nova era da internet.",
+      "nestaEdicao": "Você vai entender por que a geração mais conectada da história se tornou também a mais solitária, e como essa contradição foi criada pela mesma fórmula que transformou a atenção humana no produto mais disputado do mundo. E nas próximas páginas você verá por que essa conta chegou ao seu limite, como nasce a economia das comunidades, e por que ela é a nova era da internet.",
+      "paginas": 49,
+      "destaques": [
+        23,
+        24,
+        26,
+        35,
+        36,
+        7
+      ],
+      "minutos": 40,
+      "capitulos": [
+        [
+          "Juntos e Solitários: a verdade sobre a geração mais conectada da história",
+          5
+        ],
+        [
+          "A Promessa não cumprida das redes sociais",
+          10
+        ],
+        [
+          "O futuro das marcas é reunir pessoas",
+          20
+        ],
+        [
+          "Estudo de Caso: Futuro Simples — A Primeira Rede Social Offline do Mundo",
+          33
+        ],
+        [
+          "Por um Futuro Mais Simples",
+          39
+        ],
+        [
+          "Bibliografia",
+          47
+        ]
+      ]
+    },
+    {
       "n": "008",
       "titulo": "Versos & Trovas",
       "subtitulo": "A poesia como tecnologia de marca: o que Ariano Suassuna sabia sobre construir algo que dura.",
