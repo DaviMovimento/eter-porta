@@ -36,7 +36,7 @@ const COPY_CASA = {
     'A revista semanal e a comunidade que lê e traduz o futuro da nova economia ' +
     'em clareza, direção e ferramentas aplicáveis, para você se posicionar de ' +
     'forma única e monetizar o seu conteúdo autoral.',                // 1.2
-  polimataTit: 'O que é repertório de polímata?',
+  polimataTit: 'O que é um repertório polímata?',
   polimata: [
     'Polímata era como se chamavam os homens e as mulheres do Renascimento: ' +
     'pensadores, empreendedores e artistas que dominavam diferentes áreas do ' +
@@ -57,7 +57,7 @@ const COPY_CASA = {
      compra, e repetir o número duas vezes na mesma tela o barateia.
      O R$97 aparece uma vez só, dentro da oferta. */
   passeTitCurto: 'ADQUIRIR O PASSE',
-  chamadaOferta: 'Adquira o passe de 30 dias para ler uma edição nova por semana, abrir todas as que já foram publicadas e participar dos encontros ao vivo.',
+  chamadaOferta: 'O passe abre a ETER inteira por 30 dias: você começa hoje pela edição que quiser, continua recebendo a nova toda semana e entra nos encontros ao vivo enquanto o mês corre.',
   passeSub: '',
   espiada: 'Complete seu cadastro para ler a edição completa',
   /* 1.5, com um ajuste: "tudo aberto" foi reprovado no botão, e deixar a
@@ -291,7 +291,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232114"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232121"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -372,7 +372,7 @@ function abrirOferta(origem) {
         <p class="oferta-lede">${COPY_CASA.apresenta}</p>
         <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608232114"
+          <img src="${CASA}mockup-assinatura.webp?v=202608232121"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -562,7 +562,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232114`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232121`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1043,7 +1043,7 @@ function blocoFim() {
     <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
     <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232114"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232121"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

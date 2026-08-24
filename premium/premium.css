@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232114') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232114') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232114') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232121') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232121') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232121') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -1123,7 +1123,10 @@ body.pagina{
   background:var(--papel);color:var(--tinta);
   font-family:var(--corpo);font-size:1rem;line-height:1.62;
 }
-.pagina .topo{position:static}
+/* A barra acompanha a rolagem em TODA superfície. Ela era `static` aqui,
+   e como a home e a biblioteca são `.pagina`, o botão que vende sumia
+   para cima no primeiro rolar — justamente onde a decisão amadurece. */
+.pagina .topo{position:sticky;top:0}
 
 .papelada{
   position:relative;z-index:2;
@@ -2323,3 +2326,34 @@ body.inicio,body.biblioteca{background:var(--papel)}
   .capa-inicio .lombada-capa{width:6.6rem;scroll-snap-align:center}
   .capa-inicio .lombada-capa+.lombada-capa{margin-left:-1.6rem}
 }
+
+
+/* ═══ A SAUDAÇÃO É DA PRIMEIRA DOBRA ══════════════════════════
+   Com a barra acompanhando a rolagem, o cumprimento não pode viajar
+   junto: ele pertence à chegada. Rolou, ele sai em fade — no desktop
+   também, não só no celular — e a barra fica com logo, navegação e o
+   botão, que é o que precisa seguir à mão. */
+.topo-tag{transition:opacity .3s var(--curva), max-width .3s var(--curva),
+          margin .3s var(--curva), padding .3s var(--curva)}
+body.rolou .topo-tag{opacity:0;pointer-events:none}
+@media (min-width:60rem){
+  body.rolou .topo-tag{max-width:0;margin-left:0;padding-left:0;border-left-width:0;overflow:hidden}
+}
+
+/* ═══ UM SÓ BOTÃO DE OURO POR TELA ════════════════════════════
+   Na primeira dobra apareciam DOIS botões dourados idênticos — o da
+   barra e o do herói, com o mesmo texto, a 300px um do outro. Dois
+   convites iguais competindo não somam, dividem. O da barra passa a
+   ser contorno: continua achável e continua acompanhando a rolagem,
+   mas o peso do ouro cheio fica com o botão da decisão. Quando a
+   página rola e o herói sai de cena, ele volta a ser sólido. */
+.topo-nav a.destaque{
+  background:transparent;color:var(--ouro-texto);
+  box-shadow:inset 0 0 0 1px var(--ouro);
+  transition:background var(--t-rapido), color var(--t-rapido), box-shadow var(--t-rapido);
+}
+.topo-nav a.destaque:hover{background:rgba(175,145,83,.14);filter:none}
+body.rolou .topo-nav a.destaque{
+  background:var(--ouro-vivo);color:#17110A;box-shadow:none;
+}
+body.rolou .topo-nav a.destaque:hover{filter:brightness(1.06)}
