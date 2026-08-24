@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../premium/premium.css?v=202608232103">
+<link rel="stylesheet" href="../premium/premium.css?v=202608232106">
 </head>
 <body class="pagina biblioteca">
 
@@ -27,7 +27,7 @@
 <main class="papelada">
   <div class="selo">
     <p class="rotulo">A biblioteca</p>
-    <h1>Escolha a edição que você vai <em>ler</em></h1>
+    <h1>Escolha a edição que você&nbsp;vai&nbsp;<em>ler</em></h1>
     <p class="dek">A ETER publica novas edições semanalmente, traduzindo a complexidade da nova
     economia em ferramentas aplicáveis para posicionar o seu conteúdo autoral.
     Escolha uma edição para ler gratuitamente agora.</p>
@@ -44,7 +44,7 @@
     abrir todas as que já foram publicadas e participar dos encontros ao vivo.</p>
 
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202608232103" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202608232106" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -70,7 +70,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('../edicoes.json?v=202608232103')).json(); }
+  try { D = await (await fetch('../edicoes.json?v=202608232106')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
