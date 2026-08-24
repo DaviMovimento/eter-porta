@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232206') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232206') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232206') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232220') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232220') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232220') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2430,3 +2430,12 @@ body.rolou .topo-nav a.destaque:hover{filter:brightness(1.06)}
 .recepcao a{color:var(--ouro-texto);font-weight:600;text-decoration:none;
             border-bottom:1px solid var(--ouro)}
 .recepcao a:hover{color:var(--tinta)}
+
+/* A BIBLIOTECA: "ler" volta para a linha do verbo.
+   O estilo da casa põe a palavra em cursiva num bloco próprio — é assim
+   que a capa assina "O Futuro / Simples". Mas aqui o título é uma frase,
+   não um nome, e o bloco jogava "ler" sozinho numa terceira linha, com
+   cara de sobra. Nesta página ela volta a ser palavra dentro da frase. */
+.biblioteca .papelada h1 em{
+  display:inline;font-size:1.35em;line-height:.7;margin-top:0;
+}
