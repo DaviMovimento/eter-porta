@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241130') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241130') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241130') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241133') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241133') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241133') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2232,7 +2232,7 @@ body.inicio,body.biblioteca{background:var(--papel)}
   color:var(--tinta);text-wrap:balance;
 }
 .intervalo .oferta-chamada{color:var(--sobre-escuro);margin-bottom:1.1rem}
-#oferta-dialog .oferta-chamada{font-size:1rem;margin-bottom:.9rem}
+#oferta-dialog .oferta-chamada, #mes-dialog .oferta-chamada{font-size:1rem;margin-bottom:.9rem}
 
 /* a logo da casa abre a caixa da oferta: o monograma sozinho não diz
    de quem é a oferta para quem chegou pelo anúncio */
@@ -2514,27 +2514,27 @@ body.lendo{background:#0F0C09}
    No celular era preciso rolar para achar o botão. A caixa agora se
    mede pela tela: mockup e textos encolhem o que for preciso para o
    botão dourado nascer visível. */
-#oferta-dialog .painel.oferta{
+#oferta-dialog .painel.oferta, #mes-dialog .painel.oferta{
   display:flex;flex-direction:column;gap:.5rem;
   max-height:calc(100dvh - 2.2rem);overflow:hidden;
   padding:1.1rem 1.2rem 1.15rem;
 }
-#oferta-dialog .marca-oferta{width:4.2rem;margin-bottom:.2rem}
-#oferta-dialog .mock-passe{margin:0 auto;flex:0 1 auto;min-height:0}
-#oferta-dialog .mock-passe img{
+#oferta-dialog .marca-oferta, #mes-dialog .marca-oferta{width:4.2rem;margin-bottom:.2rem}
+#oferta-dialog .mock-passe, #mes-dialog .mock-passe{margin:0 auto;flex:0 1 auto;min-height:0}
+#oferta-dialog .mock-passe img, #mes-dialog .mock-passe img{
   display:block;width:auto;max-width:100%;height:100%;
   max-height:clamp(6rem,22dvh,13rem);margin:0 auto;object-fit:contain;
 }
-#oferta-dialog .oferta-chamada{font-size:.92rem;line-height:1.35;margin:0 auto .1rem}
-#oferta-dialog .oferta-rot{margin:.1rem 0}
-#oferta-dialog .oferta-itens{gap:.34rem}
-#oferta-dialog .oferta-itens li{font-size:.8rem;line-height:1.3}
-#oferta-dialog .oferta-itens li span{display:none}   /* as glosas saem: o essencial cabe */
-#oferta-dialog .btn{margin-top:.35rem}
-#oferta-dialog .oferta-pe{margin-top:.3rem}
+#oferta-dialog .oferta-chamada, #mes-dialog .oferta-chamada{font-size:.92rem;line-height:1.35;margin:0 auto .1rem}
+#oferta-dialog .oferta-rot, #mes-dialog .oferta-rot{margin:.1rem 0}
+#oferta-dialog .oferta-itens, #mes-dialog .oferta-itens{gap:.34rem}
+#oferta-dialog .oferta-itens li, #mes-dialog .oferta-itens li{font-size:.8rem;line-height:1.3}
+#oferta-dialog .oferta-itens li span, #mes-dialog .oferta-itens li span{display:none}   /* as glosas saem: o essencial cabe */
+#oferta-dialog .btn, #mes-dialog .btn{margin-top:.35rem}
+#oferta-dialog .oferta-pe, #mes-dialog .oferta-pe{margin-top:.3rem}
 @media (max-height:40rem){
-  #oferta-dialog .mock-passe img{max-height:16dvh}
-  #oferta-dialog .oferta-chamada{display:none}
+  #oferta-dialog .mock-passe img, #mes-dialog .mock-passe img{max-height:16dvh}
+  #oferta-dialog .oferta-chamada, #mes-dialog .oferta-chamada{display:none}
 }
 
 /* ═══ O CELULAR: a chegada sem texto vazando ══════════════════
@@ -2555,3 +2555,6 @@ body.lendo{background:#0F0C09}
   .acoes-casa{display:flex;gap:.8rem}
   .acoes-casa .btn{flex:1}
 }
+
+#mes-dialog h2{font-family:var(--display);font-weight:400;font-size:1.3rem;margin:0 0 .2rem;text-align:center}
+#mes-dialog .btn-fantasma{margin-top:.4rem}

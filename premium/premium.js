@@ -225,7 +225,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241130', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241133', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -319,7 +319,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241130"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241133"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -407,7 +407,7 @@ function abrirOferta(origem) {
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608241130"
+          <img src="${CASA}mockup-assinatura.webp?v=202608241133"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -622,7 +622,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241130`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241133`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1139,7 +1139,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241130"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241133"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1365,10 +1365,17 @@ function mostrarPorteiro(v) {
   const dias = v.diasQueFaltam;
   /* 1.6 — a trava, na redação do dossiê. A data vem do porteiro; sem ela,
      a frase não mente: diz "em breve" em vez de inventar um dia. */
-  $('#mes-dek').textContent = COPY_CASA.trava(v.liberaEmBR || 'breve');
-  $('#mes-pe').textContent =
-    `A sua deste mês é a ${outra}, que continua aberta, inteira, quando você quiser.` +
-    (dias ? ` Esta aqui abre daqui a ${dias} ${dias === 1 ? 'dia' : 'dias'}.` : '');
+  /* humano e direto: sem burocracia de datas na manchete. O passe é o
+     caminho; a data é nota de rodapé. */
+  $('#mes-dek').textContent =
+    `Sua leitura gratuita do mês foi a ${outra}. O passe abre esta e todas as outras agora:`;
+  $('#mes-rot').innerHTML = `${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))} <b>${CFG.precoPasse}</b>`;
+  $('#mes-itens').innerHTML = PASSE.itens
+    .map(([a]) => `<li><b>${a}</b></li>`).join('');
+  $('#mes-pe').textContent = dias
+    ? `Sem pressa? A próxima leitura gratuita libera em ${v.liberaEmBR || 'breve'}.`
+    : (PASSE.condicao || '');
+  $('#mes-caixa').querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
   $('#mes-voltar').hidden = !v.edicaoEmCurso;
   $('#mes-voltar').textContent = v.edicaoEmCurso ? `Voltar para a ED${v.edicaoEmCurso}` : 'Voltar';
   $('#mes-dialog').dataset.edicao = v.edicaoEmCurso || '';
