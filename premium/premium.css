@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241050') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241050') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241050') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241130') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241130') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241130') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2475,3 +2475,83 @@ body.lendo .folha-p:first-of-type{margin-top:3.6rem}
    até a altura visual das demais letras, sem virar destaque gritado. */
 .capa-inicio h1 em{font-size:1.45em;line-height:.82}
 @media (max-width:34rem){ .capa-inicio h1 em{font-size:1.4em} }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   A EXPERIÊNCIA DE LEITURA — o zoom de verdade (24/08)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. O PAN LIVRE. Cada folha era um contêiner de rolagem com
+   `overscroll-behavior: contain` — resto do zoom antigo, feito à mão.
+   Esse contêiner ENGOLIA o gesto de arrastar do zoom nativo: ampliado,
+   o dedo (e o trackpad) não iam para o lado. A folha volta a ser papel
+   simples; quem rola, amplia e arrasta é o navegador, em qualquer
+   direção, na placa de vídeo. */
+.folha-p{
+  overflow:visible;overscroll-behavior:auto;
+  -webkit-overflow-scrolling:auto;
+}
+.folha-in{width:100%;transition:none}
+
+/* 2. NADA DE VÃO BRANCO. O papel da leitura vai até onde o zoom for. */
+body.lendo{background:#0F0C09}
+
+/* 3. A BARRA compensada pela pinça: o transform agora vem inteiro do
+   JavaScript, que conhece a escala — o CSS não pode brigar com ele. */
+.barra{transition:opacity var(--t-medio)}
+.barra.oculta{opacity:0;pointer-events:none}
+
+/* ═══ O CARROSSEL DO PREVIEW, LIMPO E CENTRADO ════════════════
+   Sem o rótulo de páginas em cima, as miniaturas ocupam o espaço
+   inteiro, maiores, com o trilho correndo centrado. */
+.pulso{display:none}
+.faixa{--mini:5.4rem;margin-top:.9rem;padding:1rem .5rem .8rem}
+@media (min-width:60rem){ .faixa{--mini:4.6rem;max-width:none} }
+@media (max-width:59.99rem){ .faixa{--mini:4.8rem;max-width:none;width:100vw;margin-left:calc(50% - 50vw)} }
+@media (max-height:44rem){ .faixa{--mini:3.6rem} }
+
+/* ═══ A CAIXA DA OFERTA CABE NUMA DOBRA ═══════════════════════
+   No celular era preciso rolar para achar o botão. A caixa agora se
+   mede pela tela: mockup e textos encolhem o que for preciso para o
+   botão dourado nascer visível. */
+#oferta-dialog .painel.oferta{
+  display:flex;flex-direction:column;gap:.5rem;
+  max-height:calc(100dvh - 2.2rem);overflow:hidden;
+  padding:1.1rem 1.2rem 1.15rem;
+}
+#oferta-dialog .marca-oferta{width:4.2rem;margin-bottom:.2rem}
+#oferta-dialog .mock-passe{margin:0 auto;flex:0 1 auto;min-height:0}
+#oferta-dialog .mock-passe img{
+  display:block;width:auto;max-width:100%;height:100%;
+  max-height:clamp(6rem,22dvh,13rem);margin:0 auto;object-fit:contain;
+}
+#oferta-dialog .oferta-chamada{font-size:.92rem;line-height:1.35;margin:0 auto .1rem}
+#oferta-dialog .oferta-rot{margin:.1rem 0}
+#oferta-dialog .oferta-itens{gap:.34rem}
+#oferta-dialog .oferta-itens li{font-size:.8rem;line-height:1.3}
+#oferta-dialog .oferta-itens li span{display:none}   /* as glosas saem: o essencial cabe */
+#oferta-dialog .btn{margin-top:.35rem}
+#oferta-dialog .oferta-pe{margin-top:.3rem}
+@media (max-height:40rem){
+  #oferta-dialog .mock-passe img{max-height:16dvh}
+  #oferta-dialog .oferta-chamada{display:none}
+}
+
+/* ═══ O CELULAR: a chegada sem texto vazando ══════════════════
+   A promessa era pintada sobre um véu que acabava antes dela — as
+   últimas linhas caíam sobre o papel claro, ilegíveis. O véu passa a
+   cobrir a CHEGADA INTEIRA, do topo ao último pixel do bloco. */
+@media (max-width:59.99rem){
+  #capa-home .veu, .chegada .veu, #chegada .veu{
+    position:absolute;inset:0;height:100%;
+  }
+  #chegada{position:relative}
+}
+
+/* os botões do meio da página de edição */
+.acoes-casa{max-width:34rem;margin:1.6rem auto 2rem}
+.acoes-casa .btn{width:100%}
+@media (min-width:60rem){
+  .acoes-casa{display:flex;gap:.8rem}
+  .acoes-casa .btn{flex:1}
+}

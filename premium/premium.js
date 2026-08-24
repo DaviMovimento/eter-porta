@@ -69,8 +69,8 @@ const COPY_CASA = {
   portao: () => `As outras ${porExtenso(publicadas() - 1)} estão aqui, e uma nova chega toda semana.\n`
           + `Um mês de acesso total: ${CFG.precoPasse}, ${CFG.porEdicao || 'R$24'} por edição.`,  // 1.5
   trava: (data) => `Você já leu a sua edição deste mês.\nVolte em ${data}, ou abra tudo agora por R$97.`, // 1.6
-  cadeadoTit: 'O resto da edição',
-  cadeadoSub: 'complete seu cadastro · leitura gratuita',
+  cadeadoTit: 'Leitura gratuita',
+  cadeadoSub: 'complete seu cadastro para ler a edição inteira',
 };
 
 /* O `·` não existe na Futura dos rótulos: onde o texto vira HTML, ele vira
@@ -201,6 +201,21 @@ function irParaCheckout(origem) {
 function seguir(origem) {
   const destino = linkCheckout(origem);
   evento('foi_ao_checkout', { origem });
+  /* o leitor cadastrado que decide comprar entra na planilha com o e-mail
+     que já deu: é assim que se rastreia quem LEU e depois foi ao checkout.
+     Fire-and-forget — a venda não espera a planilha. */
+  const l = leadSalvo();
+  if (l && CFG.webhookLead) {
+    try {
+      fetch(CFG.webhookLead, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...l, edicao: '', onde: `checkout-${origem}`,
+          jornaleiro: url.get('j') || null, ms: url.get('ms') || null,
+          utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
+          pagina: paginaAtual || 0, referrer: document.referrer || '', em: new Date().toISOString() }),
+      });
+    } catch (e) {}
+  }
   despachar();
   if (CFG.checkoutPasse.includes('SEU-CHECKOUT')) { alert('Checkout não configurado.\n\n' + destino); return; }
   location.href = destino;
@@ -210,7 +225,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241050', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241130', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -304,7 +319,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241050"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241130"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -318,7 +333,7 @@ function montarChegada() {
   $('#passe-preco').textContent = CFG.precoPasse;
   $('#passe-itens').innerHTML = PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
   $('#passe-nota').textContent = [PASSE.condicao, PASSE.credito].filter(Boolean).join(' ');
-  $('#barra-txt').innerHTML = `O passe abre <b>todo o acervo</b> — ${CFG.precoPasse}`;
+  $('#barra-txt').innerHTML = `<b>Adquira o Passe</b> e tenha um mês de acesso total ao acervo, uma nova edição por semana e encontros ao vivo — ${CFG.precoPasse}`;
 
   if (!TOTAL) {
     $('#btn-ler').disabled = true;
@@ -392,7 +407,7 @@ function abrirOferta(origem) {
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608241050"
+          <img src="${CASA}mockup-assinatura.webp?v=202608241130"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -406,9 +421,14 @@ function abrirOferta(origem) {
       </div>`;
     document.body.append(cx);
     cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
-    /* sem listener próprio aqui: o <dialog> é filho do body e o delegado
-       de [data-passe] já apanha este clique — os dois juntos disparavam
-       o checkout duas vezes e contavam a intenção em dobro */
+    /* o botão da caixa é o único que segue para o pagamento; os de fora
+       abrem a caixa. Ele precisa de listener próprio E de parar o clique,
+       senão o delegado do body reabre a caixa por cima. */
+    cx.querySelector('[data-passe]').addEventListener('click', ev => {
+      ev.stopPropagation();
+      cx.close();
+      irParaCheckout('oferta');
+    });
     cx.addEventListener('click', ev => { if (ev.target === cx) cx.close(); });
     cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
   }
@@ -504,7 +524,10 @@ function montarTempos() {
   ['#pulso-n', '#trilho'];
   const pulso = folha.querySelector('.pulso') || capa.querySelector('.pulso');
   const faixa = capa.querySelector('.faixa') || folha.querySelector('.faixa');
-  [pulso, faixa].forEach(e => e && miolo.append(e));
+  /* o rótulo de páginas/capítulo saiu: o carrossel fala por si, e o
+     texto só empurrava as miniaturas para baixo */
+  pulso?.remove();
+  if (faixa) miolo.append(faixa);
   miolo.append($('#mosaico'));
   capa.after(miolo);
 
@@ -517,11 +540,19 @@ function montarTempos() {
   casa.innerHTML = `
     <p class="casa-lede">${COPY_CASA.apresenta}</p>
     <p class="casa-sub">${COPY_CASA.apresentaSub}</p>
+    <div class="acoes acoes-casa">
+      <button class="btn btn-ler" data-ler-casa>LER ESTA EDIÇÃO INTEIRA, DE GRAÇA</button>
+      <button class="btn btn-passe" data-passe="casa">ADQUIRIR O PASSE</button>
+    </div>
     <div class="casa-polimata">
       <h2>${COPY_CASA.polimataTit}</h2>
       ${COPY_CASA.polimata.map(p => `<p>${p}</p>`).join('')}
     </div>`;
   miolo.after(casa);
+  casa.querySelector('[data-ler-casa]')?.addEventListener('click', () => {
+    evento('clicou_ler', { origem: 'casa' });
+    $('#btn-ler')?.click();
+  });
 }
 
 /* ═══ A COR DA EDIÇÃO ═════════════════════════════════════════
@@ -589,7 +620,9 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608241050`;
+  /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
+  const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241130`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -829,8 +862,8 @@ function montarEspiada() {
     if (frente) {
       /* a folha da direita levanta: na frente o que sai, no verso o que entra */
       await Promise.all([carregar(d0), carregar(e1), carregar(d1)]);
-      vFrente.src = existe(d0) ? pag(d0, 800) : '';
-      vVerso.src  = existe(e1) ? pag(e1, 800) : '';
+      if (existe(d0)) vFrente.src = pag(d0, 800); else vFrente.removeAttribute('src');
+      if (existe(e1)) vVerso.src = pag(e1, 800); else vVerso.removeAttribute('src');
       por(slotDir, d1);                       /* aparece por baixo, ao levantar */
       folha = k;
       spread.classList.remove('fechada');     /* a revista abre */
@@ -839,8 +872,8 @@ function montarEspiada() {
     } else {
       /* voltando: a folha da esquerda se levanta e deita sobre a direita */
       await Promise.all([carregar(e0), carregar(d1), carregar(e1)]);
-      vVerso.src  = existe(e0) ? pag(e0, 800) : '';
-      vFrente.src = existe(d1) ? pag(d1, 800) : '';
+      if (existe(e0)) vVerso.src = pag(e0, 800); else vVerso.removeAttribute('src');
+      if (existe(d1)) vFrente.src = pag(d1, 800); else vFrente.removeAttribute('src');
       por(slotEsq, e1);
       folha = k;
       /* abrir tira a classe no início; fechar tem que devolver no início
@@ -974,7 +1007,7 @@ function montarEspiada() {
   legendar();
 
   if (!jaCapturado() && limiteEspiada < TOTAL) {
-    $('#dica-faixa').innerHTML = `o capítulo 1 é livre <i class="pt"></i> <b>o resto abre com seu cadastro</b>`;
+    $('#dica-faixa').innerHTML = '';
   }
 }
 
@@ -992,6 +1025,9 @@ function abrirNaPagina(n) {
 let montado = false;
 
 function abrirLeitura() {
+  /* o zoom arrastado revela o que estiver atrás do papel: pinta o <html>
+     da cor da leitura para nunca aparecer um vão branco */
+  document.documentElement.style.background = '#0F0C09';
   $('#chegada').style.display = 'none';
   $('#leitura').classList.add('aberta');
   document.body.classList.add('lendo');
@@ -1003,6 +1039,7 @@ function abrirLeitura() {
 }
 
 function voltar() {
+  document.documentElement.style.background = '';
   $('#leitura').classList.remove('aberta');
   $('#chegada').style.display = '';
   document.body.classList.remove('lendo');
@@ -1032,9 +1069,18 @@ function montarLeitor() {
     /* O zoom agora é do navegador, e ele NÃO busca uma imagem melhor ao
        ampliar — usa a que já baixou. Por isso a leitura carrega direto a
        maior que temos: no computador isso dobra a nitidez no zoom. */
-    img.sizes = '1400px';
-    img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
-    img.src = pag(i, 1400);
+    if (i <= 3) {
+      /* abertura leve: o @800 pinta em fração do tempo; o @1400 chega por
+         trás e troca sem piscar (o navegador só troca depois de decodificar) */
+      img.src = pag(i, 800);
+      const hd = new Image();
+      hd.onload = () => hd.decode?.().then(() => { img.src = pag(i, 1400); }).catch(() => {});
+      hd.src = pag(i, 1400);
+    } else {
+      img.sizes = '1400px';
+      img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
+      img.src = pag(i, 1400);
+    }
     img.addEventListener('load', () => {
       img.classList.add('carregada');
       /* o arquivo de 1400px leva 1 a 3 segundos para DECODIFICAR depois de
@@ -1068,12 +1114,8 @@ function montarLeitor() {
   controlarCromo();
   ancorarBarra();
 
-  /* onde ele parou da última vez: guardado desde sempre, nunca usado */
-  const parou = parseInt(localStorage.getItem(posChave(EDICAO.n)), 10);
-  if (parou > 2 && parou <= TOTAL) {
-    maximaLida = parou;
-    setTimeout(() => { irPara(parou); evento('retomou_leitura', { pagina: parou }); }, 500);
-  }
+  /* a leitura abre sempre na capa: o salto para "onde parou" atrasava a
+     abertura e desorientava quem esperava a primeira página */
 }
 
 function blocoMeio() {
@@ -1097,7 +1139,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241050"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241130"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1200,14 +1242,16 @@ function ancorarBarra() {
   if (!vv || !b) return;
 
   const acompanhar = () => {
-    /* a barra vive na janela VISUAL (o pedaço que a pessoa está vendo),
-       não na página. Sem isto ela some para fora da tela no zoom. */
-    const escala = 1 / vv.scale;
-    b.style.width = vv.width + 'px';
+    const esc = 1 / (vv.scale || 1);
+    /* âncora: o canto de baixo da janela visual, em coordenadas da página */
     b.style.left = vv.offsetLeft + 'px';
     b.style.top = (vv.offsetTop + vv.height) + 'px';
     b.style.bottom = 'auto';
-    b.style.setProperty('--vv-escala', escala);
+    b.style.right = 'auto';
+    /* a largura em unidades de layout é a visual dividida pela compensação */
+    b.style.width = (vv.width / esc) + 'px';
+    b.style.transformOrigin = '0 100%';
+    b.style.transform = `scale(${esc}) translateY(-100%)`;
   };
 
   acompanhar();
@@ -1365,7 +1409,7 @@ let aoTerminar = null;
 
 const COPY = {
   leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima edição.', 'Abrir a edição'],
-  trancada: ['O resto da edição abre aqui', '', 'Destravar a edição'],
+  trancada: ['Leitura gratuita', '', 'Liberar a edição'],
   espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima edição.', 'Ler a partir daqui'],
   checkout: ['Para onde mandamos seu acesso?', 'Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.', 'Continuar para o pagamento'],
 };
@@ -1378,11 +1422,11 @@ function pedirDados(onde, depois = null) {
   /* o número de capítulos muda por edição — prometer "seis" no código
      fazia a frase mentir em metade do acervo */
   const restantes = Math.max(1, (EDICAO.capitulos || []).length - 1);
-  const dek = chave === 'trancada'
-    ? `O primeiro capítulo é livre. ${restantes === 1 ? 'O resto' : `Os outros ${porExtenso(restantes)}`} abre${restantes === 1 ? '' : 'm'} agora, na íntegra, assim que você se identificar.`
-    : dek0;
+  const dek = dek0;
+  /* direto: um pedido, uma promessa — sem aula sobre capítulos */
   $('#form-tit').textContent = tit;
-  $('#form-dek').textContent = dek;
+  $('#form-dek').textContent = chave === 'checkout' ? dek
+    : `Preencha o formulário abaixo para liberar a ED ${EDICAO.n} na íntegra.`;
   $('#btn-enviar').textContent = bt;
   $('#form-dialog').dataset.onde = onde;
   $('#form-dialog').showModal();
@@ -1493,7 +1537,13 @@ async function enviar(e) {
 
 /* ═══ LIGAÇÕES ═════════════════════════════════════════════════ */
 function ligar() {
-  const lerAgora = async () => { if (await liberadoParaLer()) abrirLeitura(); };
+  const lerAgora = async () => {
+    /* abre JÁ e pergunta depois: o porteiro (Apps Script frio) levava de
+       2 a 5 segundos, e a pessoa ficava olhando uma tela parada. Se a
+       resposta vier negando, a parede do mês cobre a leitura. */
+    abrirLeitura();
+    liberadoParaLer().then(pode => { if (!pode) voltar(); });
+  };
 
   /* O CONVITE FLUTUANTE FOI REMOVIDO. Ele existia porque o botão real
      ficava abaixo da dobra no celular; agora os dois botões estão dentro
@@ -1580,7 +1630,7 @@ function ligar() {
 
   document.body.addEventListener('click', e => {
     const b = e.target.closest('[data-passe]');
-    if (b) irParaCheckout(b.dataset.passe);
+    if (b) abrirOferta(b.dataset.passe);
   });
 }
 
