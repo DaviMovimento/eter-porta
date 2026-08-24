@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = async () => D ||
-    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241428`)).json());
+    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241439`)).json());
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -110,6 +110,9 @@
 
       cx.querySelector('#oferta-form').addEventListener('submit', ev => {
         ev.preventDefault();
+        if (cx.dataset.enviando === '1') return;      /* clique duplo */
+        cx.dataset.enviando = '1';
+        setTimeout(() => { cx.dataset.enviando = ''; }, 1500);
         const orig = cx.dataset.origem || 'oferta';
         const irAoCheckout = () => { cx.close(); location.href = linkCheckout(C, orig); };
         if (capturado()) { 
@@ -146,7 +149,7 @@
     cx.querySelector('#oferta-campos').hidden = capturado();
     cx.classList.toggle('so-form', !!direto);
     cx.dataset.origem = origem;
-    cx.showModal();
+    if (!cx.open) cx.showModal();
     setTimeout(() => { if (!capturado()) cx.querySelector('#of-nome').focus(); }, 120);
     (window.dataLayer = window.dataLayer || []).push({ event: 'abriu_oferta', origem, pagina: PAGINA });
   }

@@ -163,13 +163,11 @@ if (url.get('reset') === '1') {
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
    daria o e-mail. */
 const jaCapturado = () => {
-  /* O ?c=1 vem do ManyChat: quem recebe o link no direct já se cadastrou
-     lá, e obrigar o formulário de novo seria pedir duas vezes o que já se
-     tem. Os links de campanha da planilha usam c=1 sozinho — exigir o ?ms
-     junto quebraria todos eles. O custo é que o parâmetro digitado à mão
-     também pula o formulário; a tranca de verdade é o porteiro do
-     servidor, não este atalho. */
-  if (url.get('c') === '1') return true;
+  /* O ?c=1 vem do ManyChat e só vale ACOMPANHADO do ?ms= (a identidade
+     do assinante, que o ManyChat injeta no link). Sozinho, ele abria a
+     leitura sem lead e sem porteiro — qualquer um digitava c=1 na barra
+     e lia o acervo inteiro, invisível. Sem o ms, o formulário aparece. */
+  if (url.get('c') === '1' && url.get('ms')) return true;
   const l = leadSalvo();
   return !!(l && l.nome && l.email && l.whatsapp);
 };
@@ -235,7 +233,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241428', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241439', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -329,7 +327,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241428"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241439"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -502,7 +500,7 @@ function abrirOferta(origem) {
   /* quem já deu os dados não os dá de novo */
   cx.querySelector('#oferta-campos').hidden = jaCapturado();
   cx.dataset.origem = origem;
-  cx.showModal();
+  if (!cx.open) cx.showModal();
   setTimeout(() => { if (!jaCapturado()) cx.querySelector('#of-nome').focus(); }, 120);
   evento('abriu_oferta', { origem });
 }
@@ -693,7 +691,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241428`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241439`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1102,7 +1100,11 @@ function montarEspiada() {
 }
 
 /* quem espiou e quis ler cai exatamente na página que estava vendo */
+let abrindo = 0;
 function abrirNaPagina(n) {
+  /* dois toques no mesmo segundo são UM pedido */
+  if (Date.now() - abrindo < 900) return;
+  abrindo = Date.now();
   const ir = () => {
     /* otimista como todo o resto: abre JÁ na página tocada; se o porteiro
        negar, a leitura fecha e a parede do mês aparece */
@@ -1231,7 +1233,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241428"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241439"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1418,7 +1420,10 @@ async function consultarPorteiro(edicao) {
      o id do assinante no link (&ms=...), o porteiro conta a edição dessa
      pessoa sem que nenhum dado pessoal ande pela barra de endereços. */
   const ms = url.get('ms') || '';
-  if (!CFG.webhookLead || (!l && !ms)) return { liberado: true, motivo: 'sem porteiro' };
+  if (!CFG.webhookLead) return { liberado: true, motivo: 'sem porteiro' };
+  /* sem lead e sem ms não existe "liberar": não sabemos QUEM é. A leitura
+     volta para o formulário em vez de abrir no escuro. */
+  if (!l && !ms) return { liberado: false, precisaCadastro: true };
 
   /* resposta fresca guardada: não repergunta */
   const g = vereditoSalvo();
@@ -1471,7 +1476,7 @@ function mostrarPorteiro(v) {
   $('#mes-voltar').hidden = !v.edicaoEmCurso;
   $('#mes-voltar').textContent = v.edicaoEmCurso ? `Voltar para a ED${v.edicaoEmCurso}` : 'Voltar';
   $('#mes-dialog').dataset.edicao = v.edicaoEmCurso || '';
-  $('#mes-dialog').showModal();
+  if (!$('#mes-dialog').open) $('#mes-dialog').showModal();
   evento('bateu_no_porteiro', { edicaoEmCurso: v.edicaoEmCurso || null, dias: dias || null });
 }
 
@@ -1500,6 +1505,12 @@ async function liberadoParaLer() {
   clearTimeout(lento);
   if (bt && antes !== null) bt.innerHTML = antes;
   if (v.liberado) return true;
+  if (v.precisaCadastro) {
+    /* a identidade evaporou (c=1 sem ms, storage limpo): fecha a leitura
+       e levanta o formulário — nunca a parede, que fala com quem já leu */
+    pedirDados('leitura', () => { abrirLeitura(); });
+    return false;
+  }
   mostrarPorteiro(v);
   return false;
 }
@@ -1523,6 +1534,8 @@ function pedirDados(onde, depois = null) {
   const restantes = Math.max(1, (EDICAO.capitulos || []).length - 1);
   const dek = dek0;
   /* direto: um pedido, uma promessa — sem aula sobre capítulos */
+  const dlg = $('#form-dialog');
+  if (dlg.open) { aoTerminar = depois; return false; }   /* clique duplo: já está na tela */
   $('#form-tit').textContent = tit;
   $('#form-dek').textContent = chave === 'checkout' ? dek
     : `Preencha o formulário abaixo para liberar a ED ${EDICAO.n} na íntegra.`;
@@ -1595,6 +1608,11 @@ async function enviar(e) {
      NA HORA; a gravação viaja por trás com keepalive (sobrevive até a
      troca de página) e, se o porteiro negar, a parede do mês cobre a
      leitura quando a resposta chegar. */
+  const btGuarda = $('#btn-enviar');
+  if (btGuarda.dataset.enviando === '1') return;   /* clique duplo no enviar */
+  btGuarda.dataset.enviando = '1';
+  setTimeout(() => { btGuarda.dataset.enviando = ''; }, 1500);
+
   localStorage.setItem(CHAVE_LEAD, JSON.stringify(lead));
   evento('virou_lead', { onde: lead.onde });
 
