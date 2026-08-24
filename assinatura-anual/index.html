@@ -8,8 +8,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
 <link rel="apple-touch-icon" href="../premium/favicon-180.png">
 <meta name="theme-color" content="#F2EEE6">
-<script defer src="../premium/calor.js?v=202608241254"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202608241254">
+<script defer src="../premium/calor.js?v=202608241259"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202608241259">
 </head>
 <body class="pagina">
 
@@ -17,9 +17,7 @@
   <a class="topo-marca" href="../" aria-label="ETER — início">
     <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
   </a>
-  <nav class="topo-nav">
-    <a href="../">Todas as edições</a>
-  </nav>
+
 </header>
 
 <main class="papelada estreita">
@@ -39,47 +37,39 @@
     inteiro em vez de trinta dias.</p>
   </section>
 
-  <section class="ganhos" id="tudo-que-acessa">
-    <p class="rotulo">Tudo que você acessa ao assinar</p>
-    <ul id="itens-assinatura"></ul>
-  </section>
-
   <section class="ganhos">
-    <p class="rotulo">O que muda ao completar</p>
+    <p class="rotulo">O que muda ao completar o ano</p>
     <ul>
-      <li><b>52 edições em vez de 4</b><span>uma revista nova por semana, o ano inteiro</span></li>
-      <li><b>Todos os encontros ao vivo</b><span>e não só os quatro do passe</span></li>
-      <li><b>O acervo aberto o ano inteiro</b><span>em vez de fechar no trigésimo dia</span></li>
+      <li><b>12 meses de acesso, não 30 dias</b><span>52 edições novas em vez de 4, e o acervo aberto o ano inteiro</span></li>
+      <li><b>A comunidade Vanguarda — só no anual</b><span>plataforma fechada e o grupo de membros no WhatsApp, com os fundadores</span></li>
+      <li><b>Participação na curadoria — só no anual</b><span>bastidores, pauta das próximas edições e coautoria em conteúdos</span></li>
+      <li><b>Todos os encontros ao vivo do ano</b><span>e não só os quatro do primeiro mês</span></li>
       <li><b>O preço de hoje travado</b><span>a ETER reajusta, e quem entrou antes não é alcançado</span></li>
     </ul>
   </section>
 
+  <section class="ganhos" id="tudo-que-acessa">
+    <p class="rotulo">Tudo que a assinatura de 12 meses abre</p>
+    <ul id="itens-assinatura"></ul>
+  </section>
+
   <figure class="mockup">
-    <img src="../premium/mockup-assinatura.webp?v=202608241254" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
+    <img src="../premium/mockup-assinatura.webp?v=202608241259" alt="A assinatura da ETER: a revista, a comunidade, os encontros ao vivo e o copiloto"
       width="794" height="485" decoding="async">
   </figure>
 
   <div class="fecho">
     <button class="btn btn-passe grande" id="btn-anual">
-      Assinar o ano — <span id="btn-preco">R$897</span>
+      ASSINAR ANUAL — <span id="btn-preco">R$897</span>
     </button>
-    <p class="sob-botao"><b id="pix-preco">R$897</b> à vista no Pix, ou parcelado no cartão.
-    Não renova sozinho: quando o ano acabar, você decide de novo.</p>
+    <p class="sob-botao"><b id="pix-preco">R$897</b> à vista no Pix, ou <b id="mensal-2">em 12× de R$87,90</b> no
+    cartão. 12 meses de acesso; não renova sozinho.</p>
+    <button class="btn btn-fantasma grande" id="btn-nao">APENAS ACESSAR O PASSE</button>
+    <p class="sob-botao">Seu passe de 30 dias continua ativo de qualquer jeito.
+    Esta condição só existe nesta página.</p>
     <p class="erro-oferta" id="erro-oferta" hidden></p>
   </div>
 
-  <div class="recusa">
-    <a href="#" id="btn-nao">Não, quero só os trinta dias do passe</a>
-    <p>O seu passe continua ativo de qualquer jeito. Esta oferta some ao sair desta página.</p>
-  </div>
-
-  <section class="recepcao">
-    <p class="rotulo">Onde você acessa</p>
-    <p>A revista, a comunidade e os encontros ao vivo ficam no <b>Curseduca</b>. O acesso
-    chega no e-mail que você usou na compra, em poucos minutos. Se não chegar, confira o
-    spam e fale com a gente pelo mesmo e-mail.</p>
-    <p><a href="https://eterbrasil.curseduca.pro/" target="_blank" rel="noopener">Abrir a plataforma</a></p>
-  </section>
 
   <p class="pe">
     <span id="pe-empresa">ETER COMPANY LTDA <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
@@ -103,12 +93,12 @@
 
   document.getElementById('btn-nao').addEventListener('click', e => {
     e.preventDefault();
-    location.href = 'https://eterbrasil.curseduca.pro/';
+    location.href = 'confirmado.html';
   });
 
   let c;
   try {
-    c = (await (await fetch('../edicoes.json?v=202608241254')).json()).config;
+    c = (await (await fetch('../edicoes.json?v=202608241259')).json()).config;
   } catch (err) {
     console.warn('[eter] catálogo indisponível', err);
     return naoDeu('Não conseguimos carregar a oferta agora. Recarregue a página — seu passe está ativo de qualquer forma.');
@@ -120,13 +110,14 @@
   texto('cheio', c.precoCheio);
   texto('parcela', c.precoAnual);
   texto('mensal', c.mensalAnual || c.parcelaAnual);
+  texto('mensal-2', c.mensalAnual || c.parcelaAnual);
   texto('btn-preco', c.precoAnual);
   texto('pix-preco', c.precoAnual);
 
   /* a lista de entregáveis mora no catálogo, junto do preço: mexeu num
      lugar, mudou nos dois. Nada de oferta escrita em dois sítios. */
   try {
-    const cat = await (await fetch('../edicoes.json?v=202608241254')).json();
+    const cat = await (await fetch('../edicoes.json?v=202608241259')).json();
     const its = (cat.assinatura && cat.assinatura.itens) || [];
     const ul = document.getElementById('itens-assinatura');
     if (ul && its.length) ul.innerHTML = its.map(([a, b]) =>
