@@ -3,8 +3,8 @@
 
    Uma página só serve todas as edições. Quem escolhe a edição é a URL:
      /?ed=004        → abre a porta da edição 004
-     /?ed=004&c=1    → já veio capturado (ManyChat): pula o formulário
      /?ed=004&j=cadu → veio pelo jornaleiro "cadu": o código vai no checkout
+   O formulário é obrigatório para todo leitor — nenhum parâmetro o pula.
 
    Edição nova = uma entrada no edicoes.json + rodar o converter.sh.
    Este arquivo não muda.
@@ -126,7 +126,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('edicoes.json?v=202608242058')).json();
+  DADOS = await (await fetch('edicoes.json?v=202608242059')).json();
   CFG = DADOS.config;
   PASSE = DADOS.passe;
 
