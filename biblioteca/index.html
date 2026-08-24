@@ -10,8 +10,8 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../premium/casa.js?v=202608241156"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202608241156">
+<script defer src="../premium/casa.js?v=202608241201"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202608241201">
 </head>
 <body class="pagina biblioteca">
 
@@ -46,7 +46,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202608241156" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202608241201" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -72,7 +72,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('../edicoes.json?v=202608241156')).json(); }
+  try { D = await (await fetch('../edicoes.json?v=202608241201')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;

@@ -225,7 +225,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241156', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241201', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -319,7 +319,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241156"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241201"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -407,7 +407,7 @@ function abrirOferta(origem) {
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608241156"
+          <img src="${CASA}mockup-assinatura.webp?v=202608241201"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -622,7 +622,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241156`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241201`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1157,7 +1157,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241156"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241201"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1515,49 +1515,42 @@ async function enviar(e) {
     pagina: paginaEmFoco || paginaAtual, referrer: document.referrer || '', em: new Date().toISOString(),
   };
 
-  const bt = $('#btn-enviar');
-  bt.disabled = true; bt.textContent = 'Abrindo…';
-
-  /* O Apps Script frio leva 2 a 5 segundos. Se a pessoa apertar Esc nesse
-     meio, ela DESISTIU — e mesmo assim a continuação abria a leitura por
-     cima dela. A marca é lida depois do await; o cadastro continua sendo
-     gravado, porque o dado já foi dado. */
-  const dialogo = $('#form-dialog');
-  const marca = (dialogo.dataset.envio = String(Date.now()));
-
-  /* A gravação do lead JÁ devolve o veredito do porteiro. Ler essa resposta
-     economiza uma segunda ida ao Google — e são 2 a 5 segundos por ida,
-     porque o Apps Script liga sob demanda. Uma viagem em vez de duas. */
-  let veredito = null;
-  if (CFG.webhookLead) {
-    try {
-      const r = await fetch(CFG.webhookLead, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(lead),
-      });
-      veredito = await r.json();
-    } catch (err) {
-      console.warn('[porta] porteiro fora do ar, liberando', err);
-      veredito = { liberado: true, motivo: 'porteiro fora do ar' };
-    }
-  }
-
+  /* ═══ ABERTURA OTIMISTA TAMBÉM AQUI ═══════════════════════
+     O envio esperava o Apps Script FRIO responder — até vinte segundos de
+     "Abrindo…" com o dedo parado. Agora o cadastro válido abre a revista
+     NA HORA; a gravação viaja por trás com keepalive (sobrevive até a
+     troca de página) e, se o porteiro negar, a parede do mês cobre a
+     leitura quando a resposta chegar. */
   localStorage.setItem(CHAVE_LEAD, JSON.stringify(lead));
-  if (veredito) localStorage.setItem(CHAVE_MES, JSON.stringify({
-    edicao: EDICAO.n, quem: lead.email, veredito, ate: Date.now() + 6e5,
-  }));
   evento('virou_lead', { onde: lead.onde });
+
+  const dialogo = $('#form-dialog');
+  dialogo.dataset.envio = '';
+  dialogo.close();
+  const bt = $('#btn-enviar');
   bt.disabled = false;
   destravar();
 
-  /* desistiu no meio da espera: grava o lead e não abre nada por cima */
-  if (dialogo.dataset.envio !== marca || !dialogo.open) { aoTerminar = null; return; }
-  dialogo.close();
+  const envio = CFG.webhookLead ? fetch(CFG.webhookLead, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(lead),
+    keepalive: true,
+  }).then(r => r.json()).catch(err => {
+    console.warn('[porta] porteiro fora do ar, liberando', err);
+    return { liberado: true, motivo: 'porteiro fora do ar' };
+  }) : Promise.resolve(null);
+
+  envio.then(veredito => {
+    if (veredito) localStorage.setItem(CHAVE_MES, JSON.stringify({
+      edicao: EDICAO.n, quem: lead.email, veredito, ate: Date.now() + 6e5,
+    }));
+    /* a leitura já está aberta; só a negativa interrompe */
+    if (veredito && !veredito.liberado && !paraComprar) { voltar(); mostrarPorteiro(veredito); }
+  });
 
   if (aoTerminar) { const f = aoTerminar; aoTerminar = null; f(); return; }
-  if (!veredito || veredito.liberado) abrirLeitura();
-  else mostrarPorteiro(veredito);
+  abrirLeitura();
 }
 
 /* ═══ LIGAÇÕES ═════════════════════════════════════════════════ */
