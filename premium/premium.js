@@ -233,7 +233,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241221', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241222', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -327,7 +327,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241221"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241222"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -451,7 +451,6 @@ function abrirOferta(origem) {
           </div>
         </div>
         <button class="btn btn-passe" id="oferta-seguir" type="submit">ASSINAR O PASSE — ${CFG.precoPasse}</button>
-        <a class="oferta-anual" id="oferta-anual" href="#">Prefere o ano inteiro? Assinatura anual — ${CFG.precoAnual} à vista ou ${CFG.parcelaAnual || '12× de R$87,90'}</a>
       </form>`;
     document.body.append(cx);
     cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
@@ -496,17 +495,6 @@ function abrirOferta(origem) {
       } catch (e) {}
       cx.close();
       seguirSemLead(orig);
-    });
-
-    cx.querySelector('#oferta-anual').addEventListener('click', ev => {
-      ev.preventDefault();
-      evento('clicou_anual', { origem: cx.dataset.origem || 'oferta' });
-      const u = new URL(CFG.checkoutAnual);
-      u.searchParams.set('src', `ed${EDICAO.n}`);
-      const j = url.get('j');
-      u.searchParams.set('sck', j ? `anual-${j}` : 'anual');
-      for (const [k, vv] of Object.entries(utmsDaUrl())) u.searchParams.set(k, vv);
-      location.href = u;
     });
   }
   /* quem já deu os dados não os dá de novo */
@@ -703,7 +691,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241221`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241222`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1238,7 +1226,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241221"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241222"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

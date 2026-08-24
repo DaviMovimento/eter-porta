@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = async () => D ||
-    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241221`)).json());
+    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241222`)).json());
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -86,7 +86,6 @@
             </div>
           </div>
           <button class="btn btn-passe" id="oferta-seguir" type="submit">ASSINAR O PASSE — ${C.precoPasse}</button>
-          <a class="oferta-anual" id="oferta-anual" href="#">Prefere o ano inteiro? Assinatura anual — ${C.precoAnual} à vista ou ${C.parcelaAnual || '12× de R$87,90'}</a>
         </form>`;
       document.body.append(cx);
       cx.querySelector('.fechar').addEventListener('click', () => cx.close());
@@ -135,16 +134,6 @@
         } catch (e) {}
         (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem: orig, pagina: PAGINA });
         irAoCheckout();
-      });
-
-      cx.querySelector('#oferta-anual').addEventListener('click', ev => {
-        ev.preventDefault();
-        const p = busca(); const j = p.get('j');
-        const u = new URL(C.checkoutAnual);
-        u.searchParams.set('src', PAGINA);
-        u.searchParams.set('sck', j ? `anual-${j}` : 'anual');
-        for (const [k, vv] of p) if (k.startsWith('utm_')) u.searchParams.set(k, vv);
-        location.href = u;
       });
     }
     cx.querySelector('#oferta-campos').hidden = capturado();
