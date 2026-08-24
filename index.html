@@ -14,9 +14,9 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="premium/casa.js?v=202608241423"></script>
-<script defer src="premium/calor.js?v=202608241423"></script>
-<link rel="stylesheet" href="premium/premium.css?v=202608241423">
+<script defer src="premium/casa.js?v=202608241428"></script>
+<script defer src="premium/calor.js?v=202608241428"></script>
+<link rel="stylesheet" href="premium/premium.css?v=202608241428">
 </head>
 <body class="pagina inicio">
 
@@ -76,7 +76,7 @@
   <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
   <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608241423" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608241428" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe" id="passe-home">
@@ -103,7 +103,7 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608241423')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608241428')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -144,7 +144,7 @@
        pela cor. A da edição mostra uma revista só, e aqui o assunto é
        a revista inteira. */
     const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-geral-m.webp' : 'parede-geral.webp';
-    const arte = `${BASE}edicoes/${paredeArq}?v=202608241423`;
+    const arte = `${BASE}edicoes/${paredeArq}?v=202608241428`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;
@@ -152,10 +152,10 @@
 
   /* os dois botões do passe vão para o mesmo lugar, com origem diferente
      para a telemetria saber qual dos dois converteu */
-  const irPagar = origem => {
-    /* a cadeia inteira: caixa da oferta (mockup + entregáveis + preço) →
-       formulário → checkout. Mesma jornada da página de edição. */
-    if (window.abrirOfertaCasa) window.abrirOfertaCasa(origem);
+  const irPagar = (origem, direto) => {
+    /* botão ao lado do card de entregáveis vai DIRETO; os soltos abrem a
+       oferta completa em popup. */
+    if (window.abrirOfertaCasa) window.abrirOfertaCasa(origem, direto);
   };
 
 
@@ -180,7 +180,7 @@
   const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
   addEventListener('scroll', rolagem, { passive: true }); rolagem();
   document.getElementById('btn-passe-home').addEventListener('click', () => irPagar('home-hero'));
-  document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('home-oferta'));
+  document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('home-oferta', true));
   document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('home-topo'); });
 })();
 </script>

@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = async () => D ||
-    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241423`)).json());
+    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241428`)).json());
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -42,9 +42,16 @@
           return !!(l && l.nome && l.email && l.whatsapp); } catch (e) { return false; }
   };
 
-  async function abrirOferta(origem) {
+  async function abrirOferta(origem, direto) {
     const d = await catalogo();
     const C = d.config, P = d.passe;
+    /* botão ao lado dos entregáveis: sem popup de oferta. Cadastrado vai
+       direto ao pagamento; novo vê só o formulário curto. */
+    if (direto && capturado()) {
+      (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem, pagina: PAGINA });
+      location.href = linkCheckout(C, origem);
+      return;
+    }
     let cx = document.getElementById('oferta-dialog');
     if (!cx) {
       cx = document.createElement('dialog');
@@ -137,6 +144,7 @@
       });
     }
     cx.querySelector('#oferta-campos').hidden = capturado();
+    cx.classList.toggle('so-form', !!direto);
     cx.dataset.origem = origem;
     cx.showModal();
     setTimeout(() => { if (!capturado()) cx.querySelector('#of-nome').focus(); }, 120);

@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241423') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241423') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241423') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241428') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241428') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241428') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2672,3 +2672,8 @@ html{background:var(--papel)}
 /* o mockup do upsell respira menos: a página é uma oferta, não um pôster */
 .papelada .mockup{margin:1.2rem 0 1.4rem}
 .papelada .mockup img{display:block;width:100%;height:auto;max-height:34dvh;object-fit:contain}
+
+/* o modo só-formulário: o botão veio de um card que já mostrou tudo */
+#oferta-dialog.so-form .mock-passe,
+#oferta-dialog.so-form .oferta-itens,
+#oferta-dialog.so-form .oferta-chamada{display:none}
