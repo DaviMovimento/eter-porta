@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = async () => D ||
-    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241022`)).json());
+    (D = await (await fetch(`${RAIZ}edicoes.json?v=202608241050`)).json());
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
