@@ -180,11 +180,11 @@ if (url.get('reset') === '1') {
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
    daria o e-mail. */
 const jaCapturado = () => {
-  /* O ?c=1 vem do ManyChat e só vale ACOMPANHADO do ?ms= (a identidade
-     do assinante, que o ManyChat injeta no link). Sozinho, ele abria a
-     leitura sem lead e sem porteiro — qualquer um digitava c=1 na barra
-     e lia o acervo inteiro, invisível. Sem o ms, o formulário aparece. */
-  if (url.get('c') === '1' && url.get('ms')) return true;
+  /* O formulário é a porta única: TODO leitor entrega nome, e-mail e
+     WhatsApp antes de ler, venha do ManyChat, da bio ou de anúncio —
+     decisão do Rei em 24/08. O ?c=1 do link do ManyChat não dá mais
+     passe livre; o ?ms= segue viajando como rastro (entra no lead e no
+     porteiro), mas não substitui o cadastro. */
   const l = leadSalvo();
   return !!(l && l.nome && l.email && l.whatsapp);
 };
@@ -250,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241500', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608242058', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -344,7 +344,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241500"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608242058"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -708,7 +708,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241500`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608242058`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1285,7 +1285,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241500"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608242058"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1466,10 +1466,10 @@ let porteiroEmVoo = null;
 async function consultarPorteiro(edicao) {
   if (emDemo()) return porteiroDeMentira(edicao);
   const l = leadSalvo();
-  /* Quem vem do ManyChat entra com c=1 e não preenche formulário — então não
-     temos e-mail nem telefone. Mas o ManyChat sabe quem é: se ele acrescentar
-     o id do assinante no link (&ms=...), o porteiro conta a edição dessa
-     pessoa sem que nenhum dado pessoal ande pela barra de endereços. */
+  /* O ?ms= é o id do assinante que o ManyChat injeta no link. Hoje todo
+     leitor preenche o formulário (o ms não dá mais passe livre), mas ele
+     segue no corpo: amarra a leitura ao contato do ManyChat sem que nenhum
+     dado pessoal ande pela barra de endereços. */
   const ms = url.get('ms') || '';
   if (!CFG.webhookLead) return { liberado: true, motivo: 'sem porteiro' };
   /* sem lead e sem ms não existe "liberar": não sabemos QUEM é. A leitura

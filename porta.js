@@ -67,7 +67,7 @@ addEventListener('visibilitychange', () => { if (document.visibilityState === 'h
 
 /* ── o lead: guardado no aparelho para não pedir duas vezes ───── */
 const leadSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE_LEAD)); } catch { return null; } };
-const jaCapturado = () => url.get('c') === '1' || !!leadSalvo();
+const jaCapturado = () => !!leadSalvo();
 
 /* ── o link do checkout, com o rastro de onde a pessoa veio ─────
    Dos campos de rastreio que a Guru aceita (ref, sck, src, subid, trk, utm_*),
@@ -126,7 +126,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch('edicoes.json?v=202608241500')).json();
+  DADOS = await (await fetch('edicoes.json?v=202608242058')).json();
   CFG = DADOS.config;
   PASSE = DADOS.passe;
 
