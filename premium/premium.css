@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241235') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241235') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241235') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241250') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241250') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241250') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2608,4 +2608,26 @@ html{background:var(--papel)}
 @media (max-height:44rem){
   #oferta-dialog .mock-passe{display:none}
   #oferta-dialog .oferta-chamada{display:block}
+}
+
+/* ═══ O POPUP DO PASSE NO CELULAR: mockup garantido, preço verde ══
+   Com os campos dentro, o quadro cresceu e o flex encolhia o mockup
+   até o zero — ele era o único elástico. Agora ele tem piso: aparece
+   sempre, menor quando a tela aperta, mas nunca some. E o preço veste
+   o Verde da casa, maior, como no card da página. */
+#oferta-dialog .mock-passe, #mes-dialog .mock-passe{
+  flex:0 0 auto;min-height:4.2rem;
+}
+#oferta-dialog .mock-passe img, #mes-dialog .mock-passe img{
+  height:auto;max-height:clamp(4.2rem,14dvh,9rem);
+}
+#oferta-dialog .oferta-rot b, #mes-dialog .oferta-rot b{
+  display:block;color:var(--verde-preco);
+  font-family:var(--display);font-size:1.75rem;line-height:1;margin-top:.1rem;
+}
+/* tela muito curta: o mockup encolhe mais, mas continua lá */
+@media (max-height:44rem){
+  #oferta-dialog .mock-passe{display:block}
+  #oferta-dialog .mock-passe img, #mes-dialog .mock-passe img{max-height:9dvh}
+  #oferta-dialog .oferta-chamada{display:block;font-size:.78rem}
 }

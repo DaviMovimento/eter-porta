@@ -50,7 +50,7 @@ const COPY_CASA = {
   /* Os botões ficaram só com a linha principal. A segunda linha dividia a
      atenção no exato ponto em que a página pede UMA decisão — e o que ela
      dizia (minutos, "um mês de acesso") já está dito na oferta logo abaixo. */
-  lerTit: 'LER ESTA EDIÇÃO INTEIRA, DE GRAÇA',
+  lerTit: 'LER GRATUITAMENTE AGORA',
   lerSub: () => '',                                                    // 1.4
   /* O BOTÃO NÃO LEVA PREÇO EM LUGAR NENHUM. Dentro da oferta o número
      já está no alto do card, em verde, três linhas acima — repeti-lo no
@@ -235,7 +235,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241235', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608241250', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -329,7 +329,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241235"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608241250"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -612,7 +612,7 @@ function montarTempos() {
     <p class="casa-lede">${COPY_CASA.apresenta}</p>
     <p class="casa-sub">${COPY_CASA.apresentaSub}</p>
     <div class="acoes acoes-casa">
-      <button class="btn btn-ler" data-ler-casa>LER ESTA EDIÇÃO INTEIRA, DE GRAÇA</button>
+      <button class="btn btn-ler" data-ler-casa>LER GRATUITAMENTE AGORA</button>
       <button class="btn btn-passe" data-passe="casa">ADQUIRIR O PASSE</button>
     </div>
     <div class="casa-polimata">
@@ -693,7 +693,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241235`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608241250`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -775,14 +775,15 @@ function montarEspiada() {
   const existe    = n => n !== null && n >= 1 && n <= TOTAL;
   const ultimaFolha = folhaDe(TOTAL);
 
-  const livre      = n => jaCapturado() || n <= limiteEspiada;
+  /* a vitrine não olha cadastro: o capítulo 1 é público, o resto é
+     trancado para TODOS — quem quer ler inteiro entra pela leitura */
+  const livre      = n => n <= limiteEspiada;
   const folhaLivre = k => paginasDe(k).every(n => !existe(n) || livre(n));
   /* Quando o limite cai em página par, a última livre divide a folha com a
      primeira travada. Em vez de embaçar as duas (o que comia uma página do
      capítulo 1 em três edições), embaça só a metade travada: o leitor vê a
      parede exatamente onde ela está. */
-  const folhaMaxima = () => (jaCapturado() ? ultimaFolha
-                                           : Math.min(ultimaFolha, folhaDe(limiteEspiada + 1)));
+  const folhaMaxima = () => Math.min(ultimaFolha, folhaDe(limiteEspiada + 1));
 
   const spread  = $('#spread');
   const slotEsq = $('#pg-esq'), slotDir = $('#pg-dir');
@@ -1085,10 +1086,10 @@ function montarEspiada() {
 
   /* quando o cadastro entra, a revista inteira abre sem recarregar a página */
   destravar = () => {
+    /* o cadastro NÃO destrava a vitrine — destrava a leitura oficial.
+       Aqui só muda a dica, que deixa de pedir o que já foi dado. */
     if (!jaCapturado()) return;
-    pintarFaixa();
-    legendar('destravou');       /* recentra a faixa, que o repinte zerou */
-    $('#dica-faixa').innerHTML = 'deslize para espiar <i class="pt"></i> <b>toque para ler a partir dali</b>';
+    $('#dica-faixa').innerHTML = 'toque numa página para <b>ler na íntegra</b>';
   };
 
   pintarFaixa();
@@ -1228,7 +1229,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241235"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608241250"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
