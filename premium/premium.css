@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232046') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232046') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232046') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608232100') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608232100') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608232100') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2274,3 +2274,33 @@ body.inicio,body.biblioteca{background:var(--papel)}
   .biblioteca .papelada h1{font-size:1.7rem;max-width:12em}
   .biblioteca .papelada .dek{font-size:.9rem;text-align:center}
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   AJUSTES DE CONFERÊNCIA — 23/08
+   ═══════════════════════════════════════════════════════════════ */
+
+/* O PREÇO EM VERDE. O Verde Eter puro (#0F1F18) sobre papel lê como
+   PRETO — a olho não é verde nenhum. Este é o mesmo verde, aberto até
+   a cor aparecer, com 6,6:1 de contraste sobre o papel. */
+:root{ --verde-preco:#1F5E42 }
+.passe-preco{color:var(--verde-preco)}
+
+/* A MANCHETE DA HOME. A cursiva de "repertório polímata" desce sobre a
+   linha seguinte e o "e" ficava órfão no começo da linha. Uma medida
+   mais curta com quebra equilibrada resolve as duas coisas, e a cursiva
+   ganha o ar de que precisa sem afastar as demais linhas. */
+.capa-inicio h1{
+  max-width:15em;margin-inline:auto;text-wrap:balance;line-height:1.16;
+}
+.capa-inicio h1 em{display:inline-block;line-height:.78;padding-bottom:.06em}
+
+/* a dica sob a prateleira quebrava deixando "DE GRAÇA" sozinha */
+.capa-inicio .dica-faixa{max-width:none;text-wrap:balance}
+
+/* A BIBLIOTECA. O "ler" em cursiva ficava sozinho numa segunda linha,
+   miúdo, parecendo sobra. Medida mais curta parte o título em duas
+   linhas cheias e a cursiva volta ao tamanho em que ela é palavra. */
+.biblioteca .papelada h1{max-width:10.5em}
+.biblioteca .papelada h1 em{font-size:1.5em;line-height:.7}
+.biblioteca .papelada .dek{max-width:27rem}

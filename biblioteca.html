@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608232046">
+<link rel="stylesheet" href="premium/premium.css?v=202608232100">
 </head>
 <body class="pagina biblioteca">
 
@@ -44,7 +44,7 @@
     abrir todas as que já foram publicadas e participar dos encontros ao vivo.</p>
 
     <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608232046" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608232100" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -70,7 +70,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608232046')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608232100')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
