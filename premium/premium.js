@@ -291,7 +291,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232109"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232114"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -372,13 +372,8 @@ function abrirOferta(origem) {
         <p class="oferta-lede">${COPY_CASA.apresenta}</p>
         <p class="oferta-sub">${COPY_CASA.apresentaSub}</p>
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608232109"
+          <img src="${CASA}mockup-assinatura.webp?v=202608232114"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
-        </figure>
-        <figure class="oferta-capas">
-          ${DADOS.edicoes.filter(e => e.paginas).slice(0, 4).map((e, i) =>
-            `<img class="oc c${i + 1}" src="${BASE}edicoes/${e.n}/paginas/p001@240.webp"
-               alt="" width="240" height="339">`).join('')}
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
         <p class="oferta-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}
@@ -567,7 +562,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232109`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232114`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1048,7 +1043,7 @@ function blocoFim() {
     <p>${COPY_CASA.portao.replace('\n', '<br>')}</p>
     <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232109"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232114"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
