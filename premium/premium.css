@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241138') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241138') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241138') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608241144') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608241144') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608241144') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2558,3 +2558,9 @@ body.lendo{background:#0F0C09}
 
 #mes-dialog h2{font-family:var(--display);font-weight:400;font-size:1.3rem;margin:0 0 .2rem;text-align:center}
 #mes-dialog .btn-fantasma{margin-top:.4rem}
+
+
+/* NENHUM ZOOM REVELA BRANCO. Ampliada e arrastada, qualquer página
+   mostrava o branco do <html> além das bordas. O html veste o papel da
+   casa; na leitura, o JavaScript o escurece. */
+html{background:var(--papel)}
