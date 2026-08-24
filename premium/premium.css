@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608240818') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608240818') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608240818') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202608240959') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202608240959') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202608240959') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2439,3 +2439,32 @@ body.rolou .topo-nav a.destaque:hover{filter:brightness(1.06)}
 .biblioteca .papelada h1 em{
   display:inline;font-size:1.35em;line-height:.7;margin-top:0;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   REVISÃO FINAL DA JORNADA — 24/08
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── O CARROSSEL DE PÁGINAS, MAIOR E NO LUGAR ─────────────────
+   As miniaturas numeradas eram a menor peça da dobra — pequenas
+   demais para se ler como páginas. Sobem um degrau em todas as
+   larguras, com mais ar em volta, e a numeração acompanha. */
+.faixa{--mini:5rem;padding:1.2rem .5rem .6rem;margin-top:.7rem}
+.mini .n{font-size:.54rem;padding:.2rem 0}
+@media (min-width:60rem){ .faixa{--mini:4.2rem} }
+@media (max-width:59.99rem){ .faixa{--mini:4.4rem;max-width:27rem} }
+@media (max-height:44rem){ .faixa{--mini:3.2rem} }
+
+/* ── A LEITURA COM O TETO FIRME ───────────────────────────────
+   O cabeçalho sumia e voltava conforme a rolagem, e a transição
+   dava a impressão de a página quebrar. Durante a leitura ele
+   agora é fixo: título, sumário e a volta sempre à mão, e as
+   folhas alinham a quebra exatamente sob ele. */
+.cromo{transition:none}
+.cromo.oculto{opacity:1;transform:none;pointer-events:auto}
+.folha-p{scroll-margin-top:3.6rem}
+body.lendo .folha-p:first-of-type{margin-top:3.6rem}
+
+/* as folhas da leitura: quebras alinhadas, o mesmo vão entre todas */
+#paginas .folha-p{margin-left:auto;margin-right:auto}
+#paginas .folha-p + .folha-p{margin-top:.6rem}

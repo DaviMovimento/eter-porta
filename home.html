@@ -8,7 +8,8 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="premium/premium.css?v=202608240818">
+<script defer src="premium/casa.js?v=202608240959"></script>
+<link rel="stylesheet" href="premium/premium.css?v=202608240959">
 </head>
 <body class="pagina inicio">
 
@@ -68,7 +69,7 @@
   <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
   <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202608240818" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202608240959" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe" id="passe-home">
@@ -95,7 +96,7 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202608240818')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202608240959')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -135,7 +136,7 @@
     /* A parede da home é a GERAL: páginas das oito edições, escolhidas
        pela cor. A da edição mostra uma revista só, e aqui o assunto é
        a revista inteira. */
-    const arte = `${BASE}edicoes/parede-geral.webp?v=202608240818`;
+    const arte = `${BASE}edicoes/parede-geral.webp?v=202608240959`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;
@@ -144,16 +145,9 @@
   /* os dois botões do passe vão para o mesmo lugar, com origem diferente
      para a telemetria saber qual dos dois converteu */
   const irPagar = origem => {
-    const u = new URL(C.checkoutPasse);
-    const p = new URLSearchParams(location.search);
-    u.searchParams.set('src', 'home');
-    /* o código do embaixador viaja dentro do sck, como já acontece na
-       página da edição — sem isto a comissão se perde quem clica aqui */
-    const j = new URLSearchParams(location.search).get('j');
-    u.searchParams.set('sck', j ? `${origem}-${j}` : origem);
-    for (const [k, v] of p) if (k.startsWith('utm_')) u.searchParams.set(k, v);
-    (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem });
-    location.href = u;
+    /* a cadeia inteira: caixa da oferta (mockup + entregáveis + preço) →
+       formulário → checkout. Mesma jornada da página de edição. */
+    if (window.abrirOfertaCasa) window.abrirOfertaCasa(origem);
   };
 
 

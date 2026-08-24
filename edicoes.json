@@ -17,7 +17,7 @@
     "_portao": "Onde a página cobra o dado. 0 = antes de ler (o desenho atual). N = libera até a página N e só então pede. A evidência favorece N; é a chave do seu teste A/B.",
     "gateNaPagina": 0,
     "_checkout": "true faz todo botão de compra virar lead ANTES de mandar para o pagamento. Sem isto, quem abandona o checkout some — e é justamente o público de recuperação.",
-    "capturaAntesDoCheckout": false,
+    "capturaAntesDoCheckout": true,
     "_leads": "Endereço do app da web do Apps Script (termina em /exec). Ver build/planilha-de-leads.gs.",
     "webhookLead": "https://script.google.com/macros/s/AKfycbzkY_WfokD6PcZDhf1Uh_toXCfn2ofcYKEldfTlga9RKdlHUR3cPg_zdRxqIzVjrt3E_w/exec",
     "webhookEventos": "",
