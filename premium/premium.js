@@ -209,7 +209,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608232340', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608240818', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -303,7 +303,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232340"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608240818"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -391,7 +391,7 @@ function abrirOferta(origem) {
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608232340"
+          <img src="${CASA}mockup-assinatura.webp?v=202608240818"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -588,7 +588,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232340`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608240818`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -734,8 +734,18 @@ function montarEspiada() {
   });
 
   function por(slot, n) {
-    if (existe(n)) { slot.src = pag(n, 800); slot.style.visibility = 'visible'; }
-    else { slot.removeAttribute('src'); slot.style.visibility = 'hidden'; }
+    if (existe(n)) {
+      /* o navegador não busca uma imagem melhor ao ampliar: ele usa a que
+         já baixou. Oferecendo as duas larguras, a tela boa pega a de 1400
+         desde o início e o zoom continua nítido. */
+      slot.srcset = `${pag(n, 800)} 800w, ${pag(n, 1400)} 1400w`;
+      slot.sizes = '(min-width: 60rem) 34rem, 92vw';
+      slot.src = pag(n, 800);
+      slot.style.visibility = 'visible';
+    } else {
+      slot.removeAttribute('src'); slot.removeAttribute('srcset');
+      slot.style.visibility = 'hidden';
+    }
   }
 
   /* embaça só o lado que está travado, e leva o cartão para esse lado */
@@ -912,13 +922,25 @@ function montarEspiada() {
   $('#seta-esq').addEventListener('click', e => { e.stopPropagation(); irParaFolha(folha - 1, 'seta'); });
   $('#seta-dir').addEventListener('click', e => { e.stopPropagation(); irParaFolha(folha + 1, 'seta'); });
 
-  /* arrastar a revista com o dedo, como se vira papel */
-  let x0 = null;
-  $('#visor').addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  /* Arrastar a revista com o dedo, como se vira papel — MENOS quando a
+     pessoa está ampliada. Ampliado, o arrasto lateral é o que move o texto
+     para ler, e virar a página nesse momento tira a revista da mão de quem
+     está lendo. Três guardas: dedo sozinho, sem ampliação, e o movimento
+     precisa ser mais horizontal que vertical. */
+  let x0 = null, y0 = null;
+  const ampliada = () => (window.visualViewport?.scale || 1) > 1.05;
+  $('#visor').addEventListener('touchstart', e => {
+    if (e.touches.length > 1) { x0 = null; return; }   /* pinça não vira página */
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+  }, { passive: true });
   $('#visor').addEventListener('touchend', e => {
     if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    const dx = e.changedTouches[0].clientX - x0;
+    const dy = e.changedTouches[0].clientY - y0;
+    x0 = null;
+    if (ampliada()) return;                    /* ampliado: o dedo move o texto */
     if (Math.abs(dx) < 45) return;
+    if (Math.abs(dy) > Math.abs(dx)) return;   /* gesto vertical é rolagem */
     arrastouEm = Date.now();
     irParaFolha(folha + (dx < 0 ? 1 : -1), 'arrasto');
   }, { passive: true });
@@ -1068,7 +1090,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232340"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608240818"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1482,7 +1504,9 @@ function ligar() {
 
   $('#btn-ler').addEventListener('click', () => {
     evento('clicou_ler', { origem: 'capa' });
-    jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora);
+    /* sem pedágio na entrada: a revista abre no clique. O cadastro é
+       pedido adiante, no cadeado, quando as páginas livres acabam. */
+    lerAgora();
   });
   $('#btn-voltar').addEventListener('click', voltar);
   $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });
@@ -1494,7 +1518,12 @@ function ligar() {
      o passe, e mora na página de upsell, depois da compra. */
   $('#nav-passe').addEventListener('click', e => {
     e.preventDefault();
-    abrirOferta('topo');
+    /* Ia para a caixa da oferta antes do pagamento. Na home e na biblioteca
+       o mesmo botão já ia direto — duas casas com dois comportamentos, e um
+       popup entre quem decidiu comprar e o checkout. A oferta inteira segue
+       na página, logo abaixo, com mockup, itens e preço, para quem quiser ler
+       antes de decidir. */
+    irParaCheckout('topo');
   });
 
   $('#mes-passe').addEventListener('click', () => {
