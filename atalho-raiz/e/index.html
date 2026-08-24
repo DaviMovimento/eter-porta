@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>ETER</title>
+<link rel="canonical" href="/revista/">
+<style>html{background:#F2EEE6;color:#5A5044;font:400 1rem/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:2rem}
+a{color:#7D6429}</style>
+</head>
+<body>
+<p>Levando você para a revista…<br><a id="ir" href="/revista/">continuar</a></p>
+<script>
+/* A PONTE DOS LINKS PUBLICADOS. Trinta e quatro links de campanha —
+   ManyChat, bio do Instagram, carrosséis — apontam para /e/?ed=001, o
+   endereço de quando a porta morava aqui. A porta foi para /revista/ e
+   cada edição ganhou pasta própria: sem esta ponte, todo esse tráfego
+   pago cai em 404. Aqui não dá para usar reescrita de servidor porque a
+   hospedagem ignora o .htaccess desta conta, então a ponte é uma pasta
+   de verdade com este arquivo dentro. */
+(() => {
+  const p = new URLSearchParams(location.search);
+  const bruto = (p.get('ed') || '').replace(/\D/g, '');
+  const destino = bruto ? `/revista/${bruto.padStart(3, '0')}/` : '/revista/';
+  /* o ?ed já virou caminho; o resto da busca segue viagem, senão o utm e
+     o código do embaixador morrem na ponte e a venda nasce órfã */
+  p.delete('ed');
+  const resto = p.toString();
+  const url = destino + (resto ? '?' + resto : '');
+  document.getElementById('ir').href = url;
+  location.replace(url);
+})();
+</script>
+</body>
+</html>
