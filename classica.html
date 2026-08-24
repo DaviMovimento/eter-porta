@@ -2,125 +2,16 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Revista ETER</title>
-<meta name="description" content="A revista semanal da nova economia brasileira.">
-<link rel="stylesheet" href="porta.css?v=202608232334">
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0;url=/revista/">
+<title>ETER</title>
+<link rel="canonical" href="/revista/">
+<style>html{background:#F2EEE6;color:#5A5044;font:400 1rem/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:2rem}a{color:#7D6429}</style>
 </head>
 <body>
-
-<!-- ══ barra de progresso da leitura (só aparece na leitura) ══ -->
-<div id="progresso" hidden><i></i></div>
-
-<!-- ══ TELA 1 · A CAPA ═════════════════════════════════════════ -->
-<main id="tela-capa" class="tela">
-  <header class="marca">ETER</header>
-
-  <div class="capa-bloco">
-    <img id="capa-img" class="capa" alt="" width="600" height="849">
-    <p class="edicao-n" id="edicao-n"></p>
-    <h1 id="edicao-titulo"></h1>
-    <p class="dek" id="edicao-sub"></p>
-    <p class="ficha" id="edicao-ficha"></p>
-  </div>
-
-  <div class="acoes">
-    <button class="btn btn-ler" id="btn-ler">Ler esta edição de graça</button>
-    <p class="rodape-btn">Abre agora, na íntegra. Sem pagar nada.</p>
-  </div>
-
-  <div class="divisor"><span>ou entre inteiro</span></div>
-
-  <section class="passe">
-    <p class="passe-rot" id="passe-rot"></p>
-    <ul class="passe-itens" id="passe-itens"></ul>
-    <p class="passe-preco"><b id="passe-preco"></b> <span id="passe-cond"></span></p>
-    <button class="btn btn-passe" id="btn-passe-capa">Comprar o passe</button>
-    <p class="passe-credito" id="passe-credito"></p>
-  </section>
-
-  <footer class="pe">
-    <p>ETER · a revista semanal da nova economia brasileira</p>
-    <p><a href="#" id="link-outras">ver as outras edições</a> · <a href="privacidade.html">privacidade</a></p>
-    <p>ETER COMPANY LTDA · CNPJ 37.223.854/0001-47</p>
-  </footer>
-</main>
-
-<!-- ══ TELA 2 · A LEITURA ══════════════════════════════════════ -->
-<main id="tela-leitura" class="tela" hidden>
-  <header class="leitor-topo">
-    <button class="ctrl-btn" id="btn-voltar" aria-label="Voltar à capa">←</button>
-    <span class="leitor-tit" id="leitor-tit"></span>
-    <div class="leitor-ctrl">
-      <button class="ctrl-btn" id="btn-capitulos" aria-label="Capítulos" title="Capítulos">☰</button>
-      <button class="ctrl-btn" id="btn-menos" aria-label="Diminuir o zoom" title="Diminuir">−</button>
-      <button class="ctrl-btn" id="btn-lupa" aria-label="Alternar o zoom" title="Aproximar o texto">⌕</button>
-      <button class="ctrl-btn" id="btn-mais" aria-label="Aumentar o zoom" title="Aumentar">+</button>
-      <button class="ctrl-btn" id="btn-modo" title="Página dupla" hidden>❐</button>
-      <span class="contador" id="contador">1 / —</span>
-    </div>
-  </header>
-
-  <!-- retomar de onde parou: aparece só para quem já tinha começado -->
-  <div class="retomar" id="retomar" hidden>
-    <p id="retomar-txt"></p>
-    <div class="retomar-acoes">
-      <button class="btn-mini forte" id="btn-retomar">Continuar</button>
-      <button class="btn-mini" id="btn-recomecar">Começar do início</button>
-    </div>
-  </div>
-
-  <div id="paginas" class="paginas"></div>
-
-  <!-- a barra de oferta: fica na página, nunca dentro do leitor -->
-  <div class="barra" id="barra">
-    <p class="barra-txt" id="barra-txt"></p>
-    <button class="btn barra-btn" id="btn-passe-barra">Pegar o passe</button>
-  </div>
-</main>
-
-<!-- ══ FORMULÁRIO (só para quem não veio capturado) ════════════ -->
-<dialog id="form-dialog">
-  <form id="form-lead" method="dialog">
-    <button type="button" class="fechar" id="btn-fechar" aria-label="Fechar">×</button>
-    <p class="form-rot">Falta um passo</p>
-    <h2>Para onde mandamos a edição?</h2>
-    <p class="form-dek">A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima quarta.</p>
-
-    <label for="f-nome">Seu nome</label>
-    <input id="f-nome" name="nome" type="text" autocomplete="given-name" required placeholder="Como te chamam">
-
-    <label for="f-zap">WhatsApp com DDD</label>
-    <input id="f-zap" name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" required placeholder="(11) 90000-0000">
-
-    <label class="consent">
-      <input type="checkbox" id="f-ok" required>
-      <span>Autorizo a <b>ETER</b> a me enviar no WhatsApp o link desta edição e comunicações sobre a revista e suas ofertas. Meus dados serão tratados no ManyChat (EUA) e na Meta. Posso sair quando quiser respondendo <b>SAIR</b>. <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span>
-    </label>
-
-    <button class="btn btn-ler" type="submit" id="btn-enviar">Abrir a edição</button>
-    <p class="form-erro" id="form-erro" hidden></p>
-  </form>
-</dialog>
-
-<!-- ══ CAPÍTULOS DESTA EDIÇÃO ══════════════════════════════════ -->
-<dialog id="capitulos-dialog">
-  <div class="indice">
-    <button type="button" class="fechar" id="btn-fechar-cap" aria-label="Fechar">×</button>
-    <h2>Nesta edição</h2>
-    <ul id="capitulos-lista"></ul>
-  </div>
-</dialog>
-
-<!-- ══ ÍNDICE DAS EDIÇÕES ══════════════════════════════════════ -->
-<dialog id="indice-dialog">
-  <div class="indice">
-    <button type="button" class="fechar" id="btn-fechar-indice" aria-label="Fechar">×</button>
-    <h2>As edições</h2>
-    <ul id="indice-lista"></ul>
-  </div>
-</dialog>
-
-<script src="porta.js?v=202608232334"></script>
+<p>Esta página virou a porta nova.<br><a id="ir" href="/revista/">continuar</a></p>
+<script>(() => { const d = "/revista/" + location.search;
+  document.getElementById('ir').href = d; location.replace(d); })();</script>
 </body>
 </html>

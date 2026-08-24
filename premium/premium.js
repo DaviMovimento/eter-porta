@@ -161,7 +161,12 @@ if (url.get('reset') === '1') {
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
    daria o e-mail. */
 const jaCapturado = () => {
-  if (url.get('c') === '1') return true;
+  /* O ?c=1 vem do ManyChat, para quem já se cadastrou lá não preencher o
+     formulário de novo. Sozinho ele abria a revista inteira para qualquer
+     um que digitasse o parâmetro na barra de endereços. Agora ele só vale
+     acompanhado do ?ms, o identificador do assinante — que o ManyChat
+     manda junto e ninguém adivinha. */
+  if (url.get('c') === '1' && url.get('ms')) return true;
   const l = leadSalvo();
   return !!(l && l.nome && l.email && l.whatsapp);
 };
@@ -204,7 +209,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608211117', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608232339', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -288,7 +293,7 @@ function montarChegada() {
   const btLer = $('#btn-ler');
   btLer.firstChild.textContent = COPY_CASA.lerTit + ' ';
   $('#sub-ler').remove();
-  document.querySelectorAll('[data-passe="capa"]').forEach(b => {
+  document.querySelectorAll('[data-passe="capa"],[data-passe="heroi"]').forEach(b => {
     b.textContent = COPY_CASA.passeTitCurto;
   });
 
@@ -298,7 +303,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232334"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608232339"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -386,7 +391,7 @@ function abrirOferta(origem) {
         <img class="marca-oferta" src="${CASA}logo.webp"
           alt="ETER" width="900" height="240">
         <figure class="mock-passe">
-          <img src="${CASA}mockup-assinatura.webp?v=202608232334"
+          <img src="${CASA}mockup-assinatura.webp?v=202608232339"
             alt="Tudo que você acessa ao assinar" width="794" height="485" decoding="async">
         </figure>
         <p class="oferta-chamada">${COPY_CASA.chamadaOferta}</p>
@@ -475,7 +480,7 @@ function montarTempos() {
   acoes.append(folha.querySelector('#btn-ler') || capa.querySelector('#btn-ler'));
   const bp = document.createElement('button');
   bp.className = 'btn btn-passe btn-passe-hero';
-  bp.dataset.passe = 'capa';
+  bp.dataset.passe = 'heroi';
   bp.textContent = COPY_CASA.passeTitCurto;
   acoes.append(bp);
   capa.append(acoes);
@@ -583,7 +588,7 @@ function montarFundo() {
      cada canto. E ela é nítida porque cada ladrilho entra em resolução quase
      nativa (800px num quadro de 2560), em vez de uma foto esticada. */
   const atm = $('#atmosfera');
-  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232334`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/parede.webp?v=202608232339`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1063,7 +1068,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232334"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608232339"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1468,20 +1473,17 @@ async function enviar(e) {
 /* ═══ LIGAÇÕES ═════════════════════════════════════════════════ */
 function ligar() {
   const lerAgora = async () => { if (await liberadoParaLer()) abrirLeitura(); };
-  $('#btn-ler-fixo')?.addEventListener('click', () => {
-    evento('clicou_ler', { origem: 'faixa-fixa' });
-    jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora);
-  });
 
-  /* a faixa se apaga quando o botão de verdade entra em cena — duas
-     ofertas idênticas na mesma tela viram ruído */
   /* O CONVITE FLUTUANTE FOI REMOVIDO. Ele existia porque o botão real
      ficava abaixo da dobra no celular; agora os dois botões estão dentro
      dela, e uma faixa fixa repetindo o mesmo convite virou uma terceira
      oferta da mesma coisa, tapando o fim da página. */
   $('#convite-fixo')?.remove();
 
-  $('#btn-ler').addEventListener('click', () => jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora));
+  $('#btn-ler').addEventListener('click', () => {
+    evento('clicou_ler', { origem: 'capa' });
+    jaCapturado() ? lerAgora() : pedirDados('leitura', lerAgora);
+  });
   $('#btn-voltar').addEventListener('click', voltar);
   $('#btn-sumario').addEventListener('click', () => { $('#sumario-dialog').showModal(); evento('abriu_sumario', { pagina: paginaAtual }); });
   const abrirAcervo = e => { e.preventDefault(); $('#acervo-dialog').showModal(); evento('abriu_acervo'); };
