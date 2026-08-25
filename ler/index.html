@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Revista ETER</title>
+<link rel="canonical" href="/revista/">
+<style>html{background:#F2EEE6;color:#5A5044;font:400 1rem/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:2rem}
+a{color:#7D6429}</style>
+</head>
+<body>
+<p>Abrindo a revista…<br><a id="ir" href="/revista/">continuar</a></p>
+<script>
+(() => {
+  const p = new URLSearchParams(location.search);
+  /* o utm da ponte é o padrão; se a campanha mandar o dela, a dela vence */
+  const fixos = {"utm_source": "bio-eter", "utm_medium": "bio", "utm_campaign": "perfil-eter"};
+  for (const [k, v] of Object.entries(fixos)) if (!p.get(k)) p.set(k, v);
+  const q = p.toString();
+  const d = "/revista/" + (q ? "?" + q : "");
+  document.getElementById('ir').href = d;
+  location.replace(d);
+})();
+</script>
+</body>
+</html>
