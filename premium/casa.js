@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = () => D ||
-    (D = fetch(`${RAIZ}edicoes.json?v=202608251611`).then(r => r.json()));
+    (D = fetch(`${RAIZ}edicoes.json?v=202608261809`).then(r => r.json()));
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
