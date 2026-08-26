@@ -250,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202608261814', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202608261830', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
 
@@ -344,7 +344,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608261814"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202608261830"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -708,7 +708,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608261814`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202608261830`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1285,7 +1285,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608261814"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202608261830"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1528,7 +1528,11 @@ function mostrarPorteiro(v) {
     : (PASSE.condicao || '');
   $('#mes-caixa').querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
   $('#mes-voltar').hidden = !v.edicaoEmCurso;
-  $('#mes-voltar').textContent = v.edicaoEmCurso ? `Voltar para a ED${v.edicaoEmCurso}` : 'Voltar';
+  /* "Voltar" mentia: quem bate nesta parede estava abrindo OUTRA edicao,
+     nunca esteve na do mes nesta sessao, e clicava esperando retomar a
+     leitura de onde saiu — caía numa edição que não tinha aberto. O botao
+     leva para a edicao que ela TEM direito de ler, entao e isso que ele diz. */
+  $('#mes-voltar').textContent = v.edicaoEmCurso ? `Ler a ED${v.edicaoEmCurso}` : 'Voltar';
   $('#mes-dialog').dataset.edicao = v.edicaoEmCurso || '';
   if (!$('#mes-dialog').open) abrirDialogo($('#mes-dialog'));
   evento('bateu_no_porteiro', { edicaoEmCurso: v.edicaoEmCurso || null, dias: dias || null });
