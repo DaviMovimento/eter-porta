@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Revista ETER</title>
-<link rel="canonical" href="/revista/">
+<link rel="canonical" href="/revista/009/">
 <style>html{{background:#F2EEE6;color:#5A5044;font:400 1rem/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}}
 body{{display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:2rem}}
 a{{color:#7D6429}}</style>
 </head>
 <body>
-<p>Abrindo a revista…<br><a id="ir" href="/revista/">continuar</a></p>
+<p>Abrindo a revista…<br><a id="ir" href="/revista/009/">continuar</a></p>
 <script>
 (() => {{
   const p = new URLSearchParams(location.search);
   /* o parametro da ponte e o padrao; se a campanha mandar o dela, a dela vence */
-  const fixos = {"j": "paula", "utm_source": "embaixador", "utm_medium": "indicacao", "utm_campaign": "paula"};
+  const fixos = {"j": "rodrigo", "utm_source": "embaixador", "utm_medium": "indicacao", "utm_campaign": "ed009-rodrigo"};
   for (const [k, v] of Object.entries(fixos)) if (!p.get(k)) p.set(k, v);
   const q = p.toString();
-  const d = "/revista/" + (q ? "?" + q : "");
+  const d = "/revista/009/" + (q ? "?" + q : "");
   document.getElementById('ir').href = d;
   location.replace(d);
 }})();
