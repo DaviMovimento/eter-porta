@@ -1,0 +1,497 @@
+{
+  "_leia": "O catálogo das portas. Edição nova = uma entrada nova aqui + rodar o converter.sh. Nada mais muda.",
+  "config": {
+    "_cdn": "As imagens saem daqui; o site em si pode morar em qualquer hospedagem, leve.",
+    "baseImagens": "https://davimovimento.github.io/eter-porta/",
+    "checkoutPasse": "https://clkdmg.site/pay/passe-de-30-dias",
+    "precoPasse": "R$97",
+    "_anual": "A segunda oferta, que roda na página de upsell logo depois do passe pago. Na Guru: produto de R$900, parcelamento em até 12x com os juros por conta do cliente — a parcela cai em ~R$87, menor que o passe.",
+    "checkoutAnual": "https://clkdmg.site/subscribe/eter-upsell/1click",
+    "precoAnual": "R$897",
+    "parcelaAnual": "12× de R$87,90",
+    "precoCheio": "R$997",
+    "_anualDireto": "O link de venda DIRETA do anual (para o botão Assinar do topo). O checkoutAnual acima é o 1-clique, que só funciona para quem JÁ comprou — não serve para tráfego frio.",
+    "_captura": "Como o lead é pego. 'whatsapp' abre a conversa e a janela de 24h (mensagem grátis depois). 'formulario' pega nome e zap na página, mas NÃO abre a janela — toda mensagem sua depois vira template pago.",
+    "modoCaptura": "formulario",
+    "whatsappNumero": "5551999999999",
+    "_portao": "Onde a página cobra o dado. 0 = antes de ler (o desenho atual). N = libera até a página N e só então pede. A evidência favorece N; é a chave do seu teste A/B.",
+    "gateNaPagina": 0,
+    "_checkout": "true faz todo botão de compra virar lead ANTES de mandar para o pagamento. Sem isto, quem abandona o checkout some — e é justamente o público de recuperação.",
+    "capturaAntesDoCheckout": true,
+    "_leads": "Endereço do app da web do Apps Script (termina em /exec). Ver build/planilha-de-leads.gs.",
+    "webhookLead": "https://script.google.com/macros/s/AKfycbzkY_WfokD6PcZDhf1Uh_toXCfn2ofcYKEldfTlga9RKdlHUR3cPg_zdRxqIzVjrt3E_w/exec",
+    "webhookEventos": "",
+    "_pixel": "Só os números. Sem eles não há público de remarketing: você fala só com quem deixou o WhatsApp, e perde quem leu 30 páginas e saiu.",
+    "pixelMeta": "",
+    "ga4": "",
+    "_nota_anual": "O anual (checkoutAnual) é oferta de upsell 1-clique: só funciona para quem ACABOU de comprar. Por isso ele vive apenas em upsell.html, e o topo da porta vende o passe.",
+    "_empresa": "Dados da controladora, usados na política de privacidade e nos rodapés. Preencher uma vez, valem em todas as páginas.",
+    "empresa": {
+      "razaoSocial": "ETER COMPANY LTDA",
+      "cnpj": "37.223.854/0001-47",
+      "endereco": "Rod. José Carlos Daux, 5500, Sala 211, Bloco Campeche A — Saco Grande, Florianópolis/SC, CEP 88032-005",
+      "emailContato": "davi@eter.company",
+      "emailDpo": "davi@eter.company",
+      "responsavel": "Davi Ribas Nogueira",
+      "whatsapp": ""
+    },
+    "mensalAnual": "em 12× de R$87,90",
+    "porEdicao": "R$24"
+  },
+  "passe": {
+    "rotulo": "Passe de 30 dias",
+    "itens": [
+      [
+        "Uma edição nova toda semana",
+        ""
+      ],
+      [
+        "Acesso ao acervo completo",
+        "todas as edições anteriores, desde a primeira"
+      ],
+      [
+        "Encontros semanais ao vivo",
+        "aulas aprofundadas, convidados, estudos de caso e leituras"
+      ]
+    ],
+    "condicao": "Cobrança única.",
+    "credito": ""
+  },
+  "edicoes": [
+    {
+      "n": "009",
+      "titulo": "O Futuro Simples",
+      "subtitulo": "O paradoxo da nova geração, economia das comunidades e a nova era da internet.",
+      "nestaEdicao": "Você vai entender por que a geração mais conectada da história se tornou também a mais solitária, e como essa contradição foi criada pela mesma fórmula que transformou a atenção humana no produto mais disputado do mundo. E nas próximas páginas você verá por que essa conta chegou ao seu limite, como nasce a economia das comunidades, e por que ela é a nova era da internet.",
+      "paginas": 49,
+      "destaques": [
+        23,
+        24,
+        26,
+        35,
+        36,
+        7
+      ],
+      "minutos": 40,
+      "capitulos": [
+        [
+          "Juntos e Solitários: a verdade sobre a geração mais conectada da história",
+          5
+        ],
+        [
+          "A Promessa não cumprida das redes sociais",
+          10
+        ],
+        [
+          "O futuro das marcas é reunir pessoas",
+          20
+        ],
+        [
+          "Estudo de Caso: Futuro Simples — A Primeira Rede Social Offline do Mundo",
+          33
+        ],
+        [
+          "Por um Futuro Mais Simples",
+          39
+        ],
+        [
+          "Bibliografia",
+          47
+        ]
+      ]
+    },
+    {
+      "n": "008",
+      "titulo": "Versos & Trovas",
+      "subtitulo": "A bela arte de usar as palavras para encantar corações e mentes.",
+      "nestaEdicao": "Você irá entender por que, no exato momento em que a inteligência artificial produz conteúdo infinito, as palavras estão perdendo a vida — e por que a capacidade de encantar corações e mentes através delas se tornou o ativo mais raro e valioso da nova economia.",
+      "paginas": 39,
+      "destaques": [
+        11,
+        17,
+        26
+      ],
+      "minutos": 32,
+      "capitulos": [
+        [
+          "As Palavras Mortas da Modernidade",
+          5
+        ],
+        [
+          "Dumbledore, Bachelard e o Feitiço da Palavra",
+          10
+        ],
+        [
+          "A Arte de Falar e Escrever",
+          16
+        ],
+        [
+          "Exercício prático: Desenvolvendo seu Estilo Autoral",
+          24
+        ],
+        [
+          "O Renascimento do Verbo",
+          32
+        ],
+        [
+          "Bibliografia",
+          37
+        ]
+      ]
+    },
+    {
+      "n": "007",
+      "titulo": "O Baile de Máscaras",
+      "subtitulo": "Como construir o personagem certo para se destacar no teatro social do mercado.",
+      "nestaEdicao": "Você vai entender por que a vida e o mercado funcionam como um teatro, em que os seus resultados dependem menos de quem você é e mais da percepção das pessoas certas sobre você. E vai sair destas páginas com o método dos grandes dramaturgos e roteiristas de cinema para construir personagens inesquecíveis.",
+      "convite": "Leia, construa, e entre em cena. A plateia já está sentada.",
+      "paginas": 59,
+      "destaques": [
+        15,
+        36,
+        23,
+        26,
+        40,
+        42,
+        10
+      ],
+      "minutos": 53,
+      "capitulos": [
+        [
+          "O Palco da Vida e o Teatro Social",
+          5
+        ],
+        [
+          "Dê-me uma Máscara e Direi a Verdade",
+          12
+        ],
+        [
+          "Sombras no Camarim",
+          20
+        ],
+        [
+          "Estudo de Caso: Silvio Santos",
+          30
+        ],
+        [
+          "Exercício prático: Construindo seu Personagem",
+          38
+        ],
+        [
+          "O Século dos Poetas",
+          51
+        ],
+        [
+          "Bibliografia",
+          56
+        ]
+      ]
+    },
+    {
+      "n": "006",
+      "titulo": "Fascinar Multidões",
+      "subtitulo": "Como antecipar, construir e liderar os movimentos culturais que dominam o mercado.",
+      "nestaEdicao": "Você vai entender por que multidões inteiras se reúnem em torno de uma única pessoa, e por que a guerra que decide o futuro da nova economia não é travada entre produtos, mas entre narrativas. E vai acessar o passo a passo para criar e liderar o seu próprio movimento.",
+      "paginas": 56,
+      "destaques": [
+        25,
+        47,
+        34,
+        31,
+        35,
+        21,
+        10,
+        18
+      ],
+      "minutos": 46,
+      "capitulos": [
+        [
+          "Psicologia das Massas e o Espírito do Tempo",
+          5
+        ],
+        [
+          "A Guerra de Narrativas da Nova Economia",
+          14
+        ],
+        [
+          "Mito, Rito e Doutrina",
+          28
+        ],
+        [
+          "Exercício prático: Criação de Movimento",
+          39
+        ],
+        [
+          "Os Filhos do Fogo",
+          49
+        ],
+        [
+          "Bibliografia",
+          54
+        ]
+      ]
+    },
+    {
+      "n": "005",
+      "titulo": "Venda como um Brasileiro",
+      "subtitulo": "De onde vem a nossa vergonha de vender, como o brasileiro decide comprar, e como vender através da nossa cultura.",
+      "nestaEdicao": "Você vai entender por que o país que diz odiar vendedores é, ao mesmo tempo, um dos maiores e melhores vendedores do planeta — e por que esse paradoxo é, na verdade, a maior vantagem competitiva do empreendedor capaz de compreender a estrutura cultural, social e linguística por trás de como o brasileiro compra e vende.",
+      "convite": "Leia, aplique, e venda mais. Sem parecer que está vendendo.",
+      "paginas": 52,
+      "destaques": [
+        24,
+        11,
+        14,
+        32,
+        37,
+        39,
+        41,
+        43
+      ],
+      "minutos": 45,
+      "capitulos": [
+        [
+          "Todo mundo odeia vendedores",
+          5
+        ],
+        [
+          "Como brasileiros compram?",
+          13
+        ],
+        [
+          "Como os brasileiros vendem? (ou deveriam)",
+          22
+        ],
+        [
+          "Estudo de Caso: Natura",
+          36
+        ],
+        [
+          "Entre nós",
+          46
+        ],
+        [
+          "Bibliografia",
+          51
+        ]
+      ]
+    },
+    {
+      "n": "004",
+      "titulo": "Corações Miméticos",
+      "subtitulo": "Os arquétipos, a engenharia do desejo e a semiótica dos algoritmos.",
+      "nestaEdicao": "Você vai conhecer a mecânica oculta do desejo, desde os arquétipos até a semiótica dos algoritmos, e aprender a usá-la a seu favor para construir uma estética impossível de ser ignorada para sua marca.",
+      "paginas": 56,
+      "destaques": [
+        8,
+        45,
+        15,
+        18,
+        27,
+        11,
+        40,
+        50
+      ],
+      "minutos": 48,
+      "capitulos": [
+        [
+          "A Guerra pelo Coração",
+          5
+        ],
+        [
+          "A Moda e seus Arquétipos",
+          10
+        ],
+        [
+          "Semiótica & Algoritmos",
+          24
+        ],
+        [
+          "Estética da Vergonha",
+          32
+        ],
+        [
+          "Estudo de caso: Farm vs Sol de Janeiro",
+          37
+        ],
+        [
+          "Exercício: Antropofagia, Devore como um Artista",
+          47
+        ],
+        [
+          "Bibliografia",
+          54
+        ]
+      ]
+    },
+    {
+      "n": "003",
+      "titulo": "O Verbo e a Máquina",
+      "subtitulo": "O manual rebelde de inteligência artificial para empreendedores criativos.",
+      "nestaEdicao": "Você vai entender por que o domínio da linguagem é, neste momento histórico, o divisor de águas definitivo entre a elite criativa que constrói a nova economia e a massa que será consumida pela mediocridade dos algoritmos.",
+      "paginas": 52,
+      "destaques": [
+        16,
+        9,
+        13,
+        18,
+        29,
+        32,
+        7
+      ],
+      "minutos": 45,
+      "capitulos": [
+        [
+          "Bem vindo à Revolução Criativa",
+          5
+        ],
+        [
+          "O Verbo",
+          12
+        ],
+        [
+          "A Máquina",
+          21
+        ],
+        [
+          "Perguntas e Proposições",
+          31
+        ],
+        [
+          "Ancestralidade e Tecnologia",
+          39
+        ],
+        [
+          "O País do presente",
+          46
+        ],
+        [
+          "Bibliografia",
+          51
+        ]
+      ]
+    },
+    {
+      "n": "002",
+      "titulo": "Torna-te Quem Tu És",
+      "subtitulo": "Como construir uma marca autoral e desejada na era da superficialidade.",
+      "nestaEdicao": "Você vai entender por que, na era da inteligência artificial, tudo tem se tornado tão superficial — e como ser mais uma entre muitas cópias é um gigantesco risco financeiro e reputacional para seu negócio. Além disso, vai acessar o passo a passo para construir uma marca autoral impossível de ser copiada e ignorada pelo seu mercado.",
+      "paginas": 43,
+      "destaques": [
+        15,
+        28,
+        17,
+        22,
+        19,
+        27
+      ],
+      "minutos": 38,
+      "capitulos": [
+        [
+          "A Revolução das Máquinas e a Era dos Autorais",
+          5
+        ],
+        [
+          "Autoralidade, A Marca dos Originais",
+          11
+        ],
+        [
+          "Estudo de caso: Emicida",
+          25
+        ],
+        [
+          "O destino de todo criador",
+          31
+        ],
+        [
+          "Tornar-se Brasil",
+          35
+        ],
+        [
+          "Bibliografia",
+          42
+        ]
+      ]
+    },
+    {
+      "n": "001",
+      "titulo": "A Década do Brasil",
+      "subtitulo": "A revolução cultural 2027–2034 e a vantagem injusta do empreendedor brasileiro.",
+      "nestaEdicao": "Você vai entender por que os empreendedores brasileiros são, neste momento histórico, os indivíduos mais bem posicionados do mundo para construir riqueza. Entre 2027 e 2034, o Brasil pode protagonizar a maior transferência de riqueza da nossa geração — e você verá qual é a vantagem competitiva específica do empreendedor brasileiro na era da IA.",
+      "paginas": 43,
+      "destaques": [
+        11,
+        15,
+        35
+      ],
+      "minutos": 35,
+      "capitulos": [
+        [
+          "A Corrida pelo Ouro Brasileiro",
+          5
+        ],
+        [
+          "Por que o Brasil pode ser o epicentro do próximo Renascimento",
+          13
+        ],
+        [
+          "A vantagem injusta do empreendedor brasileiro",
+          19
+        ],
+        [
+          "O sequestro das riquezas do Brasil",
+          23
+        ],
+        [
+          "Estudo de caso: Misci e o Luxo Brasileiro",
+          26
+        ],
+        [
+          "A Vanguarda Criativa Brasileira",
+          29
+        ],
+        [
+          "Exercício prático: Mapeamento da Visão",
+          34
+        ]
+      ]
+    }
+  ],
+  "assinatura": {
+    "rotulo": "Assinatura ETER · 12 meses",
+    "itens": [
+      [
+        "A Revista ETER toda semana",
+        ""
+      ],
+      [
+        "Acesso ao acervo completo",
+        ""
+      ],
+      [
+        "Biblioteca de ferramentas",
+        ""
+      ],
+      [
+        "Encontros semanais ao vivo",
+        ""
+      ],
+      [
+        "Gravação de todos os encontros",
+        ""
+      ],
+      [
+        "Comunidade Vanguarda",
+        ""
+      ],
+      [
+        "Grupo de membros no WhatsApp",
+        ""
+      ],
+      [
+        "Participação na curadoria",
+        ""
+      ]
+    ]
+  }
+}

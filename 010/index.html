@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revista ETER</title>
+<link rel="preload" as="fetch" href="../edicoes.json" crossorigin>
+<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/010/parede-m.webp" media="(max-width:959px)">
+<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/010/parede.webp" media="(min-width:960px)">
+<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/010/paginas/p001@800.webp" fetchpriority="high">
+<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/010/paginas/p002@800.webp">
+<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/010/paginas/p003@800.webp">
+
+<meta name="description" content="A revista semanal da nova economia brasileira.">
+<link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
+<link rel="apple-touch-icon" href="../premium/favicon-180.png">
+<meta name="theme-color" content="#F2EEE6">
+
+<link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<script defer src="../premium/calor.js?v=202609061637"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609061637">
+</head>
+<body>
+
+<!-- ══ A BARRA DA CASA — hoje uma página, amanhã várias ══════════ -->
+<header class="topo" id="topo">
+  <a class="topo-marca" href="../" aria-label="ETER — início">
+    <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
+  </a>
+  <nav class="topo-nav">
+    <a href="../">Home</a>
+    <a href="#" id="nav-acervo">Todas as edições</a>
+    <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
+  </nav>
+</header>
+
+<!-- ══ TELA 1 <i class="pt"></i> A CHEGADA ══════════════════════════════════════ -->
+<main id="chegada">
+  <!-- o fundo: a atmosfera vem da própria capa, e as páginas da edição
+       ficam penduradas como provas numa parede de gráfica -->
+  <div class="atmosfera" id="atmosfera" aria-hidden="true"></div>
+  <div class="mosaico" id="mosaico" aria-hidden="true"></div>
+  <div class="veu" aria-hidden="true"></div>
+  <div class="vinheta" aria-hidden="true"></div>
+
+  <div class="folha">
+
+    <!-- a revista, espiável na própria chegada -->
+    <section class="revista" id="revista">
+      <!-- a revista aberta na mesa: duas páginas e a lombada no meio -->
+      <div class="visor" id="visor">
+        <div class="spread" id="spread">
+          <div class="pg-slot esq"><img id="pg-esq" alt="" width="600" height="849"><i class="sombra"></i></div>
+          <div class="pg-slot dir"><img id="pg-dir" alt="Página da revista" width="600" height="849" fetchpriority="high"><i class="sombra"></i></div>
+          <div class="lombada" aria-hidden="true"></div>
+
+          <!-- a folha que vira, com frente e verso -->
+          <div class="virador" id="virador" aria-hidden="true">
+            <div class="face frente"><img id="vira-frente" alt=""><i class="luz"></i></div>
+            <div class="face verso"><img id="vira-verso" alt=""><i class="luz"></i></div>
+          </div>
+
+          <!-- o cadeado, quando a espiada chega ao fim do primeiro capítulo -->
+          <div class="tranca" id="tranca" hidden>
+            <button class="tranca-btn" id="tranca-btn">
+              <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+                <path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <rect x="4.5" y="10" width="15" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                <circle cx="12" cy="15" r="1.3" fill="currentColor"/>
+              </svg>
+              <span class="tranca-tit">O resto da edição</span>
+              <span class="tranca-sub">abre com seu cadastro <i class="pt"></i> leitura gratuita</span>
+            </button>
+          </div>
+        </div>
+
+        <p id="aviso-trava" class="so-leitor" role="status" aria-live="polite"></p>
+
+        <button class="seta esq" id="seta-esq" aria-label="Página anterior">&lsaquo;</button>
+        <button class="seta dir" id="seta-dir" aria-label="Próxima página">&rsaquo;</button>
+      </div>
+
+      <div class="pulso">
+        <span id="pulso-n">Capa</span>
+        <span class="trilho" id="trilho"><i></i></span>
+        <span id="pulso-cap"></span>
+      </div>
+
+      <div class="faixa" id="faixa" role="group" aria-label="Páginas desta edição"></div>
+      <p class="dica-faixa" id="dica-faixa">deslize para espiar <i class="pt"></i> <b>toque para ler a partir dali</b></p>
+    </section>
+
+    <!-- os dizeres -->
+    <section class="dizeres">
+    <p class="numero" id="numero"></p>
+    <h1 id="titulo"></h1>
+    <p class="promessa" id="promessa"></p>
+    <p class="convite-frase" id="convite-frase" hidden></p>
+    <p class="ficha" id="ficha"></p>
+
+    <div class="convites">
+      <button class="btn btn-ler" id="btn-ler">
+        Ler esta edição
+        <span class="sub" id="sub-ler">na íntegra, sem pagar nada</span>
+      </button>
+
+      <div class="ou">adquira o passe completo</div>
+
+      <div class="passe">
+        <div class="passe-topo">
+          <span class="passe-rot" id="passe-rot"></span>
+          <span class="passe-preco" id="passe-preco"></span>
+        </div>
+        <ul class="passe-itens" id="passe-itens"></ul>
+        <button class="btn btn-passe" data-passe="capa">Adquirir passe</button>
+        <p class="passe-nota" id="passe-nota"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pe">
+      <p><a href="#" id="ver-edicoes">o acervo</a> <i class="pt"></i> <a href="../privacidade.html">privacidade</a></p>
+      <p>ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</p>
+    </footer>
+  </div>
+</main>
+
+<!-- o convite que alcança o polegar: some quando o botão real aparece -->
+<div class="convite-fixo oculto" id="convite-fixo">
+  <button class="btn btn-ler" id="btn-ler-fixo">Ler esta edição de graça</button>
+</div>
+
+<!-- ══ TELA 2 <i class="pt"></i> A LEITURA ══════════════════════════════════════ -->
+<main id="leitura">
+  <div class="regua" id="regua"></div>
+
+  <header class="cromo" id="cromo">
+    <button class="ic" id="btn-voltar" aria-label="Voltar">←</button>
+    <span class="cromo-tit" id="cromo-tit"></span>
+    <button class="ic" id="btn-sumario" aria-label="Capítulos" title="Capítulos">☰</button>
+    <span class="pagina-n" id="pagina-n"></span>
+  </header>
+  <div class="paginas" id="paginas"></div>
+
+  <div class="barra" id="barra">
+    <img class="mono" src="../premium/monograma.webp" alt="" width="256" height="256">
+    <p class="barra-txt" id="barra-txt"></p>
+    <button class="btn btn-passe" data-passe="barra">Adquirir</button>
+  </div>
+</main>
+
+<dialog id="sumario-dialog">
+  <div class="painel">
+    <button class="fechar" data-fecha="sumario-dialog" aria-label="Fechar">×</button>
+    <h2 id="sum-tit"></h2>
+    <p class="leg" id="sum-leg"></p>
+    <ul class="caps" id="caps"></ul>
+  </div>
+</dialog>
+
+<dialog id="acervo-dialog">
+  <div class="painel">
+    <button class="fechar" data-fecha="acervo-dialog" aria-label="Fechar">×</button>
+    <h2>O acervo</h2>
+    <p class="leg">todas as edições publicadas</p>
+    <ul class="caps" id="acervo"></ul>
+  </div>
+</dialog>
+
+<dialog id="form-dialog">
+  <form class="form" id="form" novalidate>
+    <button type="button" class="fechar" data-fecha="form-dialog" aria-label="Fechar">×</button>
+    <img class="mono" src="../premium/monograma.webp" alt="" width="256" height="256">
+    <h2 id="form-tit">Para onde mandamos a edição?</h2>
+    <p class="dek2" id="form-dek">A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima edição.</p>
+
+    <div class="campo" id="c-nome">
+      <label for="f-nome">Seu nome</label>
+      <input id="f-nome" aria-describedby="msg-nome" type="text" autocomplete="given-name" placeholder="Como te chamam" enterkeyhint="next">
+      <span class="msg" id="msg-nome" role="alert">Escreva seu nome.</span>
+    </div>
+
+    <div class="campo" id="c-mail">
+      <label for="f-mail">Seu melhor e-mail</label>
+      <input id="f-mail" aria-describedby="msg-mail" type="email" autocomplete="email" placeholder="voce@email.com" enterkeyhint="next">
+      <span class="msg" id="msg-mail" role="alert">Escreva um e-mail válido.</span>
+    </div>
+
+    <div class="campo" id="c-zap">
+      <label for="f-zap">WhatsApp com DDD</label>
+      <input id="f-zap" aria-describedby="msg-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 90000-0000" enterkeyhint="go">
+      <span class="msg" id="msg-zap" role="alert">Precisa ter DDD e 8 ou 9 dígitos.</span>
+    </div>
+
+    <div class="campo" id="c-ok">
+    <label class="consent">
+      <input type="checkbox" id="f-ok" aria-describedby="msg-ok">
+      <span>Autorizo a <b>ETER</b> a me enviar a edição, comunicações e ofertas por WhatsApp e e-mail. Saio quando quiser respondendo <b>SAIR</b>. <a href="../privacidade.html" target="_blank" rel="noopener">Privacidade</a>.</span>
+    </label>
+      <span class="msg" id="msg-ok" role="alert">Precisamos da sua autorização para enviar a edição.</span>
+    </div>
+
+    <button class="btn btn-passe" type="submit" id="btn-enviar">Abrir a edição</button>
+  </form>
+</dialog>
+
+<!-- ══ A EDIÇÃO DO MÊS JÁ FOI ESCOLHIDA ═══════════════════════ -->
+<dialog id="mes-dialog">
+  <div class="painel oferta" id="mes-caixa">
+    <button type="button" class="fechar" data-fecha="mes-dialog" aria-label="Fechar">×</button>
+    <h2 id="mes-tit">Curtiu a leitura? Então vem.</h2>
+    <p class="oferta-chamada" id="mes-dek"></p>
+    <figure class="mock-passe">
+      <img src="../premium/mockup-assinatura.webp" alt="Tudo que o passe abre"
+        width="794" height="485" decoding="async">
+    </figure>
+    <p class="oferta-rot" id="mes-rot"></p>
+    <ul class="oferta-itens" id="mes-itens"></ul>
+    <button class="btn btn-passe" id="mes-passe">ADQUIRIR O PASSE</button>
+    <button class="btn btn-fantasma" id="mes-voltar">Ler a minha edição deste mês</button>
+    <p class="oferta-pe" id="mes-pe"></p>
+  </div>
+</dialog>
+
+<script src="../premium/premium.js?v=202609061637"></script>
+</body>
+</html>
