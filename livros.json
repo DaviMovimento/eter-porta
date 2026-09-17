@@ -2,7 +2,60 @@
  "_leia": "Gerado por build/livros.py a partir das bibliografias impressas. Edite afiliadoTag; o resto é regerado.",
  "config": {
   "afiliadoTag": "eterbrasil-20",
-  "aviso": "Como Associada Amazon, a ETER recebe por compras qualificadas."
+  "aviso": "Como Associada Amazon, a ETER recebe por compras qualificadas.",
+  "vitrine": {
+   "001": [
+    "ribeiro-o-povo-brasileiro",
+    "varoufakis-technofeudalism",
+    "perez-technological-revolutions-and-financial"
+   ],
+   "002": [
+    "nietzsche-assim-falou-zaratustra",
+    "jung-o-eu-e-o",
+    "damatta-a-casa-a-rua"
+   ],
+   "003": [
+    "wittgenstein-tractatus-logico-philosophicus",
+    "saussure-curso-de-linguistica-geral",
+    "brynjolfsson-the-second-machine-age"
+   ],
+   "004": [
+    "girard-mentira-romantica-e-verdade",
+    "jung-os-arquetipos-e-o",
+    "barthes-mitologias"
+   ],
+   "005": [
+    "holanda-raizes-do-brasil",
+    "damatta-carnavais-malandros-e-herois",
+    "castiglione-o-cortesao"
+   ],
+   "006": [
+    "bon-psicologia-das-multidoes",
+    "gramsci-cadernos-do-carcere",
+    "campbell-o-heroi-de-mil"
+   ],
+   "007": [
+    "goffman-a-representacao-do-eu",
+    "johnson-venice-incognito",
+    "morgado-silvio-santos"
+   ],
+   "008": [
+    "suassuna-romance-d-a-pedra",
+    "quintiliano-institutio-oratoria",
+    "halbert-the-boron-letters"
+   ],
+   "009": [
+    "oldenburg-the-great-good-place",
+    "haidt-a-geracao-ansiosa",
+    "durkheim-as-formas-elementares-da"
+   ],
+   "010": [
+    "kant-critica-da-faculdade-do",
+    "bourdieu-a-distincao",
+    "schlosser-fast-food-nation"
+   ]
+  },
+  "_vitrine": "os três livros que aparecem no cartão da edição no índice da bibliografia; escolha editorial, o resto fica na página completa"
  },
  "livros": [
   {

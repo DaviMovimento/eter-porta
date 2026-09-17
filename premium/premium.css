@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171216') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171216') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171216') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171254') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171254') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171254') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2685,6 +2685,29 @@ html{background:var(--papel)}
    motivo de o livro estar ali. Quatro por linha no desktop, dois no
    celular. O clique vai para a Amazon; o passe continua sendo o pedido. */
 .livros-pagina .selo h1 .marca{color:var(--ouro-vivo);font-family:var(--display);letter-spacing:.06em}
+/* o índice da bibliografia: um cartão por edição, capa pequena + três livros */
+.bibli-index{list-style:none;padding:0;margin:0 0 2.4rem;display:grid;grid-template-columns:1fr;gap:1.4rem}
+.bibli-index li{margin:0}
+.bibli-index a{display:flex;flex-direction:column;gap:.3rem;text-decoration:none;color:inherit}
+.bibli-index .pilha{display:flex;align-items:flex-end;gap:.9rem;padding:1.1rem;background:var(--papel-2);border-radius:2px;outline:1px solid var(--linha);outline-offset:-1px;transition:transform .2s,box-shadow .2s}
+.bibli-index a:hover .pilha{transform:translateY(-3px);box-shadow:var(--elev-2)}
+.bibli-index .rev{flex:0 0 34%;aspect-ratio:1/1.414;overflow:hidden;border-radius:1px;box-shadow:var(--elev-2)}
+.bibli-index .rev img{width:100%;height:100%;object-fit:cover;display:block}
+.bibli-index .livs{flex:1;display:flex;align-items:flex-end;justify-content:center;height:100%;padding-left:.6rem}
+.bibli-index .livs img{width:38%;aspect-ratio:2/3;object-fit:cover;border-radius:1px;box-shadow:var(--elev-2);outline:1px solid var(--linha);outline-offset:-1px}
+.bibli-index .livs img:nth-child(1){transform:rotate(-7deg) translateY(.2rem);z-index:1}
+.bibli-index .livs img:nth-child(2){transform:translateY(-.4rem);margin:0 -10%;z-index:2}
+.bibli-index .livs img:nth-child(3){transform:rotate(7deg) translateY(.2rem);z-index:1}
+.bibli-index .alg{margin-top:.5rem;font-family:var(--rotulo);font-size:var(--r-1);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro-texto)}
+.bibli-index .nom{font-family:var(--display);font-size:1.3rem;line-height:1.15;color:var(--tinta)}
+.bibli-index .chamada{margin-top:.6rem;display:block;text-align:center;padding:.7rem .6rem;border:1px solid var(--ouro);border-radius:2px;font-family:var(--rotulo);font-size:var(--r-1);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ouro-texto);transition:background .2s,color .2s}
+.bibli-index a:hover .chamada{background:var(--ouro);color:#17110A}
+@media (min-width:48rem){.bibli-index{grid-template-columns:repeat(2,1fr);gap:1.6rem 1.4rem}}
+@media (min-width:75rem){.bibli-index{grid-template-columns:repeat(3,1fr)}}
+.livros-pagina .rotulo a{color:inherit;text-decoration:none}
+.livros-pagina .rotulo a:hover{color:var(--ouro)}
+.bibli-ponte{text-align:center;margin:0 0 2.6rem;font-size:1rem;color:var(--tinta-2)}
+.bibli-ponte a{color:var(--ouro-texto);font-weight:600;text-decoration:underline;text-underline-offset:.2em}
 .filtro-ed{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin:0 0 2.2rem}
 .filtro-ed button{
   font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
