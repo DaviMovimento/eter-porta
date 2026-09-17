@@ -10,9 +10,9 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../premium/casa.js?v=202609171254"></script>
-<script defer src="../premium/calor.js?v=202609171254"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202609171254">
+<script defer src="../premium/casa.js?v=202609171421"></script>
+<script defer src="../premium/calor.js?v=202609171421"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609171421">
 </head>
 <body class="pagina biblioteca livros-pagina">
 
@@ -32,7 +32,7 @@
 <main class="papelada">
   <div class="selo">
     <p class="rotulo" id="rotulo">Bibliografia</p>
-    <h1 id="h1">Os livros que fazem a&nbsp;<span class="marca">ETER</span></h1>
+    <h1 id="h1">Os livros que fazem a&nbsp;<span class="nome-eter">ETER</span></h1>
     <p class="dek" id="dek">Conheça todos os livros que foram utilizados como base de pesquisa
     para a formulação de cada uma das nossas edições.</p>
   </div>
@@ -45,7 +45,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202609171254" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202609171421" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -86,8 +86,8 @@
   let D, L;
   try {
     [D, L] = await Promise.all([
-      fetch(`${ACIMA}edicoes.json?v=202609171254`).then(r => r.json()),
-      fetch(`${ACIMA}livros.json?v=202609171254`).then(r => r.json()),
+      fetch(`${ACIMA}edicoes.json?v=202609171421`).then(r => r.json()),
+      fetch(`${ACIMA}livros.json?v=202609171421`).then(r => r.json()),
     ]);
   } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 

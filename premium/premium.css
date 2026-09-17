@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171254') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171254') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171254') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171421') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171421') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171421') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2684,7 +2684,7 @@ html{background:var(--papel)}
    display, e a glosa que a própria revista imprimiu na bibliografia — o
    motivo de o livro estar ali. Quatro por linha no desktop, dois no
    celular. O clique vai para a Amazon; o passe continua sendo o pedido. */
-.livros-pagina .selo h1 .marca{color:var(--ouro-vivo);font-family:var(--display);letter-spacing:.06em}
+.livros-pagina .selo h1 .nome-eter{color:var(--ouro-vivo);font-family:var(--display);letter-spacing:.06em}
 /* o índice da bibliografia: um cartão por edição, capa pequena + três livros */
 .bibli-index{list-style:none;padding:0;margin:0 0 2.4rem;display:grid;grid-template-columns:1fr;gap:1.4rem}
 .bibli-index li{margin:0}
@@ -2702,8 +2702,21 @@ html{background:var(--papel)}
 .bibli-index .nom{font-family:var(--display);font-size:1.3rem;line-height:1.15;color:var(--tinta)}
 .bibli-index .chamada{margin-top:.6rem;display:block;text-align:center;padding:.7rem .6rem;border:1px solid var(--ouro);border-radius:2px;font-family:var(--rotulo);font-size:var(--r-1);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ouro-texto);transition:background .2s,color .2s}
 .bibli-index a:hover .chamada{background:var(--ouro);color:#17110A}
-@media (min-width:48rem){.bibli-index{grid-template-columns:repeat(2,1fr);gap:1.6rem 1.4rem}}
-@media (min-width:75rem){.bibli-index{grid-template-columns:repeat(3,1fr)}}
+.bibli-index a{height:100%}
+.bibli-index .chamada{margin-top:auto}
+.bibli-index .nom{padding-bottom:.5rem}
+/* no computador o índice ganha a largura da página da edição: cartões de
+   ~20rem, dois por linha no tablet e três no desktop, botões numa linha e
+   alinhados na base */
+@media (min-width:48rem){
+  .papelada:has(.bibli-index){max-width:66rem}
+  .livros-pagina .papelada h1{text-wrap:nowrap;max-width:none}
+  .bibli-index{grid-template-columns:repeat(2,1fr);gap:2rem 1.6rem}
+  .bibli-index .pilha{padding:1.4rem 1.6rem;gap:1.2rem}
+  .bibli-index .chamada{white-space:nowrap;padding:.75rem .6rem}
+  .bibli-index .nom{font-size:1.35rem}
+}
+@media (min-width:75rem){.bibli-index{grid-template-columns:repeat(3,1fr);gap:2.2rem 1.8rem}}
 .livros-pagina .rotulo a{color:inherit;text-decoration:none}
 .livros-pagina .rotulo a:hover{color:var(--ouro)}
 .bibli-ponte{text-align:center;margin:0 0 2.6rem;font-size:1rem;color:var(--tinta-2)}
