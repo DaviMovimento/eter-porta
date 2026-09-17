@@ -250,9 +250,10 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609171421', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202609171446', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
+  await recuperarPorChave();
 
   EDICAO = DADOS.edicoes.find(e => e.n === url.get('ed')) || DADOS.edicoes.find(e => e.paginas) || DADOS.edicoes[0];
   TOTAL = EDICAO.paginas;
@@ -344,7 +345,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609171421"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609171446"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -708,7 +709,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609171421`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609171446`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1285,7 +1286,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609171421"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609171446"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1462,6 +1463,32 @@ const vereditoSalvo = () => { try { return JSON.parse(localStorage.getItem(CHAVE
    entra na MESMA fila em vez de abrir outra — senão a pessoa paga a espera
    duas vezes, em paralelo, sem ganhar nada */
 let porteiroEmVoo = null;
+
+/* O link do WhatsApp traz ?k=, a chave que a planilha deu ao leitor no
+   cadastro. Quem abre esse link num navegador que não o conhece (o do
+   WhatsApp, o Safari do celular) seria mandado ao formulário de novo; a
+   chave recupera o cadastro na planilha e a edição abre direto. A chave
+   sai da barra de endereços depois de usada, para não viajar num print. */
+async function recuperarPorChave() {
+  const k = (url.get('k') || '').trim().toLowerCase();
+  if (!k || !CFG.webhookLead || jaCapturado()) return;
+  if (!/^[a-z0-9]{8}$/.test(k)) return;
+  try {
+    const r = await fetch(CFG.webhookLead, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ acao: 'quem', k }),
+    }).then(x => x.json());
+    if (r && r.ok && r.email && r.whatsapp) {
+      localStorage.setItem(CHAVE_LEAD, JSON.stringify({
+        nome: r.nome || '', email: r.email, whatsapp: r.whatsapp,
+        onde: 'chave', em: new Date().toISOString(),
+      }));
+      const limpa = new URL(location.href); limpa.searchParams.delete('k');
+      history.replaceState(null, '', limpa);
+    }
+  } catch (err) { console.warn('[porta] chave não recuperou o cadastro', err); }
+}
 
 async function consultarPorteiro(edicao) {
   if (emDemo()) return porteiroDeMentira(edicao);
