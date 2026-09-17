@@ -250,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609171505', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202609171514', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -345,7 +345,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609171505"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609171514"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -709,7 +709,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609171505`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609171514`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1286,7 +1286,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609171505"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609171514"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1485,6 +1485,14 @@ async function recuperarPorChave() {
         onde: 'chave', em: new Date().toISOString(),
       }));
       const limpa = new URL(location.href); limpa.searchParams.delete('k');
+      /* o link do WhatsApp vem curto, sem utm; a origem entra aqui, para
+         a venda que vier depois nascer com o rastro certo */
+      if (!limpa.searchParams.get('utm_source')) {
+        limpa.searchParams.set('utm_source', 'voxuy');
+        limpa.searchParams.set('utm_medium', 'whatsapp');
+        limpa.searchParams.set('utm_campaign', 'nutricao');
+        for (const [k2, v2] of limpa.searchParams) url.set(k2, v2);
+      }
       history.replaceState(null, '', limpa);
     }
   } catch (err) { console.warn('[porta] chave não recuperou o cadastro', err); }
