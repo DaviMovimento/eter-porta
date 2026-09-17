@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171213') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171213') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171213') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171216') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171216') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171216') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2729,13 +2729,17 @@ html{background:var(--papel)}
 }
 .livros .tit{font-family:var(--display);font-size:1rem;line-height:1.2;color:var(--tinta)}
 .livros .meta{font-size:var(--t-1);color:var(--tinta-3)}
-.livros .glosa{font-size:.84rem;line-height:1.45;color:var(--tinta-2)}
 .livros .tambem{font-size:var(--t-1);color:var(--tinta-3);font-style:italic}
 .livros .chamada{
-  margin-top:auto;padding-top:.5rem;
-  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
-  text-transform:uppercase;color:var(--acao);
+  margin-top:auto;display:block;text-align:center;
+  padding:.6rem .5rem;border:1px solid var(--ouro);border-radius:2px;
+  font-family:var(--rotulo);font-size:var(--r-1);font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ouro-texto);
+  transition:background .2s,color .2s;
 }
+.livros a:hover .chamada{background:var(--ouro);color:#17110A}
+.livros .aut+.tit{margin-top:.1rem}
+.livros .meta{margin-bottom:.55rem}
 .aviso-afiliado{
   font-size:var(--t-1);line-height:1.5;color:var(--tinta-3);
   text-align:center;max-width:32rem;margin:0 auto 1rem;
@@ -2749,4 +2753,5 @@ html{background:var(--papel)}
    bibliografia entra pelo rodapé e pela faixa dentro de cada edição */
 @media (max-width:47.99rem){.topo-nav a.sec{display:none}}
 .livros .indisp{display:flex;flex-direction:column;gap:.3rem;height:100%;opacity:.85}
-.livros .chamada.fora{color:var(--tinta-3)}
+.livros .chamada.fora{color:var(--tinta-3);border-color:var(--linha-2)}
+.livros a:hover .chamada.fora{background:transparent;color:var(--tinta-2)}
