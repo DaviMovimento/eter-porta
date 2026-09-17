@@ -10,9 +10,9 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../premium/casa.js?v=202609061757"></script>
-<script defer src="../premium/calor.js?v=202609061757"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202609061757">
+<script defer src="../premium/casa.js?v=202609171130"></script>
+<script defer src="../premium/calor.js?v=202609171130"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609171130">
 </head>
 <body class="pagina biblioteca">
 
@@ -23,7 +23,8 @@
   <span class="topo-tag">Bem-vindo à <em>Vanguarda</em></span>
   <nav class="topo-nav">
     <a href="../">Home</a>
-    <a href="biblioteca" class="atual-nav">Todas as edições</a>
+    <a href="../biblioteca" class="atual-nav">Todas as edições</a>
+    <a href="../bibliografia" class="sec">Bibliografia</a>
     <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
   </nav>
 </header>
@@ -47,7 +48,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202609061757" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202609171130" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -63,7 +64,7 @@
 
   <p class="pe">
     <span id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="../privacidade">Privacidade</a>
+    <a href="../bibliografia">Bibliografia</a> <i class="pt"></i> <a href="../privacidade">Privacidade</a>
   </p>
 </main>
 
@@ -73,7 +74,7 @@
    pé, para quem já concluiu que quer todas. */
 (async () => {
   let D;
-  try { D = await (await fetch('../edicoes.json?v=202609061757')).json(); }
+  try { D = await (await fetch('../edicoes.json?v=202609171130')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;

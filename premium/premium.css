@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609061757') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609061757') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609061757') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171130') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171130') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171130') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2677,3 +2677,75 @@ html{background:var(--papel)}
 #oferta-dialog.so-form .mock-passe,
 #oferta-dialog.so-form .oferta-itens,
 #oferta-dialog.so-form .oferta-chamada{display:none}
+
+
+/* ═══ A ESTANTE DE LIVROS (bibliografia) ═════════════════════ */
+/* Cada livro é um cartão vertical: capa em 2:3, autor em rótulo, título na
+   display, e a glosa que a própria revista imprimiu na bibliografia — o
+   motivo de o livro estar ali. Quatro por linha no desktop, dois no
+   celular. O clique vai para a Amazon; o passe continua sendo o pedido. */
+.filtro-ed{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin:0 0 2.2rem}
+.filtro-ed button{
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-3);background:transparent;
+  border:1px solid var(--linha-2);border-radius:2px;padding:.4rem .7rem;
+  cursor:pointer;min-height:36px;transition:border-color .2s,color .2s;
+}
+.filtro-ed button:hover{border-color:var(--tinta-3);color:var(--tinta-2)}
+.filtro-ed button.atual{border-color:var(--ouro-vivo);color:var(--ouro-texto)}
+.filtro-ed button:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+
+.edicao-livros{margin:0 0 3.2rem}
+.edicao-livros h2{
+  display:flex;flex-direction:column;gap:.25rem;
+  margin:0 0 1.3rem;padding-bottom:.7rem;border-bottom:1px solid var(--linha);
+}
+.edicao-livros h2 .alg{
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:var(--tk-2);
+  text-transform:uppercase;color:var(--ouro-texto);
+}
+.edicao-livros h2 .nom{font-family:var(--display);font-size:1.45rem;line-height:1.15;color:var(--tinta)}
+.edicao-livros h2 .sub-ed{font-size:var(--t-1);line-height:1.45;color:var(--tinta-3)}
+
+.livros{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem 1rem}
+.livros li{margin:0}
+.livros a{display:flex;flex-direction:column;gap:.3rem;height:100%;text-decoration:none;color:inherit}
+.livros .capinha{
+  display:block;aspect-ratio:2/3;overflow:hidden;background:var(--papel-2);
+  border-radius:1px;box-shadow:var(--elev-1);outline:1px solid var(--linha);outline-offset:-1px;
+  transition:transform .2s,box-shadow .2s;
+}
+.livros a:hover .capinha{transform:translateY(-3px);box-shadow:0 14px 30px -14px rgb(var(--tinta-rgb)/.5)}
+.livros .capinha img{width:100%;height:100%;object-fit:cover;display:block}
+.livros .semcapa{
+  display:grid;place-content:center;height:100%;padding:1rem;text-align:center;
+  font-family:var(--display);font-size:.82rem;line-height:1.3;color:var(--tinta-2);
+  background:linear-gradient(160deg,var(--papel-2),var(--papel-3));
+}
+.livros .aut{
+  margin-top:.45rem;font-family:var(--rotulo);font-size:var(--r-1);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ouro-texto);
+}
+.livros .tit{font-family:var(--display);font-size:1rem;line-height:1.2;color:var(--tinta)}
+.livros .meta{font-size:var(--t-1);color:var(--tinta-3)}
+.livros .glosa{font-size:.84rem;line-height:1.45;color:var(--tinta-2)}
+.livros .tambem{font-size:var(--t-1);color:var(--tinta-3);font-style:italic}
+.livros .chamada{
+  margin-top:auto;padding-top:.5rem;
+  font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--acao);
+}
+.aviso-afiliado{
+  font-size:var(--t-1);line-height:1.5;color:var(--tinta-3);
+  text-align:center;max-width:32rem;margin:0 auto 1rem;
+}
+@media (min-width:48rem){.livros{grid-template-columns:repeat(3,1fr);gap:1.6rem 1.2rem}}
+@media (min-width:75rem){
+  .livros{grid-template-columns:repeat(4,1fr)}
+  .papelada:has(.livros){max-width:66rem}
+}
+/* o quarto item da barra só cabe a partir do tablet; no celular a
+   bibliografia entra pelo rodapé e pela faixa dentro de cada edição */
+@media (max-width:47.99rem){.topo-nav a.sec{display:none}}
+.livros .indisp{display:flex;flex-direction:column;gap:.3rem;height:100%;opacity:.85}
+.livros .chamada.fora{color:var(--tinta-3)}

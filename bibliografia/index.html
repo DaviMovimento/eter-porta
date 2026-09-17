@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bibliografia — os livros da Revista ETER</title>
+<meta name="description" content="Os livros que fazem a ETER: cada edição nasce de leitura. A bibliografia das dez edições, organizada por revista, com link para comprar.">
+<link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
+<link rel="apple-touch-icon" href="../premium/favicon-180.png">
+<meta name="theme-color" content="#F2EEE6">
+
+<link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="../premium/casa.js?v=202609171130"></script>
+<script defer src="../premium/calor.js?v=202609171130"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609171130">
+</head>
+<body class="pagina biblioteca livros-pagina">
+
+<header class="topo">
+  <a class="topo-marca" href="../" aria-label="ETER — início">
+    <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
+  </a>
+  <span class="topo-tag">Bem-vindo à <em>Vanguarda</em></span>
+  <nav class="topo-nav">
+    <a href="../">Home</a>
+    <a href="../biblioteca">Todas as edições</a>
+    <a href="../bibliografia" class="atual-nav sec">Bibliografia</a>
+    <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
+  </nav>
+</header>
+
+<main class="papelada">
+  <div class="selo">
+    <p class="rotulo">Bibliografia</p>
+    <h1>Os livros que fazem a&nbsp;<em>ETER</em></h1>
+    <p class="dek" id="dek">Cada edição nasce de leitura. Aqui estão os livros citados nas dez edições,
+    organizados por revista e na ordem em que ela os leu. Toque na capa para comprar.</p>
+  </div>
+
+  <nav class="filtro-ed" id="filtro" aria-label="Escolher edição"></nav>
+
+  <div id="estantes"></div>
+
+  <section class="oferta-home">
+    <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
+
+    <figure class="mock-passe">
+      <img src="../premium/mockup-assinatura.webp?v=202609171130" alt="Tudo que você acessa ao assinar"
+        width="794" height="485" decoding="async">
+    </figure>
+    <div class="passe">
+    <div class="passe-topo">
+        <span class="passe-rot" id="passe-rot"></span>
+        <span class="passe-preco" id="passe-preco"></span>
+      </div>
+      <ul class="passe-itens" id="passe-itens"></ul>
+      <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE</button>
+      <p class="passe-nota" id="passe-nota"></p>
+    </div>
+  </section>
+
+  <p class="aviso-afiliado" id="aviso"></p>
+
+  <p class="pe">
+    <span id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
+    <a href="../privacidade">Privacidade</a>
+  </p>
+</main>
+
+<script>
+/* A BIBLIOGRAFIA. Uma estante por edição, cada livro com a glosa que a
+   própria revista escreveu na página impressa: o motivo de ele estar ali.
+   A capa leva à Amazon com o código de afiliado, que vive num lugar só
+   (livros.json → config.afiliadoTag). O passe fica no pé, como em toda
+   página da casa: a estante é prova de profundidade, o pedido é o passe. */
+(async () => {
+  const ACIMA = /\/bibliografia\/?$/.test(location.pathname) ? '../' : '';
+  /* no endereço limpo (/revista/bibliografia/) os links da barra precisam
+     subir um nível, senão "biblioteca" vira /bibliografia/biblioteca */
+  document.querySelectorAll('.topo-marca, .topo-nav a:not(.destaque)').forEach(a => {
+    const h = a.getAttribute('href');
+    if (!h || /^(https?:|#)/.test(h)) return;
+    a.setAttribute('href', (ACIMA + h.replace(/^\.\/$/, '')) || './');
+  });
+  let D, L;
+  try {
+    [D, L] = await Promise.all([
+      fetch(`${ACIMA}edicoes.json?v=202609171130`).then(r => r.json()),
+      fetch(`${ACIMA}livros.json?v=202609171130`).then(r => r.json()),
+    ]);
+  } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
+
+  const C = D.config, P = D.passe, T = L.config.afiliadoTag;
+  /* em localhost as imagens saem da própria pasta, para conferir antes do push */
+  const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const BASE = LOCAL ? ACIMA : (C.baseImagens || './');
+  const edicoes = D.edicoes.filter(e => e.paginas).slice().sort((a, b) => a.n.localeCompare(b.n));
+  const porEdicao = Object.fromEntries(edicoes.map(e => [e.n, []]));
+  for (const l of L.livros) for (const c of l.edicoes) if (porEdicao[c.n]) porEdicao[c.n].push({ ...l, glosa: c.nota, pagina: c.pagina });
+
+  const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const comprar = l => T ? l.amazon + (l.amazon.includes('?') ? '&' : '?') + 'tag=' + encodeURIComponent(T) : l.amazon;
+  const distintos = new Set(L.livros.map(l => l.id)).size;
+  document.getElementById('dek').innerHTML =
+    `Cada edição nasce de leitura. Aqui estão os <b>${distintos} livros</b> citados nas ${edicoes.length} edições, organizados por revista e na ordem em que ela os leu. Toque na capa para comprar.`;
+
+  const cartao = l => {
+    const capa = l.capa
+      ? `<img src="${/^https?:/.test(l.capa) ? l.capa : BASE + l.capa}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`
+      : `<span class="semcapa">${esc(l.titulo)}</span>`;
+    const fora = l.indisponivel_amazon;
+    const href = fora ? (l.fora_amazon_url || '') : comprar(l);
+    const rel = fora ? 'noopener' : 'nofollow sponsored noopener';
+    const chamada = fora ? `Não disponível na Amazon${l.fora_amazon_nome ? ' · ' + esc(l.fora_amazon_nome) : ''}` : 'Comprar na Amazon';
+    const dentro = `
+      <span class="capinha">${capa}</span>
+      <span class="aut">${esc(l.autor)}</span>
+      <span class="tit">${esc(l.titulo)}</span>
+      <span class="meta">${esc([l.editora, l.ano].filter(Boolean).join(' · '))}</span>
+      ${l.glosa ? `<span class="glosa">${esc(l.glosa)}</span>` : ''}
+      <span class="chamada${fora ? ' fora' : ''}">${chamada}</span>`;
+    return href
+      ? `<li><a href="${esc(href)}" target="_blank" rel="${rel}">${dentro}</a></li>`
+      : `<li><span class="indisp">${dentro}</span></li>`;
+  };
+
+  const estantes = document.getElementById('estantes');
+  estantes.innerHTML = edicoes.map(e => {
+    const lista = porEdicao[e.n].map(l => ({ ...l, _n: e.n }));
+    if (!lista.length) return '';
+    return `<section class="edicao-livros" data-n="${e.n}" id="ed${e.n}">
+      <h2>
+        <span class="alg">Edição ${e.n} <i class="pt"></i> ${lista.length} ${lista.length === 1 ? 'livro' : 'livros'}</span>
+        <span class="nom">${esc(e.titulo)}</span>
+        <span class="sub-ed">${esc(e.subtitulo || '')}</span>
+      </h2>
+      <ul class="livros">${lista.map(cartao).join('')}</ul>
+    </section>`;
+  }).join('');
+
+  /* os chips: uma edição, ou todas */
+  const filtro = document.getElementById('filtro');
+  let atual = 'todas';
+  const pintarFiltro = () => {
+    filtro.innerHTML = [['todas', 'Todas'], ...edicoes.filter(e => porEdicao[e.n].length).map(e => [e.n, 'ED' + e.n])]
+      .map(([v, r]) => `<button type="button" data-v="${v}" class="${v === atual ? 'atual' : ''}">${r}</button>`).join('');
+    document.querySelectorAll('.edicao-livros').forEach(s => s.hidden = atual !== 'todas' && s.dataset.n !== atual);
+  };
+  filtro.addEventListener('click', ev => {
+    const b = ev.target.closest('button'); if (!b) return;
+    atual = b.dataset.v; pintarFiltro();
+    if (atual !== 'todas') document.getElementById('ed' + atual)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  pintarFiltro();
+  document.querySelectorAll('.livros img').forEach(i => i.decode?.().catch(() => {}));
+
+  document.getElementById('aviso').textContent = L.config.aviso || '';
+
+  const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
+  document.getElementById('passe-rot').innerHTML = pontos(P.rotulo.replace('Passe ETER · ', 'Passe · '));
+  document.getElementById('passe-preco').textContent = C.precoPasse;
+  document.getElementById('passe-itens').innerHTML = P.itens
+    .map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('');
+  document.getElementById('passe-nota').textContent = [P.condicao, P.credito].filter(Boolean).join(' ');
+
+  const emp = C.empresa || {};
+  if (emp.razaoSocial) document.getElementById('pe-empresa').innerHTML =
+    [emp.razaoSocial, emp.cnpj && 'CNPJ ' + emp.cnpj].filter(Boolean).join(' <i class="pt"></i> ');
+
+  const irPagar = (origem, direto) => { if (window.abrirOfertaCasa) window.abrirOfertaCasa(origem, direto); };
+
+  /* o rastro sobrevive ao clique interno; os links da Amazon ficam como estão */
+  const comRastro = alvo => {
+    const u = new URL(alvo, location.href);
+    const veio = new URLSearchParams(location.search);
+    for (const [k, v] of veio) if (!u.searchParams.has(k)) u.searchParams.set(k, v);
+    return u.pathname + u.search;
+  };
+  document.querySelectorAll('a[href]').forEach(a => {
+    const h = a.getAttribute('href');
+    if (!h || /^(https?:|#|mailto:|tel:)/.test(h)) return;
+    a.setAttribute('href', comRastro(h));
+  });
+
+  const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
+  addEventListener('scroll', rolagem, { passive: true }); rolagem();
+  document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('bibliografia-oferta', true));
+  document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('bibliografia-topo'); });
+})();
+</script>
+</body>
+</html>

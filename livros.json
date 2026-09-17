@@ -1,0 +1,3746 @@
+{
+ "_leia": "Gerado por build/livros.py a partir das bibliografias impressas. Edite afiliadoTag; o resto é regerado.",
+ "config": {
+  "afiliadoTag": "eterbrasil-20",
+  "aviso": "Como Associada Amazon, a ETER recebe por compras qualificadas."
+ },
+ "livros": [
+  {
+   "id": "case-deaths-of-despair-and",
+   "autor": "Anne Case & Angus Deaton",
+   "titulo": "Deaths of Despair and the Future of Capitalism",
+   "titulo_original": "",
+   "editora": "Princeton University Press",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9780691217062",
+   "isbn10": "069119078X",
+   "capa": "https://m.media-amazon.com/images/P/069119078X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/069119078X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "deheinzelin-novas-economias-viabilizando-futuros",
+   "autor": "Lala Deheinzelin",
+   "titulo": "Novas economias viabilizando futuros desejáveis: Introdução à Fluxonomia 4D",
+   "titulo_original": "",
+   "editora": "Clube de Autores / Flux4D Press",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788590859284",
+   "isbn10": "8590859282",
+   "capa": "https://m.media-amazon.com/images/P/8590859282.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8590859282",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Novas Economias Viabilizando Futuros Desejáveis",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8590859282"
+  },
+  {
+   "id": "karp-the-technological-republic",
+   "autor": "Alexander C. Karp & Nicholas W. Zamiska",
+   "titulo": "A república tecnológica: Tecnologia, política e o futuro do ocidente",
+   "titulo_original": "",
+   "editora": "Intrínseca",
+   "ano": "2025",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788551012949",
+   "isbn10": "8551012940",
+   "capa": "https://m.media-amazon.com/images/P/8551012940.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8551012940",
+   "fonte_capa": "amazon",
+   "titulo_citado": "The Technological Republic: Hard Power, Soft Belief, and the Future of the West",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.travessa.com.br/a-republica-tecnologica-tecnologia-politica-e-o-futuro-do-ocidente/artigo/faa7c553-a938-48f9-9b26-7562e091a7e5"
+  },
+  {
+   "id": "perez-technological-revolutions-and-financial",
+   "autor": "Carlota Perez",
+   "titulo": "Technological Revolutions and Financial Capital: The Dynamics of Bubbles and Golden Ages",
+   "titulo_original": "",
+   "editora": "Edward Elgar",
+   "ano": "2002",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9781843763314",
+   "isbn10": "1840649224",
+   "capa": "https://m.media-amazon.com/images/P/1840649224.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1840649224",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "ribeiro-o-povo-brasileiro",
+   "autor": "Darcy Ribeiro",
+   "titulo": "O Povo Brasileiro: A Formação e o Sentido do Brasil",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1995",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    },
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    },
+    {
+     "n": "004",
+     "nota": "a formação e a vocação sintética do Brasil",
+     "pagina": 54
+    },
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    },
+    {
+     "n": "009",
+     "nota": "",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9788571644519",
+   "isbn10": "8526022253",
+   "capa": "https://m.media-amazon.com/images/P/8526022253.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526022253",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "varoufakis-technofeudalism",
+   "autor": "Yanis Varoufakis",
+   "titulo": "Tecnofeudalismo: O que matou o capitalismo",
+   "titulo_original": "",
+   "editora": "Crítica",
+   "ano": "2025",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788542233193",
+   "isbn10": "8542233190",
+   "capa": "https://m.media-amazon.com/images/P/8542233190.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8542233190",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Technofeudalism: What Killed Capitalism",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.planetadelivros.com.br/livro-tecnofeudalismo/417534"
+  },
+  {
+   "id": "webb-the-signals-are-talking",
+   "autor": "Amy Webb",
+   "titulo": "The Signals Are Talking: Why Today's Fringe Is Tomorrow's Mainstream",
+   "titulo_original": "",
+   "editora": "PublicAffairs",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "001",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9781610396660",
+   "isbn10": "1610396669",
+   "capa": "https://m.media-amazon.com/images/P/1610396669.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1610396669",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "ahrens-how-to-take-smart",
+   "autor": "Sönke Ahrens",
+   "titulo": "Como escrever boas notas: Uma técnica simples para melhorar a escrita, o aprendizado e o raciocínio",
+   "titulo_original": "",
+   "editora": "Auster",
+   "ano": "2023",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "método Zettelkasten, de Niklas Luhmann",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9786587408644",
+   "isbn10": "6587408648",
+   "capa": "https://m.media-amazon.com/images/P/6587408648.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6587408648",
+   "fonte_capa": "amazon",
+   "titulo_citado": "How to Take Smart Notes",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Como-escrever-boas-notas-aprendizado/dp/6587408648"
+  },
+  {
+   "id": "damatta-a-casa-a-rua",
+   "autor": "Roberto DaMatta",
+   "titulo": "A casa e a rua: espaço, cidadania, mulher e morte no Brasil",
+   "titulo_original": "",
+   "editora": "Rocco",
+   "ano": "1997",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    },
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788532507594",
+   "isbn10": "853250759X",
+   "capa": "https://m.media-amazon.com/images/P/853250759X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/853250759X",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Casa & a Rua",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://rocco.com.br/produto/a-casa-e-a-rua/"
+  },
+  {
+   "id": "ebbinghaus-uber-das-gedachtnis",
+   "autor": "Hermann Ebbinghaus",
+   "titulo": "Memory: A Contribution to Experimental Psychology",
+   "titulo_original": "Memory: A Contribution to Experimental Psychology",
+   "editora": "Sothis Press",
+   "ano": "1885",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9783534052554",
+   "isbn10": "1048768953",
+   "capa": "https://m.media-amazon.com/images/I/51I1ppZi55L._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1048768953",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Über das Gedächtnis"
+  },
+  {
+   "id": "fanon-pele-negra-mascaras-brancas",
+   "autor": "Frantz Fanon",
+   "titulo": "Pele negra, máscaras brancas",
+   "titulo_original": "",
+   "editora": "Ubu Editora",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    },
+    {
+     "n": "004",
+     "nota": "a colonização do desejo e da autoimagem",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788523212148",
+   "isbn10": "6586497205",
+   "capa": "https://m.media-amazon.com/images/I/510ZP6ECsBL._SL1191_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6586497205",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Pele Negra, Máscaras Brancas"
+  },
+  {
+   "id": "inayatullah-questioning-the-future",
+   "autor": "Sohail Inayatullah",
+   "titulo": "Questioning the Future",
+   "titulo_original": "",
+   "editora": "Tamkang University Press",
+   "ano": "2007",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9780449242667",
+   "isbn10": "0449242668",
+   "capa": "livros/capas/inayatullah-questioning-the-future-editora.jpg",
+   "amazon": "",
+   "fonte_capa": "editora",
+   "edicao_pt": "inexistente",
+   "indisponivel_amazon": true,
+   "fora_amazon": "Busca na Amazon.com.br por título+autor: 'Nenhum resultado'. O ASIN antigo 0449242668 é 'Future in Question' (Fawcett), outro livro. Vendido em PDF/impresso pela Metafuture (metafuture.org, Tamkang University Press).",
+   "fora_amazon_url": "https://www.metafuture.org/product/questioning-the-future/",
+   "fora_amazon_nome": "Metafuture, a editora do autor"
+  },
+  {
+   "id": "inayatullah-cla-2-0",
+   "autor": "Sohail Inayatullah",
+   "titulo": "CLA 2.0",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "livros/capas/inayatullah-cla-2-0-editora.jpg",
+   "amazon": "",
+   "fonte_capa": "editora",
+   "edicao_pt": "inexistente",
+   "indisponivel_amazon": true,
+   "fora_amazon": "Busca na Amazon.com.br por 'CLA 2.0 Inayatullah' e pelo ISBN 9789865982935: 'Nenhum resultado'. Vendido pela Metafuture (metafuture.org), Tamkang University Press, 2015. O item 5510834307 'Causal Layered Analysis' (Book on Demand) é impressão de verbete, não é o livro, e está indisponível.",
+   "fora_amazon_url": "https://www.metafuture.org/product/cla-2-0/",
+   "fora_amazon_nome": "Metafuture, a editora do autor"
+  },
+  {
+   "id": "jung-o-eu-e-o",
+   "autor": "Carl Gustav Jung",
+   "titulo": "O Eu e o Inconsciente",
+   "titulo_original": "",
+   "editora": "Vozes",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788532604194",
+   "isbn10": "8532604196",
+   "capa": "https://m.media-amazon.com/images/P/8532604196.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532604196",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "jung-aion",
+   "autor": "Carl Gustav Jung",
+   "titulo": "Aion: Estudo sobre o simbolismo do si-mesmo (Obras Completas de C. G. Jung, vol. 9/2)",
+   "titulo_original": "",
+   "editora": "Vozes",
+   "ano": "2013",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788532603739",
+   "isbn10": "8532603734",
+   "capa": "https://m.media-amazon.com/images/P/8532603734.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532603734",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Aion: Estudos sobre o Simbolismo do Si-Mesmo",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.livrariavozes.com.br/aionvol-928532603734/p"
+  },
+  {
+   "id": "khanna-connectography",
+   "autor": "Parag Khanna",
+   "titulo": "Connectography: Mapping the Future of Global Civilization",
+   "titulo_original": "",
+   "editora": "Random House",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9781665297660",
+   "isbn10": "1665297662",
+   "capa": "https://m.media-amazon.com/images/P/1665297662.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1665297662",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "mahbubani-the-new-asian-hemisphere",
+   "autor": "Kishore Mahbubani",
+   "titulo": "The New Asian Hemisphere",
+   "titulo_original": "",
+   "editora": "PublicAffairs",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9781586486716",
+   "isbn10": "1586486713",
+   "capa": "https://m.media-amazon.com/images/P/1586486713.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1586486713",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "nietzsche-assim-falou-zaratustra",
+   "autor": "Friedrich Nietzsche",
+   "titulo": "Assim Falou Zaratustra",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2011",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "com Píndaro, 2ª Pítica, para a origem de \"torna-te quem tu és\"",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788535930481",
+   "isbn10": "8535930485",
+   "capa": "https://m.media-amazon.com/images/P/8535930485.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535930485",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "nye-soft-power",
+   "autor": "Joseph S. Nye",
+   "titulo": "Soft Power: The Means to Success in World Politics",
+   "titulo_original": "",
+   "editora": "PublicAffairs",
+   "ano": "2004",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9781586482251",
+   "isbn10": "0786738960",
+   "capa": "https://m.media-amazon.com/images/P/0786738960.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0786738960",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "olson-houston-we-have-a",
+   "autor": "Randy Olson",
+   "titulo": "Houston, We Have a Narrative: Why Science Needs Story",
+   "titulo_original": "",
+   "editora": "University of Chicago Press",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9780226270708",
+   "isbn10": "022627084X",
+   "capa": "https://m.media-amazon.com/images/P/022627084X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/022627084X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "orwell-1984",
+   "autor": "George Orwell",
+   "titulo": "1984",
+   "titulo_original": "",
+   "editora": "Secker & Warburg",
+   "ano": "1949",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788535932522",
+   "isbn10": "8535932526",
+   "capa": "https://m.media-amazon.com/images/P/8535932526.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535932526",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "romaniuk-building-distinctive-brand-assets",
+   "autor": "Jenni Romaniuk",
+   "titulo": "Building Distinctive Brand Assets",
+   "titulo_original": "",
+   "editora": "Oxford University Press",
+   "ano": "2018",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "Ehrenberg-Bass Institute",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9780190311506",
+   "isbn10": "0190311509",
+   "capa": "https://m.media-amazon.com/images/P/0190311509.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0190311509",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "sharp-how-brands-grow",
+   "autor": "Byron Sharp",
+   "titulo": "How Brands Grow - Como as Marcas Crescem",
+   "titulo_original": "",
+   "editora": "globo",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788569663034",
+   "isbn10": "856966303X",
+   "capa": "https://m.media-amazon.com/images/I/61NyO7GfApS._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/856966303X",
+   "fonte_capa": "amazon",
+   "titulo_citado": "How Brands Grow",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.skoob.com.br/como-as-marcas-crescem-12132640ed12116511.html"
+  },
+  {
+   "id": "young-a-technique-for-producing",
+   "autor": "James Webb Young",
+   "titulo": "Tecnica para Producao de Ideias",
+   "titulo_original": "",
+   "editora": "Nobel",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788521307969",
+   "isbn10": "8521307969",
+   "capa": "https://m.media-amazon.com/images/I/51ibXCxkwgL.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8521307969",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Technique for Producing Ideas",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.travessa.com.br/tecnica-para-producao-de-ideias/artigo/6ab889aa-1ab3-4a95-9e23-b7c2d93a67d5"
+  },
+  {
+   "id": "zakaria-the-post-american-world",
+   "autor": "Fareed Zakaria",
+   "titulo": "O mundo pós-americano",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9788535913569",
+   "isbn10": "8535913564",
+   "capa": "https://m.media-amazon.com/images/P/8535913564.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535913564",
+   "fonte_capa": "amazon",
+   "titulo_citado": "The Post-American World",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8535913564"
+  },
+  {
+   "id": "zwicky-discovery-invention-research-through",
+   "autor": "Fritz Zwicky",
+   "titulo": "Discovery, Invention, Research through the morphological approach",
+   "titulo_original": "",
+   "editora": "Macmillan",
+   "ano": "1969",
+   "edicoes": [
+    {
+     "n": "002",
+     "nota": "",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/I/71iIqk7mTZL._SL1280_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B0006BYL8U",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Discovery, Invention, Research Through the Morphological Approach"
+  },
+  {
+   "id": "baudrillard-simulacros-e-simulacao",
+   "autor": "Jean Baudrillard",
+   "titulo": "Simulacros e Simulação",
+   "titulo_original": "Simulacres et Simulation",
+   "editora": "Relógio D'Água",
+   "ano": "1991",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    },
+    {
+     "n": "009",
+     "nota": "",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9789727081417",
+   "isbn10": "972708141X",
+   "capa": "https://m.media-amazon.com/images/P/972708141X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/972708141X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "portugal",
+   "titulo_citado": "Simulacros e Simulação"
+  },
+  {
+   "id": "brynjolfsson-the-second-machine-age",
+   "autor": "Erik Brynjolfsson & Andrew McAfee",
+   "titulo": "A Segunda Era das Máquinas: trabalho, progresso e prosperidade em uma época de tecnologias brilhantes",
+   "titulo_original": "",
+   "editora": "Alta Books",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788576089148",
+   "isbn10": "8576089149",
+   "capa": "https://m.media-amazon.com/images/P/8576089149.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8576089149",
+   "fonte_capa": "amazon",
+   "titulo_citado": "The Second Machine Age",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.book7.com.br/a-segunda-era-das-maquinas-9788576089148/p"
+  },
+  {
+   "id": "couldry-the-costs-of-connection",
+   "autor": "Nick Couldry & Ulises A. Mejias",
+   "titulo": "The Costs of Connection: How Data Is Colonizing Human Life and Appropriating It for Capitalism",
+   "titulo_original": "",
+   "editora": "Stanford University Press",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9781503609754",
+   "isbn10": "1503603660",
+   "capa": "https://m.media-amazon.com/images/P/1503603660.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1503603660",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "henrich-the-weirdest-people-in",
+   "autor": "Joseph Henrich",
+   "titulo": "The WEIRDest People in the World",
+   "titulo_original": "",
+   "editora": "Farrar, Straus and Giroux",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9781713547389",
+   "isbn10": "0374173222",
+   "capa": "https://m.media-amazon.com/images/P/0374173222.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0374173222",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "howkins-the-creative-economy",
+   "autor": "John Howkins",
+   "titulo": "Economia criativa: como ganhar dinheiro com ideias criativas",
+   "titulo_original": "",
+   "editora": "M.Books",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788576802068",
+   "isbn10": "8576802066",
+   "capa": "https://m.media-amazon.com/images/P/8576802066.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8576802066",
+   "fonte_capa": "amazon",
+   "titulo_citado": "The Creative Economy: How People Make Money from Ideas",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8576802066"
+  },
+  {
+   "id": "jr-soft-power",
+   "autor": "Joseph S. Nye Jr.",
+   "titulo": "Soft Power: The Means to Success in World Politics",
+   "titulo_original": "",
+   "editora": "PublicAffairs",
+   "ano": "2004",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9781586482251",
+   "isbn10": "0786738960",
+   "capa": "https://m.media-amazon.com/images/P/0786738960.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0786738960",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "krenak-futuro-ancestral",
+   "autor": "Ailton Krenak",
+   "titulo": "Futuro Ancestral",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9786559211548",
+   "isbn10": "6559211541",
+   "capa": "https://m.media-amazon.com/images/P/6559211541.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6559211541",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "morris-foundations-of-the-theory",
+   "autor": "Charles W. Morris",
+   "titulo": "Foundations of the Unity of Science (Volume 1)",
+   "titulo_original": "",
+   "editora": "University of Chicago Press",
+   "ano": "1938",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9780226575773",
+   "isbn10": "0226575772",
+   "capa": "https://m.media-amazon.com/images/I/71pkskbxcQL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0226575772",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada",
+   "titulo_citado": "Foundations of the Theory of Signs"
+  },
+  {
+   "id": "ogden-the-meaning-of-meaning",
+   "autor": "C. K. Ogden & I. A. Richards",
+   "titulo": "The Meaning of Meaning",
+   "titulo_original": "",
+   "editora": "Kegan Paul",
+   "ano": "1923",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9780415217330",
+   "isbn10": "0156584468",
+   "capa": "https://m.media-amazon.com/images/P/0156584468.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0156584468",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada"
+  },
+  {
+   "id": "popper-a-logica-da-pesquisa",
+   "autor": "Karl Popper",
+   "titulo": "A Lógica da Pesquisa Científica",
+   "titulo_original": "Logik der Forschung, 1934; ed. inglesa The Logic of Scientific Discovery, 1959",
+   "editora": "",
+   "ano": "1934",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788531602368",
+   "isbn10": "853160236X",
+   "capa": "https://m.media-amazon.com/images/P/853160236X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/853160236X",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "saussure-curso-de-linguistica-geral",
+   "autor": "Ferdinand de Saussure",
+   "titulo": "Curso de linguística geral",
+   "titulo_original": "",
+   "editora": "Cultrix",
+   "ano": "2006",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    },
+    {
+     "n": "004",
+     "nota": "significante e significado (ver Edição 003)",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788531601026",
+   "isbn10": "8531601029",
+   "capa": "https://m.media-amazon.com/images/P/8531601029.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8531601029",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Curso de Linguística Geral",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.grupopensamento.com.br/produto/curso-de-linguistica-geral-4970"
+  },
+  {
+   "id": "schwab-a-quarta-revolucao-industrial",
+   "autor": "Klaus Schwab",
+   "titulo": "A quarta revolução industrial",
+   "titulo_original": "The Fourth Industrial Revolution",
+   "editora": "Edipro",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    },
+    {
+     "n": "006",
+     "nota": "a fusão entre o físico, o digital e o biológico que reorganizou a economia",
+     "pagina": 54
+    },
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788572839785",
+   "isbn10": "857283978X",
+   "capa": "https://m.media-amazon.com/images/P/857283978X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/857283978X",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Quarta Revolução Industrial",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Quarta-Revolu%C3%A7%C3%A3o-Industrial-Klaus-Schwab/dp/857283978X"
+  },
+  {
+   "id": "wittgenstein-tractatus-logico-philosophicus",
+   "autor": "Ludwig Wittgenstein",
+   "titulo": "Tractatus Logico-Philosophicus",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1921",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788531400933",
+   "isbn10": "8531400937",
+   "capa": "https://m.media-amazon.com/images/P/8531400937.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8531400937",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "zweig-brasil-pais-do-futuro",
+   "autor": "Stefan Zweig",
+   "titulo": "Brasil, País do Futuro",
+   "titulo_original": "Brasilien: Ein Land der Zukunft",
+   "editora": "",
+   "ano": "1941",
+   "edicoes": [
+    {
+     "n": "003",
+     "nota": "",
+     "pagina": 51
+    },
+    {
+     "n": "004",
+     "nota": "o olhar estrangeiro fundador sobre o país",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788525415936",
+   "isbn10": "8525415936",
+   "capa": "https://m.media-amazon.com/images/P/8525415936.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8525415936",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "barthes-mitologias",
+   "autor": "Roland Barthes",
+   "titulo": "Mitologias",
+   "titulo_original": "Mythologies",
+   "editora": "",
+   "ano": "1957",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "denotação, conotação e mito",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788528601879",
+   "isbn10": "8528601870",
+   "capa": "https://m.media-amazon.com/images/P/8528601870.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8528601870",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "chayka-filterworld",
+   "autor": "Kyle Chayka",
+   "titulo": "Mundo Filtrado: Por que Tudo Parece Igual na Era dos Algoritmos?",
+   "titulo_original": "Filterworld",
+   "editora": "Benvirá",
+   "ano": "2025",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "o achatamento algorítmico da cultura",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786558103585",
+   "isbn10": "6558103583",
+   "capa": "https://m.media-amazon.com/images/P/6558103583.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6558103583",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Filterworld",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/6558103583"
+  },
+  {
+   "id": "eco-tratado-geral-de-semiotica",
+   "autor": "Umberto Eco",
+   "titulo": "Tratado Geral de Semiótica",
+   "titulo_original": "Trattato di semiotica generale",
+   "editora": "",
+   "ano": "1975",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "teoria geral dos signos e dos códigos culturais",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788527301206",
+   "isbn10": "8527301202",
+   "capa": "https://m.media-amazon.com/images/P/8527301202.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8527301202",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "fantappie-teoria-unitaria-do-mundo",
+   "autor": "Luigi Fantappiè",
+   "titulo": "Teoria unitária do mundo físico e biológico",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1942",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "origem do conceito de sintropia",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788883232589",
+   "isbn10": "8883232585",
+   "capa": "https://m.media-amazon.com/images/P/8883232585.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8883232585",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "girard-mentira-romantica-e-verdade",
+   "autor": "René Girard",
+   "titulo": "Mentira romântica e verdade romanesca",
+   "titulo_original": "Mensonge romantique et vérité romanesque",
+   "editora": "É Realizações",
+   "ano": "2009",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "o desejo mimético e triangular",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788588062764",
+   "isbn10": "8588062763",
+   "capa": "https://m.media-amazon.com/images/P/8588062763.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8588062763",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Mentira Romântica e Verdade Romanesca",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.travessa.com.br/mentira-romantica-e-verdade-romanesca/artigo/2e5e82e9-9ea5-4c5a-b226-8a69010ffd76"
+  },
+  {
+   "id": "guenon-o-reino-da-quantidade",
+   "autor": "René Guénon",
+   "titulo": "O Reino da Quantidade e os Sinais do Tempo - Capa comum - tradução de Portugal",
+   "titulo_original": "Le Règne de la Quantité",
+   "editora": "Publicações Dom Quixote",
+   "ano": "1989",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "a substituição da qualidade pela quantidade na modernidade",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9789722006828",
+   "isbn10": "9722006827",
+   "capa": "https://m.media-amazon.com/images/I/41X6XWG2EqL.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9722006827",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Reino da Quantidade e os Sinais dos Tempos",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/9722006827"
+  },
+  {
+   "id": "han-no-enxame",
+   "autor": "Byung-Chul Han",
+   "titulo": "No Enxame",
+   "titulo_original": "Im Schwarm",
+   "editora": "",
+   "ano": "2013",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "atenção, transparência e digital",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788532658517",
+   "isbn10": "8532658512",
+   "capa": "https://m.media-amazon.com/images/P/8532658512.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532658512",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "han-sociedade-do-cansaco",
+   "autor": "Byung-Chul Han",
+   "titulo": "Sociedade do cansaço",
+   "titulo_original": "",
+   "editora": "Editora Vozes",
+   "ano": "2010",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "atenção, transparência e digital",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "8532649963",
+   "capa": "https://m.media-amazon.com/images/I/615xknuR6CL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532649963",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Sociedade do Cansaço"
+  },
+  {
+   "id": "harari-21-licoes-para-o",
+   "autor": "Yuval Noah Harari",
+   "titulo": "21 lições para o século 21",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2018",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "algoritmos, \"hackeamento\" humano e dataísmo",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788535930917",
+   "isbn10": "8535930914",
+   "capa": "https://m.media-amazon.com/images/P/8535930914.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535930914",
+   "fonte_capa": "amazon",
+   "titulo_citado": "21 Lições para o Século XXI",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788535930917/21-licoes-para-o-seculo-21"
+  },
+  {
+   "id": "hegel-fenomenologia-do-espirito",
+   "autor": "G. W. F. Hegel",
+   "titulo": "Fenomenologia do espírito",
+   "titulo_original": "1807",
+   "editora": "Editora Vozes",
+   "ano": "1807",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "a dialética (tese/antítese/síntese) e o espírito do tempo (Zeitgeist)",
+     "pagina": 54
+    },
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788532607713",
+   "isbn10": "8532627692",
+   "capa": "https://m.media-amazon.com/images/I/51eB56zzgCL._SL1240_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532627692",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Fenomenologia do Espírito"
+  },
+  {
+   "id": "jung-os-arquetipos-e-o",
+   "autor": "Carl Gustav Jung",
+   "titulo": "Os Arquétipos e o Inconsciente Coletivo",
+   "titulo_original": "",
+   "editora": "Vozes",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "as matrizes simbólicas universais",
+     "pagina": 54
+    },
+    {
+     "n": "006",
+     "nota": "a origem do conceito de inconsciente coletivo",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788532623546",
+   "isbn10": "8532623549",
+   "capa": "https://m.media-amazon.com/images/P/8532623549.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532623549",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "levi strauss-o-pensamento-selvagem",
+   "autor": "Claude Lévi-Strauss",
+   "titulo": "O Pensamento Selvagem",
+   "titulo_original": "La Pensée Sauvage",
+   "editora": "",
+   "ano": "1962",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "o conceito de bricolage",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788530800833",
+   "isbn10": "8530800834",
+   "capa": "https://m.media-amazon.com/images/P/8530800834.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8530800834",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "mark-o-heroi-e-o",
+   "autor": "Margaret Mark & Carol S. Pearson",
+   "titulo": "O herói e o fora-da-lei: como construir marcas extraordinárias usando o poder dos arquétipos",
+   "titulo_original": "The Hero and the Outlaw",
+   "editora": "Cultrix",
+   "ano": "2003",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "os 12 arquétipos aplicados a marcas",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788531608094",
+   "isbn10": "8531608090",
+   "capa": "https://m.media-amazon.com/images/P/8531608090.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8531608090",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Herói e o Fora da Lei",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.abebooks.com/9788531608094/Her%C3%B3i-Fora-da-lei-Em-Portuguese-Brasil-8531608090/plp"
+  },
+  {
+   "id": "pariser-o-filtro-invisivel",
+   "autor": "Eli Pariser",
+   "titulo": "O filtro invisível: O que a internet está escondendo de você",
+   "titulo_original": "The Filter Bubble",
+   "editora": "Zahar",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "a bolha algorítmica",
+     "pagina": 54
+    },
+    {
+     "n": "006",
+     "nota": "as bolhas algorítmicas que organizam a atenção em universos fechados",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788537808030",
+   "isbn10": "8537808032",
+   "capa": "https://m.media-amazon.com/images/P/8537808032.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8537808032",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Filtro Invisível",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788537808030/o-filtro-invisivel"
+  },
+  {
+   "id": "peirce-collected-papers",
+   "autor": "Charles S. Peirce",
+   "titulo": "Semiótica",
+   "titulo_original": "Collected Papers",
+   "editora": "Perspectiva",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "a tríade ícone, índice e símbolo",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788527301947",
+   "isbn10": "8527301946",
+   "capa": "https://m.media-amazon.com/images/P/8527301946.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8527301946",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Collected Papers",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://editoraperspectiva.com.br/produtos/semiotica/"
+  },
+  {
+   "id": "simmel-filosofia-da-moda",
+   "autor": "Georg Simmel",
+   "titulo": "Filosofia da moda (e outros escritos)",
+   "titulo_original": "Philosophie der Mode",
+   "editora": "PT-PT — Edições Texto & Grafia",
+   "ano": "2014",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "a moda como dialética entre imitação e distinção",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9789898285898",
+   "isbn10": "9898285893",
+   "capa": "https://m.media-amazon.com/images/P/9898285893.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9898285893",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Filosofia da Moda",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://isbnsearch.org/isbn/9789898285898 ; https://www.amazon.com.br/Filosofia-Moda-Bolso-Georg-Simmel/dp/9898285893 (edição maior 'Filosofia da moda e outros escritos', 2008: 9789899568921)"
+  },
+  {
+   "id": "wu-the-attention-merchants",
+   "autor": "Tim Wu",
+   "titulo": "The Attention Merchants",
+   "titulo_original": "The Attention Merchants",
+   "editora": "",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "a economia da atenção",
+     "pagina": 54
+    },
+    {
+     "n": "006",
+     "nota": "a história da captura e revenda da atenção humana",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9780804170048",
+   "isbn10": "1782394842",
+   "capa": "https://m.media-amazon.com/images/P/1782394842.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1782394842",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "zuboff-a-era-do-capitalismo",
+   "autor": "Shoshana Zuboff",
+   "titulo": "A era do capitalismo de vigilância: A luta por um futuro humano na nova fronteira do poder",
+   "titulo_original": "",
+   "editora": "Intrínseca",
+   "ano": "2021",
+   "edicoes": [
+    {
+     "n": "004",
+     "nota": "comportamento como matéria-prima",
+     "pagina": 54
+    },
+    {
+     "n": "006",
+     "nota": "os dados comportamentais como matéria-prima e a atenção como mercadoria",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786555601442",
+   "isbn10": "6555601442",
+   "capa": "https://m.media-amazon.com/images/P/6555601442.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6555601442",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Era do Capitalismo de Vigilância",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://intrinseca.com.br/livro/a-era-do-capitalismo-de-vigilancia/"
+  },
+  {
+   "id": "buber-eu-e-tu",
+   "autor": "Martin Buber",
+   "titulo": "Eu e Tu",
+   "titulo_original": "",
+   "editora": "Centauro",
+   "ano": "2001",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788588208162",
+   "isbn10": "8588208164",
+   "capa": "https://m.media-amazon.com/images/P/8588208164.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8588208164",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Eu e Tu",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Eu-Tu-Martin-Buber/dp/8588208164 ; https://isbnsearch.org/search?s=eu+e+tu+buber"
+  },
+  {
+   "id": "castiglione-o-cortesao",
+   "autor": "Baldassare Castiglione",
+   "titulo": "O Cortesão",
+   "titulo_original": "",
+   "editora": "WMF Martins Fontes",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    },
+    {
+     "n": "008",
+     "nota": "a origem da sprezzatura, a arte de esconder a arte",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788578278175",
+   "isbn10": "8578278178",
+   "capa": "https://m.media-amazon.com/images/P/8578278178.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8578278178",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Cortesão",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.martinsfontespaulista.com.br/o-cortesao-863105/p"
+  },
+  {
+   "id": "damatta-carnavais-malandros-e-herois",
+   "autor": "Roberto DaMatta",
+   "titulo": "Carnavais, malandros e heróis: para uma sociologia do dilema brasileiro",
+   "titulo_original": "",
+   "editora": "Rocco",
+   "ano": "1997",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788532507600",
+   "isbn10": "8532507603",
+   "capa": "https://m.media-amazon.com/images/P/8532507603.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532507603",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Carnavais, Malandros e Heróis",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://rocco.com.br/produto/carnavais-malandros-e-herois/ ; https://www.amazon.com.br/Carnavais-Malandros-Her%C3%B3is-Roberto-DaMatta/dp/8532507603"
+  },
+  {
+   "id": "dixon-the-challenger-sale",
+   "autor": "Matthew Dixon & Brent Adamson",
+   "titulo": "A venda desafiadora: Assumindo o controle da conversa com o cliente",
+   "titulo_original": "The Challenger Sale",
+   "editora": "Portfolio-Penguin",
+   "ano": "2013",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788563560773",
+   "isbn10": "8563560778",
+   "capa": "https://m.media-amazon.com/images/P/8563560778.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8563560778",
+   "fonte_capa": "amazon",
+   "titulo_citado": "The Challenger Sale",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788563560773/a-venda-desafiadora"
+  },
+  {
+   "id": "giacobelli-relacionamento-influencia-e-negocios",
+   "autor": "Márcio Giacobelli",
+   "titulo": "Relacionamento, influência e negócios: Um guia prático, inspirador e estratégico para ajudar você a dominar o mundo das vendas",
+   "titulo_original": "",
+   "editora": "Editora Gente",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788545200574",
+   "isbn10": "8545200579",
+   "capa": "https://m.media-amazon.com/images/P/8545200579.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8545200579",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Relacionamento, Influência e Negócios",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.travessa.com.br/relacionamento-influencia-e-negocios/artigo/5fdaa860-3d8b-4871-8436-275be9c88a62"
+  },
+  {
+   "id": "gitomer-little-red-book-of",
+   "autor": "Jeffrey Gitomer",
+   "titulo": "O Livro Vermelho de Vendas: Princípios e técnicas de excelência em vendas",
+   "titulo_original": "Little Red Book of Selling",
+   "editora": "M.Books",
+   "ano": "2006",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788576800033",
+   "isbn10": "8576800039",
+   "capa": "https://m.media-amazon.com/images/P/8576800039.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8576800039",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Little Red Book of Selling",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com/Livro-Vermelho-Vendas-Portuguese-Brasil/dp/8576800039"
+  },
+  {
+   "id": "hall-beyond-culture",
+   "autor": "Edward T. Hall",
+   "titulo": "Beyond Culture",
+   "titulo_original": "Beyond Culture",
+   "editora": "Anchor Books",
+   "ano": "1976",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9780385087476",
+   "isbn10": "0385124740",
+   "capa": "https://m.media-amazon.com/images/I/81p9JyhjAqL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0385124740",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Beyond Culture"
+  },
+  {
+   "id": "holanda-raizes-do-brasil",
+   "autor": "Sérgio Buarque de Holanda",
+   "titulo": "Raízes do Brasil",
+   "titulo_original": "",
+   "editora": "José Olympio",
+   "ano": "1936",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788535925487",
+   "isbn10": "8535925481",
+   "capa": "https://m.media-amazon.com/images/P/8535925481.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535925481",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "mello-a-fronda-dos-mazombos",
+   "autor": "Evaldo Cabral de Mello",
+   "titulo": "A Fronda dos Mazombos: Nobres contra Mascates, Pernambuco 1666–1715",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1995",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788573262742",
+   "isbn10": "8573262745",
+   "capa": "https://m.media-amazon.com/images/P/8573262745.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8573262745",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "rackham-spin-selling",
+   "autor": "Neil Rackham",
+   "titulo": "Alcançando excelência em vendas: SPIN Selling",
+   "titulo_original": "SPIN Selling",
+   "editora": "M.Books",
+   "ano": "2023",
+   "edicoes": [
+    {
+     "n": "005",
+     "nota": "",
+     "pagina": 51
+    }
+   ],
+   "isbn13": "9788550823386",
+   "isbn10": "8550823384",
+   "capa": "https://m.media-amazon.com/images/P/8550823384.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8550823384",
+   "fonte_capa": "amazon",
+   "titulo_citado": "SPIN Selling",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8550823384"
+  },
+  {
+   "id": "baudrillard-a-sociedade-de-consumo",
+   "autor": "Jean Baudrillard",
+   "titulo": "A Sociedade De Consumo",
+   "titulo_original": "",
+   "editora": "Edições 70",
+   "ano": "1970",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o consumo como sistema simbólico e identitário",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9786559395712",
+   "isbn10": "9724407764",
+   "capa": "https://m.media-amazon.com/images/I/31G9AecpZtL.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9724407764",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Sociedade de Consumo"
+  },
+  {
+   "id": "bon-psicologia-das-multidoes",
+   "autor": "Gustave Le Bon",
+   "titulo": "Psicologia das multidões",
+   "titulo_original": "",
+   "editora": "WMF Martins Fontes",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o contágio emocional e a identificação simbólica nas massas",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788546902415",
+   "isbn10": "8546902410",
+   "capa": "https://m.media-amazon.com/images/P/8546902410.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8546902410",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Psicologia das Multidões",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Psicologia-das-multid%C3%B5es-Gustave-Bon/dp/8546902410"
+  },
+  {
+   "id": "campbell-o-heroi-de-mil",
+   "autor": "Joseph Campbell",
+   "titulo": "O Herói de Mil Faces",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1949",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a Jornada do Herói como estrutura narrativa universal",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788531502941",
+   "isbn10": "8531502942",
+   "capa": "https://m.media-amazon.com/images/P/8531502942.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8531502942",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "durkheim-as-formas-elementares-da",
+   "autor": "Émile Durkheim",
+   "titulo": "As formas elementares da vida religiosa: O sistema totêmico na Austrália",
+   "titulo_original": "",
+   "editora": "Edipro",
+   "ano": "2021",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o rito, o culto e a efervescência coletiva que sustentam a crença",
+     "pagina": 54
+    },
+    {
+     "n": "009",
+     "nota": "a estrutura de mito, rito e doutrina das comunidades",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9786556600543",
+   "isbn10": "6556600547",
+   "capa": "https://m.media-amazon.com/images/P/6556600547.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6556600547",
+   "fonte_capa": "amazon",
+   "titulo_citado": "As Formas Elementares da Vida Religiosa",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/6556600547"
+  },
+  {
+   "id": "eliade-mito-e-realidade",
+   "autor": "Mircea Eliade",
+   "titulo": "Mito e realidade",
+   "titulo_original": "",
+   "editora": "Perspectiva",
+   "ano": "1963",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o mito como relato fundador, não como mentira",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788588862012",
+   "isbn10": "8527301415",
+   "capa": "https://m.media-amazon.com/images/I/41HjQ2gZblL._SL1162_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8527301415",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Mito e Realidade"
+  },
+  {
+   "id": "freud-psicologia-das-massas-e",
+   "autor": "Sigmund Freud",
+   "titulo": "Psicologia das Massas e Análise do Eu",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1921",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "os laços vertical e horizontal que costuram a massa em movimento",
+     "pagina": 54
+    },
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788535918717",
+   "isbn10": "853591871X",
+   "capa": "https://m.media-amazon.com/images/P/853591871X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/853591871X",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "godin-tribos",
+   "autor": "Seth Godin",
+   "titulo": "Tribos: nós precisamos que você nos lidere",
+   "titulo_original": "Tribes",
+   "editora": "Alta Books",
+   "ano": "2013",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "líderes, comunidades e movimentos na nova economia",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788576088042",
+   "isbn10": "8576088045",
+   "capa": "https://m.media-amazon.com/images/P/8576088045.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8576088045",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Tribos",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Tribos-Seth-Godin/dp/8576088045"
+  },
+  {
+   "id": "gottschall-the-storytelling-animal",
+   "autor": "Jonathan Gottschall",
+   "titulo": "Storytelling: Como as Histórias nos Tornam Humanos",
+   "titulo_original": "",
+   "editora": "Vogais / Penguin Random House Portugal",
+   "ano": "2025",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "por que somos movidos por narrativas",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9789895890514",
+   "isbn10": "9895890516",
+   "capa": "https://m.media-amazon.com/images/P/9895890516.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9895890516",
+   "fonte_capa": "amazon",
+   "edicao_pt": "portugal",
+   "titulo_citado": "The Storytelling Animal"
+  },
+  {
+   "id": "gramsci-cadernos-do-carcere",
+   "autor": "Antonio Gramsci",
+   "titulo": "Cadernos do cárcere (Vol. 1): Introdução ao estudo da filosofia. A filosofia de Benedetto Croce",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a hegemonia cultural como disputa pela direção das ideias",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786558020240",
+   "isbn10": "6558020246",
+   "capa": "https://m.media-amazon.com/images/P/6558020246.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6558020246",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Cadernos do Cárcere",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://record.com.br/produto/cadernos-do-carcere-vol-1/"
+  },
+  {
+   "id": "hegel-licoes-sobre-a-filosofia",
+   "autor": "G. W. F. Hegel",
+   "titulo": "Filosofia da História",
+   "titulo_original": "",
+   "editora": "Editora UnB",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o Espírito do Tempo e os \"homens à altura de seu tempo\"",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788523003623",
+   "isbn10": "8523003622",
+   "capa": "https://m.media-amazon.com/images/P/8523003622.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8523003622",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Lições sobre a Filosofia da História",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.mercadoeditorial.org/books/view/9788523003623"
+  },
+  {
+   "id": "hoffer-o-verdadeiro-crente",
+   "autor": "Eric Hoffer",
+   "titulo": "O Verdadeiro Crente",
+   "titulo_original": "The True Believer",
+   "editora": "",
+   "ano": "1951",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a psicologia do pertencimento nos movimentos de massa, do nobre ao vil",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9780061845482",
+   "isbn10": "0060505915",
+   "capa": "https://m.media-amazon.com/images/P/0060505915.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0060505915",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada"
+  },
+  {
+   "id": "jr-stride-toward-freedom",
+   "autor": "Martin Luther King Jr.",
+   "titulo": "Stride Toward Freedom: The Montgomery Story: 1",
+   "titulo_original": "",
+   "editora": "Beacon Press",
+   "ano": "1958",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o relato da madrugada na cozinha, a decisão solitária que precede a liderança",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9780060646905",
+   "isbn10": "0807000698",
+   "capa": "https://m.media-amazon.com/images/I/71AZ-TN2MsL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0807000698",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Stride Toward Freedom"
+  },
+  {
+   "id": "maffesoli-o-tempo-das-tribos",
+   "autor": "Michel Maffesoli",
+   "titulo": "O Tempo das Tribos: O declínio do individualismo nas sociedades de massa",
+   "titulo_original": "",
+   "editora": "Forense Universitária",
+   "ano": "1988",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "as tribos urbanas e o pertencimento como força social",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788521802266",
+   "isbn10": "8530954378",
+   "capa": "https://m.media-amazon.com/images/I/61vP47xqhfL._SL1048_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8530954378",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Tempo das Tribos"
+  },
+  {
+   "id": "markun-anita-garibaldi",
+   "autor": "Paulo Markun",
+   "titulo": "Anita Garibaldi: uma heroína brasileira",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1999",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788573590869",
+   "isbn10": "8573590866",
+   "capa": "https://m.media-amazon.com/images/P/8573590866.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8573590866",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "marx-para-a-critica-da",
+   "autor": "Karl Marx",
+   "titulo": "Contribuição à crítica da economia política",
+   "titulo_original": "",
+   "editora": "Expressão Popular",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "infraestrutura, superestrutura e a engrenagem do capitalismo industrial",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788577430482",
+   "isbn10": "8577430480",
+   "capa": "https://m.media-amazon.com/images/P/8577430480.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8577430480",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Para a Crítica da Economia Política",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://expressaopopular.com.br/livraria/9788577430482contribuicao-a-critica-da-economia-politica/"
+  },
+  {
+   "id": "marx-o-capital-livro-i",
+   "autor": "Karl Marx",
+   "titulo": "O Capital [Livro 1]: crítica da economia política. O processo de produção do capital",
+   "titulo_original": "",
+   "editora": "Boitempo",
+   "ano": "2023",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "infraestrutura, superestrutura e a engrenagem do capitalismo industrial",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786557172292",
+   "isbn10": "6557172298",
+   "capa": "https://m.media-amazon.com/images/P/6557172298.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6557172298",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Capital, Livro I",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.boitempoeditorial.com.br/produto/o-capital-livro-1-152742"
+  },
+  {
+   "id": "menger-principios-de-economia-politica",
+   "autor": "Carl Menger",
+   "titulo": "Princípios de economia",
+   "titulo_original": "",
+   "editora": "Editora Axia",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a origem da teoria do valor subjetivo, fundação da Escola Austríaca",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786558943969",
+   "isbn10": "6583638312",
+   "capa": "https://m.media-amazon.com/images/I/81UQnovW41L._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6583638312",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Princípios de Economia Política",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://isbnsearch.org/isbn/9786558943969 (e-book anterior da mesma editora: 9788583861591, https://www.amazon.com.br/dp/B074XKS6BY)"
+  },
+  {
+   "id": "miller-building-a-storybrand",
+   "autor": "Donald Miller",
+   "titulo": "Storybrand: crie mensagens claras e atraia a atenção dos clientes para sua marca",
+   "titulo_original": "",
+   "editora": "Alta Books",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a marca como guia, o cliente como herói",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788550804590",
+   "isbn10": "8550804592",
+   "capa": "https://m.media-amazon.com/images/P/8550804592.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8550804592",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Building a StoryBrand",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8550804592"
+  },
+  {
+   "id": "mises-acao-humana",
+   "autor": "Ludwig von Mises",
+   "titulo": "Ação Humana: Um tratado de economia",
+   "titulo_original": "",
+   "editora": "LVM Editora",
+   "ano": "1949",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "o valor nasce do desejo, não apenas do trabalho",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788585054151",
+   "isbn10": "6550520703",
+   "capa": "https://m.media-amazon.com/images/I/61MxLc9JQWL._SL1280_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6550520703",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Ação Humana"
+  },
+  {
+   "id": "ribas-marketing-ideologico",
+   "autor": "Davi Ribas",
+   "titulo": "Marketing Ideológico: Como liderar seu mercado e transformar seus clientes em defensores da sua marca",
+   "titulo_original": "",
+   "editora": "Editora Gente",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a fonte do método de criação e liderança de movimentos aberto nesta edição",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786555445091",
+   "isbn10": "6555445092",
+   "capa": "https://m.media-amazon.com/images/P/6555445092.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6555445092",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Marketing Ideológico",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.editoragente.com.br/marketing-ideologico/p"
+  },
+  {
+   "id": "rogers-diffusion-of-innovations",
+   "autor": "Everett M. Rogers",
+   "titulo": "Diffusion of Innovations",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1962",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a mecânica do contágio, da minoria que adere à massa que consolida",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9780743222099",
+   "isbn10": "0743222091",
+   "capa": "https://m.media-amazon.com/images/P/0743222091.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0743222091",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "weber-economia-e-sociedade",
+   "autor": "Max Weber",
+   "titulo": "Economia e Sociedade (Volume 1)",
+   "titulo_original": "",
+   "editora": "Editora UnB",
+   "ano": "1922",
+   "edicoes": [
+    {
+     "n": "006",
+     "nota": "a fonte do conceito de Rotinização do Carisma",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786559395736",
+   "isbn10": "8523003142",
+   "capa": "https://m.media-amazon.com/images/I/51MWF9zH+YL._SL1000_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8523003142",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Economia e Sociedade"
+  },
+  {
+   "id": "aristoteles-poetica",
+   "autor": "Aristóteles",
+   "titulo": "Poética",
+   "titulo_original": "c. 335 a.C.",
+   "editora": "Editora 34",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "o caráter revelado pela ação, a virtude construída pelo hábito e a mimese",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788572837590",
+   "isbn10": "8572837590",
+   "capa": "https://m.media-amazon.com/images/P/8572837590.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8572837590",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "aristoteles-etica-a-nicomaco",
+   "autor": "Aristóteles",
+   "titulo": "Ética a Nicômaco",
+   "titulo_original": "",
+   "editora": "Edipro",
+   "ano": "2014",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "o caráter revelado pela ação, a virtude construída pelo hábito e a mimese",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788572838818",
+   "isbn10": "8572838813",
+   "capa": "https://m.media-amazon.com/images/P/8572838813.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8572838813",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Ética a Nicômaco",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://edipro.com.br/livro/etica-a-nicomaco/"
+  },
+  {
+   "id": "assis-memorias-postumas-de-bras",
+   "autor": "Machado de Assis",
+   "titulo": "Memórias póstumas de Brás Cubas (Clássico de Machado de Assis) - com conteúdo extra, ideal",
+   "titulo_original": "",
+   "editora": "Penguin-Companhia",
+   "ano": "1881",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "Brás Cubas e Frodo como matrizes de valores de suas civilizações",
+     "pagina": 56
+    },
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788594318619",
+   "isbn10": "8582850018",
+   "capa": "https://m.media-amazon.com/images/I/61-X+Q-DkQL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8582850018",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Memórias Póstumas de Brás Cubas"
+  },
+  {
+   "id": "berkeley-tratado-sobre-os-principios",
+   "autor": "George Berkeley",
+   "titulo": "Obras filosóficas (inclui Tratado sobre os princípios do conhecimento humano; Três diálogos entre Hylas e Philonous; Sobre o movimento; Correspondência com Johnson; Comentários filosóficos)",
+   "titulo_original": "",
+   "editora": "Editora Unesp",
+   "ano": "2010",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a fórmula \"ser é ser percebido\"",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788539300365",
+   "isbn10": "8539300362",
+   "capa": "https://m.media-amazon.com/images/P/8539300362.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8539300362",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Tratado sobre os Princípios do Conhecimento Humano",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://editoraunesp.com.br/catalogo/9788539300365,obras-filosoficas"
+  },
+  {
+   "id": "bloom-shakespeare",
+   "autor": "Harold Bloom",
+   "titulo": "Shakespeare: A Invenção do Humano",
+   "titulo_original": "orig. 1998",
+   "editora": "Objetiva",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788573022971",
+   "isbn10": "8573022973",
+   "capa": "https://m.media-amazon.com/images/P/8573022973.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8573022973",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "egri-the-art-of-dramatic",
+   "autor": "Lajos Egri",
+   "titulo": "The Art of Dramatic Writing",
+   "titulo_original": "The Art of Dramatic Writing",
+   "editora": "Simon & Schuster",
+   "ano": "1946",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9781436709217",
+   "isbn10": "1773236156",
+   "capa": "https://m.media-amazon.com/images/P/1773236156.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1773236156",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "ernout-dictionnaire-etymologique-de-la",
+   "autor": "Alfred Ernout & Antoine Meillet",
+   "titulo": "Dictionnaire étymologique de la langue latine",
+   "titulo_original": "Dictionnaire étymologique de la langue latine",
+   "editora": "Klincksieck",
+   "ano": "1932",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "as etimologias de persona, fingere e poiesis",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9780828810227",
+   "isbn10": "0828810222",
+   "capa": "https://m.media-amazon.com/images/P/0828810222.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0828810222",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "freud-o-eu-e-o",
+   "autor": "Sigmund Freud",
+   "titulo": "O Eu e o Id",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1923",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788535918724",
+   "isbn10": "8535918728",
+   "capa": "https://m.media-amazon.com/images/P/8535918728.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535918728",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "freud-luto-e-melancolia",
+   "autor": "Sigmund Freud",
+   "titulo": "Luto e Melancolia",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1917",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788520008423",
+   "isbn10": "8520008429",
+   "capa": "https://m.media-amazon.com/images/P/8520008429.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8520008429",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "freud-recordar-repetir-e-elaborar",
+   "autor": "Sigmund Freud",
+   "titulo": "Freud (1911-1913) - Obras completas volume 10: Observações psicanalíticas sobre um caso de paranoia relatado em autobiografia (\"O caso Schreber\"), artigos sobre técnica e outros textos [contém 'Recordar, repetir e elaborar', trad. Paulo César de Souza]",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2010",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788535916140",
+   "isbn10": "8535916148",
+   "capa": "https://m.media-amazon.com/images/P/8535916148.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535916148",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Recordar, Repetir e Elaborar",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788535916140/freud-1911-1913-obras-completas-volume-10"
+  },
+  {
+   "id": "freud-novas-conferencias-introdutorias-a",
+   "autor": "Sigmund Freud",
+   "titulo": "Novas Conferências Introdutórias à Psicanálise",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1933",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788535917437",
+   "isbn10": "8535917438",
+   "capa": "https://m.media-amazon.com/images/P/8535917438.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535917438",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "goffman-a-representacao-do-eu",
+   "autor": "Erving Goffman",
+   "titulo": "A Representação do Eu na Vida Cotidiana",
+   "titulo_original": "orig. The Presentation of Self in Everyday Life, 1959",
+   "editora": "Vozes",
+   "ano": "1985",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a fachada em três peças: cenário, aparência e maneira",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788532608758",
+   "isbn10": "8532608752",
+   "capa": "https://m.media-amazon.com/images/P/8532608752.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532608752",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "greimas-semantica-estrutural",
+   "autor": "A. J. Greimas",
+   "titulo": "Sémantique structurale: Recherche de méthode",
+   "titulo_original": "orig. 1966",
+   "editora": "Presses Universitaires France",
+   "ano": "1973",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "as funções e os papéis fixos dos personagens",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "2130527639",
+   "capa": "https://m.media-amazon.com/images/I/51ggjPqbfaL._SL1448_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/2130527639",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada",
+   "titulo_citado": "Semântica Estrutural"
+  },
+  {
+   "id": "homero-iliada-e-odisseia",
+   "autor": "Homero",
+   "titulo": "Caixa Homero: Ilíada e Odisseia (tradução de Frederico Lourenço direto do grego)",
+   "titulo_original": "séc. VIII a.C.",
+   "editora": "Penguin-Companhia",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "com Werner Jaeger, Paidéia: A Formação do Homem Grego (orig. 1936; Martins Fontes, 1995), para Homero como educador da Grécia",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788563560940",
+   "isbn10": "8563560948",
+   "capa": "https://m.media-amazon.com/images/P/8563560948.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8563560948",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Ilíada e Odisseia",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788563560940/caixa-homero"
+  },
+  {
+   "id": "houaiss-dicionario-houaiss-da-lingua",
+   "autor": "Antônio Houaiss & Mauro de Salles Villar",
+   "titulo": "Dicionário Houaiss da Língua Portuguesa",
+   "titulo_original": "",
+   "editora": "Objetiva",
+   "ano": "2001",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "as etimologias de persona, fingere e poiesis",
+     "pagina": 57
+    },
+    {
+     "n": "010",
+     "nota": "sapere, a raiz comum de sabor e saber",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788573029635",
+   "isbn10": "8573029633",
+   "capa": "https://m.media-amazon.com/images/P/8573029633.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8573029633",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "jaeger-paideia",
+   "autor": "Werner Jaeger",
+   "titulo": "Paidéia: A Formação do Homem Grego",
+   "titulo_original": "orig. 1936",
+   "editora": "Martins Fontes",
+   "ano": "1995",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "para Homero como educador da Grécia",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788533613959",
+   "isbn10": "8533613954",
+   "capa": "https://m.media-amazon.com/images/P/8533613954.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8533613954",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "johnson-venice-incognito",
+   "autor": "James H. Johnson",
+   "titulo": "Venice Incognito: Masks in the Serene Republic",
+   "titulo_original": "Venice Incognito: Masks in the Serene Republic",
+   "editora": "University of California Press",
+   "ano": "2011",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9780520267718",
+   "isbn10": "0520267710",
+   "capa": "https://m.media-amazon.com/images/P/0520267710.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0520267710",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "mckee-story",
+   "autor": "Robert McKee",
+   "titulo": "Story: Substância, Estrutura, Estilo e os Princípios da Escrita de Roteiro",
+   "titulo_original": "orig. 1997",
+   "editora": "Arte & Letra",
+   "ano": "2006",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788560499007",
+   "isbn10": "8560499008",
+   "capa": "https://m.media-amazon.com/images/P/8560499008.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8560499008",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "morgado-silvio-santos",
+   "autor": "Fernando Morgado",
+   "titulo": "Silvio Santos: A Trajetória do Mito",
+   "titulo_original": "",
+   "editora": "Matrix",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788582303153",
+   "isbn10": "8582303157",
+   "capa": "https://m.media-amazon.com/images/P/8582303157.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8582303157",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "pennebaker-opening-up",
+   "autor": "James W. Pennebaker & Sandra K. Beall",
+   "titulo": "Abra seu coração: o poder de cura através da expressão das emoções",
+   "titulo_original": "Opening Up",
+   "editora": "Gente",
+   "ano": "2006",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a escrita expressiva do caderno diário",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788573125115",
+   "isbn10": "857312511X",
+   "capa": "https://m.media-amazon.com/images/P/857312511X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/857312511X",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Opening Up",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.travessa.com.br/abra-seu-coracao-o-poder-de-cura-atraves-da-expressao-das-emocoes/artigo/78010f0e-3d61-461d-acb4-34743d96eb8f"
+  },
+  {
+   "id": "peterson-character-strengths-and-virtues",
+   "autor": "Christopher Peterson & Martin E. P. Seligman",
+   "titulo": "Character Strengths and Virtues",
+   "titulo_original": "Character Strengths and Virtues",
+   "editora": "Oxford University Press / APA",
+   "ano": "2004",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a classificação das forças de caráter",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9780195167016",
+   "isbn10": "0195167015",
+   "capa": "https://m.media-amazon.com/images/P/0195167015.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0195167015",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "platao-o-banquete",
+   "autor": "Platão",
+   "titulo": "O Banquete",
+   "titulo_original": "",
+   "editora": "Editora 34",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a definição de poiesis",
+     "pagina": 56
+    },
+    {
+     "n": "008",
+     "nota": "a definição de poiesis como passagem do não-ser ao ser",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788573266474",
+   "isbn10": "8573266473",
+   "capa": "https://m.media-amazon.com/images/P/8573266473.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8573266473",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Banquete",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://editora34.com.br/livro/926"
+  },
+  {
+   "id": "porges-the-polyvagal-theory",
+   "autor": "Stephen W. Porges",
+   "titulo": "The Polyvagal Theory",
+   "titulo_original": "The Polyvagal Theory",
+   "editora": "W. W. Norton & Company",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a neurocepção",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9786599903618",
+   "isbn10": "0393707008",
+   "capa": "https://m.media-amazon.com/images/I/61p3mdn4vIL._SL1208_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0393707008",
+   "fonte_capa": "amazon",
+   "titulo_citado": "The Polyvagal Theory",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://isbnsearch.org/isbn/9786599903618 ; https://sensesna.org/produto/teoria-polivagal-fundamentos-neurofisiologicos-das-emocoes-apego-comunicacao-e-autorregulacao/ (1ª ed. Senses 2012 no Skoob; a de 2022 é a reedição em catálogo)"
+  },
+  {
+   "id": "propp-morfologia-do-conto-maravilhoso",
+   "autor": "Vladimir Propp",
+   "titulo": "Morfologia do Conto Maravilhoso",
+   "titulo_original": "orig. 1928",
+   "editora": "Forense Universitária",
+   "ano": "2006",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "as funções e os papéis fixos dos personagens",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788521803546",
+   "isbn10": "8521803540",
+   "capa": "https://m.media-amazon.com/images/P/8521803540.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8521803540",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Morfologia do Conto Maravilhoso",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8521803540"
+  },
+  {
+   "id": "rogers-terapia-centrada-no-cliente",
+   "autor": "Carl R. Rogers",
+   "titulo": "Terapia centrada no cliente: Edição comemorativa de 70 anos",
+   "titulo_original": "orig. 1951",
+   "editora": "Paidós",
+   "ano": "2026",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a autoimagem",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788542241280",
+   "isbn10": "8542241282",
+   "capa": "https://m.media-amazon.com/images/P/8542241282.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8542241282",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Terapia Centrada no Cliente",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.planetadelivros.com.br/livro-terapia-centrada-no-cliente/397161"
+  },
+  {
+   "id": "rogers-tornar-se-pessoa",
+   "autor": "Carl R. Rogers",
+   "titulo": "Tornar-se Pessoa",
+   "titulo_original": "",
+   "editora": "Martins Fontes",
+   "ano": "2009",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a autoimagem",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788526302938",
+   "isbn10": "8526302930",
+   "capa": "https://m.media-amazon.com/images/P/8526302930.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526302930",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "shakespeare-teatro-completo",
+   "autor": "William Shakespeare",
+   "titulo": "William Shakespeare: Teatro Completo (3 volumes)",
+   "titulo_original": "",
+   "editora": "Nova Aguilar",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788521001140",
+   "isbn10": "8521001142",
+   "capa": "https://m.media-amazon.com/images/P/8521001142.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8521001142",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Teatro Completo",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://bookinfometadados.com.br/books/view/9788521001140"
+  },
+  {
+   "id": "silva-a-fantastica-historia-de",
+   "autor": "Arlindo Silva",
+   "titulo": "A Fantástica História de Silvio Santos",
+   "titulo_original": "",
+   "editora": "Editora do Brasil",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788510028387",
+   "isbn10": "8510028389",
+   "capa": "https://m.media-amazon.com/images/P/8510028389.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8510028389",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "stanislavski-a-preparacao-do-ator",
+   "autor": "Constantin Stanislávski",
+   "titulo": "A Preparação do Ator",
+   "titulo_original": "orig. An Actor Prepares, 1936",
+   "editora": "Civilização Brasileira",
+   "ano": "1964",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "o superobjetivo e a regra do objetivo-verbo",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788520002681",
+   "isbn10": "8520002684",
+   "capa": "https://m.media-amazon.com/images/P/8520002684.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8520002684",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "stycer-topa-tudo-por-dinheiro",
+   "autor": "Mauricio Stycer",
+   "titulo": "Topa Tudo por Dinheiro: As Muitas Faces do Empresário Silvio Santos",
+   "titulo_original": "",
+   "editora": "Todavia",
+   "ano": "2018",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788588808171",
+   "isbn10": "858880817X",
+   "capa": "https://m.media-amazon.com/images/P/858880817X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/858880817X",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "tolkien-o-senhor-dos-aneis",
+   "autor": "J. R. R. Tolkien",
+   "titulo": "O Senhor dos Anéis",
+   "titulo_original": "orig. 1954–1955",
+   "editora": "HarperCollins Brasil",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "Brás Cubas e Frodo como matrizes de valores de suas civilizações",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9786555113624",
+   "isbn10": "6555113626",
+   "capa": "https://m.media-amazon.com/images/P/6555113626.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6555113626",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "vasari-vidas-dos-artistas",
+   "autor": "Giorgio Vasari",
+   "titulo": "Vidas dos artistas",
+   "titulo_original": "orig. Le Vite, 1550",
+   "editora": "WMF Martins Fontes",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "Leonardo e Michelangelo em competição direta na Florença do Renascimento",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9786586016352",
+   "isbn10": "6586016355",
+   "capa": "https://m.media-amazon.com/images/P/6586016355.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6586016355",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Vidas dos Artistas",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Vidas-dos-artistas-Giorgio-Vasari/dp/6586016355"
+  },
+  {
+   "id": "wilde-o-critico-como-artista",
+   "autor": "Oscar Wilde",
+   "titulo": "Estética: ensaios sobre arte e cultura (= Intenções; inclui 'A crítica e a arte', trad. João do Rio)",
+   "titulo_original": "",
+   "editora": "Faro Editorial",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "007",
+     "nota": "a origem do mote \"dê-lhe uma máscara e ele lhe dirá a verdade\"",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9786559575046",
+   "isbn10": "6559575047",
+   "capa": "https://m.media-amazon.com/images/P/6559575047.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6559575047",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Crítico como Artista, em Intenções",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.plenitudedistribuidora.com.br/estetica-oscar-wilde-96075 ; https://www.amazon.com.br/Est%C3%A9tica-Ensaios-sobre-arte-cultura/dp/6559575047"
+  },
+  {
+   "id": "arriano-anabase-de-alexandre",
+   "autor": "Arriano",
+   "titulo": "Anábase de Alexandre",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a campanha de Alexandre, o Grande, e a fundação de Alexandria (331 a.C.)",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9782707306739",
+   "isbn10": "2707306738",
+   "capa": "https://m.media-amazon.com/images/P/2707306738.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/2707306738",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "bachelard-a-poetica-do-espaco",
+   "autor": "Gaston Bachelard",
+   "titulo": "A poética do espaço",
+   "titulo_original": "La Poétique de l'espace",
+   "editora": "WMF Martins Fontes",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "ressonância e reverberação",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788533624191",
+   "isbn10": "8533624190",
+   "capa": "https://m.media-amazon.com/images/P/8533624190.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8533624190",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Poética do Espaço",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://books.google.com.br/books?vid=ISBN9788533624191 ; https://isbnsearch.org/isbn/9788533624191"
+  },
+  {
+   "id": "barros-o-dinheiro",
+   "autor": "Leandro Gomes de Barros",
+   "titulo": "Coleção Leandro Gomes de Barros ''O pai do Cordel'' 10 Titulos",
+   "titulo_original": "",
+   "editora": "Diagonal Cordéis",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "os folhetos de cordel aproveitados no Auto da Compadecida",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9786598316280",
+   "isbn10": "6598316286",
+   "capa": "https://m.media-amazon.com/images/I/71kBc87VDfL._SL1035_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6598316286",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Dinheiro (O Testamento do Cachorro)",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/6598316286"
+  },
+  {
+   "id": "barros-historia-do-cavalo-que",
+   "autor": "Leandro Gomes de Barros",
+   "titulo": "História do Cavalo que Defecava Dinheiro",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "os folhetos de cordel aproveitados no Auto da Compadecida",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788587328854",
+   "isbn10": "8587328859",
+   "capa": "https://m.media-amazon.com/images/P/8587328859.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8587328859",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "bergen-louder-than-words",
+   "autor": "Benjamin K. Bergen",
+   "titulo": "Louder Than Words: The New Science of How the Mind Makes Meaning",
+   "titulo_original": "",
+   "editora": "Basic Books",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a síntese da Cognição Corporificada",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9780465028290",
+   "isbn10": "0465028292",
+   "capa": "https://m.media-amazon.com/images/P/0465028292.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0465028292",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "cicero-de-oratore",
+   "autor": "Cícero",
+   "titulo": "On the Orator: Books 1-2: De Oratore, Books I-II: 348",
+   "titulo_original": "",
+   "editora": "Harvard University Press",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "as cinco etapas clássicas da oratória",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9780674993839",
+   "isbn10": "0674993837",
+   "capa": "https://m.media-amazon.com/images/I/51EwAaA3ocL._SL1000_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0674993837",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "De Oratore"
+  },
+  {
+   "id": "cicero-de-inventione",
+   "autor": "Cícero",
+   "titulo": "De Inventione",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "as cinco etapas clássicas da oratória",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788880861843",
+   "isbn10": "1425004652",
+   "capa": "https://m.media-amazon.com/images/P/1425004652.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1425004652",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "haidt-a-geracao-ansiosa",
+   "autor": "Jonathan Haidt",
+   "titulo": "A geração ansiosa: Como a infância hiperconectada está causando uma epidemia de transtornos mentais",
+   "titulo_original": "The Anxious Generation",
+   "editora": "Companhia das Letras",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    },
+    {
+     "n": "009",
+     "nota": "a grande reconfiguração da infância e as curvas de saúde mental pós-2012",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9788535938531",
+   "isbn10": "8535938532",
+   "capa": "https://m.media-amazon.com/images/P/8535938532.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535938532",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Geração Ansiosa",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788535938531/a-geracao-ansiosa"
+  },
+  {
+   "id": "halbert-the-boron-letters",
+   "autor": "Gary Halbert",
+   "titulo": "The Boron Letters",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1984",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "o treino da cópia à mão",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9781484825983",
+   "isbn10": "1484825985",
+   "capa": "https://m.media-amazon.com/images/P/1484825985.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1484825985",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "harari-nexus",
+   "autor": "Yuval Noah Harari",
+   "titulo": "Nexus: Uma breve história das redes de informação, da Idade da Pedra à inteligência artificial",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788535937817",
+   "isbn10": "8535937811",
+   "capa": "https://m.media-amazon.com/images/P/8535937811.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535937811",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Nexus: Uma breve história das redes de informação",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788535937817/nexus"
+  },
+  {
+   "id": "jr-the-elements-of-style",
+   "autor": "William Strunk Jr. & E. B. White",
+   "titulo": "The Elements of Style",
+   "titulo_original": "",
+   "editora": "Macmillan",
+   "ano": "1959",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a revisão como sexta etapa dos estudiosos modernos",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9798547907852",
+   "isbn10": "0939173433",
+   "capa": "https://m.media-amazon.com/images/P/0939173433.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0939173433",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "leclerc-discurso-sobre-o-estilo",
+   "autor": "Georges-Louis Leclerc, Conde de Buffon",
+   "titulo": "Discours sur le style (French Edition)",
+   "titulo_original": "",
+   "editora": "Editions la Bibliothèque Digitale",
+   "ano": "1753",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "\"o estilo é o próprio homem\"",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9789703212163",
+   "isbn10": "9703212166",
+   "capa": "https://m.media-amazon.com/images/I/71gNKJ7ij6L._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B00EUI4E46",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Discurso sobre o Estilo"
+  },
+  {
+   "id": "lembke-nacao-dopamina",
+   "autor": "Anna Lembke",
+   "titulo": "Nação dopamina: por que o excesso de prazer está nos deixando infelizes e o que podemos fazer para mudar",
+   "titulo_original": "Dopamine Nation",
+   "editora": "Vestígio",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9786586551716",
+   "isbn10": "6586551714",
+   "capa": "https://m.media-amazon.com/images/P/6586551714.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6586551714",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Nação Dopamina",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.grupoautentica.com.br/produto/nacao-dopamina-1049 ; https://www.amazon.com/dp/6586551714"
+  },
+  {
+   "id": "longino-do-sublime",
+   "autor": "Longino",
+   "titulo": "Do Sublime",
+   "titulo_original": "",
+   "editora": "WMF Martins Fontes",
+   "ano": "2025",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "\"o sublime é o eco de uma grande alma\"",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788546905904",
+   "isbn10": "8546905908",
+   "capa": "https://m.media-amazon.com/images/P/8546905908.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8546905908",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Do Sublime",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8546905908"
+  },
+  {
+   "id": "magaldi-panorama-do-teatro-brasileiro",
+   "autor": "Sábato Magaldi",
+   "titulo": "Panorama do Teatro Brasileiro",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1962",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a origem da definição \"o texto mais popular do moderno teatro brasileiro\"",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788526005617",
+   "isbn10": "8526005618",
+   "capa": "https://m.media-amazon.com/images/P/8526005618.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526005618",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "paivio-imagery-and-verbal-processes",
+   "autor": "Allan Paivio",
+   "titulo": "Imagery in Verbal Processes",
+   "titulo_original": "",
+   "editora": "Holt,Rinehart & Winston of Canada Ltd",
+   "ano": "1971",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a codificação dupla: a memória grava o concreto como imagem",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9780030851735",
+   "isbn10": "0030851734",
+   "capa": "https://m.media-amazon.com/images/I/81C1KXXQKVL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0030851734",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Imagery and Verbal Processes"
+  },
+  {
+   "id": "pope-an-essay-on-criticism",
+   "autor": "Alexander Pope",
+   "titulo": "Ensaio sobre a Crítica; A Violação da Madeixa; Floresta de Windsor",
+   "titulo_original": "",
+   "editora": "Lafonte",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "\"o que muitas vezes foi pensado, mas nunca tão bem expresso\"",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9786558702580",
+   "isbn10": "6558702584",
+   "capa": "https://m.media-amazon.com/images/P/6558702584.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6558702584",
+   "fonte_capa": "amazon",
+   "titulo_citado": "An Essay on Criticism",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Ensaio-sobre-Cr%C3%ADtica-Viola%C3%A7%C3%A3o-Floresta/dp/6558702584"
+  },
+  {
+   "id": "quintiliano-institutio-oratoria",
+   "autor": "Marco Fábio Quintiliano",
+   "titulo": "Instituição Oratória (Tomo I, edição bilíngue latim-português; obra em 4 tomos)",
+   "titulo_original": "",
+   "editora": "Editora da Unicamp",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "ler os melhores, imitar, escrever e corrigir",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788526812345",
+   "isbn10": "8526812343",
+   "capa": "https://m.media-amazon.com/images/P/8526812343.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526812343",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Institutio Oratoria",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://loja.editoraunicamp.com.br/Categoria/instituicao-oratoria-tomo-i-372/p"
+  },
+  {
+   "id": "ramos-vidas-secas",
+   "autor": "Graciliano Ramos",
+   "titulo": "Vidas Secas",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1938",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788501085290",
+   "isbn10": "6580210885",
+   "capa": "https://m.media-amazon.com/images/P/6580210885.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6580210885",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "suassuna-auto-da-compadecida",
+   "autor": "Ariano Suassuna",
+   "titulo": "Auto da Compadecida",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1955",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788520938393",
+   "isbn10": "8522006342",
+   "capa": "https://m.media-amazon.com/images/P/8522006342.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8522006342",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "suassuna-a-farsa-da-boa",
+   "autor": "Ariano Suassuna",
+   "titulo": "Farsa da Boa Preguiça",
+   "titulo_original": "",
+   "editora": "Nova Fronteira",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788520942888",
+   "isbn10": "8520942881",
+   "capa": "https://m.media-amazon.com/images/P/8520942881.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8520942881",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Farsa da Boa Preguiça",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.novafronteira.com.br/a-farsa-da-boa-preguica"
+  },
+  {
+   "id": "suassuna-romance-d-a-pedra",
+   "autor": "Ariano Suassuna",
+   "titulo": "Romance d'A Pedra do Reino e o Príncipe do Sangue do Vai-e-Volta",
+   "titulo_original": "",
+   "editora": "Nova Fronteira",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788520939277",
+   "isbn10": "8520939279",
+   "capa": "https://m.media-amazon.com/images/P/8520939279.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8520939279",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Romance d'A Pedra do Reino e o Príncipe do Sangue do Vai-e-Volta",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.novafronteira.com.br/produto/romance-da-pedra-do-reino-e-o-principe-do-sangue-do-vai-e-v.html"
+  },
+  {
+   "id": "wernicke-der-aphasische-symptomencomplex",
+   "autor": "Carl Wernicke",
+   "titulo": "Der Aphasische Symptomencomplex: Eine Psychologische Studie Auf Anatomischer Basis",
+   "titulo_original": "",
+   "editora": "Legare Street Press",
+   "ano": "1874",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a descoberta da área da linguagem no cérebro",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "1016331061",
+   "capa": "https://m.media-amazon.com/images/I/71uUOGusuML._SL1360_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1016331061",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "titulo_citado": "Der aphasische Symptomencomplex"
+  },
+  {
+   "id": "zinsser-on-writing-well",
+   "autor": "William Zinsser",
+   "titulo": "On Writing Well",
+   "titulo_original": "",
+   "editora": "Harper & Row",
+   "ano": "1976",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "a revisão como sexta etapa dos estudiosos modernos",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788568493373",
+   "isbn10": "8568493378",
+   "capa": "https://m.media-amazon.com/images/P/8568493378.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8568493378",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "zweig-brasil-um-pais-do",
+   "autor": "Stefan Zweig",
+   "titulo": "Brasil, um País do Futuro",
+   "titulo_original": "Brasilien: Ein Land der Zukunft",
+   "editora": "",
+   "ano": "1941",
+   "edicoes": [
+    {
+     "n": "008",
+     "nota": "",
+     "pagina": 37
+    }
+   ],
+   "isbn13": "9788525415936",
+   "isbn10": "8525415936",
+   "capa": "https://m.media-amazon.com/images/P/8525415936.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8525415936",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "berger-contagious",
+   "autor": "Jonah Berger",
+   "titulo": "Contágio: Por que as coisas pegam",
+   "titulo_original": "",
+   "editora": "Alta Books",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "a moeda social e o contágio das ideias",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9788550815817",
+   "isbn10": "8550815810",
+   "capa": "https://m.media-amazon.com/images/P/8550815810.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8550815810",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Contagious: Why Things Catch On",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://altabooks.com.br/produto/contagio/"
+  },
+  {
+   "id": "ferster-schedules-of-reinforcement",
+   "autor": "C. B. Ferster & B. F. Skinner",
+   "titulo": "Schedules of Reinforcement",
+   "titulo_original": "",
+   "editora": "Appleton-Century-Crofts",
+   "ano": "1957",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "o reforço intermitente",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9780874118285",
+   "isbn10": "087411828X",
+   "capa": "https://m.media-amazon.com/images/P/087411828X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/087411828X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "keller-the-face-to-face",
+   "autor": "Ed Keller & Brad Fay",
+   "titulo": "The Face-to-Face Book",
+   "titulo_original": "",
+   "editora": "Free Press",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "com a pesquisa TalkTrack sobre o boca a boca offline",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9781451640069",
+   "isbn10": "1451640064",
+   "capa": "https://m.media-amazon.com/images/P/1451640064.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1451640064",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "oldenburg-the-great-good-place",
+   "autor": "Ray Oldenburg",
+   "titulo": "The Great Good Place",
+   "titulo_original": "",
+   "editora": "Paragon House",
+   "ano": "1989",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "o conceito de terceiro lugar",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9781557784582",
+   "isbn10": "1569247781",
+   "capa": "https://m.media-amazon.com/images/P/1569247781.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1569247781",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "raworth-economia-donut",
+   "autor": "Kate Raworth",
+   "titulo": "Economia Donut",
+   "titulo_original": "Doughnut Economics",
+   "editora": "",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "o modelo adotado por Amsterdã em 2020",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9788537818282",
+   "isbn10": "8537818283",
+   "capa": "https://m.media-amazon.com/images/P/8537818283.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8537818283",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "saint exupery-terra-dos-homens",
+   "autor": "Antoine de Saint-Exupéry",
+   "titulo": "Terra dos homens",
+   "titulo_original": "",
+   "editora": "Nova Fronteira",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "a perfeição alcançada quando não há mais nada a retirar",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9788520940297",
+   "isbn10": "8520940293",
+   "capa": "https://m.media-amazon.com/images/P/8520940293.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8520940293",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Terra dos Homens",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8520940293"
+  },
+  {
+   "id": "schull-addiction-by-design",
+   "autor": "Natasha Dow Schüll",
+   "titulo": "Addiction by Design",
+   "titulo_original": "",
+   "editora": "Princeton University Press",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "009",
+     "nota": "o desenho do transe nos cassinos de Las Vegas",
+     "pagina": 47
+    }
+   ],
+   "isbn13": "9780691127552",
+   "isbn10": "0691127557",
+   "capa": "https://m.media-amazon.com/images/P/0691127557.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0691127557",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "assis-dom-casmurro",
+   "autor": "Machado de Assis",
+   "titulo": "Dom Casmurro",
+   "titulo_original": "",
+   "editora": "Garnier",
+   "ano": "1899",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788500507007",
+   "isbn10": "6586490081",
+   "capa": "https://m.media-amazon.com/images/P/6586490081.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6586490081",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "aurelio-meditacoes",
+   "autor": "Marco Aurélio",
+   "titulo": "Meditações",
+   "titulo_original": "",
+   "editora": "Penguin-Companhia",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9786587885339",
+   "isbn10": "6587885330",
+   "capa": "https://m.media-amazon.com/images/P/6587885330.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6587885330",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "bourdieu-a-distincao",
+   "autor": "Pierre Bourdieu",
+   "titulo": "A distinção: Crítica social do julgamento",
+   "titulo_original": "La Distinction, Minuit, 1979",
+   "editora": "Zouk",
+   "ano": "2007",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788531410307",
+   "isbn10": "858049012X",
+   "capa": "https://m.media-amazon.com/images/I/91soug3NOdL._SL1104_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/858049012X",
+   "fonte_capa": "amazon",
+   "titulo_citado": "A Distinção: crítica social do julgamento"
+  },
+  {
+   "id": "james-cinquenta-tons-de-cinza",
+   "autor": "E.L. James",
+   "titulo": "Cinquenta tons de cinza",
+   "titulo_original": "2011",
+   "editora": "Intrínseca",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788580572186",
+   "isbn10": "8580572185",
+   "capa": "https://m.media-amazon.com/images/P/8580572185.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8580572185",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Cinquenta Tons de Cinza",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Cinquenta-Tons-Cinza-L-James/dp/8580572185"
+  },
+  {
+   "id": "kant-critica-da-faculdade-do",
+   "autor": "Immanuel Kant",
+   "titulo": "Crítica da Faculdade do Juízo",
+   "titulo_original": "1790",
+   "editora": "Forense Universitária",
+   "ano": "1993",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788570252449",
+   "isbn10": "8530935632",
+   "capa": "https://m.media-amazon.com/images/I/912Gl6izoHL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8530935632",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Crítica da Faculdade do Juízo"
+  },
+  {
+   "id": "love-mcdonald-s",
+   "autor": "John F. Love",
+   "titulo": "Mcdonalds - A Verdadeira Historia Do Sucesso",
+   "titulo_original": "McDonald's: Behind the Arches",
+   "editora": "Bertrand Brasil",
+   "ano": "1987",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788528605617",
+   "isbn10": "8528605612",
+   "capa": "https://m.media-amazon.com/images/I/610ohYrhqtL._SL1280_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8528605612",
+   "fonte_capa": "amazon",
+   "titulo_citado": "McDonald's: Behind the Arches",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/Mcdonalds-Verdadeira-Historia-Do-Sucesso/dp/8528605612"
+  },
+  {
+   "id": "mandelbrot-the-fractal-geometry-of",
+   "autor": "Benoît Mandelbrot",
+   "titulo": "The Fractal Geometry of Nature",
+   "titulo_original": "The Fractal Geometry of Nature",
+   "editora": "W. H. Freeman",
+   "ano": "1982",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9780716711865",
+   "isbn10": "1648370411",
+   "capa": "https://m.media-amazon.com/images/P/1648370411.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1648370411",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada"
+  },
+  {
+   "id": "nietzsche-a-gaia-ciencia",
+   "autor": "Friedrich Nietzsche",
+   "titulo": "A Gaia Ciência",
+   "titulo_original": "1882",
+   "editora": "Companhia das Letras",
+   "ano": "2001",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788581862439",
+   "isbn10": "8581862438",
+   "capa": "https://m.media-amazon.com/images/P/8581862438.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8581862438",
+   "fonte_capa": "amazon"
+  },
+  {
+   "id": "nietzsche-crepusculo-dos-idolos-ou",
+   "autor": "Friedrich Nietzsche",
+   "titulo": "Crepúsculo dos ídolos, ou Como se filosofa com o martelo",
+   "titulo_original": "1888",
+   "editora": "Companhia de Bolso",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788535928587",
+   "isbn10": "8535928588",
+   "capa": "https://m.media-amazon.com/images/P/8535928588.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535928588",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Crepúsculo dos Ídolos, ou Como se Filosofa com o Martelo",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788535928587/crepusculo-dos-idolos"
+  },
+  {
+   "id": "rubin-o-ato-criativo",
+   "autor": "Rick Rubin",
+   "titulo": "O ato criativo: uma forma de ser",
+   "titulo_original": "The Creative Act, Penguin Press, 2023",
+   "editora": "Sextante",
+   "ano": "2023",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9786555646740",
+   "isbn10": "6555646748",
+   "capa": "https://m.media-amazon.com/images/P/6555646748.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6555646748",
+   "fonte_capa": "amazon",
+   "titulo_citado": "O Ato Criativo: uma forma de ser",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://sextante.com.br/products/o-ato-criativo ; https://www.amazon.com.br/ato-criativo-Uma-forma-ser/dp/6555646748"
+  },
+  {
+   "id": "schlosser-fast-food-nation",
+   "autor": "Eric Schlosser",
+   "titulo": "País Fast Food",
+   "titulo_original": "Fast Food Nation",
+   "editora": "Ática",
+   "ano": "2001",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788508080922",
+   "isbn10": "8508080921",
+   "capa": "https://m.media-amazon.com/images/I/81rMktr+MHL._SL1500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8508080921",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Fast Food Nation",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.amazon.com.br/dp/8508080921"
+  },
+  {
+   "id": "taleb-antifragil",
+   "autor": "Nassim Nicholas Taleb",
+   "titulo": "Antifrágil (Nova edição): Coisas que se beneficiam com o caos",
+   "titulo_original": "Random House, 2012",
+   "editora": "Objetiva",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "010",
+     "nota": "onde o efeito Lindy ganha nome",
+     "pagina": 38
+    }
+   ],
+   "isbn13": "9788547001087",
+   "isbn10": "8547001085",
+   "capa": "https://m.media-amazon.com/images/P/8547001085.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8547001085",
+   "fonte_capa": "amazon",
+   "titulo_citado": "Antifrágil: coisas que se beneficiam com o caos",
+   "edicao_pt": "confirmada",
+   "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788547001087/antifragil-nova-edicao"
+  }
+ ]
+}
