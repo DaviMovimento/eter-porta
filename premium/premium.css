@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171130') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171130') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171130') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171213') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171213') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171213') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2684,6 +2684,7 @@ html{background:var(--papel)}
    display, e a glosa que a própria revista imprimiu na bibliografia — o
    motivo de o livro estar ali. Quatro por linha no desktop, dois no
    celular. O clique vai para a Amazon; o passe continua sendo o pedido. */
+.livros-pagina .selo h1 .marca{color:var(--ouro-vivo);font-family:var(--display);letter-spacing:.06em}
 .filtro-ed{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin:0 0 2.2rem}
 .filtro-ed button{
   font-family:var(--rotulo);font-size:var(--r-1);letter-spacing:.1em;

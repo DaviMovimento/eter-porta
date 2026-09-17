@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bibliografia — os livros da Revista ETER</title>
-<meta name="description" content="Os livros que fazem a ETER: cada edição nasce de leitura. A bibliografia das dez edições, organizada por revista, com link para comprar.">
+<meta name="description" content="Conheça todos os livros que foram utilizados como base de pesquisa para a formulação de cada uma das edições da Revista ETER, organizados por edição.">
 <link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
 <link rel="apple-touch-icon" href="../premium/favicon-180.png">
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../premium/casa.js?v=202609171130"></script>
-<script defer src="../premium/calor.js?v=202609171130"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202609171130">
+<script defer src="../premium/casa.js?v=202609171213"></script>
+<script defer src="../premium/calor.js?v=202609171213"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609171213">
 </head>
 <body class="pagina biblioteca livros-pagina">
 
@@ -32,9 +32,9 @@
 <main class="papelada">
   <div class="selo">
     <p class="rotulo">Bibliografia</p>
-    <h1>Os livros que fazem a&nbsp;<em>ETER</em></h1>
-    <p class="dek" id="dek">Cada edição nasce de leitura. Aqui estão os livros citados nas dez edições,
-    organizados por revista e na ordem em que ela os leu. Toque na capa para comprar.</p>
+    <h1>Os livros que fazem a&nbsp;<span class="marca">ETER</span></h1>
+    <p class="dek">Conheça todos os livros que foram utilizados como base de pesquisa
+    para a formulação de cada uma das nossas edições.</p>
   </div>
 
   <nav class="filtro-ed" id="filtro" aria-label="Escolher edição"></nav>
@@ -45,7 +45,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202609171130" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202609171213" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -85,8 +85,8 @@
   let D, L;
   try {
     [D, L] = await Promise.all([
-      fetch(`${ACIMA}edicoes.json?v=202609171130`).then(r => r.json()),
-      fetch(`${ACIMA}livros.json?v=202609171130`).then(r => r.json()),
+      fetch(`${ACIMA}edicoes.json?v=202609171213`).then(r => r.json()),
+      fetch(`${ACIMA}livros.json?v=202609171213`).then(r => r.json()),
     ]);
   } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
@@ -100,9 +100,6 @@
 
   const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const comprar = l => T ? l.amazon + (l.amazon.includes('?') ? '&' : '?') + 'tag=' + encodeURIComponent(T) : l.amazon;
-  const distintos = new Set(L.livros.map(l => l.id)).size;
-  document.getElementById('dek').innerHTML =
-    `Cada edição nasce de leitura. Aqui estão os <b>${distintos} livros</b> citados nas ${edicoes.length} edições, organizados por revista e na ordem em que ela os leu. Toque na capa para comprar.`;
 
   const cartao = l => {
     const capa = l.capa
@@ -130,9 +127,8 @@
     if (!lista.length) return '';
     return `<section class="edicao-livros" data-n="${e.n}" id="ed${e.n}">
       <h2>
-        <span class="alg">Edição ${e.n} <i class="pt"></i> ${lista.length} ${lista.length === 1 ? 'livro' : 'livros'}</span>
+        <span class="alg">Edição ${e.n}</span>
         <span class="nom">${esc(e.titulo)}</span>
-        <span class="sub-ed">${esc(e.subtitulo || '')}</span>
       </h2>
       <ul class="livros">${lista.map(cartao).join('')}</ul>
     </section>`;
