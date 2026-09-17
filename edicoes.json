@@ -60,6 +60,7 @@
   "edicoes": [
     {
       "n": "010",
+      "apelido": "gosto",
       "titulo": "Gosto se Discute",
       "subtitulo": "Manual de curadoria e criatividade contra o fast-food intelectual.",
       "nestaEdicao": "Você vai entender por que o mundo está ficando mais feio, mais burro e mais vazio de sentido, e como o fast-food intelectual infantiliza o paladar coletivo até transformar seus consumidores em massa de manobra de quem define o que é \"bom gosto.\" Além disso, vai acessar os três critérios que separam uma obra de valor de um produto ultraprocessado e os cinco passos da dieta intelectual que treinam o seu gosto e capacidade de curadoria, para julgar com autonomia e criar ideias e obras autorais.",
@@ -96,6 +97,7 @@
     },
     {
       "n": "009",
+      "apelido": "simples",
       "titulo": "O Futuro Simples",
       "subtitulo": "O paradoxo da nova geração, economia das comunidades e a nova era da internet.",
       "nestaEdicao": "Você vai entender por que a geração mais conectada da história se tornou também a mais solitária, e como essa contradição foi criada pela mesma fórmula que transformou a atenção humana no produto mais disputado do mundo. E nas próximas páginas você verá por que essa conta chegou ao seu limite, como nasce a economia das comunidades, e por que ela é a nova era da internet.",
@@ -138,6 +140,7 @@
     },
     {
       "n": "008",
+      "apelido": "versos",
       "titulo": "Versos & Trovas",
       "subtitulo": "A bela arte de usar as palavras para encantar corações e mentes.",
       "nestaEdicao": "Você irá entender por que, no exato momento em que a inteligência artificial produz conteúdo infinito, as palavras estão perdendo a vida — e por que a capacidade de encantar corações e mentes através delas se tornou o ativo mais raro e valioso da nova economia.",
@@ -177,6 +180,7 @@
     },
     {
       "n": "007",
+      "apelido": "mascaras",
       "titulo": "O Baile de Máscaras",
       "subtitulo": "Como construir o personagem certo para se destacar no teatro social do mercado.",
       "nestaEdicao": "Você vai entender por que a vida e o mercado funcionam como um teatro, em que os seus resultados dependem menos de quem você é e mais da percepção das pessoas certas sobre você. E vai sair destas páginas com o método dos grandes dramaturgos e roteiristas de cinema para construir personagens inesquecíveis.",
@@ -225,6 +229,7 @@
     },
     {
       "n": "006",
+      "apelido": "multidoes",
       "titulo": "Fascinar Multidões",
       "subtitulo": "Como antecipar, construir e liderar os movimentos culturais que dominam o mercado.",
       "nestaEdicao": "Você vai entender por que multidões inteiras se reúnem em torno de uma única pessoa, e por que a guerra que decide o futuro da nova economia não é travada entre produtos, mas entre narrativas. E vai acessar o passo a passo para criar e liderar o seu próprio movimento.",
@@ -269,6 +274,7 @@
     },
     {
       "n": "005",
+      "apelido": "brasileiro",
       "titulo": "Venda como um Brasileiro",
       "subtitulo": "De onde vem a nossa vergonha de vender, como o brasileiro decide comprar, e como vender através da nossa cultura.",
       "nestaEdicao": "Você vai entender por que o país que diz odiar vendedores é, ao mesmo tempo, um dos maiores e melhores vendedores do planeta — e por que esse paradoxo é, na verdade, a maior vantagem competitiva do empreendedor capaz de compreender a estrutura cultural, social e linguística por trás de como o brasileiro compra e vende.",
@@ -314,6 +320,7 @@
     },
     {
       "n": "004",
+      "apelido": "coracoes",
       "titulo": "Corações Miméticos",
       "subtitulo": "Os arquétipos, a engenharia do desejo e a semiótica dos algoritmos.",
       "nestaEdicao": "Você vai conhecer a mecânica oculta do desejo, desde os arquétipos até a semiótica dos algoritmos, e aprender a usá-la a seu favor para construir uma estética impossível de ser ignorada para sua marca.",
@@ -362,6 +369,7 @@
     },
     {
       "n": "003",
+      "apelido": "verbo",
       "titulo": "O Verbo e a Máquina",
       "subtitulo": "O manual rebelde de inteligência artificial para empreendedores criativos.",
       "nestaEdicao": "Você vai entender por que o domínio da linguagem é, neste momento histórico, o divisor de águas definitivo entre a elite criativa que constrói a nova economia e a massa que será consumida pela mediocridade dos algoritmos.",
@@ -409,6 +417,7 @@
     },
     {
       "n": "002",
+      "apelido": "autoral",
       "titulo": "Torna-te Quem Tu És",
       "subtitulo": "Como construir uma marca autoral e desejada na era da superficialidade.",
       "nestaEdicao": "Você vai entender por que, na era da inteligência artificial, tudo tem se tornado tão superficial — e como ser mais uma entre muitas cópias é um gigantesco risco financeiro e reputacional para seu negócio. Além disso, vai acessar o passo a passo para construir uma marca autoral impossível de ser copiada e ignorada pelo seu mercado.",
@@ -451,6 +460,7 @@
     },
     {
       "n": "001",
+      "apelido": "decada",
       "titulo": "A Década do Brasil",
       "subtitulo": "A revolução cultural 2027–2034 e a vantagem injusta do empreendedor brasileiro.",
       "nestaEdicao": "Você vai entender por que os empreendedores brasileiros são, neste momento histórico, os indivíduos mais bem posicionados do mundo para construir riqueza. Entre 2027 e 2034, o Brasil pode protagonizar a maior transferência de riqueza da nossa geração — e você verá qual é a vantagem competitiva específica do empreendedor brasileiro na era da IA.",
