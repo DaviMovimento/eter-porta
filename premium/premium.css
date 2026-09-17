@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171514') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171514') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171514') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609171815') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609171815') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609171815') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -360,6 +360,11 @@ body.lendo .topo{display:none}
 }
 .pg-slot img{width:100%;height:100%;object-fit:cover;display:block}
 .spread.fechada .pg-slot.esq{opacity:0}
+/* abrindo a capa, a esquerda é a mesa até a folha passar do meio do giro */
+.spread.abrindo .pg-slot.esq{opacity:0}
+/* a chegada fica invisível até o script montar os três tempos (evita a
+   piscada do molde cru); o leitor de dentro não depende disso */
+html.montando #chegada{visibility:hidden}
 
 /* a lombada: o vinco de papel dobrado no centro */
 .lombada{
@@ -2376,8 +2381,8 @@ body.rolou .topo-nav a.destaque:hover{filter:brightness(1.06)}
 @media (max-width:23.5rem){
   .topo-nav{gap:.4rem}
   .topo-nav a{padding:.35rem .28rem;white-space:nowrap}
-  .topo-nav a[href*="biblioteca"]{font-size:0}
-  .topo-nav a[href*="biblioteca"]::after{content:"EDIÇÕES";font-size:.7rem}
+  .topo-nav a[href*="biblioteca"],.topo-nav a#nav-acervo{font-size:0}
+  .topo-nav a[href*="biblioteca"]::after,.topo-nav a#nav-acervo::after{content:"EDIÇÕES";font-size:.7rem}
 }
 
 /* 2. O ALVO DE TOQUE TINHA 40px. A seção "alvos de toque" já cravava
@@ -2791,8 +2796,8 @@ html{background:var(--papel)}
 @media (max-width:47.99rem){
   .topo-nav{gap:.55rem}
   .topo-nav a{padding:.35rem .25rem;white-space:nowrap;letter-spacing:.05em}
-  .topo-nav a[href*="biblioteca"]{font-size:0}
-  .topo-nav a[href*="biblioteca"]::after{content:"EDIÇÕES";font-size:var(--r-1);letter-spacing:.05em}
+  .topo-nav a[href*="biblioteca"],.topo-nav a#nav-acervo{font-size:0}
+  .topo-nav a[href*="biblioteca"]::after,.topo-nav a#nav-acervo::after{content:"EDIÇÕES";font-size:var(--r-1);letter-spacing:.05em}
 }
 /* nos celulares mais estreitos (até 344px) "Bibliografia" vira "Livros" */
 @media (max-width:21.5rem){

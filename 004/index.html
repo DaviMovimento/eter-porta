@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="montando">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -20,8 +20,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<script defer src="../premium/calor.js?v=202609171514"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202609171514">
+<script defer src="../premium/calor.js?v=202609171815"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609171815">
+<script>
+/* A PÁGINA SÓ APARECE MONTADA. O HTML cru (molde claro, botões, imagem
+   sem página) piscava por meio segundo antes de o script vestir a capa.
+   Agora a chegada fica invisível até o script terminar; se ele falhar,
+   quatro segundos depois a página aparece de qualquer jeito. */
+setTimeout(function () { document.documentElement.classList.remove('montando'); }, 4000);
+</script>
 </head>
 <body>
 
@@ -55,7 +62,7 @@
       <div class="visor" id="visor">
         <div class="spread" id="spread">
           <div class="pg-slot esq"><img id="pg-esq" alt="" width="600" height="849"><i class="sombra"></i></div>
-          <div class="pg-slot dir"><img id="pg-dir" alt="Página da revista" width="600" height="849" fetchpriority="high"><i class="sombra"></i></div>
+          <div class="pg-slot dir"><img id="pg-dir" alt="" width="600" height="849" fetchpriority="high"><i class="sombra"></i></div>
           <div class="lombada" aria-hidden="true"></div>
 
           <!-- a folha que vira, com frente e verso -->
@@ -226,6 +233,6 @@
   </div>
 </dialog>
 
-<script src="../premium/premium.js?v=202609171514"></script>
+<script src="../premium/premium.js?v=202609171815"></script>
 </body>
 </html>
