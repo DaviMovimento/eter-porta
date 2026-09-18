@@ -250,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609171815', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202609172201', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -345,7 +345,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609171815"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609172201"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -711,7 +711,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609171815`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609172201`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1302,7 +1302,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609171815"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609172201"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1489,12 +1489,17 @@ async function recuperarPorChave() {
   const k = (url.get('k') || '').trim().toLowerCase();
   if (!k || !CFG.webhookLead || jaCapturado()) return;
   if (!/^[a-z0-9]{8}$/.test(k)) return;
+  /* o script da Google acorda devagar e às vezes responde a primeira chamada
+     com uma página de erro em vez de JSON: duas tentativas, com um respiro */
+  const perguntar = () => fetch(CFG.webhookLead, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ acao: 'quem', k }),
+  }).then(x => x.json());
   try {
-    const r = await fetch(CFG.webhookLead, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ acao: 'quem', k }),
-    }).then(x => x.json());
+    let r = null;
+    try { r = await perguntar(); } catch (_) { r = null; }
+    if (!r || !r.ok) { await new Promise(ok => setTimeout(ok, 1500)); r = await perguntar(); }
     if (r && r.ok && r.email && r.whatsapp) {
       localStorage.setItem(CHAVE_LEAD, JSON.stringify({
         nome: r.nome || '', email: r.email, whatsapp: r.whatsapp,
