@@ -250,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609180954', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202609180958', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -345,7 +345,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609180954"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609180958"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -711,7 +711,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609180954`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609180958`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1144,10 +1144,20 @@ function montarEspiada() {
 
 /* quem espiou e quis ler cai exatamente na página que estava vendo */
 let abrindo = 0;
-function abrirNaPagina(n) {
+async function abrirNaPagina(n) {
   /* dois toques no mesmo segundo são UM pedido */
   if (Date.now() - abrindo < 900) return;
   abrindo = Date.now();
+  /* veio pelo link com chave e a Google ainda não respondeu quem é: espera
+     antes de decidir entre abrir e pedir cadastro, senão o formulário
+     aparece para quem já está cadastrado */
+  if (chaveEmVoo) {
+    const bt = $('#btn-ler'); const antes = bt ? bt.innerHTML : null;
+    if (bt) bt.innerHTML = '<b>Abrindo a edição…</b>';
+    try { await chaveEmVoo; } catch (_) {}
+    chaveEmVoo = null;
+    if (bt && antes !== null) bt.innerHTML = antes;
+  }
   const ir = () => {
     /* otimista como todo o resto: abre JÁ na página tocada; se o porteiro
        negar, a leitura fecha e a parede do mês aparece */
@@ -1302,7 +1312,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609180954"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609180958"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
