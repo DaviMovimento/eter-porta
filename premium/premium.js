@@ -250,7 +250,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609172201', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202609180924', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -345,7 +345,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609172201"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609180924"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -711,7 +711,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609172201`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609180924`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1302,7 +1302,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609172201"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609180924"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1485,9 +1485,16 @@ let porteiroEmVoo = null;
    WhatsApp, o Safari do celular) seria mandado ao formulário de novo; a
    chave recupera o cadastro na planilha e a edição abre direto. A chave
    sai da barra de endereços depois de usada, para não viajar num print. */
+let chaveEmVoo = null;   /* a consulta da chave, para o botão de ler esperar */
 async function recuperarPorChave() {
   const k = (url.get('k') || '').trim().toLowerCase();
   if (!k || !CFG.webhookLead || jaCapturado()) return;
+  chaveEmVoo = recuperarPorChaveMesmo(k);
+  /* a página aparece em até 4s de qualquer jeito (html.montando); se a
+     Google demorar mais, o botão de ler espera o resto */
+  await Promise.race([chaveEmVoo, new Promise(ok => setTimeout(ok, 3500))]);
+}
+async function recuperarPorChaveMesmo(k) {
   if (!/^[a-z0-9]{8}$/.test(k)) return;
   /* o script da Google acorda devagar e às vezes responde a primeira chamada
      com uma página de erro em vez de JSON: duas tentativas, com um respiro */
@@ -1615,6 +1622,9 @@ async function liberadoParaLer() {
   const bt = $('#btn-ler');
   const antes = bt ? bt.innerHTML : null;
   const lento = setTimeout(() => { if (bt) bt.innerHTML = '<b>Abrindo a edição…</b>'; }, 500);
+  /* veio pelo link com chave e a Google ainda não respondeu: espera, senão
+     o formulário aparece para quem já está cadastrado */
+  if (chaveEmVoo) { try { await chaveEmVoo; } catch (_) {} chaveEmVoo = null; }
   const v = await consultarPorteiro(EDICAO.n);
   clearTimeout(lento);
   if (bt && antes !== null) bt.innerHTML = antes;
