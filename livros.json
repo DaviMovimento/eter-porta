@@ -3966,10 +3966,10 @@
   {
    "id": "kim-a-estrategia-do-oceano",
    "autor": "W. Chan Kim & Renée Mauborgne",
-   "titulo": "A Estratégia do Oceano Azul",
+   "titulo": "A Estratégia do Oceano Azul: Como criar novos mercados e tornar a concorrência irrelevante",
    "titulo_original": "Blue Ocean Strategy, Harvard Business School Press, 2005",
-   "editora": "Campus/Elsevier",
-   "ano": "2005",
+   "editora": "Sextante",
+   "ano": "2019",
    "edicoes": [
     {
      "n": "011",
@@ -3977,12 +3977,14 @@
      "pagina": 48
     }
    ],
-   "isbn13": "9788535215243",
-   "isbn10": "8535215247",
-   "capa": "https://m.media-amazon.com/images/P/8535215247.01.LZZZZZZZ.jpg",
-   "amazon": "https://www.amazon.com.br/dp/8535215247",
+   "isbn13": "9788543107028",
+   "isbn10": "8543107024",
+   "capa": "https://m.media-amazon.com/images/P/8543107024.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8543107024",
    "fonte_capa": "amazon",
-   "edicao_pt": "confirmada"
+   "edicao_pt": "confirmada",
+   "titulo_citado": "A Estratégia do Oceano Azul (Campus/Elsevier, 2005)",
+   "fonte_pt": "https://www.amazon.com.br/dp/8543107024"
   },
   {
    "id": "clausewitz-da-guerra",
