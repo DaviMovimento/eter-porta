@@ -10,9 +10,9 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../../premium/casa.js?v=202609241209"></script>
-<script defer src="../../premium/calor.js?v=202609241209"></script>
-<link rel="stylesheet" href="../../premium/premium.css?v=202609241209">
+<script defer src="../../premium/casa.js?v=202609241216"></script>
+<script defer src="../../premium/calor.js?v=202609241216"></script>
+<link rel="stylesheet" href="../../premium/premium.css?v=202609241216">
 </head>
 <body class="pagina biblioteca livros-pagina">
 
@@ -45,7 +45,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="../../premium/mockup-assinatura.webp?v=202609241209" alt="Tudo que você acessa ao assinar"
+      <img src="../../premium/mockup-assinatura.webp?v=202609241216" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -86,8 +86,8 @@
   let D, L;
   try {
     [D, L] = await Promise.all([
-      fetch(`${ACIMA}edicoes.json?v=202609241209`).then(r => r.json()),
-      fetch(`${ACIMA}livros.json?v=202609241209`).then(r => r.json()),
+      fetch(`${ACIMA}edicoes.json?v=202609241216`).then(r => r.json()),
+      fetch(`${ACIMA}livros.json?v=202609241216`).then(r => r.json()),
     ]);
   } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
@@ -106,10 +106,13 @@
     const capa = l.capa
       ? `<img src="${/^https?:/.test(l.capa) ? l.capa : BASE + l.capa}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`
       : `<span class="semcapa">${esc(l.titulo)}</span>`;
-    const fora = l.indisponivel_amazon;
-    const href = fora ? (l.fora_amazon_url || '') : comprar(l);
-    const rel = fora ? 'noopener' : 'nofollow sponsored noopener';
-    const chamada = fora ? `Não disponível na Amazon${l.fora_amazon_nome ? ' · ' + esc(l.fora_amazon_nome) : ''}` : 'Comprar na Amazon';
+    /* loja alternativa: livro fora da Amazon mas à venda em outro lugar
+       (sebo, editora) ganha o botão normal de compra, sem código de afiliado */
+    const loja = l.comprar_em;
+    const fora = l.indisponivel_amazon && !loja;
+    const href = loja ? l.comprar_url : fora ? (l.fora_amazon_url || '') : comprar(l);
+    const rel = loja || fora ? 'noopener' : 'nofollow sponsored noopener';
+    const chamada = loja ? `Comprar na ${esc(loja)}` : fora ? `Não disponível na Amazon${l.fora_amazon_nome ? ' · ' + esc(l.fora_amazon_nome) : ''}` : 'Comprar na Amazon';
     const dentro = `
       <span class="capinha">${capa}</span>
       <span class="aut">${esc(l.autor)}</span>
