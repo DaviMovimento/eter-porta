@@ -4094,9 +4094,9 @@
   {
    "id": "mattos-um-perfil-da-tv",
    "autor": "Sérgio Mattos",
-   "titulo": "Um Perfil da TV Brasileira",
+   "titulo": "Um Perfil da TV Brasileira: 40 anos de história, 1950-1990",
    "titulo_original": "",
-   "editora": "",
+   "editora": "ABAP / A Tarde",
    "ano": "1990",
    "edicoes": [
     {
@@ -4107,10 +4107,13 @@
    ],
    "isbn13": "",
    "isbn10": "",
-   "capa": "",
+   "capa": "livros/capas/mattos-um-perfil-da-tv.jpg",
    "amazon": "https://www.amazon.com.br/s?k=Um+Perfil+da+TV+Brasileira+S%C3%A9rgio+Mattos",
-   "fonte_capa": "",
-   "edicao_pt": "nao-confirmada"
+   "fonte_capa": "estantevirtual",
+   "edicao_pt": "nao-confirmada",
+   "indisponivel_amazon": true,
+   "fora_amazon_nome": "Estante Virtual, em sebos",
+   "fora_amazon_url": "https://www.estantevirtual.com.br/busca/um-perfil-da-tv-brasileira-sergio-mattos"
   }
  ]
 }

@@ -10,9 +10,9 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../premium/casa.js?v=202609241158"></script>
-<script defer src="../premium/calor.js?v=202609241158"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202609241158">
+<script defer src="../premium/casa.js?v=202609241209"></script>
+<script defer src="../premium/calor.js?v=202609241209"></script>
+<link rel="stylesheet" href="../premium/premium.css?v=202609241209">
 </head>
 <body class="pagina biblioteca livros-pagina">
 
@@ -45,7 +45,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp?v=202609241158" alt="Tudo que você acessa ao assinar"
+      <img src="../premium/mockup-assinatura.webp?v=202609241209" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -86,8 +86,8 @@
   let D, L;
   try {
     [D, L] = await Promise.all([
-      fetch(`${ACIMA}edicoes.json?v=202609241158`).then(r => r.json()),
-      fetch(`${ACIMA}livros.json?v=202609241158`).then(r => r.json()),
+      fetch(`${ACIMA}edicoes.json?v=202609241209`).then(r => r.json()),
+      fetch(`${ACIMA}livros.json?v=202609241209`).then(r => r.json()),
     ]);
   } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
