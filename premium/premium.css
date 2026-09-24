@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609240841') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609240841') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609240841') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609241137') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609241137') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609241137') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2032,6 +2032,36 @@ body.inicio,body.biblioteca{background:var(--papel)}
   .lombada-capa{width:4.6rem}
   .lombada-capa+.lombada-capa{margin-left:-1.3rem}
 }
+
+/* O CARROSSEL (24/09/2026, no lugar da estante): as capas correm sozinhas,
+   o leitor arrasta para os dois lados, a capa sob o mouse — ou sob o dedo,
+   no celular — cresce, e o toque abre a edição. Mesma volta infinita da
+   página do passe. */
+.capa-inicio>.prateleira.carrossel{
+  display:block;width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:0;
+  overflow-x:auto;overflow-y:visible;scrollbar-width:none;cursor:grab;touch-action:pan-x;
+  padding:1.4rem 0 1.6rem;
+}
+.prateleira.carrossel::-webkit-scrollbar{display:none}
+.prateleira.carrossel.arrastando{cursor:grabbing}
+.car-fita{display:flex;gap:1rem;width:max-content;padding:0 1rem}
+.car-capa{
+  flex:0 0 auto;width:8.6rem;display:block;position:relative;border-radius:2px;
+  box-shadow:0 10px 24px rgb(0 0 0/.45);-webkit-tap-highlight-color:transparent;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
+}
+.car-capa img{
+  width:100%;height:auto;display:block;border-radius:2px;
+  outline:1px solid rgb(255 255 255/.08);outline-offset:-1px;
+  user-select:none;-webkit-user-drag:none;pointer-events:none;
+}
+/* o destaque: no computador pelo mouse, no celular pelo toque (classe .ativa) */
+.car-capa.ativa{transform:translateY(-8px) scale(1.07);box-shadow:0 18px 36px rgb(0 0 0/.55);z-index:2}
+@media (hover:hover){
+  .car-capa:hover{transform:translateY(-8px) scale(1.07);box-shadow:0 18px 36px rgb(0 0 0/.55);z-index:2}
+}
+@media (min-width:60rem){ .car-capa{width:10.5rem} }
+@media (prefers-reduced-motion:reduce){ .car-capa{transition:none} }
 
 /* a oferta, no pé das duas páginas */
 .oferta-home{

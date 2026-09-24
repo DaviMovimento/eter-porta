@@ -14,9 +14,9 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="premium/casa.js?v=202609240841"></script>
-<script defer src="premium/calor.js?v=202609240841"></script>
-<link rel="stylesheet" href="premium/premium.css?v=202609240841">
+<script defer src="premium/casa.js?v=202609241137"></script>
+<script defer src="premium/calor.js?v=202609241137"></script>
+<link rel="stylesheet" href="premium/premium.css?v=202609241137">
 </head>
 <body class="pagina inicio">
 
@@ -77,7 +77,7 @@
   <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
   <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202609240841" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202609241137" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe" id="passe-home">
@@ -104,21 +104,67 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202609240841')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202609241137')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
   const BASE = C.baseImagens || './';
   const pub = D.edicoes.filter(e => e.paginas);
 
-  /* a prateleira: as capas, da primeira à última, como lombadas numa
-     estante — é o acervo virando argumento antes de qualquer frase */
-  document.getElementById('prateleira').innerHTML = pub
-    .slice().sort((a, b) => a.n.localeCompare(b.n))
-    .map((e, i) => `<a class="lombada-capa l${i % 4}" href="${e.n}" title="${e.titulo}">
-        <img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp" alt="${e.titulo}"
-          width="240" height="339" decoding="async">
-      </a>`).join('');
+  /* O CARROSSEL: as capas, da primeira à última, correndo em volta infinita.
+     Roda sozinho, o leitor arrasta para os dois lados, a capa sob o mouse
+     (ou sob o dedo) cresce, e o clique abre a edição. */
+  const ordem = pub.slice().sort((a, b) => a.n.localeCompare(b.n));
+  const capaHTML = e => `<a class="car-capa" href="${e.n}" title="${e.titulo}" draggable="false">
+      <img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp"
+        srcset="${BASE}edicoes/${e.n}/paginas/p001@240.webp 240w, ${BASE}edicoes/${e.n}/paginas/p001@800.webp 800w"
+        sizes="9rem" alt="${e.titulo}" width="240" height="339" decoding="async" draggable="false"></a>`;
+  const pr = document.getElementById('prateleira');
+  pr.classList.add('carrossel');
+  pr.innerHTML = `<div class="car-fita">${ordem.map(capaHTML).join('').repeat(3)}</div>`;
+  (() => {
+    const t = pr, f = t.firstElementChild;
+    const volta = () => f.scrollWidth / 3;
+    const lento = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let parado = false, baixo = false, arrastou = false, x0 = 0, s0 = 0, pos = 0, tempo = 0, apaga = 0;
+    const retoma = ms => { clearTimeout(tempo); tempo = setTimeout(() => { parado = false; }, ms); };
+    const semDestaque = () => t.querySelectorAll('.car-capa.ativa').forEach(x => x.classList.remove('ativa'));
+    requestAnimationFrame(() => { pos = volta(); t.scrollLeft = pos; });
+    /* o destaque do toque: no celular não existe mouse em cima, então a capa
+       que o dedo pousa cresce; se o dedo arrasta a fita, o destaque sai */
+    t.addEventListener('pointerdown', e => {
+      const a = e.target.closest('.car-capa');
+      if (e.pointerType !== 'mouse' && a) { clearTimeout(apaga); semDestaque(); a.classList.add('ativa'); }
+      if (e.pointerType !== 'mouse') return;
+      baixo = true; arrastou = false; parado = true; x0 = e.clientX; s0 = t.scrollLeft;
+    });
+    t.addEventListener('pointercancel', () => { semDestaque(); });
+    t.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') { clearTimeout(apaga); apaga = setTimeout(semDestaque, 900); } });
+    t.addEventListener('pointermove', e => {
+      if (!baixo) return;
+      const d = e.clientX - x0;
+      if (Math.abs(d) > 6) { arrastou = true; t.classList.add('arrastando'); }
+      if (arrastou) { t.scrollLeft = s0 - d; pos = t.scrollLeft; }
+    });
+    addEventListener('pointerup', () => { if (!baixo) return; baixo = false; t.classList.remove('arrastando'); retoma(1600); });
+    /* arrastar não é clicar: quem soltou a fita não abre a edição sem querer */
+    t.addEventListener('click', e => { if (arrastou) { e.preventDefault(); e.stopPropagation(); arrastou = false; } }, true);
+    t.addEventListener('mouseenter', () => { parado = true; clearTimeout(tempo); });
+    t.addEventListener('mouseleave', () => { if (!baixo) retoma(400); });
+    t.addEventListener('touchstart', () => { parado = true; clearTimeout(tempo); }, { passive: true });
+    t.addEventListener('touchmove', () => { semDestaque(); }, { passive: true });
+    t.addEventListener('touchend', () => retoma(1600), { passive: true });
+    t.addEventListener('scroll', () => { if (parado) pos = t.scrollLeft; }, { passive: true });
+    const passo = () => {
+      /* o navegador arredonda scrollLeft: a posição corre em ponto flutuante */
+      if (!parado && !lento) { pos -= 0.45; t.scrollLeft = Math.round(pos); }
+      const v = volta();
+      if (pos < v * 0.5) { pos += v; t.scrollLeft = Math.round(pos); }
+      else if (pos > v * 1.5) { pos -= v; t.scrollLeft = Math.round(pos); }
+      requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+  })();
   document.querySelectorAll('#prateleira img').forEach(i => i.decode?.().catch(() => {}));
   /* o mesmo motivo das provas: o Chrome baixa e não rasteriza sozinho */
   document.querySelectorAll('.mock-passe img').forEach(i => i.decode?.().catch(() => {}));
@@ -145,7 +191,7 @@
        pela cor. A da edição mostra uma revista só, e aqui o assunto é
        a revista inteira. */
     const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-geral-m.webp' : 'parede-geral.webp';
-    const arte = `${BASE}edicoes/${paredeArq}?v=202609240841`;
+    const arte = `${BASE}edicoes/${paredeArq}?v=202609241137`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;
