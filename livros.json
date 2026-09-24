@@ -53,6 +53,11 @@
     "kant-critica-da-faculdade-do",
     "bourdieu-a-distincao",
     "schlosser-fast-food-nation"
+   ],
+   "011": [
+    "varoufakis-technofeudalism",
+    "gramsci-cadernos-do-carcere",
+    "herman-a-manipulacao-do-publico"
    ]
   },
   "_vitrine": "os três livros que aparecem no cartão da edição no índice da bibliografia; escolha editorial, o resto fica na página completa"
@@ -198,6 +203,11 @@
      "n": "001",
      "nota": "",
      "pagina": 42
+    },
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
     }
    ],
    "isbn13": "9788542233193",
@@ -579,6 +589,11 @@
      "n": "002",
      "nota": "",
      "pagina": 42
+    },
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
     }
    ],
    "isbn13": "9788569663034",
@@ -1822,6 +1837,11 @@
      "n": "006",
      "nota": "a hegemonia cultural como disputa pela direção das ideias",
      "pagina": 54
+    },
+    {
+     "n": "011",
+     "nota": "o conceito de hegemonia: domínio e direção intelectual e moral",
+     "pagina": 48
     }
    ],
    "isbn13": "9786558020240",
@@ -3794,6 +3814,301 @@
    "titulo_citado": "Antifrágil: coisas que se beneficiam com o caos",
    "edicao_pt": "confirmada",
    "fonte_pt": "https://www.companhiadasletras.com.br/livro/9788547001087/antifragil-nova-edicao"
+  },
+  {
+   "id": "durand-techno-feodalisme",
+   "autor": "Cédric Durand",
+   "titulo": "Techno-féodalisme: Critique de l'économie numérique",
+   "titulo_original": "",
+   "editora": "La Découverte",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9782348080159",
+   "isbn10": "234808015X",
+   "capa": "https://m.media-amazon.com/images/P/234808015X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/234808015X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "cohen-the-press-and-foreign",
+   "autor": "Bernard C. Cohen",
+   "titulo": "The Press and Foreign Policy",
+   "titulo_original": "",
+   "editora": "Princeton University Press",
+   "ano": "1963",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "a imprensa diz ao público sobre o que pensar, não o que pensar",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9780691075198",
+   "isbn10": "0691075190",
+   "capa": "https://m.media-amazon.com/images/I/718mGlgrhgL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0691075190",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "chomsky-the-common-good",
+   "autor": "Noam Chomsky",
+   "titulo": "The Common Good",
+   "titulo_original": "",
+   "editora": "Odonian Press",
+   "ano": "1998",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9781878825087",
+   "isbn10": "1878825089",
+   "capa": "https://m.media-amazon.com/images/P/1878825089.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1878825089",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "herman-a-manipulacao-do-publico",
+   "autor": "Edward S. Herman & Noam Chomsky",
+   "titulo": "A Manipulação do Público",
+   "titulo_original": "Manufacturing Consent, Pantheon, 1988",
+   "editora": "Futura",
+   "ano": "2003",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "o espectro da opinião aceitável e o modelo de propaganda",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788574131443",
+   "isbn10": "857413144X",
+   "capa": "https://m.media-amazon.com/images/P/857413144X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/857413144X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "vitruvio-tratado-de-arquitetura-livro",
+   "autor": "Vitrúvio",
+   "titulo": "Tratado de Arquitetura, livro I",
+   "titulo_original": "De architectura, século I a.C.",
+   "editora": "Martins Fontes",
+   "ano": "2007",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788580633498",
+   "isbn10": "8580633494",
+   "capa": "https://m.media-amazon.com/images/P/8580633494.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8580633494",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "pulizzi-conteudo-s-a",
+   "autor": "Joe Pulizzi",
+   "titulo": "Conteúdo S.A.",
+   "titulo_original": "Content Inc., McGraw-Hill, 2015",
+   "editora": "DVS Editora",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788582891339",
+   "isbn10": "8582891334",
+   "capa": "https://m.media-amazon.com/images/P/8582891334.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8582891334",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "fitzpatrick-o-teste-da-mae",
+   "autor": "Rob Fitzpatrick",
+   "titulo": "O Teste da Mãe",
+   "titulo_original": "The Mom Test, 2013",
+   "editora": "",
+   "ano": "2019",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/P/B07QM7ZS7Q.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B07QM7ZS7Q",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada",
+   "asin": "B07QM7ZS7Q"
+  },
+  {
+   "id": "kim-a-estrategia-do-oceano",
+   "autor": "W. Chan Kim & Renée Mauborgne",
+   "titulo": "A Estratégia do Oceano Azul",
+   "titulo_original": "Blue Ocean Strategy, Harvard Business School Press, 2005",
+   "editora": "Campus/Elsevier",
+   "ano": "2005",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788535215243",
+   "isbn10": "8535215247",
+   "capa": "https://m.media-amazon.com/images/P/8535215247.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535215247",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "clausewitz-da-guerra",
+   "autor": "Carl von Clausewitz",
+   "titulo": "Da Guerra",
+   "titulo_original": "Vom Kriege, 1832",
+   "editora": "Martins Fontes",
+   "ano": "2010",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788546904518",
+   "isbn10": "8546904510",
+   "capa": "https://m.media-amazon.com/images/P/8546904510.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8546904510",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "godin-marketing-de-permissao",
+   "autor": "Seth Godin",
+   "titulo": "Marketing de Permissão",
+   "titulo_original": "Permission Marketing, Simon & Schuster, 1999",
+   "editora": "Campus",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788535205701",
+   "isbn10": "8535205705",
+   "capa": "https://m.media-amazon.com/images/I/71qhho6rfSL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535205705",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "fantappie-principi-di-una-teoria",
+   "autor": "Luigi Fantappiè",
+   "titulo": "Principi di una teoria unitaria del mondo fisico e biologico",
+   "titulo_original": "",
+   "editora": "Humanitas Nova",
+   "ano": "1944",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "a origem do termo sintropia",
+     "pagina": 48
+    }
+   ],
+   "isbn13": "9788883232589",
+   "isbn10": "8883232585",
+   "capa": "https://m.media-amazon.com/images/P/8883232585.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8883232585",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "herz-a-historia-secreta-da",
+   "autor": "Daniel Herz",
+   "titulo": "A História Secreta da Rede Globo",
+   "titulo_original": "",
+   "editora": "Tchê!",
+   "ano": "1987",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 49
+    }
+   ],
+   "isbn13": "9788530700140",
+   "isbn10": "8530700147",
+   "capa": "https://m.media-amazon.com/images/I/61rPmhVpngL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8530700147",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "francfort-tv-tupi",
+   "autor": "Elmo Francfort & Maurício Viel",
+   "titulo": "TV Tupi: Do Tamanho do Brasil",
+   "titulo_original": "",
+   "editora": "ABERT",
+   "ano": "2022",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 49
+    }
+   ],
+   "isbn13": "9786500464719",
+   "isbn10": "6500464710",
+   "capa": "https://m.media-amazon.com/images/P/6500464710.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6500464710",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "mattos-um-perfil-da-tv",
+   "autor": "Sérgio Mattos",
+   "titulo": "Um Perfil da TV Brasileira",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1990",
+   "edicoes": [
+    {
+     "n": "011",
+     "nota": "",
+     "pagina": 49
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "",
+   "amazon": "https://www.amazon.com.br/s?k=Um+Perfil+da+TV+Brasileira+S%C3%A9rgio+Mattos",
+   "fonte_capa": "",
+   "edicao_pt": "nao-confirmada"
   }
  ]
 }

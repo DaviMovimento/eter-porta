@@ -59,6 +59,43 @@
   },
   "edicoes": [
     {
+      "n": "011",
+      "apelido": "micro",
+      "titulo": "Micro-hegemonias",
+      "subtitulo": "Como se libertar da servidão algorítmica e tornar-se dono do seu próprio ecossistema de mídia e distribuição.",
+      "nestaEdicao": "Você vai entender por que, no tecnofeudalismo, quem produz conteúdo torna-se vassalo de terras alugadas, pagando cada vez mais caro para falar com o próprio público, e como o fim do senso comum estilhaçou a atenção do país. Além disso, irá compreender na prática como construir sua Arquitetura de Canais, e tornar-se dono do próprio canal de mídia e distribuição, formando uma tribo de pessoas que confiam em sua marca como fonte de informação e curadoria.",
+      "paginas": 50,
+      "destaques": [
+        9,
+        8,
+        10,
+        7
+      ],
+      "minutos": 37,
+      "capitulos": [
+        [
+          "Tecnofeudalismo e a servidão digital",
+          5
+        ],
+        [
+          "O Espelho de Mil Faces",
+          11
+        ],
+        [
+          "Exercício Prático: Arquitetura de Canais",
+          20
+        ],
+        [
+          "A Batalha pela Procedência",
+          42
+        ],
+        [
+          "Bibliografia",
+          48
+        ]
+      ]
+    },
+    {
       "n": "010",
       "apelido": "gosto",
       "titulo": "Gosto se Discute",
