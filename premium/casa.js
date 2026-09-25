@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = () => D ||
-    (D = fetch(`${RAIZ}edicoes.json?v=202609241333`).then(r => r.json()));
+    (D = fetch(`${RAIZ}edicoes.json?v=202609251539`).then(r => r.json()));
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -33,6 +33,15 @@
     u.searchParams.set('utm_campaign', PAGINA);
     for (const [k, v] of p) if (k.startsWith('utm_')) u.searchParams.set(k, v);
     u.searchParams.set('utm_medium', origem);
+    /* o id do contato no ManyChat, guardado pela página de edição: a venda
+       que vem pela home também chega à Guru com o elo venda → contato */
+    const m = (p.get('ms') || '').trim();
+    let ms = '';
+    try {
+      if (/^\d{4,20}$/.test(m)) { localStorage.setItem('eter_ms', m); ms = m; }
+      else ms = localStorage.getItem('eter_ms') || '';
+    } catch (e) { ms = /^\d{4,20}$/.test(m) ? m : ''; }
+    if (ms) u.searchParams.set('utm_term', `ms-${ms}`);
     return u.toString();
   }
 

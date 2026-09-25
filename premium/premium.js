@@ -195,6 +195,18 @@ function utmsDaUrl() {
   return u;
 }
 
+/* O id do contato no ManyChat (?ms=) vira utm_term no checkout, e a Guru o
+   mostra na aba Rastreamento: é o elo venda → contato. Fica guardado no
+   aparelho, porque quem lê hoje pelo ManyChat pode comprar semana que vem
+   pela bio. Só número: o link quebrado manda "{{user_id}}" literal. */
+const MS = (() => {
+  const m = (url.get('ms') || '').trim();
+  try {
+    if (/^\d{4,20}$/.test(m)) { localStorage.setItem('eter_ms', m); return m; }
+    return localStorage.getItem('eter_ms') || '';
+  } catch (e) { return /^\d{4,20}$/.test(m) ? m : ''; }
+})();
+
 function linkCheckout(origem) {
   const base = CFG.checkoutPasse, j = url.get('j');
   const p = new URLSearchParams({
@@ -202,6 +214,7 @@ function linkCheckout(origem) {
     /* os UTMs da URL entram antes: a origem do botão é o dado mais preciso
        e não pode ser apagada pelo utm_medium que veio do anúncio */
     utm_source: 'porta', utm_campaign: `ed${EDICAO.n}`, ...utmsDaUrl(), utm_medium: origem,
+    ...(MS ? { utm_term: `ms-${MS}` } : {}),
   });
   return base + (base.includes('?') ? '&' : '?') + p;
 }
@@ -250,7 +263,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609241333', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202609251539', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -345,7 +358,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609241333"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609251539"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -711,7 +724,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609241333`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609251539`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1312,7 +1325,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609241333"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609251539"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
