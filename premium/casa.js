@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = () => D ||
-    (D = fetch(`${RAIZ}edicoes.json?v=202610121829`).then(r => r.json()));
+    (D = fetch(`${RAIZ}edicoes.json?v=202610121925`).then(r => r.json()));
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -110,14 +110,9 @@
       });
       cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
 
-      const zap = cx.querySelector('#of-zap');
-      zap.addEventListener('input', () => {
-        const dg = zap.value.replace(/\D/g, '').slice(0, 11);
-        zap.value = dg.length <= 2 ? dg
-          : dg.length <= 7 ? `(${dg.slice(0, 2)}) ${dg.slice(2)}`
-          : `(${dg.slice(0, 2)}) ${dg.slice(2, 7)}-${dg.slice(7)}`;
-        cx.querySelector('#oc-zap').classList.remove('erro');
-      });
+      /* o WhatsApp de qualquer país (fone.js): Brasil por padrão */
+      const foneOferta = window.EterFone.montar(cx.querySelector('#of-zap'),
+        () => cx.querySelector('#oc-zap').classList.remove('erro'));
 
       cx.querySelector('#oferta-form').addEventListener('submit', ev => {
         ev.preventDefault();
@@ -133,15 +128,16 @@
         const v = id => cx.querySelector(id).value.trim();
         const erra = (id, sim) => cx.querySelector(id).classList.toggle('erro', sim);
         const nome = v('#of-nome'), mail = v('#of-mail');
-        const dig = v('#of-zap').replace(/\D/g, '');
+        const fz = foneOferta.ler();
+        cx.querySelector('#oc-zap .msg').textContent = fz.msg;
         erra('#oc-nome', !nome);
         erra('#oc-mail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
-        erra('#oc-zap', !(dig.length === 10 || dig.length === 11));
+        erra('#oc-zap', !fz.ok);
         erra('#oc-ok', !cx.querySelector('#of-ok').checked);
         if (cx.querySelector('.campo.erro')) return;
         const p = busca();
         const lead = {
-          nome, email: mail, whatsapp: '55' + dig, edicao: '',
+          nome, email: mail, whatsapp: fz.whatsapp, edicao: '',
           onde: `checkout-${PAGINA}-${orig}`,
           jornaleiro: p.get('j') || null, ms: p.get('ms') || null,
           utm_source: p.get('utm_source') || '', utm_medium: p.get('utm_medium') || '',

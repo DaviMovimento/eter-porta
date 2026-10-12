@@ -263,7 +263,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610121829', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610121925', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -358,7 +358,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610121829"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610121925"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -490,14 +490,9 @@ function abrirOferta(origem) {
     cx.addEventListener('click', ev => { if (ev.target === cx && backdropValido(cx)) cx.close(); });
     cx.querySelectorAll('img').forEach(i => i.decode?.().catch(() => {}));
 
-    const zap = cx.querySelector('#of-zap');
-    zap.addEventListener('input', () => {
-      const d = zap.value.replace(/\D/g, '').slice(0, 11);
-      zap.value = d.length <= 2 ? d
-        : d.length <= 7 ? `(${d.slice(0, 2)}) ${d.slice(2)}`
-        : `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-      cx.querySelector('#oc-zap').classList.remove('erro');
-    });
+    /* o WhatsApp de qualquer país (fone.js): Brasil por padrão */
+    const foneOferta = window.EterFone.montar(cx.querySelector('#of-zap'),
+      () => cx.querySelector('#oc-zap').classList.remove('erro'));
 
     cx.querySelector('#oferta-form').addEventListener('submit', ev => {
       ev.preventDefault(); ev.stopPropagation();
@@ -506,14 +501,15 @@ function abrirOferta(origem) {
       const v = id => cx.querySelector(id).value.trim();
       const erra = (id, sim) => cx.querySelector(id).classList.toggle('erro', sim);
       const nome = v('#of-nome'), mail = v('#of-mail');
-      const dig = v('#of-zap').replace(/\D/g, '');
+      const fz = foneOferta.ler();
+      cx.querySelector('#oc-zap .msg').textContent = fz.msg;
       erra('#oc-nome', !nome);
       erra('#oc-mail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
-      erra('#oc-zap', !(dig.length === 10 || dig.length === 11));
+      erra('#oc-zap', !fz.ok);
       erra('#oc-ok', !cx.querySelector('#of-ok').checked);
       if (cx.querySelector('.campo.erro')) return;
       const lead = {
-        nome, email: mail, whatsapp: '55' + dig,
+        nome, email: mail, whatsapp: fz.whatsapp,
         edicao: '', onde: `checkout-${orig}`,
         jornaleiro: url.get('j') || null, ms: url.get('ms') || null,
         utm_source: '', utm_medium: '', utm_campaign: '', ...utmsDaUrl(),
@@ -724,7 +720,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610121829`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610121925`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1329,7 +1325,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610121829"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610121925"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1707,24 +1703,21 @@ const porExtenso = n => EXTENSO[n] || String(n);
 
 const soDigitos = s => s.replace(/\D/g, '');
 
-function mascara(e) {
-  const d = soDigitos(e.target.value).slice(0, 11);
-  e.target.value = d.length <= 2 ? d
-    : d.length <= 7 ? `(${d.slice(0, 2)}) ${d.slice(2)}`
-    : `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-  $('#c-zap').classList.remove('erro');
-}
+/* o WhatsApp de qualquer país (fone.js), montado no arranque */
+let foneForm = null;
 
 async function enviar(e) {
   e.preventDefault();
   const nome = $('#f-nome').value.trim();
   const mail = $('#f-mail').value.trim();
-  const zap = soDigitos($('#f-zap').value);
+  const fz = foneForm.ler();
+  const zap = fz.whatsapp;
+  $('#msg-zap').textContent = fz.msg;
 
   /* nome, e-mail e telefone são obrigatórios — ninguém lê sem se identificar */
   const nomeOk = nome.length >= 2;
   const mailOk = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(mail);
-  const zapOk = zap.length >= 10 && zap.length <= 11;
+  const zapOk = fz.ok;
 
   $('#c-nome').classList.toggle('erro', !nomeOk);
   $('#c-mail').classList.toggle('erro', !mailOk);
@@ -1748,7 +1741,7 @@ async function enviar(e) {
      é leitura. */
   const paraComprar = onde.startsWith('checkout');
   const lead = {
-    nome, email: mail, whatsapp: '55' + zap,
+    nome, email: mail, whatsapp: zap,
     edicao: paraComprar ? '' : EDICAO.n,
     onde,
     jornaleiro: url.get('j') || null, ms: url.get('ms') || null,
@@ -1886,7 +1879,7 @@ function ligar() {
   });
 
   $('#form').addEventListener('submit', enviar);
-  $('#f-zap').addEventListener('input', mascara);
+  foneForm = window.EterFone.montar($('#f-zap'), () => $('#c-zap').classList.remove('erro'));
   $('#f-nome').addEventListener('input', () => $('#c-nome').classList.remove('erro'));
   $('#f-mail').addEventListener('input', () => $('#c-mail').classList.remove('erro'));
 
