@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202609251539') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202609251539') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202609251539') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610121829') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610121829') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610121829') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2811,6 +2811,7 @@ html{background:var(--papel)}
 .livros a:hover .chamada{background:var(--ouro);color:#17110A}
 .livros .aut+.tit{margin-top:.1rem}
 .livros .meta{margin-bottom:.55rem}
+.livros .idioma{display:block;font-size:var(--t-1);line-height:1.4;color:var(--tinta-3);font-style:italic;margin:-.3rem 0 .55rem}
 .aviso-afiliado{
   font-size:var(--t-1);line-height:1.5;color:var(--tinta-3);
   text-align:center;max-width:32rem;margin:0 auto 1rem;

@@ -58,6 +58,11 @@
     "herman-a-manipulacao-do-publico",
     "herz-a-historia-secreta-da",
     "pulizzi-conteudo-s-a"
+   ],
+   "012": [
+    "martins-linchamentos",
+    "foucault-vigiar-e-punir",
+    "planck-autobiografia-cientifica-e-outros"
    ]
   },
   "_vitrine": "os três livros que aparecem no cartão da edição no índice da bibliografia; escolha editorial, o resto fica na página completa"
@@ -4113,6 +4118,412 @@
    "edicao_pt": "nao-confirmada",
    "comprar_em": "Estante Virtual",
    "comprar_url": "https://www.estantevirtual.com.br/busca/um-perfil-da-tv-brasileira-sergio-mattos"
+  },
+  {
+   "id": "foucault-vigiar-e-punir",
+   "autor": "Michel Foucault",
+   "titulo": "Vigiar e punir: Nascimento da prisão",
+   "titulo_original": "Surveiller et punir",
+   "editora": "Vozes",
+   "ano": "1975",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "o suplício de Damiens e o povo como personagem principal da pena",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788532605085",
+   "isbn10": "8532605087",
+   "capa": "https://m.media-amazon.com/images/P/8532605087.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532605087",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "martins-linchamentos",
+   "autor": "José de Souza Martins",
+   "titulo": "Linchamentos: A justiça popular no Brasil",
+   "titulo_original": "",
+   "editora": "Contexto",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "2.028 casos em cerca de sessenta anos e o povo que continuou a aplicar a pena antiga",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788572448918",
+   "isbn10": "8572448918",
+   "capa": "https://m.media-amazon.com/images/P/8572448918.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8572448918",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "durkheim-da-divisao-do-trabalho",
+   "autor": "Émile Durkheim",
+   "titulo": "Da divisão do trabalho social",
+   "titulo_original": "De la division du travail social",
+   "editora": "Edipro",
+   "ano": "1893",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "a cólera pública",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788572839495",
+   "isbn10": "8572839496",
+   "capa": "https://m.media-amazon.com/images/P/8572839496.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8572839496",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "canetti-massa-e-poder",
+   "autor": "Elias Canetti",
+   "titulo": "Massa e poder",
+   "titulo_original": "Masse und Macht",
+   "editora": "Companhia das Letras",
+   "ano": "1960",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "a massa que persegue cresce depressa porque não corre risco",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788535932270",
+   "isbn10": "8535932275",
+   "capa": "https://m.media-amazon.com/images/P/8535932275.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535932275",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "gauss-theory-of-the-motion",
+   "autor": "Carl Friedrich Gauss",
+   "titulo": "Theory of the Motion of the Heavenly Bodies Moving About the Sun in Conic Sections",
+   "titulo_original": "Theoria Motus Corporum Coelestium",
+   "editora": "Cambridge University Press",
+   "ano": "1809",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "a curva usada para descrever os erros de medição",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9781147245240",
+   "isbn10": "114724524X",
+   "capa": "https://m.media-amazon.com/images/P/114724524X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/114724524X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "aviso": "Sem tradução para o português (o original é em latim). O link leva à tradução em inglês."
+  },
+  {
+   "id": "spinoza-etica",
+   "autor": "Baruch de Spinoza",
+   "titulo": "Ética",
+   "titulo_original": "Ethica",
+   "editora": "Autêntica",
+   "ano": "1677",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "o amor por quem entristece aquilo que odiamos",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788575263815",
+   "isbn10": "8575263811",
+   "capa": "https://m.media-amazon.com/images/P/8575263811.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8575263811",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "aristoteles-politica",
+   "autor": "Aristóteles",
+   "titulo": "Política",
+   "titulo_original": "",
+   "editora": "Edipro",
+   "ano": "século IV a.C.",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "o ser humano como animal político",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788552100355",
+   "isbn10": "8552100355",
+   "capa": "https://m.media-amazon.com/images/P/8552100355.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8552100355",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "castro-o-anjo-pornografico",
+   "autor": "Ruy Castro",
+   "titulo": "O anjo pornográfico: A vida de Nelson Rodrigues",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1992",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9786559211203",
+   "isbn10": "6559211207",
+   "capa": "https://m.media-amazon.com/images/P/6559211207.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6559211207",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "schopenhauer-a-arte-de-ter",
+   "autor": "Arthur Schopenhauer",
+   "titulo": "A arte de ter razão: 38 estratagemas",
+   "titulo_original": "Eristische Dialektik",
+   "editora": "Vozes",
+   "ano": "1864",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788532655806",
+   "isbn10": "8532655807",
+   "capa": "https://m.media-amazon.com/images/P/8532655807.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532655807",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "planck-autobiografia-cientifica-e-outros",
+   "autor": "Max Planck",
+   "titulo": "Autobiografia científica e outros ensaios",
+   "titulo_original": "Wissenschaftliche Selbstbiographie",
+   "editora": "Contraponto",
+   "ano": "1948",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "a verdade nova que vence quando os adversários vão morrendo",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788578660536",
+   "isbn10": "8578660536",
+   "capa": "https://m.media-amazon.com/images/P/8578660536.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8578660536",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "sagan-broca-s-brain",
+   "autor": "Carl Sagan",
+   "titulo": "Broca's Brain: Reflections on the Romance of Science",
+   "titulo_original": "",
+   "editora": "Random House",
+   "ano": "1979",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "riram dos irmãos Wright e riram também do palhaço Bozo",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9780345336897",
+   "isbn10": "0345336895",
+   "capa": "https://m.media-amazon.com/images/P/0345336895.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0345336895",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada",
+   "aviso": "Sem edição em português à venda no Brasil. O link leva à edição original, em inglês."
+  },
+  {
+   "id": "mill-sobre-a-liberdade",
+   "autor": "John Stuart Mill",
+   "titulo": "Sobre a liberdade",
+   "titulo_original": "On Liberty",
+   "editora": "L&PM",
+   "ano": "1859",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "os maus não precisam de nada além dos bons assistindo sem fazer nada",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788525434197",
+   "isbn10": "8525434191",
+   "capa": "https://m.media-amazon.com/images/P/8525434191.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8525434191",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "fisher-fantasmas-da-minha-vida",
+   "autor": "Mark Fisher",
+   "titulo": "Fantasmas da minha vida: Escritos sobre depressão, assombrologia e futuros perdidos",
+   "titulo_original": "Ghosts of My Life",
+   "editora": "Autonomia Literária",
+   "ano": "2014",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "a origem de \"o lento cancelamento do futuro\"",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9786587233680",
+   "isbn10": "6587233686",
+   "capa": "https://m.media-amazon.com/images/P/6587233686.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6587233686",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "berardi-depois-do-futuro",
+   "autor": "Franco Berardi",
+   "titulo": "Depois do futuro",
+   "titulo_original": "After the Future",
+   "editora": "Ubu",
+   "ano": "2011",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "a origem de \"o lento cancelamento do futuro\"",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9788571260214",
+   "isbn10": "8571260214",
+   "capa": "https://m.media-amazon.com/images/P/8571260214.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8571260214",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "kuran-private-truths-public-lies",
+   "autor": "Timur Kuran",
+   "titulo": "Private Truths, Public Lies: The Social Consequences of Preference Falsification",
+   "titulo_original": "",
+   "editora": "Harvard University Press",
+   "ano": "1995",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "quem pensa uma coisa e diz outra para não ser punido",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9780674707580",
+   "isbn10": "0674707583",
+   "capa": "https://m.media-amazon.com/images/P/0674707583.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0674707583",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "aviso": "Sem tradução para o português. O link leva à edição original, em inglês."
+  },
+  {
+   "id": "priore-historia-das-mesticagens-no",
+   "autor": "Mary Del Priore e Gian Melo (orgs.)",
+   "titulo": "História das mestiçagens no Brasil",
+   "titulo_original": "",
+   "editora": "Editora Unesp",
+   "ano": "2026",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "9786557113424",
+   "isbn10": "6557113429",
+   "capa": "https://m.media-amazon.com/images/P/6557113429.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6557113429",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "cirne-lima-dialetica-para-principiantes",
+   "autor": "Carlos Cirne-Lima",
+   "titulo": "Dialética para principiantes",
+   "titulo_original": "",
+   "editora": "Escritos",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "\"há apenas tese\" e a história como roteiro aberto",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "livros/capas/cirne-lima-dialetica-para-principiantes.jpg",
+   "amazon": "https://www.amazon.com.br/s?k=Dial%C3%A9tica+para+principiantes+Carlos+Cirne-Lima",
+   "fonte_capa": "estante-virtual",
+   "edicao_pt": "confirmada",
+   "comprar_em": "Estante Virtual",
+   "comprar_url": "https://www.estantevirtual.com.br/busca/dialetica-para-principiantes-cirne-lima"
+  },
+  {
+   "id": "cirne-lima-sobre-a-contradicao",
+   "autor": "Carlos Cirne-Lima",
+   "titulo": "Sobre a contradição",
+   "titulo_original": "",
+   "editora": "EDIPUCRS",
+   "ano": "1993",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "\"há apenas tese\" e a história como roteiro aberto",
+     "pagina": 39
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "livros/capas/cirne-lima-sobre-a-contradicao.jpg",
+   "amazon": "https://www.amazon.com.br/s?k=Sobre+a+contradi%C3%A7%C3%A3o+Carlos+Cirne-Lima",
+   "fonte_capa": "estante-virtual",
+   "edicao_pt": "confirmada",
+   "comprar_em": "Estante Virtual",
+   "comprar_url": "https://www.estantevirtual.com.br/busca/sobre-a-contradicao-cirne-lima"
+  },
+  {
+   "id": "sagrada-biblia-sagrada-nvi",
+   "autor": "Bíblia Sagrada",
+   "titulo": "Nova Versão Internacional (NVI)",
+   "titulo_original": "",
+   "editora": "Thomas Nelson Brasil",
+   "ano": "",
+   "edicoes": [
+    {
+     "n": "012",
+     "nota": "Lucas 6:22 e 14:11, a epígrafe e o eco bíblico do título",
+     "pagina": 42
+    }
+   ],
+   "isbn13": "9786556896656",
+   "isbn10": "6556896659",
+   "capa": "https://m.media-amazon.com/images/P/6556896659.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6556896659",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
   }
  ]
 }

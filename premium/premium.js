@@ -263,7 +263,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202609251539', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610121829', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -358,7 +358,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202609251539"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610121829"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -724,7 +724,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202609251539`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610121829`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -746,7 +746,11 @@ function montarFundo() {
      próprio capítulo 1 completam o quadro. */
   const caps = EDICAO.capitulos || [];
   const limite = caps[1] ? caps[1][1] - 1 : Math.max(4, Math.ceil(TOTAL / 3));
-  let provas = (EDICAO.destaques || []).filter(n => n <= TOTAL && n <= limite);
+  /* exceção pedida pelo Rei (ED012, 12/10): uma página de capítulo fechado
+     pode entrar na VITRINE se a ficha a listar em `destaquesAlem`; na leitura
+     ela continua trancada pelo cadeado */
+  const alem = EDICAO.destaquesAlem || [];
+  let provas = (EDICAO.destaques || []).filter(n => n <= TOTAL && (n <= limite || alem.includes(n)));
   for (let n = 3; provas.length < 4 && n <= limite; n++) {
     if (!provas.includes(n)) provas.push(n);
   }
@@ -1325,7 +1329,7 @@ function blocoFim() {
     <h3>A próxima sai <em>semana que vem</em></h3>
     <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202609251539"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610121829"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
