@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ETER — Inteligência cultural e repertório polímata</title>
-<meta name="description" content="A revista semanal e a comunidade de quem vive das próprias ideias. Leia uma edição inteira, de graça.">
+<meta name="description" content="A revista semanal e a comunidade de quem vive das próprias ideias. Leia o primeiro capítulo de qualquer edição, de graça.">
 <link rel="icon" type="image/png" sizes="32x32" href="premium/favicon-32.png">
 <link rel="apple-touch-icon" href="premium/favicon-180.png">
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="premium/fone.js?v=202610251837"></script>
-<script defer src="premium/casa.js?v=202610251837"></script>
-<script defer src="premium/calor.js?v=202610251837"></script>
-<link rel="stylesheet" href="premium/premium.css?v=202610251837">
+<script defer src="premium/fone.js?v=202610251944"></script>
+<script defer src="premium/casa.js?v=202610251944"></script>
+<script defer src="premium/calor.js?v=202610251944"></script>
+<link rel="stylesheet" href="premium/premium.css?v=202610251944">
 </head>
 <body class="pagina inicio">
 
@@ -44,11 +44,11 @@
     </p>
 
     <figure class="prateleira" id="prateleira" aria-label="As edições publicadas"></figure>
-    <p class="dica-faixa">Escolha uma edição para ler gratuitamente</p>
+    <p class="dica-faixa">Escolha uma edição e leia o primeiro capítulo gratuitamente</p>
 
     <div class="acoes">
       <a class="btn btn-ler" href="biblioteca">
-        RESGATAR A LEITURA GRATUITA
+        LER O PRIMEIRO CAPÍTULO GRATUITO
       </a>
       <button class="btn btn-passe btn-passe-hero" id="btn-passe-home">ADQUIRIR O PASSE</button>
     </div>
@@ -74,7 +74,7 @@
   <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
   <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202610251837" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202610251944" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe" id="passe-home">
@@ -101,7 +101,7 @@
    porta usa: nada de oferta escrita em dois lugares. */
 (async () => {
   let D;
-  try { D = await (await fetch('edicoes.json?v=202610251837')).json(); }
+  try { D = await (await fetch('edicoes.json?v=202610251944')).json(); }
   catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
   const C = D.config, P = D.passe;
@@ -188,7 +188,7 @@
        pela cor. A da edição mostra uma revista só, e aqui o assunto é
        a revista inteira. */
     const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-geral-m.webp' : 'parede-geral.webp';
-    const arte = `${BASE}edicoes/${paredeArq}?v=202610251837`;
+    const arte = `${BASE}edicoes/${paredeArq}?v=202610251944`;
     const im = new Image();
     im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
     im.src = arte;

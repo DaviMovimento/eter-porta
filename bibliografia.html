@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#F2EEE6">
 
 <link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="premium/fone.js?v=202610251837"></script>
-<script defer src="premium/casa.js?v=202610251837"></script>
-<script defer src="premium/calor.js?v=202610251837"></script>
-<link rel="stylesheet" href="premium/premium.css?v=202610251837">
+<script defer src="premium/fone.js?v=202610251944"></script>
+<script defer src="premium/casa.js?v=202610251944"></script>
+<script defer src="premium/calor.js?v=202610251944"></script>
+<link rel="stylesheet" href="premium/premium.css?v=202610251944">
 </head>
 <body class="pagina biblioteca livros-pagina">
 
@@ -46,7 +46,7 @@
     <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
 
     <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202610251837" alt="Tudo que você acessa ao assinar"
+      <img src="premium/mockup-assinatura.webp?v=202610251944" alt="Tudo que você acessa ao assinar"
         width="794" height="485" decoding="async">
     </figure>
     <div class="passe">
@@ -87,8 +87,8 @@
   let D, L;
   try {
     [D, L] = await Promise.all([
-      fetch(`${ACIMA}edicoes.json?v=202610251837`).then(r => r.json()),
-      fetch(`${ACIMA}livros.json?v=202610251837`).then(r => r.json()),
+      fetch(`${ACIMA}edicoes.json?v=202610251944`).then(r => r.json()),
+      fetch(`${ACIMA}livros.json?v=202610251944`).then(r => r.json()),
     ]);
   } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
 
@@ -142,7 +142,7 @@
     estantes.innerHTML = `<section class="edicao-livros"><ul class="livros">${porEdicao[edAtual.n].map(l => cartao({ ...l, _n: edAtual.n })).join('')}</ul></section>`;
     const ponte = document.getElementById('ponte');
     ponte.hidden = false;
-    ponte.innerHTML = `Ainda não leu esta edição? <a href="${ACIMA}${edAtual.n}">Ler de graça</a>`;
+    ponte.innerHTML = `Ainda não leu esta edição? <a href="${ACIMA}${edAtual.n}">Ler o primeiro capítulo de graça</a>`;
   } else {
     /* O ÍNDICE. A capa da revista é pequena e fica ao lado de três capas de
        livro: o cartão anuncia "livros" antes de qualquer texto, para não se

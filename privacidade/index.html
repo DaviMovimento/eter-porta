@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
 <link rel="apple-touch-icon" href="../premium/favicon-180.png">
 <meta name="theme-color" content="#F2EEE6">
-<link rel="stylesheet" href="../premium/premium.css?v=202610251837">
+<link rel="stylesheet" href="../premium/premium.css?v=202610251944">
 </head>
 <body class="pagina">
 
@@ -41,8 +41,8 @@
   <ul>
     <li><b>Seu nome, seu e-mail e seu número de WhatsApp</b>, quando você preenche o formulário para
     ler uma edição ou para comprar o passe.</li>
-    <li><b>Qual edição você escolheu ler</b> — porque a leitura gratuita é de uma edição a cada 30 dias,
-    e precisamos saber qual foi a sua para não cobrar duas vezes a mesma escolha.</li>
+    <li><b>Qual edição você abriu</b> — para saber se você tem o passe ativo e liberar a edição
+    completa, e para enviar a edição certa no seu WhatsApp e no seu e-mail.</li>
     <li><b>Como você chegou e o que leu</b> — a edição aberta, até que página você foi, o endereço que
     te trouxe até aqui e os parâmetros de campanha do link.</li>
     <li><b>Dados técnicos do acesso</b> — endereço IP, navegador e aparelho, registrados pelos serviços
@@ -55,7 +55,7 @@
   <ul>
     <li>Enviar no seu WhatsApp e no seu e-mail o link da edição e as edições seguintes.</li>
     <li>Enviar comunicações sobre a revista e suas ofertas.</li>
-    <li>Aplicar a regra da leitura gratuita — uma edição a cada 30 dias por pessoa.</li>
+    <li>Liberar a edição completa a quem tem o passe ativo.</li>
     <li>Entender quais temas e quais trechos interessam aos leitores, para melhorar a revista.</li>
     <li>Medir a eficiência das nossas campanhas e apresentar anúncios a quem já nos visitou.</li>
   </ul>
@@ -108,7 +108,7 @@
    para o Davi — nunca um colchete cru para o leitor. */
 (async () => {
   try {
-    const cfg = (await (await fetch('../edicoes.json?v=202610251837')).json()).config || {};
+    const cfg = (await (await fetch('../edicoes.json?v=202610251944')).json()).config || {};
     const e = cfg.empresa || {};
     const falta = t => `<span class="aguardando">${t}</span>`;
 

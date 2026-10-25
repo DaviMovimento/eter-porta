@@ -67,7 +67,9 @@ const COPY_CASA = {
   /* Os botões ficaram só com a linha principal. A segunda linha dividia a
      atenção no exato ponto em que a página pede UMA decisão — e o que ela
      dizia (minutos, "um mês de acesso") já está dito na oferta logo abaixo. */
-  lerTit: 'LER GRATUITAMENTE AGORA',
+  /* O GRATUITO É O CAPÍTULO 1 (ordem do Rei, 25/10): a edição completa é
+     do passe. O botão diz exatamente o que abre. */
+  lerTit: 'LER O PRIMEIRO CAPÍTULO GRATUITO',
   lerSub: () => '',                                                    // 1.4
   /* O BOTÃO NÃO LEVA PREÇO EM LUGAR NENHUM. Dentro da oferta o número
      já está no alto do card, em verde, três linhas acima — repeti-lo no
@@ -77,17 +79,17 @@ const COPY_CASA = {
   passeTitCurto: 'ADQUIRIR O PASSE',
   chamadaOferta: 'Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.',
   passeSub: '',
-  espiada: 'Complete seu cadastro para ler a edição completa',
+  espiada: 'Complete seu cadastro para ler o primeiro capítulo',
   /* 1.5, com um ajuste: "tudo aberto" foi reprovado no botão, e deixar a
      expressão viva aqui faria a página dizer duas coisas sobre a mesma
      oferta. Vale "acesso total", que é a redação que ficou. */
-  /* a contagem sai do catálogo: escrita à mão ela erra hoje (são OUTRAS
-     sete, não oito) e volta a errar a cada edição publicada */
-  portao: () => `As outras ${porExtenso(publicadas() - 1)} estão aqui, e uma nova chega toda semana.\n`
-          + `Um mês de acesso total: ${CFG.precoPasse}, ${CFG.porEdicao || 'R$24'} por edição.`,  // 1.5
   trava: (data) => `Você já leu a sua edição deste mês.\nVolte em ${data}, ou abra tudo agora por R$97.`, // 1.6
-  cadeadoTit: 'Leitura gratuita',
-  cadeadoSub: 'complete seu cadastro para ler a edição inteira',
+  cadeadoTit: 'O resto da edição',
+  cadeadoSub: 'abre com o passe',
+  /* a parede no fim do capítulo 1, para quem não tem passe. A contagem
+     sai do catálogo: escrita à mão ela erra a cada edição publicada */
+  fimCap1: () => `A edição completa e as outras ${porExtenso(publicadas() - 1)} estão no passe, e uma nova chega toda semana.\n`
+          + `Um mês de acesso total: ${CFG.precoPasse}, ${CFG.porEdicao || 'R$24'} por edição.`,
 };
 
 /* O `·` não existe na Futura dos rótulos: onde o texto vira HTML, ele vira
@@ -263,7 +265,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610251837', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610251944', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -358,7 +360,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610251837"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610251944"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -639,7 +641,7 @@ function montarTempos() {
     <p class="casa-lede">${COPY_CASA.apresenta}</p>
     <p class="casa-sub">${COPY_CASA.apresentaSub}</p>
     <div class="acoes acoes-casa">
-      <button class="btn btn-ler" data-ler-casa>LER GRATUITAMENTE AGORA</button>
+      <button class="btn btn-ler" data-ler-casa>${COPY_CASA.lerTit}</button>
       <button class="btn btn-passe" data-passe="casa">ADQUIRIR O PASSE</button>
     </div>
     <div class="casa-polimata">
@@ -720,7 +722,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610251837`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610251944`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1142,7 +1144,7 @@ function montarEspiada() {
     /* o cadastro NÃO destrava a vitrine — destrava a leitura oficial.
        Aqui só muda a dica, que deixa de pedir o que já foi dado. */
     if (!jaCapturado()) return;
-    $('#dica-faixa').innerHTML = 'toque numa página para <b>ler na íntegra</b>';
+    $('#dica-faixa').innerHTML = 'toque numa página para <b>ler o primeiro capítulo</b>';
   };
 
   pintarFaixa();
@@ -1172,13 +1174,21 @@ async function abrirNaPagina(n) {
     if (bt && antes !== null) bt.innerHTML = antes;
   }
   const ir = () => {
-    /* otimista como todo o resto: abre JÁ na página tocada; se o porteiro
-       negar, a leitura fecha e a parede do mês aparece */
-    abrirLeitura(); setTimeout(() => irPara(n), 420);
-    liberadoParaLer().then(pode => { if (!pode) voltar(); });
+    /* otimista como todo o resto: abre JÁ na página tocada. Página do
+       capítulo 1 abre direto; página trancada leva à parede do fim do
+       capítulo e, se o porteiro reconhecer o passe, à própria página. */
+    abrirLeitura();
+    setTimeout(() => (n <= leitorAte ? irPara(n) : rolar($('#fim-cap1'))), 420);
+    liberadoParaLer().then(pode => {
+      if (!pode) { voltar(); return; }
+      if (n > limiteEspiada && ASSINANTE) setTimeout(() => irPara(n), 120);
+    });
   };
   if (jaCapturado()) { evento('leu_da_espiada', { pagina: n }); ir(); return; }
-  pedirDados(n > limiteEspiada ? 'trancada' : 'espiada', ir);
+  /* sem cadastro, a página trancada não pede formulário: ela é do passe,
+     e é o passe que se oferece */
+  if (n > limiteEspiada) { evento('bateu_no_cadeado_sem_cadastro', { pagina: n }); abrirOferta('cadeado'); return; }
+  pedirDados('espiada', ir);
 }
 
 /* ═══ TELA 2 · A LEITURA ═══════════════════════════════════════ */
@@ -1187,7 +1197,10 @@ let montado = false;
 function consumirEdicao() {
   /* a escolha do mês se gasta quando a leitura de fato abre. Uma vez por
      edição por aparelho; o script antigo ignora a ação (vira linha de
-     log), o novo grava — o deploy fica seguro nos dois mundos. */
+     log), o novo grava — o deploy fica seguro nos dois mundos.
+     DESLIGADO em 25/10: sem a regra do mês não há escolha para gastar, e
+     cada linha gravada seria só ruído na planilha. */
+  return;
   try {
     const marca = 'eter_consumiu_' + EDICAO.n;
     if (localStorage.getItem(marca)) return;
@@ -1243,57 +1256,17 @@ function montarLeitor() {
     return `<i style="flex:${fim - ini}" data-cap="${i}"></i>`;
   }).join('');
 
-  for (let i = 1; i <= TOTAL; i++) {
-    const img = document.createElement('img');
-    img.className = 'pag';
-    img.dataset.pagina = i;
-    img.alt = `Página ${i}`;
-    img.width = 1400; img.height = 1979;
-    img.loading = i <= 2 ? 'eager' : 'lazy';
-    img.decoding = 'async';
-    if (i === 1) img.fetchPriority = 'high';
-    /* O zoom agora é do navegador, e ele NÃO busca uma imagem melhor ao
-       ampliar — usa a que já baixou. Por isso a leitura carrega direto a
-       maior que temos: no computador isso dobra a nitidez no zoom. */
-    if (i <= 3) {
-      /* abertura leve: o @800 pinta em fração do tempo; o @1400 chega por
-         trás e troca sem piscar (o navegador só troca depois de decodificar) */
-      img.src = pag(i, 800);
-      const hd = new Image();
-      hd.onload = () => hd.decode?.().then(() => { img.src = pag(i, 1400); }).catch(() => {});
-      hd.src = pag(i, 1400);
-    } else {
-      img.sizes = '1400px';
-      img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
-      img.src = pag(i, 1400);
-    }
-    img.addEventListener('load', () => {
-      img.classList.add('carregada');
-      /* o arquivo de 1400px leva 1 a 3 segundos para DECODIFICAR depois de
-         baixado, e nesse meio a folha ficava como papel escuro — parecia
-         página em branco. decode() antecipa o trabalho para fora da rolagem. */
-      img.decode?.().catch(() => {});
-    }, { once: true });
-    /* rede quebrando no meio da leitura não pode virar ícone de imagem
-       quebrada: a folha vira papel em branco com o número da página */
-    img.addEventListener('error', () => {
-      folha.classList.add('falhou');
-      folha.dataset.n = i;
-    }, { once: true });
-
-    const folha = document.createElement('div');
-    folha.className = 'folha-p';
-    folha.dataset.pagina = i;
-    const dentro = document.createElement('div');
-    dentro.className = 'folha-in';
-    dentro.appendChild(img);
-    folha.appendChild(dentro);
-    frag.appendChild(folha);
-
-    if (caps.length > 2 && i === (caps[2]?.[1] || 0) - 1) frag.appendChild(blocoMeio());
-  }
-  frag.appendChild(blocoFim());
+  /* O CAPÍTULO 1 É DE TODOS; o resto é do passe (25/10). O leitor monta
+     só até a véspera do capítulo 2 e fecha numa parede. Quem tem passe
+     ativo (o porteiro responde `assinante`) ganha as outras páginas ali
+     mesmo, sem recarregar. Na dúvida — porteiro fora do ar, resposta
+     estranha — fica no capítulo 1: falhar FECHADO aqui é o certo, porque
+     o que se perde é uma leitura paga, e não o acesso de quem se cadastrou. */
+  const ate = ASSINANTE ? TOTAL : Math.min(TOTAL, limiteEspiada);
+  for (let i = 1; i <= ate; i++) frag.appendChild(criarFolha(i));
+  frag.appendChild(ASSINANTE ? blocoFimAssinante() : blocoFimCap1());
   caixa.appendChild(frag);
+  leitorAte = ate;
 
   montarSumario();
   observar();
@@ -1304,28 +1277,88 @@ function montarLeitor() {
      abertura e desorientava quem esperava a primeira página */
 }
 
-function blocoMeio() {
-  const d = document.createElement('div');
-  d.className = 'intervalo';
-  d.innerHTML = `
-    <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
-    <p class="rot">Um intervalo</p>
-    <h3>Toda semana nasce uma <em>nova</em></h3>
-    <p>Esta você lê inteira, de graça. O passe abre as próximas quatro, os encontros ao vivo e o acervo completo — e você segue lendo esta aqui do mesmo jeito.</p>
-    <button class="btn btn-passe" data-passe="intervalo">Adquirir passe — ${CFG.precoPasse}</button>`;
-  return d;
+/* uma página da leitura: a imagem dentro da folha */
+function criarFolha(i) {
+  const img = document.createElement('img');
+  img.className = 'pag';
+  img.dataset.pagina = i;
+  img.alt = `Página ${i}`;
+  img.width = 1400; img.height = 1979;
+  img.loading = i <= 2 ? 'eager' : 'lazy';
+  img.decoding = 'async';
+  if (i === 1) img.fetchPriority = 'high';
+  /* O zoom agora é do navegador, e ele NÃO busca uma imagem melhor ao
+     ampliar — usa a que já baixou. Por isso a leitura carrega direto a
+     maior que temos: no computador isso dobra a nitidez no zoom. */
+  if (i <= 3) {
+    /* abertura leve: o @800 pinta em fração do tempo; o @1400 chega por
+       trás e troca sem piscar (o navegador só troca depois de decodificar) */
+    img.src = pag(i, 800);
+    const hd = new Image();
+    hd.onload = () => hd.decode?.().then(() => { img.src = pag(i, 1400); }).catch(() => {});
+    hd.src = pag(i, 1400);
+  } else {
+    img.sizes = '1400px';
+    img.srcset = `${pag(i, 800)} 800w, ${pag(i, 1400)} 1400w`;
+    img.src = pag(i, 1400);
+  }
+  img.addEventListener('load', () => {
+    img.classList.add('carregada');
+    /* o arquivo de 1400px leva 1 a 3 segundos para DECODIFICAR depois de
+       baixado, e nesse meio a folha ficava como papel escuro — parecia
+       página em branco. decode() antecipa o trabalho para fora da rolagem. */
+    img.decode?.().catch(() => {});
+  }, { once: true });
+  /* rede quebrando no meio da leitura não pode virar ícone de imagem
+     quebrada: a folha vira papel em branco com o número da página */
+  img.addEventListener('error', () => {
+    folha.classList.add('falhou');
+    folha.dataset.n = i;
+  }, { once: true });
+
+  const folha = document.createElement('div');
+  folha.className = 'folha-p';
+  folha.dataset.pagina = i;
+  const dentro = document.createElement('div');
+  dentro.className = 'folha-in';
+  dentro.appendChild(img);
+  folha.appendChild(dentro);
+  return folha;
 }
 
-function blocoFim() {
+/* até onde o leitor está montado, e se o porteiro já reconheceu o passe */
+let ASSINANTE = false, leitorAte = 0, OBSERVADOR = null;
+
+/* o porteiro disse que esta pessoa tem passe ativo: abre o resto. Se o
+   leitor ainda não montou, só marca — ele já nasce inteiro. */
+function liberarEdicaoInteira() {
+  if (ASSINANTE) return;
+  ASSINANTE = true;
+  evento('assinante_leu_inteira');
+  if (!montado || leitorAte >= TOTAL) return;
+  const parede = $('#fim-cap1');
+  const frag = document.createDocumentFragment();
+  const novas = [];
+  for (let i = leitorAte + 1; i <= TOTAL; i++) { const f = criarFolha(i); novas.push(f); frag.appendChild(f); }
+  frag.appendChild(blocoFimAssinante());
+  if (parede) parede.replaceWith(frag); else $('#paginas').appendChild(frag);
+  leitorAte = TOTAL;
+  novas.forEach(f => OBSERVADOR?.observe(f.querySelector('.pag')));
+}
+
+/* a parede no fim do capítulo 1: a mesma contracapa de antes, agora no
+   lugar em que a leitura gratuita acaba */
+function blocoFimCap1() {
   const d = document.createElement('div');
   d.className = 'intervalo';
+  d.id = 'fim-cap1';
   d.innerHTML = `
     <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
-    <p class="rot">Contracapa</p>
-    <h3>A próxima sai <em>semana que vem</em></h3>
-    <p>${COPY_CASA.portao().replace('\n', '<br>')}</p>
+    <p class="rot">Fim do primeiro capítulo</p>
+    <h3>O resto da edição está no <em>passe</em></h3>
+    <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610251837"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610251944"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1335,6 +1368,23 @@ function blocoFim() {
       <button class="btn btn-passe" data-passe="fim">${COPY_CASA.passeTit}</button>
       <p class="passe-nota">${[PASSE.condicao, PASSE.credito].filter(Boolean).join(' ')}</p>
     </section>`;
+  return d;
+}
+
+/* o fim da edição de quem tem passe: não vende o que ele já comprou */
+function blocoFimAssinante() {
+  const d = document.createElement('div');
+  d.className = 'intervalo';
+  d.innerHTML = `
+    <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
+    <p class="rot">Contracapa</p>
+    <h3>A próxima sai <em>semana que vem</em></h3>
+    <p>Seu passe está ativo: as outras edições estão abertas no acervo.</p>
+    <button class="btn btn-ler" data-acervo-fim>VER O ACERVO</button>`;
+  d.querySelector('[data-acervo-fim]').addEventListener('click', () => {
+    evento('abriu_acervo', { origem: 'fim' });
+    $('#acervo-dialog').showModal();
+  });
   return d;
 }
 
@@ -1353,8 +1403,11 @@ function montarSumario() {
     if (!a) return;
     e.preventDefault();
     $('#sumario-dialog').close();
-    irPara(+a.dataset.pagina);
-    evento('saltou_capitulo', { pagina: +a.dataset.pagina });
+    const p = +a.dataset.pagina;
+    /* capítulo que ainda não está no leitor (é do passe): vai à parede */
+    if (p > leitorAte) { rolar($('#fim-cap1')); evento('bateu_na_parede', { origem: 'sumario', pagina: p }); return; }
+    irPara(p);
+    evento('saltou_capitulo', { pagina: p });
   });
 }
 
@@ -1394,6 +1447,7 @@ function observar() {
       for (const m of [...marcos]) if (pct() >= m) { marcos.delete(m); evento('leu_ate', { porcento: m, pagina: p }); }
     }
   }, { rootMargin: '-45% 0px -45% 0px' });
+  OBSERVADOR = obs;
 
   document.querySelectorAll('.pag').forEach(el => obs.observe(el));
 }
@@ -1655,22 +1709,24 @@ async function liberadoParaLer() {
   const v = await consultarPorteiro(EDICAO.n);
   clearTimeout(lento);
   if (bt && antes !== null) bt.innerHTML = antes;
-  if (v.liberado) return true;
+  if (v.assinante) liberarEdicaoInteira();
   if (v.precisaCadastro) {
     /* a identidade evaporou (c=1 sem ms, storage limpo): fecha a leitura
        e levanta o formulário — nunca a parede, que fala com quem já leu */
     pedirDados('leitura', () => { abrirLeitura(); });
     return false;
   }
-  mostrarPorteiro(v);
-  return false;
+  /* a regra "uma edição por mês" saiu (25/10): o capítulo 1 é de todos,
+     então nenhuma resposta do porteiro fecha a leitura. A parede do mês
+     (mostrarPorteiro) fica no código, desligada. */
+  return true;
 }
 
 let aoTerminar = null;
 
 const COPY = {
   leitura:  ['Para onde mandamos a edição?', 'A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima edição.', 'Abrir a edição'],
-  trancada: ['Leitura gratuita', '', 'Liberar a edição'],
+  trancada: ['O primeiro capítulo é gratuito', '', 'Ler o primeiro capítulo'],
   espiada:  ['Falta um passo para ler', 'A leitura abre nesta página, agora. O WhatsApp é para você receber a próxima edição.', 'Ler a partir daqui'],
   checkout: ['Para onde mandamos seu acesso?', 'Confirmando aqui, o passe cai no seu WhatsApp assim que o pagamento entrar.', 'Continuar para o pagamento'],
 };
@@ -1689,7 +1745,7 @@ function pedirDados(onde, depois = null) {
   if (dlg.open) { aoTerminar = depois; return false; }   /* clique duplo: já está na tela */
   $('#form-tit').textContent = tit;
   $('#form-dek').textContent = chave === 'checkout' ? dek
-    : `Preencha o formulário abaixo para liberar a ED ${EDICAO.n} na íntegra.`;
+    : `Preencha o formulário abaixo para ler o primeiro capítulo da ED ${EDICAO.n}.`;
   $('#btn-enviar').textContent = bt;
   $('#form-dialog').dataset.onde = onde;
   abrirDialogo($('#form-dialog'));
@@ -1787,8 +1843,8 @@ async function enviar(e) {
     if (veredito && !paraComprar) localStorage.setItem(CHAVE_MES, JSON.stringify({
       edicao: EDICAO.n, quem: lead.email, veredito, ate: Date.now() + 6e5,
     }));
-    /* a leitura já está aberta; só a negativa interrompe */
-    if (veredito && !veredito.liberado && !paraComprar) { voltar(); mostrarPorteiro(veredito); }
+    /* a leitura já está aberta no capítulo 1; o passe ativo abre o resto */
+    if (veredito && veredito.assinante && !paraComprar) liberarEdicaoInteira();
   });
 
   /* a resposta deste envio JÁ é o veredito do porteiro: registrar como
