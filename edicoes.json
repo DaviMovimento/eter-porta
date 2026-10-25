@@ -59,6 +59,47 @@
  },
  "edicoes": [
   {
+   "n": "013",
+   "apelido": "museu",
+   "titulo": "Um Museu de Grandes Novidades",
+   "subtitulo": "A arte de ler, prever e até mesmo fabricar as tendências que moldam o futuro.",
+   "nestaEdicao": "Você vai entender o que é uma tendência, o motivo de toda novidade ser uma releitura do passado que responde às tensões do espírito do tempo e o que distingue as tendências espontâneas daquelas intencionalmente fabricadas. Além disso, terá acesso aos critérios práticos para identificar, prever e se posicionar diante das tendências que moldam o futuro da cultura e do mercado, de modo a tirar proveito das ondas o quanto antes.",
+   "paginas": 70,
+   "destaques": [
+    9,
+    12,
+    11,
+    13
+   ],
+   "minutos": 51,
+   "capitulos": [
+    [
+     "Tudo que Você Podia Ser",
+     5
+    ],
+    [
+     "O Futuro Deixa Pistas",
+     15
+    ],
+    [
+     "A Fantástica Fábrica de Novidades",
+     26
+    ],
+    [
+     "Exercício Prático: Como se Posicionar Diante das Tendências",
+     37
+    ],
+    [
+     "Casar ou Comprar uma Bicicleta?",
+     55
+    ],
+    [
+     "Bibliografia",
+     63
+    ]
+   ]
+  },
+  {
    "n": "012",
    "apelido": "odiados",
    "titulo": "Os Odiados Serão Exaltados",

@@ -63,6 +63,11 @@
     "martins-linchamentos",
     "foucault-vigiar-e-punir",
     "planck-autobiografia-cientifica-e-outros"
+   ],
+   "013": [
+    "hobsbawm-a-invencao-das-tradicoes",
+    "tetlock-superprevisoes",
+    "tye-the-father-of-spin"
    ]
   },
   "_vitrine": "os três livros que aparecem no cartão da edição no índice da bibliografia; escolha editorial, o resto fica na página completa"
@@ -236,6 +241,11 @@
      "n": "001",
      "nota": "",
      "pagina": 42
+    },
+    {
+     "n": "013",
+     "nota": "os sinais que vão da margem ao centro",
+     "pagina": 64
     }
    ],
    "isbn13": "9781610396660",
@@ -1459,6 +1469,11 @@
      "n": "008",
      "nota": "a origem da sprezzatura, a arte de esconder a arte",
      "pagina": 37
+    },
+    {
+     "n": "013",
+     "nota": "a origem da sprezzatura",
+     "pagina": 63
     }
    ],
    "isbn13": "9788578278175",
@@ -2113,6 +2128,11 @@
      "n": "006",
      "nota": "a mecânica do contágio, da minoria que adere à massa que consolida",
      "pagina": 55
+    },
+    {
+     "n": "013",
+     "nota": "inovadores (2,5%) e adotantes iniciais (13,5%), os primeiros 16%",
+     "pagina": 63
     }
    ],
    "isbn13": "9780743222099",
@@ -4524,6 +4544,725 @@
    "amazon": "https://www.amazon.com.br/dp/6556896659",
    "fonte_capa": "amazon",
    "edicao_pt": "confirmada"
+  },
+  {
+   "id": "ferguson-ensaio-sobre-a-historia",
+   "autor": "Adam Ferguson",
+   "titulo": "Ensaio sobre a história da sociedade civil",
+   "titulo_original": "An Essay on the History of Civil Society",
+   "editora": "Unesp",
+   "ano": "1767",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o resultado da ação humana, mas não de um desígnio humano",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9788539307975",
+   "isbn10": "8539307979",
+   "capa": "https://m.media-amazon.com/images/P/8539307979.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8539307979",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "herder-kritische-walder",
+   "autor": "Johann Gottfried Herder",
+   "titulo": "Kritische Wälder",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1769",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a origem da palavra Zeitgeist, o espírito do tempo",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9783843055505",
+   "isbn10": "3843055505",
+   "capa": "https://m.media-amazon.com/images/P/3843055505.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/3843055505",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "hegel-ciencia-da-logica-1",
+   "autor": "Georg Wilhelm Friedrich Hegel",
+   "titulo": "Ciência da lógica 1: A doutrina do ser",
+   "titulo_original": "Wissenschaft der Logik",
+   "editora": "Vozes",
+   "ano": "1812",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a Aufhebung, a superação que nega, conserva e eleva",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9788532653086",
+   "isbn10": "8532653081",
+   "capa": "https://m.media-amazon.com/images/P/8532653081.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532653081",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "ogburn-social-change-with-respect",
+   "autor": "William F. Ogburn",
+   "titulo": "Social Change with Respect to Culture and Original Nature",
+   "titulo_original": "",
+   "editora": "B. W. Huebsch",
+   "ano": "1922",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a técnica que muda mais rápido do que os costumes",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9781019386781",
+   "isbn10": "1019386789",
+   "capa": "https://m.media-amazon.com/images/P/1019386789.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1019386789",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "neumann-theory-of-games-and",
+   "autor": "John von Neumann e Oskar Morgenstern",
+   "titulo": "Theory of Games and Economic Behavior",
+   "titulo_original": "",
+   "editora": "Princeton University Press",
+   "ano": "1944",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a Teoria dos Jogos",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9780691003627",
+   "isbn10": "0691003629",
+   "capa": "https://m.media-amazon.com/images/P/0691003629.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0691003629",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "katz-personal-influence",
+   "autor": "Elihu Katz e Paul F. Lazarsfeld",
+   "titulo": "Personal Influence",
+   "titulo_original": "",
+   "editora": "Free Press",
+   "ano": "1955",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "os líderes de opinião",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9781412805070",
+   "isbn10": "1412805074",
+   "capa": "https://m.media-amazon.com/images/P/1412805074.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1412805074",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "kahn-on-thermonuclear-war",
+   "autor": "Herman Kahn",
+   "titulo": "On Thermonuclear War",
+   "titulo_original": "",
+   "editora": "Princeton University Press",
+   "ano": "1960",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "os cenários de guerra nuclear na RAND Corporation",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9781412806640",
+   "isbn10": "141280664X",
+   "capa": "https://m.media-amazon.com/images/P/141280664X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/141280664X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "kahn-the-year-2000",
+   "autor": "Herman Kahn e Anthony J. Wiener",
+   "titulo": "The Year 2000: A Framework for Speculation on the Next Thirty-Three Years",
+   "titulo_original": "",
+   "editora": "Macmillan",
+   "ano": "1967",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "cenários como método para pensar o futuro",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/I/818Uj0C7JcL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B000UVBFDA",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "asin": "B000UVBFDA"
+  },
+  {
+   "id": "williams-marxism-and-literature",
+   "autor": "Raymond Williams",
+   "titulo": "Marxism and Literature",
+   "titulo_original": "Marxism and Literature",
+   "editora": "Oxford University Press",
+   "ano": "1977",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o dominante, o residual, o arcaico e o emergente",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9780199586820",
+   "isbn10": "0199586829",
+   "capa": "https://m.media-amazon.com/images/P/0199586829.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0199586829",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada"
+  },
+  {
+   "id": "hebdige-subcultura",
+   "autor": "Dick Hebdige",
+   "titulo": "Subcultura: O significado do estilo",
+   "titulo_original": "Subculture: The Meaning of Style",
+   "editora": "",
+   "ano": "1979",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a subcultura e sua incorporação pelo mercado",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9789899981478",
+   "isbn10": "9899981478",
+   "capa": "https://m.media-amazon.com/images/I/71NaoF78lOL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9899981478",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "hobsbawm-a-invencao-das-tradicoes",
+   "autor": "Eric Hobsbawm e Terence Ranger",
+   "titulo": "A invenção das tradições",
+   "titulo_original": "The Invention of Tradition",
+   "editora": "Paz e Terra",
+   "ano": "1983",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o recente que passa a parecer “sempre foi assim”",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "9788577532094",
+   "isbn10": "8577532097",
+   "capa": "https://m.media-amazon.com/images/P/8577532097.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8577532097",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "epstein-the-rise-and-fall",
+   "autor": "Edward Jay Epstein",
+   "titulo": "The Rise and Fall of Diamonds",
+   "titulo_original": "",
+   "editora": "Simon & Schuster",
+   "ano": "1982",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a De Beers e a invenção do diamante de noivado",
+     "pagina": 63
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/P/B0050CC56A.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B0050CC56A",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "asin": "B0050CC56A"
+  },
+  {
+   "id": "cialdini-as-armas-da-persuasao",
+   "autor": "Robert Cialdini",
+   "titulo": "As armas da persuasão",
+   "titulo_original": "Influence",
+   "editora": "Sextante",
+   "ano": "1984",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a prova social",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788575428092",
+   "isbn10": "8575428098",
+   "capa": "https://m.media-amazon.com/images/P/8575428098.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8575428098",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "neustadt-thinking-in-time",
+   "autor": "Richard E. Neustadt e Ernest R. May",
+   "titulo": "Thinking in Time: The Uses of History for Decision Makers",
+   "titulo_original": "",
+   "editora": "Free Press",
+   "ano": "1986",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a analogia histórica nas decisões",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9780029227916",
+   "isbn10": "0029227917",
+   "capa": "https://m.media-amazon.com/images/P/0029227917.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0029227917",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "schwartz-the-art-of-the",
+   "autor": "Peter Schwartz",
+   "titulo": "The Art of the Long View",
+   "titulo_original": "",
+   "editora": "Doubleday/Currency",
+   "ano": "1991",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o cenário como narrativa plausível sobre o futuro",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9780385267328",
+   "isbn10": "0385267320",
+   "capa": "https://m.media-amazon.com/images/P/0385267320.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0385267320",
+   "fonte_capa": "amazon",
+   "edicao_pt": "nao-confirmada"
+  },
+  {
+   "id": "moore-atravessando-o-abismo",
+   "autor": "Geoffrey A. Moore",
+   "titulo": "Atravessando o abismo",
+   "titulo_original": "Crossing the Chasm",
+   "editora": "Alta Books",
+   "ano": "1991",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o abismo entre os primeiros adotantes e a maioria",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788550813950",
+   "isbn10": "8550813958",
+   "capa": "https://m.media-amazon.com/images/P/8550813958.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8550813958",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "simpson-science-of-coercion",
+   "autor": "Christopher Simpson",
+   "titulo": "Science of Coercion: Communication Research and Psychological Warfare, 1945-1960",
+   "titulo_original": "",
+   "editora": "Oxford University Press",
+   "ano": "1994",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a persuasão planejada e as operações psicológicas",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/P/B00S7EFYQ6.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B00S7EFYQ6",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "asin": "B00S7EFYQ6"
+  },
+  {
+   "id": "tye-the-father-of-spin",
+   "autor": "Larry Tye",
+   "titulo": "The Father of Spin: Edward L. Bernays and the Birth of Public Relations",
+   "titulo_original": "",
+   "editora": "Crown",
+   "ano": "1998",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a trajetória de Bernays, sobrinho de Freud",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/P/B0091I177W.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B0091I177W",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "asin": "B0091I177W"
+  },
+  {
+   "id": "gladwell-o-ponto-da-virada",
+   "autor": "Malcolm Gladwell",
+   "titulo": "O ponto da virada",
+   "titulo_original": "The Tipping Point",
+   "editora": "Sextante",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a mensagem, os mensageiros e o contexto da virada",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788575424834",
+   "isbn10": "8575424831",
+   "capa": "https://m.media-amazon.com/images/P/8575424831.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8575424831",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "bauman-modernidade-liquida",
+   "autor": "Zygmunt Bauman",
+   "titulo": "Modernidade líquida",
+   "titulo_original": "Liquid Modernity",
+   "editora": "Zahar",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9786559790005",
+   "isbn10": "6559790002",
+   "capa": "https://m.media-amazon.com/images/P/6559790002.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6559790002",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "tetlock-expert-political-judgment",
+   "autor": "Philip E. Tetlock",
+   "titulo": "Expert Political Judgment: How Good Is It? How Can We Know?",
+   "titulo_original": "",
+   "editora": "Princeton University Press",
+   "ano": "2005",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "284 especialistas avaliados ao longo de duas décadas",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9780691175973",
+   "isbn10": "0691175977",
+   "capa": "https://m.media-amazon.com/images/P/0691175977.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0691175977",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "chang-can-t-stop-won",
+   "autor": "Jeff Chang",
+   "titulo": "Can't Stop Won't Stop: A History of the Hip-Hop Generation",
+   "titulo_original": "",
+   "editora": "St. Martin's Press",
+   "ano": "2005",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a festa de DJ Kool Herc no Bronx, em 1973",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9780312425791",
+   "isbn10": "0312425791",
+   "capa": "https://m.media-amazon.com/images/P/0312425791.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0312425791",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "taleb-a-logica-do-cisne",
+   "autor": "Nassim Nicholas Taleb",
+   "titulo": "A lógica do Cisne Negro",
+   "titulo_original": "The Black Swan",
+   "editora": "Objetiva",
+   "ano": "2007",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788547001261",
+   "isbn10": "8547001263",
+   "capa": "https://m.media-amazon.com/images/P/8547001263.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8547001263",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "thaler-nudge",
+   "autor": "Richard H. Thaler e Cass R. Sunstein",
+   "titulo": "Nudge: Como tomar melhores decisões",
+   "titulo_original": "Nudge",
+   "editora": "Objetiva",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a arquitetura das condições de escolha",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788539007431",
+   "isbn10": "8539007436",
+   "capa": "https://m.media-amazon.com/images/P/8539007436.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8539007436",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "arthur-the-nature-of-technology",
+   "autor": "W. Brian Arthur",
+   "titulo": "The Nature of Technology: What It Is and How It Evolves",
+   "titulo_original": "",
+   "editora": "Free Press",
+   "ano": "2009",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o novo como combinação de elementos que já existem",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9781416544067",
+   "isbn10": "1416544062",
+   "capa": "https://m.media-amazon.com/images/P/1416544062.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1416544062",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "org-divination-and-interpretation-of",
+   "autor": "Amar Annus (org.)",
+   "titulo": "Divination and Interpretation of Signs in the Ancient World",
+   "titulo_original": "",
+   "editora": "Oriental Institute, University of Chicago",
+   "ano": "2010",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a adivinhação nas civilizações antigas",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9781885923684",
+   "isbn10": "1885923686",
+   "capa": "https://m.media-amazon.com/images/P/1885923686.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1885923686",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "ries-a-startup-enxuta",
+   "autor": "Eric Ries",
+   "titulo": "A startup enxuta",
+   "titulo_original": "The Lean Startup",
+   "editora": "Sextante",
+   "ano": "2011",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a hipótese testada em pequena escala",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788543108629",
+   "isbn10": "8543108624",
+   "capa": "https://m.media-amazon.com/images/P/8543108624.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8543108624",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "collins-vencedoras-por-opcao",
+   "autor": "Jim Collins e Morten T. Hansen",
+   "titulo": "Vencedoras por opção",
+   "titulo_original": "Great by Choice",
+   "editora": "Alta Books",
+   "ano": "2011",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "primeiro as balas, depois o canhão",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788550807775",
+   "isbn10": "855080777X",
+   "capa": "https://m.media-amazon.com/images/P/855080777X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/855080777X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "tetlock-superprevisoes",
+   "autor": "Philip E. Tetlock e Dan Gardner",
+   "titulo": "Superprevisões",
+   "titulo_original": "Superforecasting",
+   "editora": "Objetiva",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a previsão que melhora com revisão constante",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9788547000011",
+   "isbn10": "8547000011",
+   "capa": "https://m.media-amazon.com/images/P/8547000011.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8547000011",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "wucker-o-rinoceronte-cinza",
+   "autor": "Michele Wucker",
+   "titulo": "O rinoceronte cinza",
+   "titulo_original": "The Gray Rhino",
+   "editora": "Temporalis",
+   "ano": "2016",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "",
+     "pagina": 64
+    }
+   ],
+   "isbn13": "9786587885742",
+   "isbn10": "6587885748",
+   "capa": "https://m.media-amazon.com/images/P/6587885748.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6587885748",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "ellis-hacking-growth",
+   "autor": "Sean Ellis e Morgan Brown",
+   "titulo": "Hacking Growth",
+   "titulo_original": "Hacking Growth",
+   "editora": "Alta Books",
+   "ano": "2017",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "o teste do “muito decepcionado”",
+     "pagina": 65
+    }
+   ],
+   "isbn13": "9788550804453",
+   "isbn10": "8550804452",
+   "capa": "https://m.media-amazon.com/images/P/8550804452.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8550804452",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "org-transforming-the-future",
+   "autor": "Riel Miller (org.)",
+   "titulo": "Transforming the Future: Anticipation in the 21st Century",
+   "titulo_original": "",
+   "editora": "UNESCO/Routledge",
+   "ano": "2018",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a base da alfabetização em futuros",
+     "pagina": 65
+    }
+   ],
+   "isbn13": "9780367855888",
+   "isbn10": "0367855887",
+   "capa": "https://m.media-amazon.com/images/P/0367855887.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0367855887",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "kohavi-trustworthy-online-controlled-experiments",
+   "autor": "Ron Kohavi, Diane Tang e Ya Xu",
+   "titulo": "Trustworthy Online Controlled Experiments",
+   "titulo_original": "",
+   "editora": "Cambridge University Press",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "a mensagem testada em muitas versões",
+     "pagina": 65
+    }
+   ],
+   "isbn13": "9781108724265",
+   "isbn10": "1108724264",
+   "capa": "https://m.media-amazon.com/images/P/1108724264.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1108724264",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "bernays-biography-of-an-idea",
+   "autor": "Edward Bernays",
+   "titulo": "Biography of an Idea",
+   "titulo_original": "",
+   "editora": "Simon & Schuster",
+   "ano": "1965",
+   "edicoes": [
+    {
+     "n": "013",
+     "nota": "as tochas da liberdade",
+     "pagina": 69
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/P/B00TQEM19E.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B00TQEM19E",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente",
+   "asin": "B00TQEM19E"
   }
  ]
 }
