@@ -114,9 +114,9 @@ const publicadas = () => DADOS.edicoes.filter(e => e.paginas).length;
 /* A PÁGINA QUE VENDE A EDIÇÃO (pedido do Rei, 26/10; ED014 primeiro). Medido
    no lançamento da ED014: 75 abriram a oferta e só 7 foram pagar. A página
    passa a vender AQUELA edição, e o passe aparece como o jeito de lê-la
-   inteira. Liga por edição com `paginaVenda` no catálogo; sem a chave, a
-   página fica como sempre foi. */
-const vendeEdicao = () => !!(EDICAO && EDICAO.paginaVenda);
+   inteira. Desde 26/10 (tarde) vale para TODAS as páginas de edição
+   (RELEASES-EDICOES-PAGINA-26OUT.md): não depende mais de chave no catálogo. */
+const vendeEdicao = () => !!EDICAO;
 const itensPasse = () => vendeEdicao() ? [
   [`${EDICAO.titulo} completa`, 'do capítulo 1 à bibliografia'],
   ['Todas as edições já publicadas', `desde a primeira (${publicadas()} até hoje)`],
@@ -281,7 +281,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261041', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261115', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -381,7 +381,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261041"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261115"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -468,6 +468,11 @@ function abrirOferta(origem) {
      rastreio (utm, ms) segue pelo linkCheckout, e o seguir() anota na
      planilha que o leitor foi ao checkout. */
   if (jaCapturado()) { irParaCheckout(origem); return; }
+  /* O PASSE VAI DIRETO AO CHECKOUT PARA TODO MUNDO (Rei, 26/10 à tarde):
+     nenhum popup no caminho de quem quer pagar. O formulário fica só no
+     capítulo grátis. Quem desiste no checkout não vira lead na planilha;
+     a Guru guarda o que ele digitou lá. O quadro abaixo fica sem uso. */
+  if (vendeEdicao()) { irParaCheckout(origem); return; }
   /* ═══ UM POPUP SÓ ═══════════════════════════════════════════
      Eram dois quadros em fila — a oferta e depois o formulário — dizendo
      quase a mesma coisa. Agora é um: mockup, o que o passe entrega, os
@@ -630,13 +635,13 @@ function montarTempos() {
   const bp = document.createElement('button');
   bp.dataset.passe = 'heroi';
   if (vendeEdicao()) {
-    /* a página de venda: o principal é ler a edição inteira; o capítulo
-       grátis vira a saída de quem ainda não decidiu */
+    /* a página de venda: o passe vem primeiro, dourado; o capítulo grátis
+       volta a ser o botão verde de sempre, logo abaixo (Rei, 26/10) */
     acoes.classList.add('acoes-venda');
-    bp.className = 'btn btn-ler btn-venda';
-    bp.textContent = `LER A EDIÇÃO COMPLETA · ${CFG.precoPasse}`;
-    btLer.className = 'btn btn-secundario';
-    btLer.firstChild.textContent = 'Ler o primeiro capítulo grátis';
+    bp.className = 'btn btn-passe btn-venda';
+    bp.textContent = `ADQUIRIR O PASSE · ${CFG.precoPasse}`;
+    btLer.className = 'btn btn-ler';
+    btLer.firstChild.textContent = 'LER O PRIMEIRO CAPÍTULO GRÁTIS';
     acoes.append(bp, btLer);
   } else {
     bp.className = 'btn btn-passe btn-passe-hero';
@@ -647,7 +652,7 @@ function montarTempos() {
   if (vendeEdicao()) {
     const nota = document.createElement('p');
     nota.className = 'acoes-nota';
-    nota.textContent = `O passe de 30 dias libera esta edição inteira e todas as já publicadas. PIX ou cartão. Cobrança única, não renova.`;
+    nota.textContent = `Libera ${EDICAO.titulo} completa e todas as edições já publicadas.`;
     capa.append(nota);
     const bc = document.querySelector('[data-passe="capa"]');
     if (bc) bc.textContent = 'LER A EDIÇÃO COMPLETA AGORA';
@@ -695,7 +700,7 @@ function montarTempos() {
     <ul class="porque-lista">${q.lista.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
     ${q.numeros ? `<p class="porque-num">${pontilhar(q.numeros)}</p>` : ''}
     <div class="acoes acoes-casa">
-      <button class="btn btn-ler btn-venda" data-passe="casa">LER A EDIÇÃO COMPLETA · ${CFG.precoPasse}</button>
+      <button class="btn btn-passe btn-venda" data-passe="casa">ADQUIRIR O PASSE · ${CFG.precoPasse}</button>
     </div>`;
     miolo.after(casa);
     return;
@@ -785,7 +790,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261041`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261115`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1419,10 +1424,15 @@ function blocoFimCap1() {
     /* a dobra do fim do capítulo 1 (26/10): diz onde a leitura grátis
        acaba, promete o que vem e vende a continuação desta edição */
     d.classList.add('fim-venda');
+    /* o gancho: o texto da edição, quando existe; senão, o título do
+       capítulo 2 tirado do sumário (nada escrito de memória) */
+    const cap2 = (EDICAO.capitulos || [])[1];
+    const gancho = EDICAO.gancho
+      || (cap2 ? `A leitura continua no capítulo 2, <i>${cap2[0]}</i>, na página ${cap2[1]}.` : '');
     d.innerHTML = `
     <p class="rot">Aqui termina o capítulo gratuito.</p>
     <h3>Continue lendo <em>${EDICAO.titulo}</em></h3>
-    ${EDICAO.gancho ? `<p class="gancho">${EDICAO.gancho}</p>` : ''}
+    ${gancho ? `<p class="gancho">${gancho}</p>` : ''}
     <figure class="capa-fim"><img src="${pag(1, 800)}" alt="Capa da edição ${EDICAO.n}, ${EDICAO.titulo}"
       width="800" height="1131" decoding="async" loading="lazy"></figure>
     <section class="passe">
@@ -1431,8 +1441,8 @@ function blocoFimCap1() {
         <span class="passe-preco">${CFG.precoPasse}</span>
       </div>
       <ul class="passe-itens">${itensPasse().map(([a, g]) => `<li><b>${a}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')}</ul>
-      <button class="btn btn-ler btn-venda" data-passe="fim">CONTINUAR LENDO · ${CFG.precoPasse}</button>
-      <p class="passe-nota">PIX ou cartão · acesso imediato à edição inteira e a todas as anteriores.</p>
+      <button class="btn btn-passe btn-venda" data-passe="fim">CONTINUAR LENDO COM O PASSE · ${CFG.precoPasse}</button>
+      <p class="passe-nota">${notaPasse()}</p>
     </section>`;
     return d;
   }
@@ -1442,7 +1452,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261041"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261115"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

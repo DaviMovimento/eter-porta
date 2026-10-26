@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261041') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261041') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261041') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261115') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261115') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261115') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2886,6 +2886,16 @@ html{background:var(--papel)}
   .acoes-venda .btn-venda{flex:1.35 1 0}
   .acoes-venda .btn-secundario{flex:1 1 0}
 }
+/* desde 26/10 à tarde o secundário é o verde de sempre (.btn-ler):
+   divide a linha com o dourado sem disputar o primeiro lugar */
+.acoes-venda .btn-ler{flex:1 1 auto}
+@media (min-width:60rem){ .acoes-venda .btn-ler{flex:1 1 0} }
+/* o dourado e o verde com a mesma letra (rótulo espaçado), cada um numa
+   linha no celular de 375px */
+.acoes-venda .btn,.acoes-casa .btn-venda,.fim-venda .btn-venda{
+  font-family:var(--rotulo);font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;font-size:.8rem;
+}
 
 /* o bloco do meio: o sumário com uma linha de curiosidade por capítulo */
 .casa-leituras .leituras-tit{
@@ -2909,6 +2919,9 @@ html{background:var(--papel)}
 .capa-fim{max-width:13rem;margin:.4rem auto 1.2rem}
 .capa-fim img{width:100%;height:auto;display:block;box-shadow:0 22px 44px -18px rgb(0 0 0/.7)}
 .fim-venda .passe .btn{max-width:none;width:100%}
+/* o rodapé da caixa é lido sobre o creme: a cor clara do intervalo
+   (escrita para o fundo escuro) deixava a linha quase invisível */
+.fim-venda .passe .passe-nota{color:var(--tinta-3);font-size:.72rem;text-wrap:balance}
 /* a linha do passe logo abaixo dos dois botões, no celular e no computador */
 @media (max-width:59.99rem){ .capa>.acoes-nota{order:7} } /* mesma ordem dos botões (7) e vem depois deles no HTML */
 @media (min-width:60rem){ .capa .acoes-nota{grid-column:2;grid-row:6;align-self:start;margin-top:.7rem} }

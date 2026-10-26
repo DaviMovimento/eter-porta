@@ -17,7 +17,7 @@
   "_portao": "Onde a página cobra o dado. 0 = antes de ler (o desenho atual). N = libera até a página N e só então pede. A evidência favorece N; é a chave do seu teste A/B.",
   "gateNaPagina": 0,
   "_checkout": "true faz todo botão de compra virar lead ANTES de mandar para o pagamento. Sem isto, quem abandona o checkout some — e é justamente o público de recuperação.",
-  "capturaAntesDoCheckout": true,
+  "capturaAntesDoCheckout": false,
   "_leads": "Endereço do app da web do Apps Script (termina em /exec). Ver build/planilha-de-leads.gs.",
   "webhookLead": "https://script.google.com/macros/s/AKfycbzkY_WfokD6PcZDhf1Uh_toXCfn2ofcYKEldfTlga9RKdlHUR3cPg_zdRxqIzVjrt3E_w/exec",
   "webhookEventos": "",
@@ -99,10 +99,9 @@
      54
     ]
    ],
-   "paginaVenda": true,
    "gancho": "No capítulo 2, <i>Brasil, o Telêmaco dos Trópicos</i>, a história do Brasil de D. João VI até o domingo da eleição, contada como a de um filho que espera o pai voltar. Depois, o estudo de caso do bolsonarismo, a história das mulheres que a lei apagou e o caminho para parar de esperar.",
    "porQue": {
-    "titulo": "POR QUE O BRASIL VIVE À ESPERA DE UM SALVADOR",
+    "titulo": "POR QUE O BRASIL VIVE À ESPERA DE UM SALVADOR?",
     "paragrafos": [
      "A cada eleição, o Brasil se divide entre candidatos apresentados como os únicos capazes de salvar o país de uma ameaça maior. Metade comemora, a outra metade lamenta, e alguns anos depois a cena se repete, com novos rostos, enquanto os problemas de quem trabalha e empreende continuam os mesmos.",
      "<em>Pátria Mãe Solteira</em>, a 14ª edição da Revista ETER, investiga de onde vem esse padrão. Percorrendo a história do país, da colonização aos dias de hoje, com a ajuda da psicanálise, da antropologia e da literatura, a edição mostra como uma identidade nacional que nunca chegou a se formar nos leva a procurar, a cada geração, um novo \"pai\" para governar o Brasil."
@@ -155,7 +154,21 @@
      "Bibliografia",
      63
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "DE ONDE VÊM AS TENDÊNCIAS?",
+    "paragrafos": [
+     "Toda semana surge uma novidade que parece mudar tudo, e quem a percebe primeiro sai na frente, enquanto o resto do mercado corre atrás.",
+     "<em>Um Museu de Grandes Novidades</em>, a 13ª edição da Revista ETER, mostra por que toda novidade é uma releitura do passado que responde às tensões do espírito do tempo, o que distingue as tendências espontâneas daquelas fabricadas de propósito e como identificar, prever e se posicionar diante delas."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "o que é, de fato, uma tendência;",
+     "quais pistas o futuro deixa antes de chegar;",
+     "como as novidades são fabricadas;",
+     "e como se posicionar diante das tendências antes de todo mundo."
+    ]
+   }
   },
   {
    "n": "012",
@@ -199,7 +212,21 @@
    ],
    "destaquesAlem": [
     19
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE ALGUNS CANCELADOS SAEM MAIS FORTES?",
+    "paragrafos": [
+     "Todo dia alguém é atacado nas redes, e enquanto muitos desaparecem depois de um cancelamento, outros saem dele mais conhecidos e mais seguidos do que antes.",
+     "<em>Os Odiados Serão Exaltados</em>, a 12ª edição da Revista ETER, investiga as origens e o funcionamento da cultura do cancelamento e mostra como transformar ódio em audiência, fazendo até os seus maiores detratores espalharem as suas ideias."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "o que distingue um cancelamento de verdade de um ataque que gera audiência;",
+     "como João Bosco transformou as críticas em vantagem;",
+     "como ser cancelado a seu favor;",
+     "e por que os odiados de hoje podem ser os exaltados de amanhã."
+    ]
+   }
   },
   {
    "n": "011",
@@ -236,7 +263,21 @@
      "Bibliografia",
      48
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "QUEM É O DONO DA SUA AUDIÊNCIA?",
+    "paragrafos": [
+     "Quem produz conteúdo hoje constrói o seu público em terras alugadas, paga cada vez mais caro para falar com quem já o segue e pode perder tudo de uma hora para a outra.",
+     "<em>Micro-hegemonias</em>, a 11ª edição da Revista ETER, mostra como o capitalismo digital virou um tecnofeudalismo, como o fim do senso comum estilhaçou a atenção do país e como se tornar dono do próprio ecossistema de mídia e distribuição."
+    ],
+    "listaTit": "Em quatro capítulos, você vai entender:",
+    "lista": [
+     "por que o criador virou vassalo das plataformas;",
+     "como a atenção do país se fragmentou;",
+     "como construir a sua Arquitetura de Canais;",
+     "e por que a próxima batalha é pela procedência da informação."
+    ]
+   }
   },
   {
    "n": "010",
@@ -273,7 +314,21 @@
      "Bibliografia",
      38
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE O MUNDO ESTÁ FICANDO MAIS FEIO?",
+    "paragrafos": [
+     "Nunca tivemos acesso a tanta cultura, e ainda assim o que mais se consome é o conteúdo rápido, raso e igual, que molda o paladar de milhões de pessoas sem que elas percebam.",
+     "<em>Gosto se Discute</em>, a 10ª edição da Revista ETER, é um manual de curadoria e criatividade contra o fast-food intelectual: mostra como ele infantiliza o paladar coletivo e entrega os critérios e os passos para treinar o seu gosto e criar obras autorais."
+    ],
+    "listaTit": "Em quatro capítulos, você vai entender:",
+    "lista": [
+     "como a indústria fabricou o paladar da nossa época;",
+     "por que o gosto é uma forma de poder;",
+     "quais critérios separam uma obra de valor de um produto ultraprocessado;",
+     "e como fazer a dieta intelectual que treina o seu gosto."
+    ]
+   }
   },
   {
    "n": "009",
@@ -316,7 +371,21 @@
      "Bibliografia",
      47
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE A GERAÇÃO MAIS CONECTADA É A MAIS SOLITÁRIA?",
+    "paragrafos": [
+     "Nunca estivemos tão conectados, e nunca tanta gente se sentiu sozinha: a mesma internet que prometia nos aproximar transformou a nossa atenção no produto mais disputado do mundo.",
+     "<em>O Futuro Simples</em>, a 9ª edição da Revista ETER, investiga esse paradoxo, mostra por que essa conta chegou ao limite e como nasce a economia das comunidades, que está inaugurando uma nova era da internet."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "a verdade sobre a geração mais conectada da história;",
+     "por que as redes sociais não cumpriram o que prometeram;",
+     "por que o futuro das marcas é reunir pessoas;",
+     "e o que a primeira rede social offline do mundo ensina sobre essa virada."
+    ]
+   }
   },
   {
    "n": "008",
@@ -356,7 +425,21 @@
      "Bibliografia",
      37
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE AS PALAVRAS PERDERAM A FORÇA?",
+    "paragrafos": [
+     "Nunca se produziu tanto texto, e nunca as palavras disseram tão pouco: com a inteligência artificial escrevendo sem parar, quase tudo o que lemos soa igual e passa sem deixar marca.",
+     "<em>Versos & Trovas</em>, a 8ª edição da Revista ETER, investiga por que as palavras estão perdendo a vida e por que a capacidade de encantar corações e mentes com elas se tornou o ativo mais raro da nova economia."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "o que matou as palavras na modernidade;",
+     "o que Dumbledore e Bachelard ensinam sobre o poder da palavra;",
+     "como falar e escrever com encanto;",
+     "e como desenvolver o seu estilo autoral."
+    ]
+   }
   },
   {
    "n": "007",
@@ -405,7 +488,21 @@
      "Bibliografia",
      56
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE O MERCADO FUNCIONA COMO UM TEATRO?",
+    "paragrafos": [
+     "No mercado, quem é escolhido nem sempre é o mais competente, e sim quem as pessoas certas percebem como tal: os seus resultados dependem da imagem que os outros fazem de você.",
+     "<em>O Baile de Máscaras</em>, a 7ª edição da Revista ETER, mostra por que a vida e o mercado funcionam como um teatro social e entrega o método dos grandes dramaturgos e roteiristas para construir o personagem certo para se destacar nele."
+    ],
+    "listaTit": "Em seis capítulos, você vai entender:",
+    "lista": [
+     "por que todos representamos papéis no teatro social;",
+     "o que as máscaras revelam, e o que escondem nos bastidores;",
+     "como Silvio Santos construiu um dos personagens mais duradouros do país;",
+     "e como construir o seu personagem, passo a passo."
+    ]
+   }
   },
   {
    "n": "006",
@@ -450,7 +547,21 @@
      "Bibliografia",
      54
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE MULTIDÕES SEGUEM UMA ÚNICA PESSOA?",
+    "paragrafos": [
+     "Movimentos inteiros se formam em torno de uma pessoa, de uma marca ou de uma ideia, e quem os lidera passa a dominar mercados que nenhum anúncio conseguiria conquistar.",
+     "<em>A Arte de Fascinar Multidões</em>, a 6ª edição da Revista ETER, investiga a psicologia das massas e a guerra de narrativas que decide a nova economia, e mostra o passo a passo para criar e liderar o seu próprio movimento."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "o que a psicologia das massas revela sobre o espírito do nosso tempo;",
+     "por que a disputa da nova economia acontece entre narrativas;",
+     "como mito, rito e doutrina sustentam qualquer movimento;",
+     "e como criar o seu."
+    ]
+   }
   },
   {
    "n": "005",
@@ -496,7 +607,21 @@
      "Bibliografia",
      51
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE O BRASILEIRO TEM VERGONHA DE VENDER?",
+    "paragrafos": [
+     "O brasileiro diz odiar vendedores, desconfia de quem oferece e evita falar de preço, e ainda assim é um dos povos que mais e melhor vendem no planeta.",
+     "<em>Venda como um Brasileiro</em>, a 5ª edição da Revista ETER, investiga esse paradoxo: de onde vem a nossa vergonha de vender, como o brasileiro de fato decide comprar e como transformar a nossa cultura na maior vantagem competitiva de quem empreende."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "de onde vem a nossa aversão a vendedores;",
+     "como o brasileiro decide comprar;",
+     "como deveríamos vender, a partir da nossa cultura;",
+     "e o que a Natura ensina sobre vender como um brasileiro."
+    ]
+   }
   },
   {
    "n": "004",
@@ -545,7 +670,22 @@
      "Bibliografia",
      54
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE DESEJAMOS O QUE DESEJAMOS?",
+    "paragrafos": [
+     "Toda escolha de compra parece pessoal, mas por trás dela há uma mecânica antiga, feita de arquétipos, imitação e símbolos, que hoje os algoritmos aprenderam a explorar.",
+     "<em>Corações Miméticos</em>, a 4ª edição da Revista ETER, revela essa mecânica oculta do desejo, dos arquétipos da moda à semiótica dos algoritmos, e mostra como usá-la para construir uma estética impossível de ser ignorada para a sua marca."
+    ],
+    "listaTit": "Em seis capítulos, você vai entender:",
+    "lista": [
+     "como funciona a guerra pelo coração do consumidor;",
+     "quais arquétipos movem a moda e o desejo;",
+     "como os algoritmos leem e reproduzem símbolos;",
+     "o que a disputa entre Farm e Sol de Janeiro ensina sobre estética;",
+     "e como devorar referências, como um artista, para criar a sua."
+    ]
+   }
   },
   {
    "n": "003",
@@ -593,7 +733,21 @@
      "Bibliografia",
      51
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "QUEM VAI DOMINAR A INTELIGÊNCIA ARTIFICIAL?",
+    "paragrafos": [
+     "A inteligência artificial chegou a todos ao mesmo tempo, mas os resultados que ela entrega variam enormemente de uma pessoa para outra, e a diferença está em quem a comanda.",
+     "<em>O Verbo e a Máquina</em>, a 3ª edição da Revista ETER, é um manual rebelde de IA para empreendedores criativos: mostra por que o domínio da linguagem se tornou o fator que separa quem constrói a nova economia de quem será consumido pela mediocridade dos algoritmos."
+    ],
+    "listaTit": "Em seis capítulos, você vai entender:",
+    "lista": [
+     "por que a inteligência artificial inaugurou uma revolução criativa;",
+     "como a linguagem se tornou a principal ferramenta de quem cria;",
+     "como fazer as perguntas e proposições que extraem o melhor da máquina;",
+     "e por que a ancestralidade brasileira pode ser uma vantagem na era da tecnologia."
+    ]
+   }
   },
   {
    "n": "002",
@@ -636,7 +790,21 @@
      "Bibliografia",
      42
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE TUDO FICOU TÃO PARECIDO?",
+    "paragrafos": [
+     "Na era da inteligência artificial, qualquer pessoa produz em segundos o mesmo texto, a mesma imagem e a mesma ideia que todos os outros, e o mercado se encheu de marcas que parecem cópias umas das outras.",
+     "<em>Torna-te Quem Tu És</em>, a 2ª edição da Revista ETER, mostra por que ser mais uma entre muitas cópias virou um risco financeiro e reputacional, e como construir, a partir de quem você é, uma marca autoral impossível de ser copiada ou ignorada."
+    ],
+    "listaTit": "Em cinco capítulos, você vai entender:",
+    "lista": [
+     "por que a revolução das máquinas inaugurou a era dos autorais;",
+     "o que define uma marca autoral, e como o Emicida construiu a sua;",
+     "qual é o destino de todo criador que decide tornar-se quem é;",
+     "e por que esse caminho passa por tornar-se, também, brasileiro."
+    ]
+   }
   },
   {
    "n": "001",
@@ -680,7 +848,21 @@
      "Exercício prático: Mapeamento da Visão",
      34
     ]
-   ]
+   ],
+   "porQue": {
+    "titulo": "POR QUE O BRASIL PODE VIVER A SUA DÉCADA DE OURO?",
+    "paragrafos": [
+     "Enquanto o noticiário fala de crise, investidores, marcas e instituições do mundo inteiro começaram a olhar para o Brasil como um dos lugares mais promissores da próxima década.",
+     "<em>A Década do Brasil</em>, a 1ª edição da Revista ETER, investiga essa virada: por que, entre 2027 e 2034, o país pode protagonizar a maior transferência de riqueza da nossa geração, e qual vantagem específica o empreendedor brasileiro tem para aproveitá-la na era da inteligência artificial."
+    ],
+    "listaTit": "Em sete capítulos, você vai entender:",
+    "lista": [
+     "por que o mundo voltou a disputar o ouro brasileiro;",
+     "por que o Brasil pode ser o epicentro do próximo Renascimento;",
+     "qual é a vantagem injusta do empreendedor brasileiro, e como as riquezas do país costumam ser sequestradas;",
+     "e como mapear a sua própria visão para ocupar um lugar nessa década."
+    ]
+   }
   }
  ],
  "assinatura": {
