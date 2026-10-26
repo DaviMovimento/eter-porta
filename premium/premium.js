@@ -281,7 +281,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261027', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261030', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -381,7 +381,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261027"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261030"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -684,16 +684,16 @@ function montarTempos() {
      ver o específico. */
   const casa = document.createElement('section');
   casa.className = 'casa';
-  if (vendeEdicao() && (EDICAO.leituras || []).length) {
-    casa.classList.add('casa-leituras');
+  if (vendeEdicao() && EDICAO.porQue) {
+    /* o bloco do meio vende a EDIÇÃO como um todo (correção do Rei, 26/10) */
+    const q = EDICAO.porQue;
+    casa.classList.add('casa-porque');
     casa.innerHTML = `
-    <h2 class="leituras-tit">O que você vai ler nesta edição</h2>
-    <ol class="leituras">
-      ${EDICAO.leituras.map(([nome, autor, linha], i) => `
-        <li><span class="leit-n">${String(i + 1).padStart(2, '0')}</span>
-          <div><p class="leit-nome">${nome} <span class="leit-autor">${autor}</span></p>
-          <p class="leit-linha">${linha}</p></div></li>`).join('')}
-    </ol>
+    <h2 class="porque-tit">Por que ler ${EDICAO.titulo} agora</h2>
+    ${(q.paragrafos || []).map(t => `<p class="porque-p">${t}</p>`).join('')}
+    ${(q.entender || []).length ? `<p class="porque-lista-tit">Ao terminar a edição, você vai entender:</p>
+    <ul class="porque-lista">${q.entender.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
+    ${q.numeros ? `<p class="porque-num">${pontilhar(q.numeros)}</p>` : ''}
     <div class="acoes acoes-casa">
       <button class="btn btn-ler btn-venda" data-passe="casa">LER A EDIÇÃO COMPLETA · ${CFG.precoPasse}</button>
     </div>`;
@@ -785,7 +785,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261027`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261030`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1442,7 +1442,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261027"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261030"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

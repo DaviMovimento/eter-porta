@@ -100,34 +100,20 @@
     ]
    ],
    "paginaVenda": true,
-   "leituras": [
-    [
-     "Que País É Esse?",
-     "Davi Ribas",
-     "Por que, mesmo cansado dos dois lados, o brasileiro continua escolhendo entre dois salvadores, e o que Freud explicou sobre isso em 1921."
+   "gancho": "No capítulo 2, <i>Brasil, o Telêmaco dos Trópicos</i>, a história do Brasil de D. João VI até o domingo da eleição, contada como a de um filho que espera o pai voltar. Depois, o estudo de caso do bolsonarismo, a história das mulheres que a lei apagou e o caminho para parar de esperar.",
+   "porQue": {
+    "paragrafos": [
+     "Eleição após eleição, metade do país comemora a chegada de um salvador e a outra metade lamenta a perda do país, enquanto a vida de quem trabalha e empreende continua exatamente a mesma.",
+     "Nesta edição, investigamos por que o Brasil repete esse ciclo desde muito antes da República, numa leitura que reúne história, psicanálise e antropologia sem tomar partido de nenhum dos lados."
     ],
-    [
-     "Brasil, o Telêmaco dos Trópicos",
-     "Davi Ribas",
-     "De D. João VI ao domingo da eleição: a história do Brasil contada como a de um filho que nunca deixou de esperar o pai voltar."
+    "entender": [
+     "por que a política brasileira gira em torno da espera por um salvador da pátria;",
+     "de onde vem essa espera, numa história que começa com a chegada das caravelas e chega às urnas de 2026;",
+     "como ela decide o voto e a maneira como cada um de nós se enxerga nas decisões do dia a dia;",
+     "e o que acontece se decidirmos parar de esperar."
     ],
-    [
-     "O Retorno do Pai Pródigo",
-     "Ricardo Villar",
-     "Como um sobrenome virou programa de governo, e por que a esquerda perdeu a palavra que unia o seu eleitor."
-    ],
-    [
-     "Pátria Quenga, Mãe Gentil",
-     "Samantha Buglione",
-     "A história que a lei brasileira apagou: as mulheres que sustentaram o país enquanto a nação esperava um pai."
-    ],
-    [
-     "Por uma Vanguarda com Lenço e Documento",
-     "Ricardo Villar",
-     "O que acontece quando decidimos parar de esperar."
-    ]
-   ],
-   "gancho": "No capítulo 2, <i>Brasil, o Telêmaco dos Trópicos</i>, a história do Brasil de D. João VI até o domingo da eleição, contada como a de um filho que espera o pai voltar. Depois, o estudo de caso do bolsonarismo, a história das mulheres que a lei apagou e o caminho para parar de esperar."
+    "numeros": "5 capítulos · 59 páginas · 94 referências na bibliografia"
+   }
   },
   {
    "n": "013",

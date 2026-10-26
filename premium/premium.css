@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261027') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261027') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261027') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261030') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261030') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261030') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2912,3 +2912,14 @@ html{background:var(--papel)}
 /* a linha do passe logo abaixo dos dois botões, no celular e no computador */
 @media (max-width:59.99rem){ .capa>.acoes-nota{order:7} } /* mesma ordem dos botões (7) e vem depois deles no HTML */
 @media (min-width:60rem){ .capa .acoes-nota{grid-column:2;grid-row:6;align-self:start;margin-top:.7rem} }
+
+/* o bloco do meio da página de venda: por que ler esta edição agora */
+.casa-porque>*{max-width:40rem;margin-inline:auto}
+.porque-tit{font-family:var(--display);font-size:1.6rem;line-height:1.2;color:var(--tinta);text-wrap:balance;margin-bottom:1rem}
+.porque-p{font-size:1.02rem;line-height:1.62;color:var(--tinta-2);margin-bottom:.9rem}
+.porque-lista-tit{font-family:var(--rotulo);font-size:var(--r-2);letter-spacing:var(--tk-2);text-transform:uppercase;color:var(--ouro-texto);margin:1.5rem auto .7rem}
+.porque-lista{padding-left:1.1rem;margin-bottom:1.3rem}
+.porque-lista li{font-size:.98rem;line-height:1.55;color:var(--tinta-2);margin-bottom:.5rem}
+.porque-lista li::marker{color:var(--ouro-vivo)}
+.porque-num{font-family:var(--rotulo);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:1.4rem}
+@media (min-width:60rem){ .porque-tit{font-size:2rem} }
