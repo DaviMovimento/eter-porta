@@ -68,6 +68,11 @@
     "hobsbawm-a-invencao-das-tradicoes",
     "tetlock-superprevisoes",
     "tye-the-father-of-spin"
+   ],
+   "014": [
+    "lacan-o-seminario-livro-3",
+    "homero-odisseia",
+    "hermann-no-reino-do-desejado"
    ]
   },
   "_vitrine": "os três livros que aparecem no cartão da edição no índice da bibliografia; escolha editorial, o resto fica na página completa"
@@ -193,6 +198,11 @@
      "n": "009",
      "nota": "",
      "pagina": 47
+    },
+    {
+     "n": "014",
+     "nota": "a \"ninguendade\" dos primeiros brasileiros, o cunhadismo e os \"criatórios de gente mestiça\"",
+     "pagina": 54
     }
    ],
    "isbn13": "9788571644519",
@@ -218,6 +228,11 @@
      "n": "011",
      "nota": "",
      "pagina": 48
+    },
+    {
+     "n": "014",
+     "nota": "o senhor e o vassalo dos canais de distribuição",
+     "pagina": 57
     }
    ],
    "isbn13": "9788542233193",
@@ -1392,6 +1407,11 @@
      "n": "006",
      "nota": "a história da captura e revenda da atenção humana",
      "pagina": 54
+    },
+    {
+     "n": "014",
+     "nota": "a economia da atenção",
+     "pagina": 56
     }
    ],
    "isbn13": "9780804170048",
@@ -1497,6 +1517,11 @@
      "n": "005",
      "nota": "",
      "pagina": 51
+    },
+    {
+     "n": "014",
+     "nota": "\"Você sabe com quem está falando?\"",
+     "pagina": 56
     }
    ],
    "isbn13": "9788532507600",
@@ -1611,6 +1636,11 @@
      "n": "005",
      "nota": "",
      "pagina": 51
+    },
+    {
+     "n": "014",
+     "nota": "o personalismo e a confusão entre o público e o privado",
+     "pagina": 55
     }
    ],
    "isbn13": "9788535925487",
@@ -1694,6 +1724,11 @@
     {
      "n": "006",
      "nota": "o contágio emocional e a identificação simbólica nas massas",
+     "pagina": 54
+    },
+    {
+     "n": "014",
+     "nota": "",
      "pagina": 54
     }
    ],
@@ -1792,6 +1827,11 @@
      "n": "007",
      "nota": "",
      "pagina": 56
+    },
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
     }
    ],
    "isbn13": "9788535918717",
@@ -2195,6 +2235,11 @@
      "n": "007",
      "nota": "o caráter revelado pela ação, a virtude construída pelo hábito e a mimese",
      "pagina": 56
+    },
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
     }
    ],
    "isbn13": "9788572838818",
@@ -2482,6 +2527,11 @@
      "n": "010",
      "nota": "sapere, a raiz comum de sabor e saber",
      "pagina": 38
+    },
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
     }
    ],
    "isbn13": "9788573029635",
@@ -3293,6 +3343,11 @@
      "n": "008",
      "nota": "",
      "pagina": 37
+    },
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
     }
    ],
    "isbn13": "9788501085290",
@@ -4065,6 +4120,11 @@
      "n": "011",
      "nota": "a origem do termo sintropia",
      "pagina": 48
+    },
+    {
+     "n": "014",
+     "nota": "a sintropia",
+     "pagina": 57
     }
    ],
    "isbn13": "9788883232589",
@@ -4405,6 +4465,11 @@
      "n": "012",
      "nota": "a origem de \"o lento cancelamento do futuro\"",
      "pagina": 39
+    },
+    {
+     "n": "014",
+     "nota": "a nostalgia e o cancelamento do futuro",
+     "pagina": 56
     }
    ],
    "isbn13": "9786587233680",
@@ -4768,6 +4833,11 @@
      "n": "013",
      "nota": "o recente que passa a parecer “sempre foi assim”",
      "pagina": 63
+    },
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
     }
    ],
    "isbn13": "9788577532094",
@@ -5263,6 +5333,1246 @@
    "fonte_capa": "amazon",
    "edicao_pt": "inexistente",
    "asin": "B00TQEM19E"
+  },
+  {
+   "id": "homero-odisseia",
+   "autor": "Homero",
+   "titulo": "Odisseia",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1874",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788563560278",
+   "isbn10": "8563560271",
+   "capa": "https://m.media-amazon.com/images/P/8563560271.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8563560271",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "ribeiro-o-processo-civilizatorio",
+   "autor": "Darcy Ribeiro",
+   "titulo": "O processo civilizatório",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "1968",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o Brasil como \"povo novo\", sem uma identidade herdada",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786556126425",
+   "isbn10": "655612642X",
+   "capa": "https://m.media-amazon.com/images/P/655612642X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/655612642X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "ribeiro-as-americas-e-a",
+   "autor": "Darcy Ribeiro",
+   "titulo": "As Américas e a civilização",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "1970",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o Brasil como \"povo novo\", sem uma identidade herdada",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786556121024",
+   "isbn10": "6556121029",
+   "capa": "https://m.media-amazon.com/images/P/6556121029.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6556121029",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "freud-totem-e-tabu",
+   "autor": "Sigmund Freud",
+   "titulo": "Totem e tabu",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1912-1913",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788535921748",
+   "isbn10": "8535921745",
+   "capa": "https://m.media-amazon.com/images/P/8535921745.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535921745",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "reich-psicologia-de-massas-do",
+   "autor": "Wilhelm Reich",
+   "titulo": "Psicologia de massas do fascismo",
+   "titulo_original": "Die Massenpsychologie des Faschismus",
+   "editora": "Martins Fontes",
+   "ano": "1933",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788533614185",
+   "isbn10": "8533614187",
+   "capa": "https://m.media-amazon.com/images/P/8533614187.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8533614187",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "fromm-o-medo-a-liberdade",
+   "autor": "Erich Fromm",
+   "titulo": "O medo à liberdade",
+   "titulo_original": "Escape from Freedom",
+   "editora": "Zahar",
+   "ano": "1941",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9789724426167",
+   "isbn10": "9724426165",
+   "capa": "https://m.media-amazon.com/images/P/9724426165.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9724426165",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "adorno-ensaios-sobre-psicologia-social",
+   "autor": "Theodor W. Adorno",
+   "titulo": "Ensaios sobre psicologia social e psicanálise",
+   "titulo_original": "",
+   "editora": "Editora Unesp",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "\"A teoria freudiana e o padrão da propaganda fascista\" (1951)",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9786557113493",
+   "isbn10": "6557113496",
+   "capa": "https://m.media-amazon.com/images/P/6557113496.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6557113496",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "lacan-o-seminario-livro-3",
+   "autor": "Jacques Lacan",
+   "titulo": "O Seminário, livro 3: As psicoses",
+   "titulo_original": "",
+   "editora": "Zahar",
+   "ano": "1955-1956",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o pai simbólico",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788571103894",
+   "isbn10": "8571103895",
+   "capa": "https://m.media-amazon.com/images/P/8571103895.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8571103895",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "anderson-comunidades-imaginadas",
+   "autor": "Benedict Anderson",
+   "titulo": "Comunidades imaginadas",
+   "titulo_original": "Imagined Communities",
+   "editora": "Companhia das Letras",
+   "ano": "1983",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788535911886",
+   "isbn10": "853591188X",
+   "capa": "https://m.media-amazon.com/images/P/853591188X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/853591188X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "chaui-brasil",
+   "autor": "Marilena Chaui",
+   "titulo": "Brasil: mito fundador e sociedade autoritária",
+   "titulo_original": "",
+   "editora": "Fundação Perseu Abramo",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788586469275",
+   "isbn10": "8586469270",
+   "capa": "https://m.media-amazon.com/images/P/8586469270.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8586469270",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "griffin-the-nature-of-fascism",
+   "autor": "Roger Griffin",
+   "titulo": "The Nature of Fascism",
+   "titulo_original": "",
+   "editora": "Pinter",
+   "ano": "1991",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o fascismo como promessa de renascimento da grandeza nacional",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9780415096614",
+   "isbn10": "0415096618",
+   "capa": "https://m.media-amazon.com/images/P/0415096618.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0415096618",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "weffort-o-populismo-na-politica",
+   "autor": "Francisco Weffort",
+   "titulo": "O populismo na política brasileira",
+   "titulo_original": "",
+   "editora": "Paz e Terra",
+   "ano": "1978",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788521905998",
+   "isbn10": "8521905998",
+   "capa": "https://m.media-amazon.com/images/P/8521905998.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8521905998",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "queiroz-o-messianismo-no-brasil",
+   "autor": "Maria Isaura Pereira de Queiroz",
+   "titulo": "O messianismo no Brasil e no mundo",
+   "titulo_original": "",
+   "editora": "Dominus/Edusp",
+   "ano": "1965",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788529500300",
+   "isbn10": "852950030X",
+   "capa": "https://m.media-amazon.com/images/P/852950030X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/852950030X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "hermann-no-reino-do-desejado",
+   "autor": "Jacqueline Hermann",
+   "titulo": "No reino do desejado",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1998",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788571647862",
+   "isbn10": "8571647860",
+   "capa": "https://m.media-amazon.com/images/P/8571647860.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8571647860",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "freyre-casa-grande-senzala",
+   "autor": "Gilberto Freyre",
+   "titulo": "Casa-grande & senzala",
+   "titulo_original": "",
+   "editora": "Maia & Schmidt",
+   "ano": "1933",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "a mestiçagem colonial e a ama de leite negra na casa da sinhá",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788526008694",
+   "isbn10": "8526008692",
+   "capa": "https://m.media-amazon.com/images/P/8526008692.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526008692",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "freyre-sobrados-e-mucambos",
+   "autor": "Gilberto Freyre",
+   "titulo": "Sobrados e mucambos",
+   "titulo_original": "",
+   "editora": "Companhia Editora Nacional",
+   "ano": "1936",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o declínio do patriarcado",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788526008359",
+   "isbn10": "8526008358",
+   "capa": "https://m.media-amazon.com/images/P/8526008358.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526008358",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "freyre-ordem-e-progresso",
+   "autor": "Gilberto Freyre",
+   "titulo": "Ordem e progresso",
+   "titulo_original": "",
+   "editora": "José Olympio",
+   "ano": "1959",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "a passagem para a República positivista",
+     "pagina": 54
+    }
+   ],
+   "isbn13": "9788526008366",
+   "isbn10": "8526008366",
+   "capa": "https://m.media-amazon.com/images/P/8526008366.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8526008366",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "holanda-visao-do-paraiso",
+   "autor": "Sérgio Buarque de Holanda",
+   "titulo": "Visão do paraíso",
+   "titulo_original": "",
+   "editora": "José Olympio",
+   "ano": "1959",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o passado idealizado",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535916676",
+   "isbn10": "8535916679",
+   "capa": "https://m.media-amazon.com/images/P/8535916679.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535916679",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "weil-normose",
+   "autor": "Pierre Weil, Jean-Yves Leloup e Roberto Crema",
+   "titulo": "Normose: a patologia da normalidade",
+   "titulo_original": "",
+   "editora": "Verus",
+   "ano": "2003",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788532640987",
+   "isbn10": "8532640982",
+   "capa": "https://m.media-amazon.com/images/P/8532640982.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532640982",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "copernico-as-revolucoes-dos-orbes",
+   "autor": "Nicolau Copérnico",
+   "titulo": "As revoluções dos orbes celestes",
+   "titulo_original": "De revolutionibus orbium coelestium",
+   "editora": "",
+   "ano": "1543",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9789723103410",
+   "isbn10": "9723103419",
+   "capa": "https://m.media-amazon.com/images/I/31nuWi43kzL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9723103419",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "schwarcz-brasil",
+   "autor": "Lilia M. Schwarcz e Heloisa M. Starling",
+   "titulo": "Brasil: uma biografia",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2015",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "https://m.media-amazon.com/images/P/B079GB27S2.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/B079GB27S2",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada",
+   "asin": "B079GB27S2"
+  },
+  {
+   "id": "schwarcz-as-barbas-do-imperador",
+   "autor": "Lilia M. Schwarcz",
+   "titulo": "As barbas do imperador",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1998",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535923353",
+   "isbn10": "8535923357",
+   "capa": "https://m.media-amazon.com/images/P/8535923357.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535923357",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "dias-primeiros-cantos",
+   "autor": "Gonçalves Dias",
+   "titulo": "Primeiros cantos",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1846",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788531900655",
+   "isbn10": "8531900654",
+   "capa": "https://m.media-amazon.com/images/P/8531900654.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8531900654",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "alencar-iracema",
+   "autor": "José de Alencar",
+   "titulo": "Iracema",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1865",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9786555527483",
+   "isbn10": "655552748X",
+   "capa": "https://m.media-amazon.com/images/P/655552748X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/655552748X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "comte-systeme-de-politique-positive",
+   "autor": "Auguste Comte",
+   "titulo": "Système de politique positive",
+   "titulo_original": "",
+   "editora": "",
+   "ano": "1851-1854",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "\"o amor por princípio e a ordem por base; o progresso por fim\"",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9781049515359",
+   "isbn10": "1049515358",
+   "capa": "https://m.media-amazon.com/images/P/1049515358.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/1049515358",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "carvalho-os-bestializados",
+   "autor": "José Murilo de Carvalho",
+   "titulo": "Os bestializados",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1987",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535930870",
+   "isbn10": "8535930876",
+   "capa": "https://m.media-amazon.com/images/P/8535930876.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535930876",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "carvalho-a-formacao-das-almas",
+   "autor": "José Murilo de Carvalho",
+   "titulo": "A formação das almas",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1990",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535928952",
+   "isbn10": "8535928952",
+   "capa": "https://m.media-amazon.com/images/P/8535928952.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535928952",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "faoro-os-donos-do-poder",
+   "autor": "Raymundo Faoro",
+   "titulo": "Os donos do poder",
+   "titulo_original": "",
+   "editora": "Globo",
+   "ano": "1958",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9786559210961",
+   "isbn10": "6559210960",
+   "capa": "https://m.media-amazon.com/images/P/6559210960.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6559210960",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "leal-coronelismo-enxada-e-voto",
+   "autor": "Victor Nunes Leal",
+   "titulo": "Coronelismo, enxada e voto",
+   "titulo_original": "",
+   "editora": "Revista Forense",
+   "ano": "1949",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535921304",
+   "isbn10": "8535921303",
+   "capa": "https://m.media-amazon.com/images/P/8535921303.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535921303",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "gomes-a-invencao-do-trabalhismo",
+   "autor": "Angela de Castro Gomes",
+   "titulo": "A invenção do trabalhismo",
+   "titulo_original": "",
+   "editora": "Vértice/IUPERJ",
+   "ano": "1988",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o \"pai dos pobres\" e os direitos concedidos como dádiva",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788522505081",
+   "isbn10": "852250508X",
+   "capa": "https://m.media-amazon.com/images/P/852250508X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/852250508X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "vianna-o-misterio-do-samba",
+   "autor": "Hermano Vianna",
+   "titulo": "O mistério do samba",
+   "titulo_original": "",
+   "editora": "Jorge Zahar/Editora UFRJ",
+   "ano": "1995",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788537808641",
+   "isbn10": "8537808644",
+   "capa": "https://m.media-amazon.com/images/P/8537808644.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8537808644",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "ferreira-1964",
+   "autor": "Jorge Ferreira e Angela de Castro Gomes",
+   "titulo": "1964: o golpe que derrubou um presidente, pôs fim ao regime democrático e instituiu a ditadura no Brasil",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "2014",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788520012383",
+   "isbn10": "8520012388",
+   "capa": "https://m.media-amazon.com/images/P/8520012388.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8520012388",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "gaspari-a-ditadura-envergonhada",
+   "autor": "Elio Gaspari",
+   "titulo": "A ditadura envergonhada",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2002",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788580573978",
+   "isbn10": "8580573971",
+   "capa": "https://m.media-amazon.com/images/P/8580573971.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8580573971",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "alonso-treze",
+   "autor": "Angela Alonso",
+   "titulo": "Treze: a política de rua de Lula a Bolsonaro",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2023",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535934571",
+   "isbn10": "853593457X",
+   "capa": "https://m.media-amazon.com/images/P/853593457X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/853593457X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "nietzsche-o-anticristo",
+   "autor": "Friedrich Nietzsche",
+   "titulo": "O Anticristo",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1888",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "a transvaloração de todos os valores",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788535928174",
+   "isbn10": "8535928170",
+   "capa": "https://m.media-amazon.com/images/P/8535928170.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535928170",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "schwarz-que-horas-sao",
+   "autor": "Roberto Schwarz",
+   "titulo": "Que horas são?",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1987",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "\"Nacional por subtração\" (1986)",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9788585095574",
+   "isbn10": "8585095571",
+   "capa": "https://m.media-amazon.com/images/P/8585095571.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8585095571",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "lipovetsky-a-era-do-vazio",
+   "autor": "Gilles Lipovetsky",
+   "titulo": "A era do vazio",
+   "titulo_original": "",
+   "editora": "Manole",
+   "ano": "1983",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 55
+    }
+   ],
+   "isbn13": "9789724417462",
+   "isbn10": "9724417468",
+   "capa": "https://m.media-amazon.com/images/P/9724417468.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/9724417468",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "damatta-universo-do-futebol",
+   "autor": "Roberto DaMatta",
+   "titulo": "Universo do futebol",
+   "titulo_original": "",
+   "editora": "Pinakotheke",
+   "ano": "1982",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o futebol como paixão nacional",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "",
+   "isbn10": "",
+   "capa": "",
+   "amazon": "https://www.amazon.com.br/s?k=Universo+do+futebol+Roberto+DaMatta",
+   "fonte_capa": "",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "damatta-o-que-faz-o",
+   "autor": "Roberto DaMatta",
+   "titulo": "O que faz o brasil, Brasil?",
+   "titulo_original": "",
+   "editora": "Rocco",
+   "ano": "1984",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o indivíduo e a pessoa diante da lei",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788532502018",
+   "isbn10": "8532502016",
+   "capa": "https://m.media-amazon.com/images/P/8532502016.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8532502016",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "damatta-a-casa-a-rua",
+   "autor": "Roberto DaMatta",
+   "titulo": "A casa & a rua",
+   "titulo_original": "",
+   "editora": "Brasiliense",
+   "ano": "1985",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "o indivíduo e a pessoa diante da lei",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788532507594",
+   "isbn10": "853250759X",
+   "capa": "https://m.media-amazon.com/images/P/853250759X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/853250759X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "carvalho-cidadania-no-brasil",
+   "autor": "José Murilo de Carvalho",
+   "titulo": "Cidadania no Brasil: o longo caminho",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "2001",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9786558020424",
+   "isbn10": "6558020424",
+   "capa": "https://m.media-amazon.com/images/P/6558020424.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6558020424",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "queiroz-messianismo-e-conflito-social",
+   "autor": "Maurício Vinhas de Queiroz",
+   "titulo": "Messianismo e conflito social",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "1966",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788508048083",
+   "isbn10": "8508048084",
+   "capa": "https://m.media-amazon.com/images/I/71P-pNU7++L._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8508048084",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "kafka-um-medico-rural",
+   "autor": "Franz Kafka",
+   "titulo": "Um médico rural",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1999",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "\"Diante da lei\"",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788571648913",
+   "isbn10": "8571648913",
+   "capa": "https://m.media-amazon.com/images/P/8571648913.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8571648913",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "org-funcao-fraterna",
+   "autor": "Maria Rita Kehl (org.)",
+   "titulo": "Função fraterna",
+   "titulo_original": "",
+   "editora": "Relume Dumará",
+   "ano": "2000",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788573162165",
+   "isbn10": "8573162163",
+   "capa": "https://m.media-amazon.com/images/I/31e9DFOUQdL._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8573162163",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "gasset-a-rebeliao-das-massas",
+   "autor": "José Ortega y Gasset",
+   "titulo": "A rebelião das massas",
+   "titulo_original": "",
+   "editora": "Martins Fontes",
+   "ano": "1930",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788567394824",
+   "isbn10": "8567394821",
+   "capa": "https://m.media-amazon.com/images/P/8567394821.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8567394821",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "adorno-dialetica-do-esclarecimento",
+   "autor": "Theodor W. Adorno e Max Horkheimer",
+   "titulo": "Dialética do esclarecimento",
+   "titulo_original": "",
+   "editora": "Zahar",
+   "ano": "1947",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "a indústria cultural",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788571104143",
+   "isbn10": "857110414X",
+   "capa": "https://m.media-amazon.com/images/P/857110414X.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/857110414X",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "venturi-aprendendo-com-las-vegas",
+   "autor": "Robert Venturi, Denise Scott Brown e Steven Izenour",
+   "titulo": "Aprendendo com Las Vegas",
+   "titulo_original": "",
+   "editora": "Cosac Naify",
+   "ano": "1972",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788575031933",
+   "isbn10": "8575031937",
+   "capa": "https://m.media-amazon.com/images/P/8575031937.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8575031937",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "debord-a-sociedade-do-espetaculo",
+   "autor": "Guy Debord",
+   "titulo": "A sociedade do espetáculo",
+   "titulo_original": "",
+   "editora": "Contraponto",
+   "ano": "1967",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9788585910174",
+   "isbn10": "8585910178",
+   "capa": "https://m.media-amazon.com/images/P/8585910178.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8585910178",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "cohen-folk-devils-and-moral",
+   "autor": "Stanley Cohen",
+   "titulo": "Folk Devils and Moral Panics",
+   "titulo_original": "",
+   "editora": "MacGibbon & Kee",
+   "ano": "1972",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 56
+    }
+   ],
+   "isbn13": "9780415610162",
+   "isbn10": "0415610168",
+   "capa": "https://m.media-amazon.com/images/P/0415610168.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0415610168",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "souza-os-batalhadores-brasileiros",
+   "autor": "Jessé Souza",
+   "titulo": "Os batalhadores brasileiros",
+   "titulo_original": "",
+   "editora": "Editora UFMG",
+   "ano": "2010",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788570418746",
+   "isbn10": "8570418744",
+   "capa": "https://m.media-amazon.com/images/I/61K2JSGJ19L._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8570418744",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "souza-o-pobre-de-direita",
+   "autor": "Jessé Souza",
+   "titulo": "O pobre de direita: a vingança dos bastardos",
+   "titulo_original": "",
+   "editora": "Civilização Brasileira",
+   "ano": "2024",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9786558021551",
+   "isbn10": "6558021552",
+   "capa": "https://m.media-amazon.com/images/P/6558021552.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6558021552",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "spyer-povo-de-deus",
+   "autor": "Juliano Spyer",
+   "titulo": "Povo de Deus",
+   "titulo_original": "",
+   "editora": "Geração Editorial",
+   "ano": "2020",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788581305080",
+   "isbn10": "8581305083",
+   "capa": "https://m.media-amazon.com/images/P/8581305083.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8581305083",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "singer-os-sentidos-do-lulismo",
+   "autor": "André Singer",
+   "titulo": "Os sentidos do lulismo",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788535921588",
+   "isbn10": "8535921583",
+   "capa": "https://m.media-amazon.com/images/P/8535921583.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535921583",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "nobre-imobilismo-em-movimento",
+   "autor": "Marcos Nobre",
+   "titulo": "Imobilismo em movimento",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2013",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788535923346",
+   "isbn10": "8535923349",
+   "capa": "https://m.media-amazon.com/images/P/8535923349.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535923349",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "lopes-novo-dicionario-banto-do",
+   "autor": "Nei Lopes",
+   "titulo": "Novo dicionário banto do Brasil",
+   "titulo_original": "",
+   "editora": "Pallas",
+   "ano": "2012",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788534703482",
+   "isbn10": "8534703485",
+   "capa": "https://m.media-amazon.com/images/P/8534703485.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8534703485",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "stam-brazilian-cinema",
+   "autor": "Robert Stam e Randal Johnson",
+   "titulo": "Brazilian Cinema",
+   "titulo_original": "",
+   "editora": "Associated University Presses",
+   "ano": "1982",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9780838630785",
+   "isbn10": "0838630782",
+   "capa": "https://m.media-amazon.com/images/I/41I9ilqDl8L._SL500_.jpg",
+   "amazon": "https://www.amazon.com.br/dp/0838630782",
+   "fonte_capa": "amazon",
+   "edicao_pt": "inexistente"
+  },
+  {
+   "id": "toledo-iseb",
+   "autor": "Caio Navarro de Toledo",
+   "titulo": "ISEB: fábrica de ideologias",
+   "titulo_original": "",
+   "editora": "Ática",
+   "ano": "1977",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9781122332958",
+   "isbn10": "1122332955",
+   "capa": "",
+   "amazon": "https://www.amazon.com.br/dp/1122332955",
+   "fonte_capa": "",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "veloso-verdade-tropical",
+   "autor": "Caetano Veloso",
+   "titulo": "Verdade tropical",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "1997",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "\"sem lenço, sem documento\"",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9788535929898",
+   "isbn10": "8535929894",
+   "capa": "https://m.media-amazon.com/images/P/8535929894.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/8535929894",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
+  },
+  {
+   "id": "reis-domingos-sodre-um-sacerdote",
+   "autor": "João José Reis",
+   "titulo": "Domingos Sodré, um sacerdote africano",
+   "titulo_original": "",
+   "editora": "Companhia das Letras",
+   "ano": "2008",
+   "edicoes": [
+    {
+     "n": "014",
+     "nota": "as juntas de alforria na Bahia",
+     "pagina": 57
+    }
+   ],
+   "isbn13": "9786559211364",
+   "isbn10": "6559211363",
+   "capa": "https://m.media-amazon.com/images/P/6559211363.01.LZZZZZZZ.jpg",
+   "amazon": "https://www.amazon.com.br/dp/6559211363",
+   "fonte_capa": "amazon",
+   "edicao_pt": "confirmada"
   }
  ]
 }
