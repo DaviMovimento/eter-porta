@@ -118,9 +118,11 @@ const publicadas = () => DADOS.edicoes.filter(e => e.paginas).length;
    (RELEASES-EDICOES-PAGINA-26OUT.md): não depende mais de chave no catálogo. */
 const vendeEdicao = () => !!EDICAO;
 const itensPasse = () => vendeEdicao() ? [
-  [`A edição completa de ${EDICAO.titulo}`, 'do capítulo 1 à bibliografia'],
-  ['Todas as edições já publicadas', `desde a primeira (${publicadas()} até hoje)`],
-  ['Uma edição nova toda semana', 'durante os 30 dias'],
+  /* os itens dizem a coisa e param: sem a linha de explicação embaixo
+     (Rei, 26/10: "deixa a coisa clara") */
+  [`Edição completa de ${EDICAO.titulo}`, ''],
+  ['Acervo com todas as edições já publicadas', ''],
+  ['Uma nova edição toda semana', ''],
   ['Encontros semanais ao vivo', ''],
 ] : PASSE.itens;
 const notaPasse = () => vendeEdicao()
@@ -281,7 +283,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261122', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261152', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -381,7 +383,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261122"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261152"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -397,7 +399,9 @@ function montarChegada() {
     ? itensPasse().map(([t, g]) => `<li><b>${t}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')
     : PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
   $('#passe-nota').textContent = notaPasse();
-  $('#barra-txt').innerHTML = `<b>Adquira o Passe</b> e tenha um mês de acesso total ao acervo, uma nova edição por semana e encontros ao vivo — ${CFG.precoPasse}`;
+  $('#barra-txt').innerHTML = vendeEdicao()
+    ? `<b>Adquira o passe</b> para ler a edição completa de <i>${EDICAO.titulo}</i>, todo o acervo e uma revista nova toda semana · ${CFG.precoPasse}`
+    : `<b>Adquira o Passe</b> e tenha um mês de acesso total ao acervo, uma nova edição por semana e encontros ao vivo — ${CFG.precoPasse}`;
 
   if (!TOTAL) {
     $('#btn-ler').disabled = true;
@@ -792,7 +796,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261122`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261152`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1423,28 +1427,34 @@ function blocoFimCap1() {
   d.className = 'intervalo';
   d.id = 'fim-cap1';
   if (vendeEdicao()) {
-    /* a dobra do fim do capítulo 1 (26/10): diz onde a leitura grátis
-       acaba, promete o que vem e vende a continuação desta edição */
+    /* a dobra do fim do capítulo 1 (Rei, 26/10 à tarde): vende o PASSE
+       inteiro, não o capítulo 2 — falar do capítulo seguinte fazia parecer
+       que o passe só abria mais um capítulo. A capa desta edição fica na
+       frente e o leque das outras atrás: quem compra vê que leva o acervo. */
     d.classList.add('fim-venda');
-    /* o gancho: o texto da edição, quando existe; senão, o título do
-       capítulo 2 tirado do sumário (nada escrito de memória) */
-    const cap2 = (EDICAO.capitulos || [])[1];
-    const gancho = EDICAO.gancho
-      || (cap2 ? `A leitura continua no capítulo 2, <i>${cap2[0]}</i>, na página ${cap2[1]}.` : '');
+    const outras = DADOS.edicoes
+      .filter(e => e.paginas && e.n !== EDICAO.n)
+      .sort((a, b) => Math.abs(+a.n - +EDICAO.n) - Math.abs(+b.n - +EDICAO.n) || +b.n - +a.n)
+      .slice(0, 4);
+    const lugares = ['l1', 'r1', 'l2', 'r2'];
     d.innerHTML = `
     <p class="rot">Aqui termina o capítulo gratuito.</p>
-    <h3>Continue lendo <em>${EDICAO.titulo}</em></h3>
-    ${gancho ? `<p class="gancho">${gancho}</p>` : ''}
-    <figure class="capa-fim"><img src="${pag(1, 800)}" alt="Capa da edição ${EDICAO.n}, ${EDICAO.titulo}"
-      width="800" height="1131" decoding="async" loading="lazy"></figure>
+    <h3>Adquira o passe para <em>continuar lendo</em></h3>
+    <figure class="leque">
+      ${outras.map((e, i) => `<img class="leque-tras ${lugares[i]}" src="${pagDe(e.n, 1, 240)}" alt=""
+        width="240" height="340" decoding="async" loading="lazy">`).join('')}
+      <img class="leque-frente" src="${pag(1, 800)}" alt="Capa da edição ${EDICAO.n}, ${EDICAO.titulo}"
+        width="800" height="1132" decoding="async" loading="lazy">
+    </figure>
+    <p class="fim-texto">Leia a edição completa de <i>${EDICAO.titulo}</i>, acesse o acervo com todas as já publicadas e receba, em primeira mão, uma revista nova toda semana.</p>
     <section class="passe">
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
         <span class="passe-preco">${CFG.precoPasse}</span>
       </div>
       <ul class="passe-itens">${itensPasse().map(([a, g]) => `<li><b>${a}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')}</ul>
-      <button class="btn btn-passe btn-venda" data-passe="fim">CONTINUAR LENDO COM O PASSE · ${CFG.precoPasse}</button>
-      <p class="passe-nota">${notaPasse()}</p>
+      <p class="passe-unico">Pagamento único de ${CFG.precoPasse}.</p>
+      <button class="btn btn-passe btn-venda" data-passe="fim">ADQUIRIR O PASSE AGORA</button>
     </section>`;
     return d;
   }
@@ -1454,7 +1464,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261122"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261152"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>

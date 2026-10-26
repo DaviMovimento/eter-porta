@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261122') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261122') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261122') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261152') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261152') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261152') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2922,6 +2922,20 @@ html{background:var(--papel)}
 /* o rodapé da caixa é lido sobre o creme: a cor clara do intervalo
    (escrita para o fundo escuro) deixava a linha quase invisível */
 .fim-venda .passe .passe-nota{color:var(--tinta-3);font-size:.72rem;text-wrap:balance}
+/* o leque: a capa desta edição na frente, quatro outras atrás. Tudo em
+   porcentagem da largura, para caber em 375px sem rolagem lateral. */
+.leque{position:relative;width:min(100%,24rem);aspect-ratio:100/70;margin:.9rem auto 1.3rem}
+.leque img{position:absolute;bottom:0;height:auto;display:block;transform-origin:50% 100%;
+  box-shadow:0 14px 30px -14px rgb(0 0 0/.75)}
+.leque-frente{left:28%;width:44%;z-index:3;box-shadow:0 24px 46px -18px rgb(0 0 0/.85)}
+.leque-tras{width:29%;filter:brightness(.62) saturate(.85)}
+.leque-tras.l1{left:17%;transform:rotate(-8deg);z-index:2}
+.leque-tras.r1{left:54%;transform:rotate(8deg);z-index:2}
+.leque-tras.l2{left:5%;bottom:3%;transform:rotate(-15deg);z-index:1}
+.leque-tras.r2{left:66%;bottom:3%;transform:rotate(15deg);z-index:1}
+.fim-texto{font-size:.98rem;line-height:1.55;color:rgb(240 234 224/.86);max-width:30rem;margin:0 auto 1.4rem;text-wrap:pretty}
+.fim-texto i{color:var(--ouro-claro)}
+.fim-venda .passe .passe-unico{font-size:.85rem;color:var(--tinta-2);text-align:center;margin:.2rem 0 .8rem}
 /* a linha do passe logo abaixo dos dois botões, no celular e no computador */
 @media (max-width:59.99rem){ .capa>.acoes-nota{order:7} } /* mesma ordem dos botões (7) e vem depois deles no HTML */
 @media (min-width:60rem){ .capa .acoes-nota{grid-column:2;grid-row:6;align-self:start;margin-top:.7rem} }
