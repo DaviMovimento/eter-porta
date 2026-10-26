@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610252054') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610252054') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610252054') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610252102') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610252102') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610252102') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -639,6 +639,9 @@ h1 em{
   font-family:var(--script);font-style:normal;font-weight:400;
   display:block;font-size:1.5em;line-height:.84;color:var(--ouro);margin-top:.08em;
 }
+/* a palavra riscada da capa (ED014) e o fecho que cresce junto */
+h1 s.riscado{text-decoration:line-through;text-decoration-thickness:.07em;text-decoration-color:var(--ouro-claro,currentColor);opacity:.92}
+h1 em.maior{font-size:1.95em;line-height:.8}
 
 /* O OLHO DA EDIÇÃO. Onde ficava a ficha técnica — capítulos, páginas,
    minutos — agora fica o subtítulo: a promessa em uma linha, colada no
@@ -805,6 +808,7 @@ h1 em{
   .numero::after{width:3rem}
   h1{font-size:clamp(2.4rem,3.6vw,3.2rem)}
   h1 em{display:inline;font-size:1.45em;margin-left:.1em}
+  h1 em.maior{font-size:1.85em}
   .promessa,.convite-frase{margin-left:0;max-width:30rem}
   .dek-ed{margin-left:0;font-size:1.22rem}
   .convites{margin-top:1.8rem;padding-top:0}
