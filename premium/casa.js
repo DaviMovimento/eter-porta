@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = () => D ||
-    (D = fetch(`${RAIZ}edicoes.json?v=202610252134`).then(r => r.json()));
+    (D = fetch(`${RAIZ}edicoes.json?v=202610252341`).then(r => r.json()));
 
   const busca = () => new URLSearchParams(location.search);
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
@@ -54,9 +54,9 @@
   async function abrirOferta(origem, direto) {
     const d = await catalogo();
     const C = d.config, P = d.passe;
-    /* botão ao lado dos entregáveis: sem popup de oferta. Cadastrado vai
-       direto ao pagamento; novo vê só o formulário curto. */
-    if (direto && capturado()) {
+    /* Cadastrado vai direto ao pagamento, de qualquer botão (ordem do Rei,
+       25/10); novo vê a oferta com o formulário curto. */
+    if (capturado()) {
       (window.dataLayer = window.dataLayer || []).push({ event: 'foi_ao_checkout', origem, pagina: PAGINA });
       location.href = linkCheckout(C, origem);
       return;
