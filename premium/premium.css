@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261015') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261015') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261015') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610261027') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610261027') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610261027') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2864,3 +2864,51 @@ html{background:var(--papel)}
 .campo label.fone-pais{display:flex;font-family:var(--corpo);font-size:1rem;font-weight:400;
   letter-spacing:0;text-transform:none;color:var(--tinta);margin:0}
 .oferta-campos .campo label.fone-pais{font-size:.92rem}
+
+
+/* ═══ A PÁGINA QUE VENDE A EDIÇÃO (26/10, ED014 primeiro) ═══════
+   Liga com `paginaVenda` no catálogo. O principal é ler a edição inteira;
+   o capítulo grátis vira contorno ao lado. Sem a chave, nada disto aparece. */
+.acoes-venda .btn-venda{flex:1.35 1 auto}
+.btn-secundario{
+  background:transparent;color:var(--sobre-escuro,#F2EEE6);
+  border:1px solid rgb(219 199 164/.65);
+  font-family:var(--rotulo);font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;font-size:.74rem;padding:1rem 1.1rem;
+}
+.btn-secundario:hover{border-color:var(--ouro-claro);background:rgb(219 199 164/.08)}
+.btn-secundario .sub{display:none}
+.acoes-nota{
+  font-size:.8rem;line-height:1.5;color:rgb(242 238 230/.72);
+  margin-top:.75rem;max-width:34rem;text-wrap:pretty;
+}
+@media (min-width:60rem){
+  .acoes-venda .btn-venda{flex:1.35 1 0}
+  .acoes-venda .btn-secundario{flex:1 1 0}
+}
+
+/* o bloco do meio: o sumário com uma linha de curiosidade por capítulo */
+.casa-leituras .leituras-tit{
+  font-family:var(--rotulo);font-size:var(--r-2);letter-spacing:var(--tk-2);
+  text-transform:uppercase;color:var(--ouro-texto);margin:0 auto 1.3rem;max-width:44rem;
+}
+.leituras{list-style:none;padding:0;margin:0 auto 1.8rem;max-width:44rem;display:grid;gap:1.15rem}
+.leituras li{display:grid;grid-template-columns:2.4rem 1fr;gap:.6rem;align-items:start;
+  border-top:1px solid var(--linha);padding-top:1rem}
+.leit-n{font-family:var(--display);font-size:1.5rem;line-height:1;color:var(--ouro-texto)}
+.leit-nome{font-family:var(--display);font-size:1.12rem;line-height:1.25;color:var(--tinta);margin-bottom:.3rem}
+.leit-autor{display:block;font-family:var(--rotulo);font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--tinta-3);margin-top:.25rem}
+.leit-linha{font-size:.95rem;line-height:1.55;color:var(--tinta-2)}
+.casa-leituras .acoes-casa{max-width:44rem;margin-inline:auto}
+@media (min-width:60rem){ .leituras{grid-template-columns:1fr 1fr;column-gap:2.4rem} }
+
+/* a dobra no fim do capítulo 1 */
+.fim-venda .gancho{font-size:.95rem;color:rgb(240 234 224/.78);max-width:30rem}
+.fim-venda .gancho i{color:var(--ouro-claro)}
+.capa-fim{max-width:13rem;margin:.4rem auto 1.2rem}
+.capa-fim img{width:100%;height:auto;display:block;box-shadow:0 22px 44px -18px rgb(0 0 0/.7)}
+.fim-venda .passe .btn{max-width:none;width:100%}
+/* a linha do passe logo abaixo dos dois botões, no celular e no computador */
+@media (max-width:59.99rem){ .capa>.acoes-nota{order:7} } /* mesma ordem dos botões (7) e vem depois deles no HTML */
+@media (min-width:60rem){ .capa .acoes-nota{grid-column:2;grid-row:6;align-self:start;margin-top:.7rem} }

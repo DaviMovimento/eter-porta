@@ -98,7 +98,36 @@
      "Bibliografia",
      54
     ]
-   ]
+   ],
+   "paginaVenda": true,
+   "leituras": [
+    [
+     "Que País É Esse?",
+     "Davi Ribas",
+     "Por que, mesmo cansado dos dois lados, o brasileiro continua escolhendo entre dois salvadores, e o que Freud explicou sobre isso em 1921."
+    ],
+    [
+     "Brasil, o Telêmaco dos Trópicos",
+     "Davi Ribas",
+     "De D. João VI ao domingo da eleição: a história do Brasil contada como a de um filho que nunca deixou de esperar o pai voltar."
+    ],
+    [
+     "O Retorno do Pai Pródigo",
+     "Ricardo Villar",
+     "Como um sobrenome virou programa de governo, e por que a esquerda perdeu a palavra que unia o seu eleitor."
+    ],
+    [
+     "Pátria Quenga, Mãe Gentil",
+     "Samantha Buglione",
+     "A história que a lei brasileira apagou: as mulheres que sustentaram o país enquanto a nação esperava um pai."
+    ],
+    [
+     "Por uma Vanguarda com Lenço e Documento",
+     "Ricardo Villar",
+     "O que acontece quando decidimos parar de esperar."
+    ]
+   ],
+   "gancho": "No capítulo 2, <i>Brasil, o Telêmaco dos Trópicos</i>, a história do Brasil de D. João VI até o domingo da eleição, contada como a de um filho que espera o pai voltar. Depois, o estudo de caso do bolsonarismo, a história das mulheres que a lei apagou e o caminho para parar de esperar."
   },
   {
    "n": "013",

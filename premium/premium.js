@@ -111,6 +111,22 @@ const url = new URLSearchParams(location.search);
    sai daqui, nunca escrita à mão no meio de uma frase */
 const publicadas = () => DADOS.edicoes.filter(e => e.paginas).length;
 
+/* A PÁGINA QUE VENDE A EDIÇÃO (pedido do Rei, 26/10; ED014 primeiro). Medido
+   no lançamento da ED014: 75 abriram a oferta e só 7 foram pagar. A página
+   passa a vender AQUELA edição, e o passe aparece como o jeito de lê-la
+   inteira. Liga por edição com `paginaVenda` no catálogo; sem a chave, a
+   página fica como sempre foi. */
+const vendeEdicao = () => !!(EDICAO && EDICAO.paginaVenda);
+const itensPasse = () => vendeEdicao() ? [
+  [`${EDICAO.titulo} completa`, 'do capítulo 1 à bibliografia'],
+  ['Todas as edições já publicadas', `desde a primeira (${publicadas()} até hoje)`],
+  ['Uma edição nova toda semana', 'durante os 30 dias'],
+  ['Encontros semanais ao vivo', ''],
+] : PASSE.itens;
+const notaPasse = () => vendeEdicao()
+  ? 'PIX ou cartão · cobrança única · acesso imediato · não renova.'
+  : [PASSE.condicao, PASSE.credito].filter(Boolean).join(' ');
+
 const CHAVE_LEAD = 'eter_lead';
 const posChave = ed => `eter_pos_${ed}`;
 
@@ -265,7 +281,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261015', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610261027', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -365,7 +381,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261015"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610261027"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -377,8 +393,10 @@ function montarChegada() {
 
   $('#passe-rot').innerHTML = pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '));
   $('#passe-preco').textContent = CFG.precoPasse;
-  $('#passe-itens').innerHTML = PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
-  $('#passe-nota').textContent = [PASSE.condicao, PASSE.credito].filter(Boolean).join(' ');
+  $('#passe-itens').innerHTML = vendeEdicao()
+    ? itensPasse().map(([t, g]) => `<li><b>${t}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')
+    : PASSE.itens.map(([t, g]) => `<li><b>${t}</b>${g}</li>`).join('');
+  $('#passe-nota').textContent = notaPasse();
   $('#barra-txt').innerHTML = `<b>Adquira o Passe</b> e tenha um mês de acesso total ao acervo, uma nova edição por semana e encontros ao vivo — ${CFG.precoPasse}`;
 
   if (!TOTAL) {
@@ -470,7 +488,7 @@ function abrirOferta(origem) {
           <b>${CFG.precoPasse}</b></p>
         <p class="oferta-chamada">30 dias de acesso total. Não renova: cobrança única.</p>
         <ul class="oferta-itens">
-          ${PASSE.itens.map(([a]) => `<li><b>${a}</b></li>`).join('')}
+          ${itensPasse().map(([a]) => `<li><b>${a}</b></li>`).join('')}
         </ul>
         <div class="oferta-campos" id="oferta-campos">
           <div class="campo" id="oc-nome">
@@ -495,7 +513,7 @@ function abrirOferta(origem) {
             <span class="msg" role="alert">Precisamos da sua autorização.</span>
           </div>
         </div>
-        <button class="btn btn-passe" id="oferta-seguir" type="submit">ASSINAR O PASSE — ${CFG.precoPasse}</button>
+        <button class="btn btn-passe" id="oferta-seguir" type="submit">${vendeEdicao() ? 'LER A EDIÇÃO COMPLETA AGORA' : `ASSINAR O PASSE — ${CFG.precoPasse}`}</button>
       </form>`;
     document.body.append(cx);
     cx.querySelector('[data-fecha]').addEventListener('click', () => cx.close());
@@ -608,13 +626,32 @@ function montarTempos() {
      é a saída de quem já sabe o que quer. */
   const acoes = document.createElement('div');
   acoes.className = 'acoes';
-  acoes.append(folha.querySelector('#btn-ler') || capa.querySelector('#btn-ler'));
+  const btLer = folha.querySelector('#btn-ler') || capa.querySelector('#btn-ler');
   const bp = document.createElement('button');
-  bp.className = 'btn btn-passe btn-passe-hero';
   bp.dataset.passe = 'heroi';
-  bp.textContent = COPY_CASA.passeTitCurto;
-  acoes.append(bp);
+  if (vendeEdicao()) {
+    /* a página de venda: o principal é ler a edição inteira; o capítulo
+       grátis vira a saída de quem ainda não decidiu */
+    acoes.classList.add('acoes-venda');
+    bp.className = 'btn btn-ler btn-venda';
+    bp.textContent = `LER A EDIÇÃO COMPLETA · ${CFG.precoPasse}`;
+    btLer.className = 'btn btn-secundario';
+    btLer.firstChild.textContent = 'Ler o primeiro capítulo grátis';
+    acoes.append(bp, btLer);
+  } else {
+    bp.className = 'btn btn-passe btn-passe-hero';
+    bp.textContent = COPY_CASA.passeTitCurto;
+    acoes.append(btLer, bp);
+  }
   capa.append(acoes);
+  if (vendeEdicao()) {
+    const nota = document.createElement('p');
+    nota.className = 'acoes-nota';
+    nota.textContent = `O passe de 30 dias libera esta edição inteira e todas as já publicadas. PIX ou cartão. Cobrança única, não renova.`;
+    capa.append(nota);
+    const bc = document.querySelector('[data-passe="capa"]');
+    if (bc) bc.textContent = 'LER A EDIÇÃO COMPLETA AGORA';
+  }
 
   /* o índice de páginas desce para o miolo: sobre a arte ele era ruído,
      sobre papel ele é o que deixa escolher por onde entrar */
@@ -647,6 +684,22 @@ function montarTempos() {
      ver o específico. */
   const casa = document.createElement('section');
   casa.className = 'casa';
+  if (vendeEdicao() && (EDICAO.leituras || []).length) {
+    casa.classList.add('casa-leituras');
+    casa.innerHTML = `
+    <h2 class="leituras-tit">O que você vai ler nesta edição</h2>
+    <ol class="leituras">
+      ${EDICAO.leituras.map(([nome, autor, linha], i) => `
+        <li><span class="leit-n">${String(i + 1).padStart(2, '0')}</span>
+          <div><p class="leit-nome">${nome} <span class="leit-autor">${autor}</span></p>
+          <p class="leit-linha">${linha}</p></div></li>`).join('')}
+    </ol>
+    <div class="acoes acoes-casa">
+      <button class="btn btn-ler btn-venda" data-passe="casa">LER A EDIÇÃO COMPLETA · ${CFG.precoPasse}</button>
+    </div>`;
+    miolo.after(casa);
+    return;
+  }
   casa.innerHTML = `
     <p class="casa-lede">${COPY_CASA.apresenta}</p>
     <p class="casa-sub">${COPY_CASA.apresentaSub}</p>
@@ -732,7 +785,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261015`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610261027`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1362,13 +1415,34 @@ function blocoFimCap1() {
   const d = document.createElement('div');
   d.className = 'intervalo';
   d.id = 'fim-cap1';
+  if (vendeEdicao()) {
+    /* a dobra do fim do capítulo 1 (26/10): diz onde a leitura grátis
+       acaba, promete o que vem e vende a continuação desta edição */
+    d.classList.add('fim-venda');
+    d.innerHTML = `
+    <p class="rot">Aqui termina o capítulo gratuito.</p>
+    <h3>Continue lendo <em>${EDICAO.titulo}</em></h3>
+    ${EDICAO.gancho ? `<p class="gancho">${EDICAO.gancho}</p>` : ''}
+    <figure class="capa-fim"><img src="${pag(1, 800)}" alt="Capa da edição ${EDICAO.n}, ${EDICAO.titulo}"
+      width="800" height="1131" decoding="async" loading="lazy"></figure>
+    <section class="passe">
+      <div class="passe-topo">
+        <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
+        <span class="passe-preco">${CFG.precoPasse}</span>
+      </div>
+      <ul class="passe-itens">${itensPasse().map(([a, g]) => `<li><b>${a}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')}</ul>
+      <button class="btn btn-ler btn-venda" data-passe="fim">CONTINUAR LENDO · ${CFG.precoPasse}</button>
+      <p class="passe-nota">PIX ou cartão · acesso imediato à edição inteira e a todas as anteriores.</p>
+    </section>`;
+    return d;
+  }
   d.innerHTML = `
     <img class="mono" src="${CASA}monograma.webp" alt="" width="256" height="256">
     <p class="rot">Fim do primeiro capítulo</p>
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261015"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610261027"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1458,6 +1532,18 @@ function observar() {
     }
   }, { rootMargin: '-45% 0px -45% 0px' });
   OBSERVADOR = obs;
+
+  /* CHEGOU AO FIM DO CAPÍTULO 1 (26/10): os marcos de leu_ate são da edição
+     inteira (25/50/75/100%) e o capítulo gratuito acaba antes do primeiro.
+     Agora que o grátis é só o cap 1, este é o degrau que importa: a última
+     página livre ou a parede do passe entrando na tela, uma vez por leitura. */
+  let fimCap1 = false;
+  const marcaFim = () => { if (fimCap1 || ASSINANTE) return; fimCap1 = true; evento('fim_cap1', { pagina: limiteEspiada }); };
+  const obsFim = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) marcaFim(); }, { threshold: 0.35 });
+  const alvoFim = $('#fim-cap1') || document.querySelector(`.folha-p[data-pagina="${limiteEspiada}"]`);
+  if (alvoFim) obsFim.observe(alvoFim);
+  const ultimaLivre = document.querySelector(`.folha-p[data-pagina="${limiteEspiada}"]`);
+  if (ultimaLivre && ultimaLivre !== alvoFim) obsFim.observe(ultimaLivre);
 
   document.querySelectorAll('.pag').forEach(el => obs.observe(el));
 }
