@@ -102,17 +102,19 @@
    "paginaVenda": true,
    "gancho": "No capítulo 2, <i>Brasil, o Telêmaco dos Trópicos</i>, a história do Brasil de D. João VI até o domingo da eleição, contada como a de um filho que espera o pai voltar. Depois, o estudo de caso do bolsonarismo, a história das mulheres que a lei apagou e o caminho para parar de esperar.",
    "porQue": {
+    "titulo": "A eleição de domingo começou há cinco séculos",
     "paragrafos": [
-     "Eleição após eleição, metade do país comemora a chegada de um salvador e a outra metade lamenta a perda do país, enquanto a vida de quem trabalha e empreende continua exatamente a mesma.",
-     "Nesta edição, investigamos por que o Brasil repete esse ciclo desde muito antes da República, numa leitura que reúne história, psicanálise e antropologia sem tomar partido de nenhum dos lados."
+     "Você acompanhou a apuração, viu metade do país comemorar e a outra metade gritar \"golpe\", e talvez tenha sentido que já assistiu a esse filme. Assistiu, e mais vezes do que imagina."
     ],
-    "entender": [
-     "por que a política brasileira gira em torno da espera por um salvador da pátria;",
-     "de onde vem essa espera, numa história que começa com a chegada das caravelas e chega às urnas de 2026;",
-     "como ela decide o voto e a maneira como cada um de nós se enxerga nas decisões do dia a dia;",
+    "listaTit": "Nesta edição, você vai descobrir:",
+    "lista": [
+     "qual palavra a República tirou da frase que virou o lema da nossa bandeira, e por que essa ausência diz tanto sobre o país;",
+     "o personagem de uma epopeia escrita há quase três mil anos que explica o eleitor brasileiro melhor do que qualquer pesquisa;",
+     "a palavra que toda criança brasileira diz antes de aprender a falar, e o que ela revela sobre quem de fato criou este país;",
+     "o mecanismo que Freud descreveu em 1921 e que faz milhões de adultos se colocarem diante de um candidato como filhos diante do pai;",
+     "por que, quanto mais um lado acusa o outro de ser a ameaça, mais os dois se fortalecem;",
      "e o que acontece se decidirmos parar de esperar."
-    ],
-    "numeros": "5 capítulos · 59 páginas · 94 referências na bibliografia"
+    ]
    }
   },
   {
