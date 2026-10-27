@@ -16,9 +16,22 @@
 
   let D = null;
   const catalogo = () => D ||
-    (D = fetch(`${RAIZ}edicoes.json?v=202610262300`).then(r => r.json()));
+    (D = fetch(`${RAIZ}edicoes.json?v=202610272005`).then(r => r.json()));
 
-  const busca = () => new URLSearchParams(location.search);
+  /* a busca devolve também o código do embaixador guardado pela página de
+     edição (30 dias da primeira entrada), para a venda feita pela home
+     continuar no nome dele */
+  const busca = () => {
+    const p = new URLSearchParams(location.search);
+    try {
+      const agora = Date.now(), j = (p.get('j') || '').trim().toLowerCase();
+      const s = JSON.parse(localStorage.getItem('eter_j') || 'null');
+      if (/^[a-z0-9_-]{2,40}$/.test(j)) {
+        if (!s || s.j !== j || s.ate < agora) localStorage.setItem('eter_j', JSON.stringify({ j, ate: agora + 30 * 864e5 }));
+      } else if (s && s.j && s.ate > agora) p.set('j', s.j);
+    } catch (e) {}
+    return p;
+  };
   const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
 
   /* o mesmo desenho de URL da página de edição: src diz a página, sck diz

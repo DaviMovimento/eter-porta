@@ -193,6 +193,22 @@ if (url.get('reset') === '1') {
   history.replaceState(null, '', limpa);
 }
 
+/* O CÓDIGO DO EMBAIXADOR DURA 30 DIAS. O ?j só vivia no endereço: quem lia
+   hoje pelo link da Nath e voltava dias depois por um link comum chegava ao
+   checkout sem o código, e a venda saía do nome dela. O aparelho guarda o
+   código pela janela da comissão (30 dias contados da primeira entrada com
+   ele) e o devolve ao `url` quando a visita chega sem. Fica depois do reset
+   para o ?reset=1 continuar abrindo como visitante novo. */
+(() => {
+  try {
+    const agora = Date.now(), j = (url.get('j') || '').trim().toLowerCase();
+    const s = JSON.parse(localStorage.getItem('eter_j') || 'null');
+    if (/^[a-z0-9_-]{2,40}$/.test(j)) {
+      if (!s || s.j !== j || s.ate < agora) localStorage.setItem('eter_j', JSON.stringify({ j, ate: agora + 30 * 864e5 }));
+    } else if (s && s.j && s.ate > agora) url.set('j', s.j);
+  } catch (e) {}
+})();
+
 /* Capturado é quem entregou nome, e-mail E telefone. Um cadastro antigo,
    feito antes de o e-mail existir, não vale — senão essa pessoa nunca
    daria o e-mail. */
@@ -280,7 +296,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610262300', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610272005', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -380,7 +396,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610262300"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610272005"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -792,7 +808,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610262300`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610272005`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1535,7 +1551,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610262300"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610272005"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
