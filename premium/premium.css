@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610262202') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610262202') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610262202') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202610262243') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202610262243') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202610262243') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2950,3 +2950,13 @@ html{background:var(--papel)}
 .porque-lista li::marker{color:var(--ouro-vivo)}
 .porque-num{font-family:var(--rotulo);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:1.4rem}
 @media (min-width:60rem){ .porque-tit{font-size:2rem} }
+
+/* o modelo da edição grátis do mês (26/10 noite): depois da caixa do passe,
+   o convite discreto para seguir lendo — texto claro sobre o fundo escuro
+   do intervalo, sem competir com o botão dourado */
+.seguir-lendo{display:block;margin:1.4rem auto 0;padding:.8rem 1.2rem;background:none;
+  border:1px solid rgb(240 234 224/.28);border-radius:999px;cursor:pointer;
+  font-family:var(--rotulo);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+  color:rgb(240 234 224/.86)}
+.seguir-lendo:hover{border-color:rgb(240 234 224/.6);color:#F0EAE0}
+.seguir-lendo:focus-visible{outline:2px solid var(--ouro-claro);outline-offset:3px}
