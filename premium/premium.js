@@ -280,7 +280,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202610262243', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202610262300', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -380,7 +380,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610262243"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202610262300"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -792,7 +792,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610262243`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202610262300`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1463,12 +1463,24 @@ function vigiarBarra() {
   if (!barra) return;
   barra.classList.add('oculta');
   if (!caixa || ASSINANTE) return;
-  let contou = false;
-  new IntersectionObserver(es => es.forEach(e => {
-    const passou = !e.isIntersecting && e.boundingClientRect.bottom < 0;
-    barra.classList.toggle('oculta', !passou || ASSINANTE);
-    if (passou && !contou && !ASSINANTE) { contou = true; evento('passou_da_oferta'); }
-  }), { rootMargin: '-90px 0px 0px 0px' }).observe(caixa);   /* a caixa sob o cabeçalho fixo já conta como passada */
+  /* Pela posição na rolagem, e não por IntersectionObserver: ele só avisa
+     quando a caixa entra ou sai da tela, e um salto (sumário, "continuar
+     lendo", rolagem rápida) a levava de "abaixo" para "acima" sem aviso —
+     o rodapé ficava escondido até o fim (auditoria no celular, 26/10). */
+  let contou = false, pendente = false;
+  const conferir = () => {
+    pendente = false;
+    const viva = document.getElementById('fim-cap1');
+    const r = viva?.getBoundingClientRect();
+    /* passou = o pé da caixa já subiu para baixo do cabeçalho fixo. Com a
+       leitura fechada a caixa não tem tamanho, e isso não conta */
+    const passou = !!r && r.height > 0 && !ASSINANTE
+      && $('#leitura').classList.contains('aberta') && r.bottom < 90;
+    barra.classList.toggle('oculta', !passou);
+    if (passou && !contou) { contou = true; evento('passou_da_oferta'); }
+  };
+  addEventListener('scroll', () => { if (!pendente) { pendente = true; requestAnimationFrame(conferir); } }, { passive: true });
+  conferir();
 }
 
 /* a parede no fim do capítulo 1: a mesma contracapa de antes, agora no
@@ -1523,7 +1535,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610262243"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202610262300"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
