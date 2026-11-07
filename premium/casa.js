@@ -16,7 +16,7 @@
 
   let D = null;
   const catalogo = () => D ||
-    (D = fetch(`${RAIZ}edicoes.json?v=202611060937`).then(r => r.json()));
+    (D = fetch(`${RAIZ}edicoes.json?v=202611071133`).then(r => r.json()));
 
   /* a busca devolve também o código do embaixador guardado pela página de
      edição (30 dias da primeira entrada), para a venda feita pela home

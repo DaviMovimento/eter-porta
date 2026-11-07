@@ -296,7 +296,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202611060937', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202611071133', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -396,7 +396,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202611060937"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202611071133"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -652,14 +652,13 @@ function montarTempos() {
   const bp = document.createElement('button');
   bp.dataset.passe = 'heroi';
   if (vendeEdicao()) {
-    /* a página de venda: o passe vem primeiro, dourado; a leitura grátis
-       do mês volta a ser o botão verde de sempre, logo abaixo (Rei, 26/10) */
+    /* a página da edição tem um trabalho só: abrir a leitura grátis. O botão
+       fica na primeira dobra e o passe sai daqui (Rei, 07/11): ele fica na
+       barra do topo e vai para a página da assinatura */
     acoes.classList.add('acoes-venda');
-    bp.className = 'btn btn-passe btn-venda';
-    bp.textContent = `ADQUIRIR O PASSE · ${CFG.precoPasse}`;
     btLer.className = 'btn btn-ler';
     btLer.firstChild.textContent = COPY_CASA.lerTit;
-    acoes.append(bp, btLer);
+    acoes.append(btLer);
   } else {
     bp.className = 'btn btn-passe btn-passe-hero';
     bp.textContent = COPY_CASA.passeTitCurto;
@@ -669,11 +668,11 @@ function montarTempos() {
   if (vendeEdicao()) {
     const nota = document.createElement('p');
     nota.className = 'acoes-nota';
-    /* as duas saídas numa linha só: o que é grátis e o que o passe abre */
-    nota.textContent = 'Grátis: uma edição completa a cada 30 dias. O passe libera todas as já publicadas e uma nova toda semana.';
+    nota.textContent = 'Grátis: uma edição completa a cada 30 dias.';
     capa.append(nota);
-    const bc = document.querySelector('[data-passe="capa"]');
-    if (bc) bc.textContent = 'ADQUIRIR O PASSE AGORA';
+    /* o cartão do passe e o "ou" que vinham no fim da capa saem da página da edição */
+    document.querySelector('[data-passe="capa"]')?.closest('.passe')?.setAttribute('hidden', '');
+    document.querySelector('.convites>.ou')?.setAttribute('hidden', '');
   }
 
   /* o índice de páginas desce para o miolo: sobre a arte ele era ruído,
@@ -718,8 +717,9 @@ function montarTempos() {
     <ul class="porque-lista">${q.lista.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
     ${q.numeros ? `<p class="porque-num">${pontilhar(q.numeros)}</p>` : ''}
     <div class="acoes acoes-casa">
-      <button class="btn btn-passe btn-venda" data-passe="casa">ADQUIRIR O PASSE · ${CFG.precoPasse}</button>
+      <button class="btn btn-ler" data-ler-casa>${COPY_CASA.lerTit}</button>
     </div>`;
+    casa.querySelector('[data-ler-casa]').addEventListener('click', () => $('#btn-ler')?.click());
     miolo.after(casa);
     return;
   }
@@ -808,7 +808,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202611060937`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202611071133`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1460,6 +1460,9 @@ function liberarEdicaoInteira(assinante = true) {
 function anexarResto() {
   if (leitorAte >= TOTAL) return;
   const caixa = $('#fim-cap1');
+  /* na leitura grátis não há oferta no meio (Rei, 07/11): a caixa vira só o
+     marco invisível do fim do capítulo 1; a parede segue para a 2ª edição do mês */
+  caixa?.classList.add('so-marco');
   const frag = document.createDocumentFragment();
   const novas = [];
   for (let i = leitorAte + 1; i <= TOTAL; i++) { const f = criarFolha(i); novas.push(f); frag.appendChild(f); }
@@ -1478,7 +1481,8 @@ function vigiarBarra() {
   const barra = $('#barra'), caixa = $('#fim-cap1');
   if (!barra) return;
   barra.classList.add('oculta');
-  if (!caixa || ASSINANTE) return;
+  /* a oferta saiu da leitura (Rei, 07/11): o passe fica só na barra do topo */
+  if (vendeEdicao() || !caixa || ASSINANTE) return;
   /* Pela posição na rolagem, e não por IntersectionObserver: ele só avisa
      quando a caixa entra ou sai da tela, e um salto (sumário, "continuar
      lendo", rolagem rápida) a levava de "abaixo" para "acima" sem aviso —
@@ -1551,7 +1555,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202611060937"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202611071133"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -1585,21 +1589,11 @@ function blocoFimAssinante() {
    próxima é maior. Mesma caixa do passe, sem repetir o leque. */
 function blocoFimEdicao() {
   const d = document.createElement('div');
-  d.className = 'intervalo fim-venda';
+  d.className = 'intervalo';
   d.id = 'fim-edicao';
   d.innerHTML = `
     <p class="rot">Fim da edição</p>
-    <h3>As outras ${porExtenso(publicadas() - 1)} estão no <em>passe</em></h3>
-    <p class="fim-texto">A próxima edição grátis libera 30 dias depois desta escolha. Com o passe, você lê agora todas as edições já publicadas e recebe uma revista nova toda semana.</p>
-    <section class="passe">
-      <div class="passe-topo">
-        <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
-        <span class="passe-preco">${CFG.precoPasse}</span>
-      </div>
-      <ul class="passe-itens">${itensPasse().map(([a, g]) => `<li><b>${a}</b>${g ? `<span>${g}</span>` : ''}</li>`).join('')}</ul>
-      <p class="passe-unico">Pagamento único de ${CFG.precoPasse}.</p>
-      <button class="btn btn-passe btn-venda" data-passe="fim-edicao">ADQUIRIR O PASSE AGORA</button>
-    </section>`;
+    <p>A próxima edição grátis libera 30 dias depois desta escolha.</p>`;
   return d;
 }
 

@@ -63,7 +63,7 @@
   window.dataLayer = window.dataLayer || [];
   const empurraOriginal = window.dataLayer.push.bind(window.dataLayer);
   window.dataLayer.push = (...itens) => {
-    itens.forEach(i => { if (i && i.event) marca('funil', { ev: i.event, origem: i.origem || '', ed: i.edicao || '' }); });
+    itens.forEach(i => { if (i && i.event) marca('funil', { ev: i.event, origem: i.origem || '', ed: i.edicao || '', pc: i.porcento, pg: i.pagina }); });
     return empurraOriginal(...itens);
   };
   window.__calor = (nome, dados) => marca('funil', { ev: nome, ...((dados && { origem: dados.origem || '', ed: dados.edicao || '' }) || {}) });

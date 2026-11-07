@@ -87,8 +87,9 @@
         /* quem digita o 0 da ligação local (07…, 06…, 015…) não erra:
            o WhatsApp não usa esse 0, então ele sai */
         if (s !== 'BR') d = d.replace(/^0+/, '');
-        const ok = tam.includes(d.length);
-        const msg = s === 'BR' ? 'Precisa ter DDD e 8 ou 9 dígitos.'
+        /* no Brasil o número é o do WhatsApp: celular, DDD + 9 dígitos começando em 9 */
+        const ok = s === 'BR' ? d.length === 11 && d[2] === '9' && !/(\d)\1{6}/.test(d) : tam.includes(d.length);
+        const msg = s === 'BR' ? 'Confira o número: DDD e o celular de 9 dígitos, começando em 9.'
           : `Confira o número: ${EM[s] || 'em'} ${n} o celular tem ${tam.join(' ou ')} dígitos.`;
         return { ok, whatsapp: c + d, msg };
       },
