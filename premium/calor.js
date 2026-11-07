@@ -18,7 +18,7 @@
   const base = () => ({
     s: sid, p: location.pathname, em: Date.now(),
     vw: innerWidth, cel: innerWidth < 960 ? 1 : 0,
-    us: q('utm_source'), um: q('utm_medium'), uc: q('utm_campaign'), j: q('j'),
+    us: q('utm_source'), um: q('utm_medium'), uc: q('utm_campaign'), j: q('j'), ms: q('ms'),
   });
 
   const fila = [];
