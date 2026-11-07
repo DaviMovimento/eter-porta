@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202611071207') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202611071207') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202611071207') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202611071234') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202611071234') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202611071234') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2998,7 +2998,6 @@ html{background:var(--papel)}
   .capa:has(.acoes-venda)>.numero{margin-bottom:.25rem}
   .capa:has(.acoes-venda)>h1{font-size:1.5rem;margin-bottom:.3rem}
   .capa:has(.acoes-venda)>.ficha,.capa:has(.acoes-venda)>.dek-ed{font-size:.86rem;line-height:1.3;margin-bottom:.2rem}
-  .capa:has(.acoes-venda) .visor{max-width:calc((100svh - 26.5rem)*1.41)}
   .capa>.acoes-venda .btn{padding-top:.75rem;padding-bottom:.75rem}
 }
 @media (min-width:60rem){
@@ -3011,3 +3010,101 @@ html{background:var(--papel)}
 .intervalo.so-marco{height:1px;min-height:0;margin:0;padding:0;border:0;overflow:hidden;opacity:0}
 .cromo-assine{flex:none;font-family:var(--rotulo);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .7rem;margin-right:.3rem;background:transparent;color:var(--ouro-claro);border:1px solid var(--ouro-claro);border-radius:2px;cursor:pointer}
 .cromo-assine[hidden]{display:none}
+
+/* barra e capa da edição (Rei, 07/11). Uma barra só: logo e menu na mesma
+   linha. No celular o logo leva à home e a saudação desce para a capa */
+.saudacao-capa{display:none}
+.miolo .faixa.fora{display:none}
+.texto-edicao{display:none}
+@media (max-width:59.99rem){
+  :root{--barra-h:3.7rem}
+  .topo{flex-wrap:nowrap}
+  .topo-nav,body.rolou .topo-nav{order:0;flex:0 1 auto;margin:0 0 0 auto;padding:0;border-top:0;justify-content:flex-end}
+  .capa:has(.acoes-venda){min-height:calc(100svh - var(--barra-h))}
+  /* a revista fica no meio, com a mesma largura do botão */
+  .capa .visor{width:100%;max-width:min(100%,max(15rem,calc((100svh - 24rem)*1.41)));margin-inline:auto}
+  .capa>.acoes-venda{align-self:center;width:100%;max-width:27rem}
+  .capa>.acoes-venda .btn-ler{width:100%;max-width:none}
+  .capa>.acoes-nota{margin:.75rem auto 0;max-width:22rem;font-size:.8rem;line-height:1.4;text-wrap:balance}
+  .capa:has(.acoes-venda)>.promessa{display:none}
+  .capa:has(.acoes-venda){padding-bottom:1.6rem}
+}
+@media (max-width:47.99rem){
+  /* no celular o botão tem a largura exata da revista */
+  .capa>.acoes-venda{max-width:min(100%,max(15rem,calc((100svh - 24rem)*1.41)))}
+  .topo{padding:.45rem .7rem;gap:.4rem}
+  .topo .topo-tag{display:none}
+  .topo-marca{flex:none}
+  .topo-marca img{width:3.7rem}
+  .topo-nav{gap:.1rem}
+  .topo-nav a{letter-spacing:.03em}
+  .topo-nav a[href*="biblioteca"]::after,.topo-nav a#nav-acervo::after,.topo-nav a.sec::after{letter-spacing:.03em}
+  .topo-nav a.destaque{flex:none;letter-spacing:.04em;padding:.4rem .6rem;margin-left:.2rem}
+  .topo-nav a:first-child{display:none}
+  .saudacao-capa{
+    display:block;order:0;text-align:center;margin:0 0 .35rem;
+    font-family:var(--display);font-size:.92rem;color:rgb(255 255 255/.86);
+  }
+  .saudacao-capa em{font-family:var(--script);font-style:normal;font-size:1.5em;line-height:.8;color:var(--ouro-claro);position:relative;top:.06em}
+}
+/* abaixo de 368px a letra do menu encolhe um pouco para nada encostar no botão */
+@media (max-width:23rem){
+  .topo-marca img{width:3.4rem}
+  .topo-nav a,.topo-nav a.destaque{font-size:.64rem}
+  .topo-nav a[href*="biblioteca"]{font-size:0}
+  .topo-nav a#nav-acervo{font-size:0}
+  .topo-nav a[href*="biblioteca"]::after,.topo-nav a#nav-acervo::after{font-size:.64rem}
+}
+/* iPad e computador, o mesmo desenho (Rei, 07/11): duas colunas centralizadas na altura. À esquerda a
+   revista grande, do tamanho que a tela permite, com botão e nota no eixo dela;
+   à direita número, título, subtítulo e texto em parágrafos */
+.promessa .par{display:block}
+@media (min-width:48rem){
+  .capa:has(.col-revista){
+    grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-rows:auto;
+    align-items:center;align-content:center;gap:0 clamp(2.5rem,4vw,5rem);
+    max-width:min(94vw,104rem);padding:1.6rem 2.5rem 2rem;
+  }
+  .col-revista{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;min-width:0}
+  .col-texto{grid-column:2;grid-row:1;min-width:0}
+  .col-revista .revista{width:100%;margin:0}
+  .col-revista .visor{width:100%;max-width:min(100%,max(15rem,calc((100svh - 16rem)*1.41)));margin-inline:auto}
+  .col-revista .acoes-venda{align-self:center;margin:1.3rem 0 0;width:100%;max-width:27rem;justify-content:center}
+  .col-revista .btn-ler{width:100%;max-width:none;margin:0;text-align:center}
+  .col-revista .acoes-nota{align-self:center;margin:.7rem 0 0;font-size:.85rem;line-height:1.4;text-align:center;color:rgb(255 255 255/.74)}
+  .capa:has(.col-revista){display:grid}
+  .col-texto .numero{margin-bottom:.7rem;justify-content:flex-start;text-align:left}
+  .col-texto .numero::before{display:none}
+  .col-texto h1,.col-texto .dek-ed{text-align:left}
+  .col-texto h1{margin-bottom:.9rem}
+  .col-texto .dek-ed{margin:0 0 1.3rem;max-width:none}
+  .col-texto .promessa{margin:0;max-width:34rem;font-size:1rem;line-height:1.6;text-align:left}
+  .col-texto .promessa .par+.par{margin-top:.8rem}
+}
+/* no celular o texto da edição vem depois das páginas de destaque */
+@media (max-width:47.99rem){
+  .texto-edicao{display:block;max-width:36rem;margin:2rem auto 0;padding:0 1.4rem;text-align:center}
+  .texto-edicao p{font-size:1rem;line-height:1.6;color:var(--tinta-2);text-wrap:pretty}
+  .texto-edicao p+p{margin-top:1.1rem}
+}
+/* a barra do iPad é mais alta que a do celular, e a capa desconta a altura certa */
+@media (min-width:48rem) and (max-width:59.99rem){
+  :root{--barra-h:4.8rem}
+  /* iPad em pé: menu numa linha só, e a revista ganha o espaço das margens */
+  .topo{padding:.6rem 1.2rem}
+  .topo-nav{gap:.5rem}
+  .topo-nav a{white-space:nowrap}
+  .topo-nav a[href*="biblioteca"],.topo-nav a#nav-acervo{font-size:0}
+  .topo-nav a[href*="biblioteca"]::after,.topo-nav a#nav-acervo::after{content:"EDIÇÕES";font-size:var(--r-1);letter-spacing:.09em}
+  .capa:has(.col-revista){gap:0 2rem;padding:1.4rem 1.6rem 2rem}
+}
+/* celular deitado: a revista e o botão sobem para o topo, para caber na tela */
+@media (min-width:48rem) and (max-height:30rem){ .col-revista{align-self:start} }
+/* a capa da edição começa logo abaixo da barra e mede o próprio conteúdo: saudação,
+   número, nome, promessa, revista e botão sobem juntos (Rei, 07/11). No aparelho
+   mais alto a segunda dobra aparece antes, em vez de sobrar espaço vazio */
+.capa:has(.acoes-venda){min-height:0;justify-content:flex-start;padding-top:1rem;padding-bottom:1.6rem}
+@media (min-width:48rem){
+  .capa:has(.col-revista){min-height:0;align-content:start;padding-top:1.5rem;padding-bottom:2rem}
+}
+

@@ -296,7 +296,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202611071207', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202611071234', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -367,7 +367,11 @@ function montarChegada() {
   $('#titulo').innerHTML = partes.length
     ? `${partes.join(' ')}${risco} <em${EDICAO.riscado ? ' class="maior"' : ''}>${fecho}</em>` : fecho;
 
-  $('#promessa').textContent = EDICAO.nestaEdicao || EDICAO.subtitulo;
+  /* a ficha guarda o texto impresso, palavra por palavra; a página abre com
+     "Nesta edição", que na revista é o título da seção (Rei, 07/11) */
+  const impresso = EDICAO.nestaEdicao;
+  $('#promessa').textContent = impresso
+    ? `Nesta edição ${impresso[0].toLowerCase()}${impresso.slice(1)}` : EDICAO.subtitulo;
   if (EDICAO.convite) { $('#convite-frase').textContent = EDICAO.convite; $('#convite-frase').hidden = false; }
 
   /* Aqui ficava a ficha técnica — capítulos, páginas, minutos. Contagem
@@ -396,7 +400,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202611071207"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202611071234"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -668,12 +672,33 @@ function montarTempos() {
   if (vendeEdicao()) {
     const nota = document.createElement('p');
     nota.className = 'acoes-nota';
-    nota.textContent = 'Grátis: você pode resgatar uma leitura gratuita a cada 30 dias.';
+    nota.textContent = 'Você pode resgatar uma leitura gratuita a cada 30 dias.';
     capa.append(nota);
     /* o cartão do passe e o "ou" que vinham no fim da capa saem da página da edição */
     document.querySelector('[data-passe="capa"]')?.closest('.passe')?.setAttribute('hidden', '');
     document.querySelector('.convites>.ou')?.setAttribute('hidden', '');
     document.querySelector('.convites .mock-passe')?.setAttribute('hidden', '');
+    /* no iPad e no computador a capa são duas colunas de verdade: a revista com o botão
+       colado embaixo, e o texto ao lado. No celular tudo volta a ser uma pilha */
+    const colRevista = document.createElement('div'), colTexto = document.createElement('div');
+    colRevista.className = 'col-revista';
+    colTexto.className = 'col-texto';
+    const telaGrande = matchMedia('(min-width:48rem)');
+    const textos = ['#numero', '#titulo', '#ficha', '#promessa'].map(s => $(s));
+    const pecas = [$('#revista'), acoes, nota];
+    const arrumarColunas = () => {
+      if (telaGrande.matches) {
+        colTexto.append(...textos);
+        colRevista.append(...pecas);
+        capa.append(colRevista, colTexto);
+      } else {
+        capa.append(...textos, ...pecas);
+        colRevista.remove();
+        colTexto.remove();
+      }
+    };
+    arrumarColunas();
+    telaGrande.addEventListener('change', arrumarColunas);
   }
 
   /* o índice de páginas desce para o miolo: sobre a arte ele era ruído,
@@ -700,6 +725,30 @@ function montarTempos() {
   if (faixa) miolo.append(faixa);
   miolo.append($('#mosaico'));
   capa.after(miolo);
+  if (vendeEdicao()) {
+    /* a segunda dobra abre nas páginas de destaque, sem o carrossel de
+       miniaturas (Rei, 07/11). No celular o texto da edição vem logo depois
+       delas, em parágrafos separados; no computador ele segue ao lado da revista */
+    faixa?.classList.add('fora');
+    const texto = document.createElement('div');
+    texto.className = 'texto-edicao';
+    const partes = $('#promessa').textContent.split(/(?<=[.?!])\s+(?=[A-ZÀ-Ú])/);
+    $('#promessa').textContent = '';
+    partes.forEach(t => {
+      const p = document.createElement('p');
+      p.textContent = t;
+      texto.append(p);
+      const par = document.createElement('span');
+      par.className = 'par';
+      par.textContent = t;
+      $('#promessa').append(par);
+    });
+    miolo.append(texto);
+    const oi = document.createElement('p');
+    oi.className = 'saudacao-capa';
+    oi.innerHTML = 'Bem-vindo à <em>Vanguarda</em>';
+    capa.prepend(oi);
+  }
 
   /* 1.2 e 1.3 — a apresentação da casa entra DEPOIS dos botões, e a ordem
      tem razão: quem chega na página de uma edição veio por aquele tema, e
@@ -809,7 +858,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202611071207`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202611071234`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1560,7 +1609,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202611071207"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202611071234"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
