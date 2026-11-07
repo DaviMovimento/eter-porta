@@ -5,9 +5,9 @@
    Duas composições de verdade: uma coluna no celular, duas no desktop.
    ═══════════════════════════════════════════════════════════════ */
 
-@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202611071139') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202611071139') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202611071139') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2?v=202611071207') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2?v=202611071207') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'FuturaE';src:url('fontes/futura-bold.woff2?v=202611071207') format('woff2');font-weight:700;font-display:swap}
 
 :root{
   color-scheme:light;
@@ -2980,12 +2980,34 @@ html{background:var(--papel)}
 @media (max-height:740px) and (min-width:60rem){ .car-capa{width:6.4rem} }
 @media (max-width:23.5rem){ .capa-inicio h1{font-size:1.56rem} }
 
-/* página da edição (Rei, 07/11): botão único de ler grátis na primeira dobra do
-   celular, logo depois do título; o passe sai da página */
+/* página da edição (Rei, 07/11): a primeira dobra é número, título, subtítulo,
+   a revista e, embaixo dela, o botão único com a nota. A explicação vem depois */
 @media (max-width:59.99rem){
-  .capa>.acoes-venda{order:3;margin-top:.9rem}
-  .capa>.acoes-nota{order:3;margin:.4rem 0 .6rem;text-align:center}
+  .capa>.revista{order:4;margin:.5rem 0 0}
+  .capa>.acoes-venda{order:5;margin-top:.7rem}
+  .capa>.acoes-nota{order:6;margin:.45rem 0 0;text-align:center}
+  .capa>.promessa{order:7;margin-top:2.4rem}
+  .capa>.dica-faixa:empty{display:none}
+  /* a revista encolhe em tela baixa para o botão nunca sair da primeira dobra */
+  .capa .visor{max-width:calc((100svh - 27rem)*1.41);margin-inline:auto}
+  .capa>.acoes-nota{font-size:.74rem;line-height:1.3}
 }
-.convites>.passe[hidden],.convites>.ou[hidden]{display:none}
+/* celular baixo, ou com a barra do navegador aberta: tudo aperta um pouco */
+@media (max-width:59.99rem) and (max-height:46rem){
+  .capa:has(.acoes-venda){padding-top:.7rem;padding-bottom:1rem}
+  .capa:has(.acoes-venda)>.numero{margin-bottom:.25rem}
+  .capa:has(.acoes-venda)>h1{font-size:1.5rem;margin-bottom:.3rem}
+  .capa:has(.acoes-venda)>.ficha,.capa:has(.acoes-venda)>.dek-ed{font-size:.86rem;line-height:1.3;margin-bottom:.2rem}
+  .capa:has(.acoes-venda) .visor{max-width:calc((100svh - 26.5rem)*1.41)}
+  .capa>.acoes-venda .btn{padding-top:.75rem;padding-bottom:.75rem}
+}
+@media (min-width:60rem){
+  .capa .acoes-venda{grid-column:1;grid-row:6;align-self:start;margin-top:.8rem;max-width:none}
+  .capa .acoes-nota{grid-column:1;grid-row:7;text-align:center}
+  .capa .dica-faixa:empty{display:none}
+}
+.convites>.passe[hidden],.convites>.ou[hidden],.convites .mock-passe[hidden]{display:none}
 /* na leitura grátis a caixa do fim do capítulo 1 fica só como marco, sem aparecer */
 .intervalo.so-marco{height:1px;min-height:0;margin:0;padding:0;border:0;overflow:hidden;opacity:0}
+.cromo-assine{flex:none;font-family:var(--rotulo);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .7rem;margin-right:.3rem;background:transparent;color:var(--ouro-claro);border:1px solid var(--ouro-claro);border-radius:2px;cursor:pointer}
+.cromo-assine[hidden]{display:none}

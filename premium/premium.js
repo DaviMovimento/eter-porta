@@ -70,7 +70,7 @@ const COPY_CASA = {
   /* O GRATUITO É UMA EDIÇÃO COMPLETA A CADA 30 DIAS (Rei, 26/10 noite;
      o capítulo 1 grátis vigorou de 25 a 26/10 e vendeu igual, ~1 passe
      por 100 visitas, sem a leitura que vende). O botão diz o que abre. */
-  lerTit: 'LER A EDIÇÃO COMPLETA GRÁTIS',
+  lerTit: 'LER EDIÇÃO COMPLETA',
   lerSub: () => '',                                                    // 1.4
   /* O BOTÃO NÃO LEVA PREÇO EM LUGAR NENHUM. Dentro da oferta o número
      já está no alto do card, em verde, três linhas acima — repeti-lo no
@@ -296,7 +296,7 @@ const pct = () => TOTAL ? Math.round((maximaLida / TOTAL) * 100) : 0;
 
 /* ═══ ARRANQUE ═════════════════════════════════════════════════ */
 async function iniciar() {
-  DADOS = await (await fetch(new URL('../edicoes.json?v=202611071139', ONDE_MORO))).json();
+  DADOS = await (await fetch(new URL('../edicoes.json?v=202611071207', ONDE_MORO))).json();
   CFG = DADOS.config; PASSE = DADOS.passe;
   BASE = CFG.baseImagens || '../';
   await recuperarPorChave();
@@ -396,7 +396,7 @@ function montarChegada() {
   if (caixaPasse && !caixaPasse.querySelector('.mock-passe')) {
     const f = document.createElement('figure');
     f.className = 'mock-passe';
-    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202611071139"
+    f.innerHTML = `<img src="${CASA}mockup-assinatura.webp?v=202611071207"
       alt="Tudo que você acessa: a revista, o acervo, os encontros ao vivo e a comunidade"
       width="794" height="485" decoding="async">`;
     /* FORA do card, ACIMA dele. Dentro, o mockup é preto sobre marrom
@@ -668,11 +668,12 @@ function montarTempos() {
   if (vendeEdicao()) {
     const nota = document.createElement('p');
     nota.className = 'acoes-nota';
-    nota.textContent = 'Grátis: uma edição completa a cada 30 dias.';
+    nota.textContent = 'Grátis: você pode resgatar uma leitura gratuita a cada 30 dias.';
     capa.append(nota);
     /* o cartão do passe e o "ou" que vinham no fim da capa saem da página da edição */
     document.querySelector('[data-passe="capa"]')?.closest('.passe')?.setAttribute('hidden', '');
     document.querySelector('.convites>.ou')?.setAttribute('hidden', '');
+    document.querySelector('.convites .mock-passe')?.setAttribute('hidden', '');
   }
 
   /* o índice de páginas desce para o miolo: sobre a arte ele era ruído,
@@ -684,7 +685,7 @@ function montarTempos() {
   /* quem já se cadastrou não pode continuar sendo mandado se cadastrar:
      o texto só era reposto por destravar(), que roda depois do envio */
   if (dicaCapa) {
-    dicaCapa.textContent = jaCapturado() ? '' : COPY_CASA.espiada;
+    dicaCapa.textContent = jaCapturado() || vendeEdicao() ? '' : COPY_CASA.espiada;
     capa.append(dicaCapa);
   }
 
@@ -808,7 +809,7 @@ function montarFundo() {
   const atm = $('#atmosfera');
   /* o celular carrega a parede de 60 KB; a de 260 é do desktop */
   const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-m.webp' : 'parede.webp';
-  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202611071139`;
+  const parede = `${BASE}edicoes/${EDICAO.n}/${paredeArq}?v=202611071207`;
   const teste = new Image();
   teste.onload = () => {
     atm.style.backgroundImage = `url("${parede}")`;
@@ -1432,6 +1433,8 @@ function liberarEdicaoInteira(assinante = true) {
     ASSINANTE = true;
     evento('assinante_leu_inteira');
     $('#barra')?.classList.add('oculta');
+    const assine = $('#cromo-assine');
+    if (assine) assine.hidden = true;
     if (!montado) return;
     const parede = $('#fim-cap1');
     if (leitorAte >= TOTAL) {
@@ -1481,6 +1484,8 @@ function vigiarBarra() {
   const barra = $('#barra'), caixa = $('#fim-cap1');
   if (!barra) return;
   barra.classList.add('oculta');
+  const assine = $('#cromo-assine');
+  if (assine) assine.hidden = !!ASSINANTE;
   /* a oferta saiu da leitura (Rei, 07/11): o passe fica só na barra do topo */
   if (vendeEdicao() || !caixa || ASSINANTE) return;
   /* Pela posição na rolagem, e não por IntersectionObserver: ele só avisa
@@ -1555,7 +1560,7 @@ function blocoFimCap1() {
     <h3>O resto da edição está no <em>passe</em></h3>
     <p>${COPY_CASA.fimCap1().replace('\n', '<br>')}</p>
     <section class="passe">
-      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202611071139"
+      <figure class="mock-passe"><img src="${CASA}mockup-assinatura.webp?v=202611071207"
         alt="Tudo que você acessa" width="794" height="485" decoding="async"></figure>
       <div class="passe-topo">
         <span class="passe-rot">${pontilhar(PASSE.rotulo.replace('Passe ETER · ', 'Passe · '))}</span>
@@ -2161,6 +2166,9 @@ function ligar() {
        checkout. Quem chega ao pagamento já viu o que está comprando. */
     abrirOferta('topo');
   });
+
+  /* na leitura a oferta fica só aqui, na barra que acompanha a rolagem (Rei, 07/11) */
+  $('#cromo-assine')?.addEventListener('click', () => abrirOferta('leitura'));
 
   $('#mes-passe').addEventListener('click', () => {
     $('#mes-dialog').close();
