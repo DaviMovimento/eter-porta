@@ -129,7 +129,7 @@ h1 s{text-decoration-thickness:.06em;opacity:.75}
  h1{font-size:36px;line-height:1.08}.sub{font-size:16px}
  .folha{border-radius:22px 22px 0 0;padding:44px 16px 64px}
  .cards{grid-template-columns:1fr;gap:16px}.livros{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
- .livro a,.livro .sem{padding:12px}.livro .capa{height:170px;margin-bottom:12px}.livro .tit{font-size:15px}.livro .compra span{font-size:11.5px;letter-spacing:.06em;padding:10px 4px;line-height:1.25}
+ .livro a,.livro .sem{padding:12px}.livro .capa{height:170px;margin-bottom:12px}.livro .tit{font-size:15px}.livro .compra span{font-size:12px;letter-spacing:.05em;padding:10px 4px;line-height:1.25}
  .ed{grid-template-columns:110px 1fr}
  .bib .vis-l{height:160px}.bib .vis-l img{height:124px}.bib .vis-l .ce{height:150px}
  .fecho{padding:64px 16px}.fecho h2{font-size:30px}
@@ -183,7 +183,7 @@ if(folha&&dob&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let S=0,
  const ref=()=>{let b=0;dob.querySelectorAll('.palco > *, .palco .texto > *').forEach(e=>{const r=e.getBoundingClientRect();if(r.height)b=Math.max(b,r.bottom+scrollY)});return b};
  const mede=()=>{const fim=dob.getBoundingClientRect().bottom+scrollY;S=Math.round(fim-ref()-Math.max(40,innerHeight*.06));folha.style.marginTop=(-S)+'px';anda()};
  const anda=()=>{ped=false;folha.style.transform='translateY('+Math.max(0,S-scrollY)+'px)'};
- let larg=innerWidth;mede();setTimeout(mede,700);addEventListener('load',()=>setTimeout(mede,200));addEventListener('resize',()=>{if(innerWidth!==larg){larg=innerWidth;setTimeout(mede,300)}});
+ let larg=innerWidth;mede();setTimeout(mede,700);addEventListener('load',()=>setTimeout(mede,200));let alt=innerHeight,tr;addEventListener('resize',()=>{const mouse=matchMedia('(pointer:fine)').matches;if(innerWidth!==larg||(mouse&&innerHeight!==alt)){larg=innerWidth;alt=innerHeight;clearTimeout(tr);tr=setTimeout(mede,200)}}); /* 09/11 (Rei: a folha cobria o botão no computador): refaz a conta quando muda a largura e, com mouse, também quando muda só a altura (barra de downloads, ferramentas, janela redimensionada); no celular a altura muda sozinha com a barra do navegador e não conta */
  addEventListener('scroll',()=>{if(!ped){ped=true;requestAnimationFrame(anda)}},{passive:true});}
 /* ordem das edições: da mais nova para a mais antiga, ou o contrário */
 const ord=document.getElementById('ordem');if(ord){const ul=document.querySelector('.cards');let nova=true;

@@ -1253,7 +1253,8 @@ todos();})();
   const fundo=r.bottom+scrollY;const alvo=Math.max(fundo+Math.max(72,innerHeight*.08),innerHeight*.5);const sobe=Math.max(0,Math.round(innerHeight-alvo));
   s.style.setProperty('--sobe',sobe+'px')};
  mede();setTimeout(mede,1300);
- addEventListener('resize',()=>{if(innerWidth!==larg){larg=innerWidth;mede()}});
+ /* 09/11 (Rei: a folha cobria o botão no computador): refaz a conta quando muda a largura e, com mouse, também quando muda só a altura (barra de downloads, ferramentas, janela redimensionada); no celular a altura muda sozinha com a barra do navegador e não conta */
+ let alt=innerHeight,tr;addEventListener('resize',()=>{const mouse=matchMedia('(pointer:fine)').matches;if(innerWidth!==larg||(mouse&&innerHeight!==alt)){larg=innerWidth;alt=innerHeight;clearTimeout(tr);tr=setTimeout(mede,150)}});
  if('scrollRestoration' in history)history.scrollRestoration='manual';
  s.classList.add('baixa');
  const sobe=()=>{s.classList.remove('baixa');['scroll','wheel','touchmove','keydown'].forEach(e=>removeEventListener(e,sobe))};
