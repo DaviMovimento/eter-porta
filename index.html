@@ -1,235 +1,1304 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" style="scroll-behavior:smooth">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ETER — Inteligência cultural e repertório polímata</title>
-<link rel="preload" as="fetch" href="edicoes.json" crossorigin>
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/parede-geral-m.webp" media="(max-width:959px)">
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/parede-geral.webp" media="(min-width:960px)">
-
 <meta name="description" content="A revista semanal e a comunidade de quem vive das próprias ideias. Leia uma edição completa por mês, de graça.">
-<link rel="icon" type="image/png" sizes="32x32" href="premium/favicon-32.png">
-<link rel="apple-touch-icon" href="premium/favicon-180.png">
-<meta name="theme-color" content="#F2EEE6">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png"><link rel="apple-touch-icon" href="img/favicon-180.png"><meta name="theme-color" content="#190808">
+<style>
+@font-face{font-family:'TRJN';src:url('fontes/trjn-medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'TRJN';src:url('fontes/trjn-italico.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Sloop';src:url('fontes/sloop.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'FuturaCond';src:url('fontes/futura-cond-xb.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'InterEter';src:url('fontes/inter.ttf') format('truetype');font-display:swap}
 
-<link rel="preload" href="premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="premium/fone.js?v=202611071234"></script>
-<script defer src="premium/casa.js?v=202611071234"></script>
-<script defer src="premium/calor.js?v=202611071234"></script>
-<link rel="stylesheet" href="premium/premium.css?v=202611071234">
+/* paleta oficial + dourado do site para botão e destaque pequeno */
+:root{--bege:#FFFBF3;--preto:#190808;--vinho:#511212;--vermelho:#A41E13;--verde:#0F1F18;--ouro-of:#89723C;--ouro-si:#AF9153;--ouro-luz:#89723C;--barra:clamp(64px,calc(46px + 2.3vw),84px);
+  /* cor da dobra (padrão: preto) */
+  --fundo:#190808;--fundo-rgb:25,8,8;--texto:#FFFBF3;--destaque:var(--ouro-of);--destaque-peq:var(--ouro-si);--bt1:var(--ouro-si);--bt1-txt:#190808;--bt2-borda:rgba(255,251,243,.6);--bt2-txt:#FFFBF3;--barra-fundo:rgba(25,8,8,.9);--barra-txt:#FFFBF3;--barra-linha:rgba(175,145,83,.35)}
+:root[data-cor="bege"]{--fundo:#FFFBF3;--fundo-rgb:255,251,243;--texto:#190808;--destaque:var(--ouro-of);--destaque-peq:var(--vinho);--bt1:var(--preto);--bt1-txt:#FFFBF3;--bt2-borda:#190808;--bt2-txt:#190808;--barra-fundo:rgba(255,251,243,.92);--barra-txt:#190808;--barra-linha:rgba(25,8,8,.14)}
+:root[data-cor="vinho"]{--fundo:#511212;--fundo-rgb:81,18,18;--texto:#FFFBF3;--destaque:var(--ouro-of);--destaque-peq:var(--ouro-si);--barra-fundo:rgba(60,12,12,.92)}
+:root[data-cor="verde"]{--fundo:#0F1F18;--fundo-rgb:15,31,24;--texto:#FFFBF3;--destaque:var(--ouro-of);--destaque-peq:var(--ouro-si);--barra-fundo:rgba(12,24,19,.92)}
+:root[data-cor="vermelho"] .barra nav a.assine{background:#FFFBF3;color:#A41E13}
+:root[data-cor="vermelho"]{--fundo:#A41E13;--fundo-rgb:164,30,19;--texto:#FFFBF3;--destaque:#FFFBF3;--destaque-peq:#FFFBF3;--bt1:#FFFBF3;--bt1-txt:#A41E13;--bt2-borda:rgba(255,251,243,.75);--barra-fundo:rgba(120,20,12,.94)}
+*{box-sizing:border-box;margin:0}
+html,body{background:var(--fundo);color:var(--texto)}
+body{font-family:'TRJN',Georgia,serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block}
+
+/* barra fixa, sempre visível: fundo cheio e sombra */
+.barra{position:fixed;inset:0 0 auto 0;height:var(--barra);z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);background:var(--barra-fundo);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--barra-linha);box-shadow:0 10px 30px -12px rgba(0,0,0,.55)}
+.barra .logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+.barra .logo img{height:clamp(22px,calc(13px + 1.15vw),32px);width:auto} /* 08/11: no computador e no iPad a barra cresce com a largura da tela; o celular fica como está */
+.assin{font:800 12px/1.15 'FuturaCond',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--barra-txt);opacity:.82;border-left:1px solid var(--barra-linha);padding-left:14px;max-width:30ch}
+.barra nav{display:flex;align-items:center;gap:clamp(18px,2.6vw,40px)}
+.barra nav a{font:800 clamp(13px,calc(9px + .5vw),16.5px)/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--barra-txt);text-decoration:none;opacity:.88;transition:color .2s,opacity .2s}
+.barra nav a:hover{opacity:1;color:var(--ouro-si)}
+[data-cor="bege"] .barra nav a:not(.assine):hover{color:var(--vinho)}
+.barra nav a.atual{opacity:1;box-shadow:inset 0 -1px 0 var(--ouro-si)}
+.barra nav a.assine{opacity:1;color:#190808;background:var(--ouro-si);padding:.85em 1.35em;border-radius:2px;transition:background-color .2s}
+.barra nav a.assine:hover{background:var(--ouro-luz);color:#190808}
+
+/* primeira dobra */
+.dobra{position:relative;min-height:100svh;overflow:hidden;isolation:isolate}
+.fundo{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--fundo)}
+.texto{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:calc(var(--barra) + clamp(28px,8vh,80px)) 16px 40px;max-width:1040px;margin:0 auto}
+.saud{display:flex;align-items:baseline;gap:.5em;justify-content:center;margin-bottom:clamp(10px,1.6vh,18px)}
+.saud .a{font:800 13px/1 'FuturaCond',sans-serif;letter-spacing:.3em;text-transform:uppercase;opacity:.86}
+.saud .b{font:400 clamp(30px,3.2vw,42px)/.8 'Sloop',cursive;color:var(--destaque);transform:translateY(.12em)}
+h1{font:500 clamp(33px,min(4.4vw,7.4vh),62px)/1.04 'TRJN',Georgia,serif;letter-spacing:-.012em;text-wrap:balance;max-width:21ch}
+h1 em{font-style:italic;color:var(--destaque)}
+.sub{margin-top:clamp(14px,2vh,22px);font:400 clamp(17px,calc(9px + .95vw),22px)/1.6 'InterEter',-apple-system,sans-serif;letter-spacing:.005em;opacity:.9;max-width:56ch;text-wrap:balance}
+.sub em{font-family:'TRJN',Georgia,serif;font-size:1.12em;font-style:italic;color:var(--destaque-peq)}
+.botoes{display:grid;grid-template-columns:repeat(2,minmax(0,350px));gap:12px;justify-content:center;margin-top:clamp(20px,3vh,30px)}
+.bt{display:flex;width:100%;white-space:nowrap;align-items:center;justify-content:center;min-height:52px;padding:0 24px;font:800 14px/1 'FuturaCond',sans-serif;letter-spacing:.17em;text-transform:uppercase;text-decoration:none;border-radius:2px;border:1px solid var(--bt1);transition:background-color .2s,color .2s,border-color .2s}
+.bt.um{background:var(--bt1);color:var(--bt1-txt)}
+.bt.um:hover{background:var(--ouro-luz);border-color:var(--ouro-luz);color:#190808}
+[data-cor="bege"] .bt.um:hover{background:var(--vinho);border-color:var(--vinho);color:#FFFBF3}
+[data-cor="vermelho"] .bt.um:hover{background:transparent;border-color:#FFFBF3;color:#FFFBF3}
+:root[data-cor="vermelho"] .barra nav a.assine:hover{background:#190808;color:#FFFBF3}
+.bt.dois{background:rgba(var(--fundo-rgb),.35);color:var(--bt2-txt);border-color:var(--bt2-borda)}
+.bt.dois:hover{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
+
+/* biblioteca: movimento da primeira versão (colunas inclinadas, sobem e descem em velocidades diferentes) com tamanho padrão por tipo */
+:root{--colw:270px;--gap:14px}
+.colunas{position:absolute;top:0;bottom:0;left:50%;width:max-content;display:grid;grid-template-columns:repeat(var(--cols,7),var(--colw));gap:var(--gap);transform:translateX(-50%) rotate(-4deg) scale(1.12)}
+.col{display:flex;flex-direction:column;gap:var(--gap);will-change:transform;align-self:start}
+.col.desce{animation-name:desce}
+.p{width:var(--colw);flex:0 0 auto;border-radius:6px;overflow:hidden;position:relative}
+.p.alto{aspect-ratio:1/1.414}
+/* 08/11 (Rei): sem frameworks; capas da ETER, capas de livro e aulas na mesma altura de casa, inteiras, sem fundo e sem corte */
+.col .p{aspect-ratio:auto!important;background:none!important;padding:0!important;box-shadow:none!important;display:flex;align-items:flex-end;justify-content:center;overflow:visible}
+.col .p img,.col .p video{display:block;max-width:100%;border-radius:3px;object-fit:fill!important;filter:none!important}
+.col .p.aula video{object-fit:cover!important;object-position:50% 40%!important}
+.p.largo{aspect-ratio:4/3}
+.p.quad{aspect-ratio:3/4} /* aula: só a pessoa, card em pé, quase do tamanho de uma capa */
+.p img,.p video{width:100%;height:100%;display:block}
+.p.capa img{object-fit:cover}
+.p.livro img{object-fit:contain;object-position:center bottom;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45))}
+.p.fw{background:#FFFBF3;padding:8%}
+.p.fw img{object-fit:contain}
+.p.aula video{object-fit:cover;object-position:var(--pos,right bottom)}
+.p.aula{box-shadow:0 0 0 1px rgba(201,173,114,.25)}
+@keyframes sobe{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes desce{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.veu{position:absolute;inset:0;pointer-events:none}
+/* layout centro: área do texto limpa, biblioteca nas bordas */
+[data-layout="centro"] .veu{background:radial-gradient(ellipse 44% 58% at 50% 46%,rgba(var(--fundo-rgb),.97) 0%,rgba(var(--fundo-rgb),.92) 52%,rgba(var(--fundo-rgb),.35) 82%,rgba(var(--fundo-rgb),.15) 100%)}
+/* layout lado: texto num painel cheio à esquerda, biblioteca à direita */
+[data-layout="lado"] .texto{align-items:flex-start;text-align:left;margin:0;max-width:none;width:min(52vw,760px);padding-left:clamp(32px,6vw,96px);padding-right:clamp(24px,3vw,48px);min-height:100svh;background:var(--fundo);box-shadow:30px 0 60px -20px rgba(var(--fundo-rgb),.9)}
+[data-layout="lado"] .saud{justify-content:flex-start}
+[data-layout="lado"] h1{max-width:18ch;font-size:clamp(33px,min(3.9vw,7vh),58px)}
+[data-layout="lado"] .sub{max-width:46ch}
+[data-layout="lado"] .botoes{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:560px;justify-content:stretch}
+[data-layout="lado"] .bt{letter-spacing:.12em;padding:0 16px}
+@media (max-width:1280px){[data-layout="lado"] .botoes{grid-template-columns:1fr;max-width:380px}}
+[data-layout="lado"] .colunas{left:calc(min(48vw,700px) + (100vw - min(48vw,700px))/2)}
+[data-layout="lado"] .veu{background:linear-gradient(90deg,rgba(var(--fundo-rgb),.75),rgba(var(--fundo-rgb),.05) 30%,rgba(var(--fundo-rgb),0) 100%);left:min(48vw,700px)}
+.grao{position:absolute;inset:0;pointer-events:none;opacity:.3;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E")}
+[data-cor="bege"] .grao{mix-blend-mode:multiply;opacity:.45}
+
+/* 08/11 (Rei): barra igual à do celular em todas as telas, sem fundo e sem a frase ao lado do logo */
+.barra{background:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none!important;border-bottom:0!important}
+.assin{display:none}
+.barra nav a:not(.assine),.barra .logo{text-shadow:0 1px 8px rgba(0,0,0,.8)}
+/* ===== Direções do computador e do iPad (parecer do designer, 08/11) ===== */
+/* A · tudo atrás da sombra: véu em faixas horizontais, texto no centro, pé mais claro */
+[data-layout="a"] .veu{background:linear-gradient(180deg,rgba(var(--fundo-rgb),.85) 0%,rgba(var(--fundo-rgb),.9) 14%,rgba(var(--fundo-rgb),.92) 70%,rgba(var(--fundo-rgb),.55) 86%,rgba(var(--fundo-rgb),.4) 100%)}
+[data-layout="a"] .texto{padding-top:calc(var(--barra) + 86px);max-width:1080px}
+[data-layout="a"] h1{font-size:clamp(40px,min(4.6vw,7.4vh),68px);max-width:1000px;text-wrap:balance}
+[data-layout="a"] .botoes{grid-template-columns:repeat(2,320px)}
+[data-layout="a"] .bt{min-height:54px}
+/* B · página aberta: texto no papel à esquerda, biblioteca no preto à direita */
+[data-layout="b"] .texto{align-items:flex-start;text-align:left;margin:0;max-width:none;width:640px;min-height:100svh;padding:calc(var(--barra) + 90px) 56px 40px 72px;background:#FFFBF3;color:#190808;position:relative;z-index:2}
+[data-layout="b"] .texto::after{content:"";position:absolute;top:0;bottom:0;right:0;width:1px;background:var(--ouro-of);box-shadow:0 0 80px 30px rgba(0,0,0,.35)}
+[data-layout="b"] .saud{justify-content:flex-start}
+[data-layout="b"] h1{font-size:clamp(36px,4.2vw,60px);max-width:15ch;color:#190808}
+[data-layout="b"] h1 em{color:var(--ouro-of)}
+[data-layout="b"] .sub{color:#190808;opacity:1;max-width:46ch}
+[data-layout="b"] .sub em{color:var(--vinho)}
+[data-layout="b"] .saud .b{color:var(--ouro-of)}
+[data-layout="b"] .botoes{grid-template-columns:1fr 1fr;width:100%;max-width:500px;justify-content:stretch}
+[data-layout="b"] .bt{letter-spacing:.12em;padding:0 14px}
+[data-layout="b"] .bt.um{background:var(--ouro-si);border-color:#190808;color:#190808}
+[data-layout="b"] .bt.um:hover{background:var(--ouro-of);border-color:#190808;color:#190808}
+[data-layout="b"] .bt.dois{background:transparent;color:#190808;border-color:#190808}
+[data-layout="b"] .bt.dois:hover{background:#190808;color:#FFFBF3}
+[data-layout="b"] .sumario{display:block}
+[data-layout="b"] .colunas{left:calc(640px + (100vw - 640px)/2)}
+[data-layout="b"] .veu{left:640px;background:rgba(var(--fundo-rgb),.5)}
+[data-layout="b"] .barra{background:linear-gradient(90deg,rgba(255,251,243,.96) 0,rgba(255,251,243,.96) 640px,rgba(25,8,8,.86) 640px);box-shadow:none;border-bottom:1px solid rgba(137,114,60,.35)}
+[data-layout="b"] .barra .logo,[data-layout="b"] .assin{color:#190808}
+.bt-linha{display:none;margin-top:10px;font:400 13px/1.4 'InterEter',sans-serif;opacity:.75}
+.bt-linha.on{display:block}
+[data-layout="b"] .bt-linha{color:#190808}
+.sumario{display:none;margin-top:28px;padding-top:16px;border-top:1px solid rgba(25,8,8,.15);font:400 13px/1.5 'InterEter',sans-serif;color:rgba(25,8,8,.6);max-width:46ch}
+/* C · o fundador na frente da biblioteca */
+.fundador{display:none}
+[data-layout="c"] .veu{background:linear-gradient(90deg,rgba(var(--fundo-rgb),.94) 0%,rgba(var(--fundo-rgb),.9) 40%,rgba(var(--fundo-rgb),.55) 62%,rgba(var(--fundo-rgb),.35) 100%)}
+[data-layout="c"] .texto{align-items:flex-start;text-align:left;margin:0;max-width:none;width:min(46vw,680px);padding:calc(var(--barra) + 96px) 24px 40px 96px}
+[data-layout="c"] .saud{justify-content:flex-start}
+[data-layout="c"] h1{font-size:clamp(36px,4.4vw,64px);max-width:15ch}
+[data-layout="c"] .botoes{grid-template-columns:1fr 1fr;width:100%;max-width:560px;justify-content:stretch}
+[data-layout="c"] .bt{letter-spacing:.12em;padding:0 14px}
+[data-layout="c"] .fundador{display:block;position:absolute;z-index:1;right:7vw;bottom:4vh;width:min(30vw,430px);height:min(66vh,560px);filter:saturate(.85) brightness(.92);background:url(img/davi-c.webp) center bottom/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 70%,transparent 100%),linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 70%,transparent 100%),linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);mask-composite:intersect}
+[data-layout="c"] .fundador::after{content:"Ilustração: a gravação vertical do Davi em fundo preto ainda não existe";position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font:600 10px/1.3 -apple-system,sans-serif;color:#d8c08a;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:4px;white-space:nowrap}
+/* iPad em pé (761 a 1100 px) */
+@media (min-width:761px) and (max-width:1100px){
+  :root{--colw:240px}
+  [data-layout="a"] .texto{padding-top:calc(var(--barra) + 76px)}
+  [data-layout="a"] h1{font-size:50px}
+  [data-layout="a"] .botoes{grid-template-columns:repeat(2,minmax(0,300px))}
+  [data-layout="a"] .veu{background:linear-gradient(180deg,rgba(var(--fundo-rgb),.88) 0%,rgba(var(--fundo-rgb),.9) 55%,rgba(var(--fundo-rgb),.5) 70%,rgba(var(--fundo-rgb),.4) 100%)}
+  [data-layout="b"] .texto{width:100%;min-height:680px;padding:calc(var(--barra) + 70px) 56px 40px}
+  [data-layout="b"] .texto::after{top:auto;left:0;right:0;bottom:0;width:auto;height:1px}
+  [data-layout="b"] .colunas{left:50%;top:680px}
+  [data-layout="b"] .veu{left:0;top:680px}
+  [data-layout="b"] .barra{background:rgba(255,251,243,.96)}
+  [data-layout="b"] .barra nav a:not(.assine){color:#190808}
+  [data-layout="c"] .texto{width:100%;padding:calc(var(--barra) + 76px) 56px 40px}
+  [data-layout="c"] .veu{background:linear-gradient(180deg,rgba(var(--fundo-rgb),.88) 0%,rgba(var(--fundo-rgb),.85) 48%,rgba(var(--fundo-rgb),.5) 64%,rgba(var(--fundo-rgb),.5) 100%)}
+  [data-layout="c"] .fundador{width:340px;height:420px;right:40px;bottom:40px}
+}
+/* celular: o desenho que o Rei aprovou, texto mais alto */
+@media (max-width:760px){
+  :root{--barra:56px}
+  .barra{padding:0 14px;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-bottom:0}
+  .barra nav a:not(.assine),.barra .logo{text-shadow:0 1px 8px rgba(0,0,0,.8)}
+  .barra .logo img{height:16px}
+  .assin{display:none}
+  .barra nav{gap:11px}
+  .barra nav a{font-size:12px;letter-spacing:.06em}
+  .barra nav a.assine{padding:9px 11px}
+  .texto,[data-layout="lado"] .texto{align-items:center;text-align:center;width:auto;max-width:none;margin:0;padding:calc(var(--barra) + 9vh) 16px 40px;background:none;box-shadow:none;min-height:0}
+  [data-layout="lado"] .saud{justify-content:center}
+  .saud{margin-bottom:8px}.saud .a{font-size:11.5px}.saud .b{font-size:30px}
+  h1,[data-layout="lado"] h1{max-width:100%;font-size:30px;line-height:1.16;letter-spacing:.003em}
+  .sub,[data-layout="lado"] .sub{max-width:36ch;font-size:15px} /* celular: tamanho aprovado pelo Rei */
+  .botoes,[data-layout="lado"] .botoes{grid-template-columns:1fr;width:100%;max-width:360px;gap:10px;justify-content:center}
+  .bt{min-height:50px;font-size:13.5px;letter-spacing:.15em}
+  :root{--colw:150px;--gap:10px}
+  .colunas,[data-layout] .colunas{left:50%;top:0}
+  .texto,[data-layout] .texto{align-items:center;text-align:center;width:auto;max-width:none;margin:0;padding:calc(var(--barra) + 9vh) 16px 40px;background:none;box-shadow:none;min-height:0;color:inherit}
+  [data-layout] .texto::after,[data-layout] .fundador,[data-layout] .sumario{display:none}
+  [data-layout] .saud{justify-content:center}
+  [data-layout] h1,[data-layout] .sub{color:inherit}
+  [data-layout] h1{max-width:100%;font-size:30px}
+  [data-layout] h1 em{color:var(--destaque)}
+  [data-layout] .sub em{color:var(--destaque-peq)}
+  [data-layout] .botoes{grid-template-columns:1fr;width:100%;max-width:360px;gap:10px;justify-content:center}
+  [data-layout] .bt.um{background:var(--bt1);border-color:var(--bt1);color:var(--bt1-txt)}
+  [data-layout] .bt.dois{background:rgba(var(--fundo-rgb),.35);color:var(--bt2-txt);border-color:var(--bt2-borda)}
+  [data-layout] .barra{background:none;box-shadow:none;border-bottom:0}
+  [data-layout] .barra .logo{color:inherit}
+  .veu,[data-layout] .veu{left:0;top:0;background:linear-gradient(180deg,rgba(var(--fundo-rgb),.92) 0px,rgba(var(--fundo-rgb),.86) 56px,rgba(var(--fundo-rgb),.93) 16%,rgba(var(--fundo-rgb),.93) 66%,rgba(var(--fundo-rgb),.6) 78%,rgba(var(--fundo-rgb),.4) 100%)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* controle (fora do desenho; some quando a página está dentro da comparação) */
+.controle{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:50;display:flex;gap:4px;padding:5px;background:rgba(15,31,24,.95);border:1px solid rgba(216,192,138,.4);border-radius:40px;font:600 12px/1 -apple-system,Helvetica,Arial,sans-serif;max-width:calc(100vw - 16px);overflow-x:auto}
+.controle button{all:unset;cursor:pointer;color:#FFFBF3;padding:8px 11px;border-radius:30px;white-space:nowrap;flex:0 0 auto}
+.controle button.on{background:#d8c08a;color:#190808}
+.embutido .controle{display:none}
+</style>
+<script>window.__destino=location.hash;</script>
+<script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
+<script defer src="premium/calor.js"></script>
+<meta property="og:type" content="website"><meta property="og:site_name" content="ETER"><meta property="og:title" content="ETER — Inteligência cultural e repertório polímata"><meta property="og:description" content="A revista semanal e a comunidade de quem vive das próprias ideias. Leia uma edição completa por mês, de graça."><meta property="og:url" content="https://eterbrasil.com/revista/"><meta property="og:image" content="https://eterbrasil.com/revista/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="pagina inicio">
-
-<header class="topo">
-  <a class="topo-marca" href="./" aria-label="ETER — início">
-    <img src="premium/logo.webp" alt="ETER" width="900" height="240">
-  </a>
-  <span class="topo-tag">Bem-vindo à <em>Vanguarda</em></span>
-  <nav class="topo-nav">
-    <a href="./" class="atual-nav">Home</a>
-    <a href="biblioteca">Todas as edições</a>
-    <a href="bibliografia" class="sec">Bibliografia</a>
-    <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
+<body>
+<header class="barra">
+  <a class="logo" href="#topo" aria-label="ETER, página inicial"><img id="logo" src="img/logo-bege.svg" alt="ETER"><span class="assin">A Plataforma Editorial dos Formadores de Opinião</span></a>
+  <nav aria-label="Principal">
+    <a class="atual" href="#topo">Home</a>
+    <a href="biblioteca/">Edições</a>
+    <a href="bibliografia/">Bibliografia</a>
+    <a class="assine" href="#assinatura">Assine</a>
   </nav>
 </header>
-
-<!-- ══ A CHEGADA ══════════════════════════════════════════════ -->
-<main id="capa-home">
-  <div class="atmosfera" id="atmosfera" aria-hidden="true"></div>
-  <div class="veu" aria-hidden="true"></div>
-
-  <section class="capa capa-inicio">
-    <p class="saudacao-capa">Bem-vindo à <em>Vanguarda</em></p>
-    <h1>Torne-se um formador de opinião reconhecido e bem pago pelo seu repertório.</h1>
-    <p class="dek-ed" id="promessa-home">
-      Assine a plataforma editorial onde, toda semana, profissionais e empreendedores inteligentes
-      leem, discutem, escrevem e publicam as ideias mais relevantes do nosso tempo.
-    </p>
-
-    <figure class="prateleira" id="prateleira" aria-label="As edições publicadas"></figure>
-
-    <div class="acoes">
-      <a class="btn btn-ler" href="biblioteca">
-        LER UMA EDIÇÃO GRÁTIS
-      </a>
-      <button class="btn btn-passe btn-passe-hero" id="btn-passe-home">ADQUIRIR O PASSE</button>
+<main>
+<section class="dobra" id="topo">
+  <div class="fundo" id="fundo"></div>
+  <div class="fundador" aria-hidden="true"></div>
+  <div class="texto">
+    <p class="saud"><span class="a">Bem-vindo à</span><span class="b">Vanguarda</span></p>
+    <h1>Torne-se um formador de opinião <em>reconhecido e bem pago</em> pelo seu repertório.</h1>
+    <p class="sub">Assine a plataforma editorial onde, toda&nbsp;semana, profissionais e&nbsp;empreendedores inteligentes <em>leem, discutem, escrevem e&nbsp;publicam</em> as ideias mais relevantes do&nbsp;nosso&nbsp;tempo.</p>
+    <div class="botoes">
+      <a class="bt um" href="#assinatura">Assine a ETER</a>
+      <a class="bt dois" id="bt2" href="biblioteca/">Conheça a revista</a>
     </div>
-  </section>
+    <p class="bt-linha" id="btlinha"></p>
+    <p class="sumario">[a definir pelo copy: linha de sumário no molde do NESTA EDIÇÃO]</p>
+  </div>
+</section>
 </main>
+<script>document.write('<script src="pecas.js?t='+Date.now()+'"><\/script>')</script>
+<script>
+const P=window.PECAS, $=id=>document.getElementById(id), q=new URLSearchParams(location.search);
+if(window.self!==window.top||/[?&]foto=1/.test(location.search)) document.body.classList.add('embutido');
+const embaralha=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const cel=()=>innerWidth<=760;
+// fontes de cada tipo de peça
+const CAPAS=embaralha(P.capas.map(f=>'img/capas/'+f));
+const LIVROS=embaralha(P.livros.map(f=>'img/livros/'+f));
+const ABERT=embaralha(P.pecas.filter(f=>/-hl-/.test(f)).map(f=>'img/pecas/'+f));
+const FW=embaralha((P.fw2&&P.fw2.length?P.fw2.map(f=>'img/fw2/'+f):P.frameworks.map(f=>'img/frameworks/'+f)));
+const AULAS=(P.aulas&&P.aulas.length?P.aulas:[{arquivo:'leitura-ao-vivo',pessoa:'Davi Ribas',dir:'video/'},{arquivo:'aula-convidado',pessoa:'Convidado',dir:'video/'}]);
+// alternância pedida pelo Rei: capa de revista, framework, capa de livro, aula
+const TIPOS=['capa','livro','fw','aula']; // 08/11: capa da ETER, capa de livro, framework inteiro, aula
+const FW_FORA=/002-tres-graficos|013-cinco-fases|013-niveis-de-sinal/; // 08/11: só os desenhos completos; linha do tempo, listas e gráficos simples saíram da pasta // viram tira fina no cartão (parecer do designer); saem até o Rei decidir
+const FWOK=FW.filter(f=>!FW_FORA.test(f));
+// metade das aulas do Davi: intercala Davi e convidados
+const DAVI=AULAS.filter(a=>/davi/.test(a.arquivo)), OUTROS=AULAS.filter(a=>!/davi/.test(a.arquivo));
+const AULAS2=[];for(let i=0;i<Math.max(DAVI.length,OUTROS.length);i++){if(DAVI[i])AULAS2.push(DAVI[i]);if(OUTROS[i])AULAS2.push(OUTROS[i])}
+const PROP={'rafael-censon-status':'480/268','matheus-de-lucca-ideias':'480/278','jonas-castro-ecossistema':'480/398'}; // aula com gráfico: card na proporção do vídeo, nada cortado
+const fila={capa:0,fw:0,livro:0,aula:0};
+const tira=(lista,k)=>lista[(fila[k]++)%lista.length];
+// ===== Fundo (Rei, 08/11, versão final) =====
+// Só capas da ETER, capas de livro e aulas (sem frameworks). Todas as casas têm a mesma altura (a da capa da ETER),
+// as fileiras ficam alinhadas e todas as colunas sobem juntas. Capas e livros se alternam como tabuleiro de xadrez,
+// então nunca encostam dois iguais (em cima ou ao lado); a aula entra numa casa solta, sem outra aula encostada,
+// no máximo 2 vídeos na tela. Nenhuma peça e nenhuma pessoa se repete na tela.
+const DIM=P.dims||{};
+const LIVROS_OK=LIVROS.filter(f=>{const d=DIM[f];return d&&d[1]/d[0]>=1.3&&d[1]/d[0]<=1.75});
+const pessoaDe=a=>/davi/.test(a.arquivo)?'davi':a.arquivo;
+const LISTAS={capa:CAPAS,livro:embaralha(LIVROS_OK),aula:embaralha(AULAS)};
+const cursor={capa:0,livro:0,aula:0};
+let COLS=[], rafId=0, ultimo=0, ALT=0, FOLGA=220, GAP=14, LARG=270, CASA=382;
+const PARADO=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function sobra(chave,pessoa,topo){let pior=-1e9;
+  for(const C of COLS) for(const e of C.el.children){
+    if(e.dataset.chave!==chave&&!(pessoa&&e.dataset.pessoa===pessoa)) continue;
+    pior=Math.max(pior,C.pos+e.offsetTop+e.offsetHeight-(topo-ALT)+120);}
+  return pior}
+function aulasNaTela(topo){let n=0;
+  for(const C of COLS) for(const e of C.el.children){ if(e.dataset.tipo!=='aula') continue;
+    if(C.pos+e.offsetTop+e.offsetHeight-(topo-ALT)+120>0) n++;}
+  return n}
+function pega(t,topo){const l=LISTAS[t]; let melhor=null,mk=0,ms=1e9;
+  for(let k=0;k<l.length;k++){const it=l[(cursor[t]+k)%l.length], chave=t==='aula'?it.arquivo:it;
+    const so=sobra(chave,t==='aula'?pessoaDe(it):null,topo); if(so<=0){cursor[t]=(cursor[t]+k+1)%l.length;return it}
+    if(t!=='aula'&&so<ms){ms=so;melhor=it;mk=k}}
+  if(melhor) cursor[t]=(cursor[t]+mk+1)%l.length; return melhor}
+function vizinhoAula(c,fila){ // aula na mesma fileira das colunas vizinhas ou logo acima/abaixo nesta coluna
+  for(const v of [c-1,c+1]){const C=COLS[v]; if(C&&C.tipos[fila]==='aula') return true}
+  return COLS[c].tipos[fila-1]==='aula'}
+function criaPeca(c){
+  const C=COLS[c], fila=C.fila, topo=C.pos+C.el.children.length*(CASA+GAP);
+  let t=(fila+c)%2===0?'capa':'livro', it=null;
+  if((fila+c)%3===0&&!vizinhoAula(c,fila)&&aulasNaTela(topo)<3){const a=pega('aula',topo); if(a){t='aula';it=a}}
+  if(!it) it=pega(t,topo);
+  C.tipos[fila]=t; C.fila++;
+  const el=document.createElement('div'); el.dataset.tipo=t; el.className='p '+t; el.style.height=CASA+'px';
+  if(t==='aula'){const d=it.dir||'video/pessoas/', w=Math.round(Math.min(LARG,CASA*.75));
+    el.innerHTML=`<video src="${d}${it.arquivo}.mp4" poster="${d}${it.arquivo}.jpg" muted loop playsinline autoplay preload="auto" style="width:${w}px;height:${CASA}px"></video>`;
+    el.dataset.chave=it.arquivo; el.dataset.pessoa=pessoaDe(it);
+    const v=el.querySelector('video'); v.muted=true; if(!PARADO) v.play().catch(()=>{});
+  }else{const [w,h]=DIM[it]||[1000,1414]; const r=h/w; const ww=Math.round(Math.min(LARG,CASA/r)), hh=Math.round(ww*r);
+    el.innerHTML=`<img src="${it}" alt="" width="${ww}" height="${hh}" style="width:${ww}px;height:${hh}px" decoding="async">`; el.dataset.chave=it;}
+  return el}
+function tiraPeca(el){const v=el.querySelector('video'); if(v){v.pause();v.removeAttribute('src');v.load()} el.remove()}
+function monta(){
+  cancelAnimationFrame(rafId);
+  const cs=getComputedStyle(document.documentElement); LARG=parseFloat(cs.getPropertyValue('--colw'))||270; GAP=parseFloat(cs.getPropertyValue('--gap'))||14; CASA=Math.round(LARG*1.414);
+  const n=Math.ceil(innerWidth*1.12/(LARG+GAP))+1;
+  $('fundo').innerHTML=`<div class="colunas" style="--cols:${n}"></div><div class="veu"></div><div class="grao"></div>`;
+  const box=$('fundo').querySelector('.colunas'); ALT=$('fundo').getBoundingClientRect().height||innerHeight;
+  for(const k in cursor) cursor[k]=Math.floor(Math.random()*LISTAS[k].length);
+  COLS=[]; const inicio=-FOLGA;
+  for(let c=0;c<n;c++){const el=document.createElement('div');el.className='col';box.appendChild(el);COLS.push({el,pos:inicio,fila:0,tipos:{}});}
+  for(let r=0;r<20;r++) for(let c=0;c<n;c++){const C=COLS[c]; if(C.el.children.length*(CASA+GAP)+C.pos<ALT+FOLGA) C.el.appendChild(criaPeca(c)); C.el.style.transform=`translateY(${C.pos}px)`}
+  ultimo=performance.now(); if(!PARADO) rafId=requestAnimationFrame(passo);
+}
+const VEL=11;
+function passo(t){
+  const dt=Math.min(.1,(t-ultimo)/1000); ultimo=t;
+  COLS.forEach((C,c)=>{
+    C.pos-=VEL*dt;
+    if(C.pos+CASA<-FOLGA&&C.el.firstElementChild){tiraPeca(C.el.firstElementChild); C.pos+=CASA+GAP;}
+    if(C.el.children.length*(CASA+GAP)+C.pos<ALT+FOLGA) C.el.appendChild(criaPeca(c));
+    C.el.style.transform=`translateY(${C.pos}px)`;
+  });
+  rafId=requestAnimationFrame(passo);
+}
+function cor(c){document.documentElement.dataset.cor=c;$('logo').src=c==='bege'?'img/logo.svg':'img/logo-bege.svg';document.querySelectorAll('[data-cor]').forEach(b=>b.classList.toggle('on',b.dataset.cor===c));sincroniza()}
+function layout(l){document.documentElement.dataset.layout=l;$('logo').src=(l==='b'&&innerWidth>760)||document.documentElement.dataset.cor==='bege'?'img/logo.svg':'img/logo-bege.svg';document.querySelectorAll('[data-layout]').forEach(b=>b.classList.toggle('on',b.dataset.layout===l));monta();sincroniza()}
+function sincroniza(){}
+document.querySelectorAll('button[data-cor]').forEach(b=>b.onclick=()=>cor(b.dataset.cor));
+document.querySelectorAll('button[data-layout]').forEach(b=>b.onclick=()=>layout(b.dataset.layout));
+function poeBt(t){const [b,l]=String(t).split(' | ');$('bt2').textContent=b;$('btlinha').textContent=l||'';$('btlinha').classList.toggle('on',!!l)}
+if(q.get('bt')) poeBt(q.get('bt'));
+window.addEventListener('message',e=>{const d=e.data||{}; if(d.cor) cor(d.cor); if(d.layout) layout(d.layout); if(d.bt) poeBt(d.bt);});
+document.documentElement.dataset.cor=['preto','bege','vinho','verde','vermelho'].includes(q.get('cor'))?q.get('cor'):'preto';
+cor(document.documentElement.dataset.cor);
+layout('a'); // 08/11: o Rei escolheu "tudo atrás da sombra" no computador, no iPad e no celular
+let rt, larg0=innerWidth; addEventListener('resize',()=>{if(innerWidth===larg0) return; larg0=innerWidth; clearTimeout(rt);rt=setTimeout(monta,250)});
+</script>
+<!-- HOME = PÁGINA DE VENDA DA ETER · v2 com os ajustes de design do Rei de 08/11 (o texto se corrige depois).
+     Ordem: o que é (abre como revista) · revista · comunidade · leitura comentada · convidados · clube · fundador (com o que dizem sobre o Davi) · assinantes · ofertas · perguntas · chamada final · rodapé.
+     Textos: Argon (rodadas/1.9-textos-argon.md) + falas do Rei de 08/11 para o clube e a coautoria. Backup da v1: pagina-v1-antes-ajustes.html -->
+<style>
+.pv{--f:#FFFBF3;--t:#190808;--ln:rgba(25,8,8,.13);--t3:rgba(25,8,8,.5);--ouro:#89723C;--ouro2:#AF9153;--vinho:#511212;--pad:clamp(18px,5vw,84px);
+  --h2:clamp(30px,3.4vw,54px);--txt:clamp(15.5px,1.15vw,18px);--num:clamp(72px,10vw,170px);--btn-h:clamp(52px,3.9vw,60px);--btn-f:clamp(12.5px,.95vw,14.5px);
+  --capa-w:clamp(150px,15vw,230px);--livro-h:clamp(220px,20.5vw,310px);--pe-w:150px;--ic:clamp(130px,11vw,168px);--card-w:360px;
+  position:relative;z-index:2;font-family:'InterEter',-apple-system,Helvetica,Arial,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+.pv *{box-sizing:border-box;margin:0;padding:0}
+.pv a{color:inherit}
+.pv .sec{position:relative;padding:clamp(72px,9vw,150px) var(--pad);overflow:clip}
+.pv .claro{background:var(--f);color:var(--t)}
+.pv .escuro{background:var(--t);color:var(--f)}
+/* passagem de dobra: cada parte sobe por cima da anterior, como uma folha */
+.pv #o-que-e{border-radius:36px 36px 0 0;box-shadow:0 -30px 60px -26px rgba(0,0,0,.5)}
+.pv .sombra{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:50}
+.pv .in{max-width:1180px;margin:0 auto}
+.pv [data-a]{opacity:0;transform:translateY(54px);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0)*.09s)}
+.pv [data-a="gira"]{transform:translateY(80px) rotate(-3deg) scale(.96)}
+.pv [data-a].vis{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.pv [data-a]{opacity:1;transform:none;transition:none}}
+/* abertura de capítulo */
+.pv .cap{display:grid;grid-template-columns:auto 1px minmax(0,1fr);gap:clamp(16px,2.4vw,36px);align-items:center;max-width:1020px}
+.pv .cap .n{font:500 var(--num)/.76 'TRJN',Georgia,serif;color:var(--ouro)}
+.pv .escuro .cap .n{color:var(--f)}
+.pv .cap .r{align-self:stretch;background:currentColor;opacity:.45}
+.pv .cap .rot{display:block;font:italic 500 clamp(20px,1.8vw,28px)/1 'TRJN',Georgia,serif;color:var(--ouro);margin-bottom:12px}
+.pv .cap h2{font:500 var(--h2)/1.03 'TRJN',Georgia,serif;letter-spacing:-.015em}
+.pv .cap h2 em{font-style:italic;color:var(--ouro)}
+.pv .escuro .cap h2 em{color:var(--ouro2)}
+.pv .cap p{margin-top:14px;max-width:640px;font-size:var(--txt);line-height:1.65;opacity:.8}
+.pv .centro{text-align:center;max-width:800px;margin:0 auto}
+.pv .centro h2{font:500 var(--h2)/1.05 'TRJN',Georgia,serif;letter-spacing:-.015em}
+.pv .centro h2 em{font-style:italic;color:var(--ouro)}
+.pv .escuro .centro h2 em{color:var(--ouro2)}
+.pv .centro p{margin:16px auto 0;max-width:640px;font-size:var(--txt);line-height:1.65;opacity:.8}
+.pv .pbt{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:var(--btn-h);padding:0 clamp(30px,3.2vw,52px);border-radius:2px;text-decoration:none;font:800 var(--btn-f)/1 'FuturaCond',sans-serif;letter-spacing:.17em;text-transform:uppercase;border:1px solid var(--t);background:var(--t);color:var(--f);transition:background .25s,color .25s,transform .25s,border-color .25s;cursor:pointer}
+.pv .pbt:hover{transform:translateY(-2px);background:var(--vinho);border-color:var(--vinho)}
+.pv .pbt.ouro{background:var(--ouro2);border-color:var(--ouro2);color:var(--t)}.pv .pbt.ouro:hover{background:#c4a868;border-color:#c4a868}
+.pv .pbt.linha{background:transparent;color:inherit;border-color:currentColor}.pv .pbt.linha:hover{background:var(--t);color:var(--f);border-color:var(--t)}
+.pv .escuro .pbt.linha:hover,.pv .fund .pbt.linha:hover{background:var(--f);color:var(--t);border-color:var(--f)}
+.pv .acoes{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:clamp(34px,3.8vw,56px)}
 
-<!-- ══ A CASA ═════════════════════════════════════════════════ -->
-<section class="casa">
-  <div class="casa-polimata">
-    <h2>O que é um repertório polímata?</h2>
-    <p>Polímata era como se chamavam os homens e as mulheres do Renascimento: pensadores,
-    empreendedores e artistas que dominavam diferentes áreas do conhecimento para criar
-    obras autorais.</p>
-    <p>Na era da inteligência artificial, em que todos estudam os mesmos assuntos, usam as
-    mesmas ferramentas e repetem os mesmos clichês, o ativo mais raro, e por isso o mais
-    valioso, passou a ser a capacidade de articular áreas distintas do próprio repertório
-    para criar e monetizar ideias, conteúdos e marcas autorais.</p>
-  </div>
-</section>
+/* 1 · O QUE É: a revista se abre (a folha da capa vira, como no Flipsnack) e mostra o texto e o sumário */
+.pv .oq{padding:clamp(56px,6vw,90px) var(--pad);background:#120606}
+.pv .livro3d{position:relative;max-width:1240px;margin:0 auto;perspective:2600px}
+.pv .esp{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:min(84vh,800px)}
+.pv .livro3d.fim .esp{box-shadow:0 50px 90px -40px rgba(0,0,0,.9)}
+.pv .esp::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:60px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(0,0,0,.16) 45%,rgba(0,0,0,.26) 50%,rgba(0,0,0,.16) 55%,transparent);pointer-events:none;z-index:3}
+.pv .pg{position:relative;padding:clamp(48px,6vw,100px) clamp(24px,4.5vw,80px);overflow:hidden}
+.pv .pg.esq{background:var(--f)}
+.pv .pg.dir{background:var(--t);color:var(--f)}
+.pv .fant{position:absolute;font:500 clamp(260px,32vw,520px)/.8 'TRJN',Georgia,serif;pointer-events:none;user-select:none}
+.pv .esq .fant{right:-.16em;bottom:-.16em;color:rgba(25,8,8,.045)}
+.pv .dir .fant{left:-.08em;bottom:-.2em;color:rgba(255,251,243,.035)}
+.pv .oq h2{position:relative;font:500 clamp(42px,4.6vw,74px)/1 'TRJN',Georgia,serif;letter-spacing:-.018em}
+.pv .oq h2 em{font-style:italic;color:var(--ouro)}
+.pv .oq .txt{position:relative;margin-top:clamp(30px,6vh,80px);max-width:470px;font-size:clamp(16px,1.2vw,18.5px);line-height:1.72;text-align:justify;hyphens:auto;-webkit-hyphens:auto;color:rgba(25,8,8,.86)}
+.pv .oq .txt::first-letter{padding-left:2em}
+.pv .oq .fecho{position:relative;margin-top:22px;max-width:470px;font:italic 500 clamp(20px,1.7vw,26px)/1.3 'TRJN',Georgia,serif;color:var(--ouro)}
+.pv .oq h3{position:relative;font:500 clamp(40px,4vw,62px)/1 'TRJN',Georgia,serif}
+.pv .oq ol{position:relative;list-style:none;margin-top:clamp(22px,4.5vh,52px)}
+.pv .oq li a{display:grid;grid-template-columns:auto 1px 1fr auto;align-items:center;gap:clamp(14px,1.6vw,24px);padding:clamp(8px,1.4vh,15px) 0;border-bottom:1px dashed rgba(255,251,243,.22);text-decoration:none}
+.pv .oq li .n{font:500 clamp(44px,4.4vw,74px)/.85 'TRJN',Georgia,serif;color:rgba(255,251,243,.55);min-width:1.15em;transition:color .35s}
+.pv .oq li .r{align-self:stretch;background:rgba(255,251,243,.55)}
+.pv .oq li .t{font-size:clamp(15.5px,1.3vw,20px);line-height:1.3;color:rgba(255,251,243,.8);transition:color .3s,transform .35s}
+.pv .oq li .s{font:500 20px/1 'TRJN',serif;color:rgba(255,251,243,.35);transition:color .3s,transform .35s}
+.pv .oq li a:hover .n{color:var(--ouro2)}.pv .oq li a:hover .t{color:var(--f);transform:translateX(5px)}.pv .oq li a:hover .s{color:var(--ouro2);transform:translateY(3px)}
+.pv .vira{position:absolute;top:0;bottom:0;left:50%;width:50%;transform-origin:left center;transform-style:preserve-3d;transition:transform 1.9s cubic-bezier(.45,.05,.2,1);z-index:5}
+.pv .livro3d.aberta .vira{transform:rotateY(-180deg)}
+.pv .vira>div{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pv .vira .frente{background:#190808;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;box-shadow:0 50px 90px -40px rgba(0,0,0,.9),inset 0 0 0 16px #190808,inset 0 0 0 17px rgba(255,251,243,.55)}
+.pv .vira .frente img{width:min(62%,320px)}
+.pv .vira .frente span{margin-top:20px;font:400 clamp(30px,3.2vw,48px)/1 'Sloop',cursive;color:var(--ouro2)}
+.pv .vira .frente::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.4),transparent 16%)}
+.pv .vira .verso{transform:rotateY(180deg)}
+.pv .vira .verso::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgba(0,0,0,.14),transparent 22%);pointer-events:none}
+.pv .esp{box-shadow:0 50px 90px -40px rgba(0,0,0,.9)}
 
-<!-- ══ A OFERTA ═══════════════════════════════════════════════ -->
-<section class="oferta-home">
-  <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
+/* 2 · REVISTA */
+.pv .capas{position:relative;margin:clamp(40px,5vw,70px) calc(-1*var(--pad)) 0;overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.pv .capas.arr{cursor:grabbing}
+.pv .capas .fila{display:flex;align-items:flex-start;gap:clamp(14px,1.6vw,24px);width:max-content;padding:26px 0 30px;will-change:transform}
+.pv .capas a{flex:none;display:block;width:var(--capa-w);text-decoration:none;-webkit-user-drag:none}
+.pv .capas img{display:block;width:100%;height:auto;aspect-ratio:420/594;object-fit:cover;box-shadow:0 22px 34px -18px rgba(25,8,8,.65);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;-webkit-user-drag:none;pointer-events:none}
+.pv .capas a:hover img{transform:translateY(-12px) rotate(-1.5deg);box-shadow:0 34px 44px -20px rgba(25,8,8,.75)}
+.pv .capas a span{display:block;margin-top:12px;text-align:center;font:500 14px/1 'TRJN',serif;color:var(--t3)}
+.pv .dica{text-align:center;font-size:13px;color:var(--t3)}
+.pv .duo{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,80px);align-items:center;margin-top:clamp(80px,9vw,140px)}
+.pv .duo h3,.pv .meio h3{font:500 clamp(28px,2.7vw,42px)/1.05 'TRJN',Georgia,serif}
+.pv .duo h3 em,.pv .meio h3 em{font-style:italic;color:var(--ouro)}
+.pv .duo p,.pv .meio p{margin-top:14px;font-size:var(--txt);line-height:1.65;opacity:.8}
+.pv .duo img{width:100%;height:auto;display:block}
+.pv .meio{text-align:center;max-width:760px;margin:clamp(80px,9vw,140px) auto 0}
+.pv .livros{position:relative;overflow:hidden;margin:clamp(30px,3.5vw,48px) calc(-1*var(--pad)) 0;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.pv .livros .fila{display:flex;align-items:flex-end;gap:clamp(16px,1.6vw,26px);width:max-content;padding:20px 0 26px;animation:pv-corre 120s linear infinite}
+.pv .livros img{height:var(--livro-h);width:auto;display:block;box-shadow:0 22px 32px -16px rgba(25,8,8,.6)}
+@keyframes pv-corre{to{transform:translateX(-50%)}}
 
-  <figure class="mock-passe">
-      <img src="premium/mockup-assinatura.webp?v=202611071234" alt="Tudo que você acessa ao assinar"
-        width="794" height="485" decoding="async">
-    </figure>
-    <div class="passe" id="passe-home">
-    <div class="passe-topo">
-      <span class="passe-rot" id="passe-rot"></span>
-      <span class="passe-preco" id="passe-preco"></span>
+/* 3 · COMUNIDADE */
+.pv .comu{margin:clamp(46px,5.5vw,80px) calc(-1*var(--pad)) 0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.pv .comu .fita{display:flex;gap:16px;width:max-content;animation:pv-corre 80s linear infinite}
+.pv .comu .fita+.fita{margin-top:18px;animation-direction:reverse;animation-duration:96s}
+.pv .pe{flex:0 0 auto;width:var(--pe-w)}
+.pv .pe .q{position:relative;width:100%;aspect-ratio:150/190;overflow:hidden;background:#2a2020}
+.pv .pe .q::after{content:"";position:absolute;inset:7px;border:1px solid rgba(255,251,243,.55);pointer-events:none}
+.pv .pe img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06);transition:filter .5s,transform .7s}
+.pv .pe:hover img{filter:none;transform:scale(1.05)}
+.pv .pe .ini{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(160deg,#3a2a26,#1e1311);font:500 44px/1 'TRJN',Georgia,serif;color:var(--ouro2)}
+.pv .pe b{display:block;margin-top:10px;font:500 16px/1.15 'TRJN',Georgia,serif}
+.pv .pe span{display:block;margin-top:3px;font-size:11.5px;line-height:1.35;opacity:.55}
+
+/* 4 · LEITURA COMENTADA: o quadro da aula com o framework e, embaixo, só a barra de áudio */
+.pv .aula{max-width:1000px;margin:clamp(40px,5vw,70px) auto 0}
+.pv .aula .tela{position:relative;border-radius:10px;overflow:hidden;background:#111;box-shadow:0 44px 80px -44px rgba(25,8,8,.75),0 0 0 1px rgba(25,8,8,.08)}
+.pv .aula .tela{aspect-ratio:16/10;background:#2b2523}
+.pv .aula .tela img{position:absolute;left:2%;top:0;height:100%;width:auto;display:block;box-shadow:0 0 40px rgba(0,0,0,.35)}
+.pv .aula .tela .rosto{position:absolute;right:clamp(10px,1.6vw,20px);bottom:clamp(10px,1.6vw,20px);width:18.5%;aspect-ratio:480/266;object-fit:cover;border-radius:8px;box-shadow:0 14px 30px -10px rgba(0,0,0,.6);outline:2px solid rgba(255,255,255,.9)}
+.pv .aula .tela .ao{position:absolute;right:2%;top:16px;display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:30px;background:rgba(25,8,8,.82);color:#fff;font:800 10px/1 'FuturaCond',sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.pv .aula .tela .ao i{width:7px;height:7px;border-radius:50%;background:#e2382b;animation:pv-pisca 1.6s ease-in-out infinite}
+@keyframes pv-pisca{50%{opacity:.25}}
+.pv .ouca{display:flex;align-items:center;gap:clamp(14px,1.8vw,22px);margin-top:16px;padding:12px clamp(16px,2vw,26px) 12px 12px;border-radius:60px;background:var(--t);color:var(--f)}
+.pv .ouca .play{all:unset;cursor:pointer;flex:none;width:56px;height:56px;border-radius:50%;background:var(--ouro2);display:grid;place-items:center;transition:transform .2s}
+.pv .ouca .play:hover{transform:scale(1.07)}
+.pv .ouca .play::before{content:"";border-left:16px solid var(--t);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
+.pv .ouca.toca .play::before{border:0;margin:0;width:15px;height:18px;background:linear-gradient(90deg,var(--t) 0 5px,transparent 5px 10px,var(--t) 10px 15px)}
+.pv .ouca .rot{flex:none;font:800 11px/1.35 'FuturaCond',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro2);max-width:170px}
+.pv .ouca .onda{flex:1;min-width:0;height:44px;display:flex;align-items:center;gap:2px;cursor:pointer}
+.pv .ouca .onda i{flex:1;min-width:1px;border-radius:2px;background:rgba(255,251,243,.26);transform-origin:center;animation:pv-respira 2.4s ease-in-out infinite;animation-delay:calc(var(--k)*-.05s)}
+.pv .ouca .onda i.ja{background:var(--ouro2)}
+.pv .ouca.toca .onda i{animation-duration:.8s}
+@keyframes pv-respira{50%{transform:scaleY(.45)}}
+.pv .ouca .tm{flex:none;font-size:12.5px;opacity:.65;font-variant-numeric:tabular-nums}
+
+/* 5 · CONVIDADOS (coloridos) */
+.pv .conv{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,22px);margin-top:clamp(40px,5vw,70px)}
+.pv .cv4 .q{position:relative;aspect-ratio:3/4;overflow:hidden;background:#2a2020}
+.pv .cv4 .q::after{content:"";position:absolute;inset:9px;border:1px solid rgba(255,251,243,.6);pointer-events:none}
+.pv .cv4 video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s}
+.pv .cv4:hover video{transform:scale(1.05)}
+.pv .cv4 b{display:block;margin-top:14px;font:500 clamp(18px,1.6vw,23px)/1.1 'TRJN',Georgia,serif}
+.pv .cv4 .bio{display:block;margin-top:6px;font:800 10px/1.45 'FuturaCond',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro2)}
+.pv .cv4 .au{display:block;margin-top:7px;font:italic 500 15px/1.3 'TRJN',Georgia,serif;opacity:.8}
+
+/* 6 · CLUBE DE ESCRITA */
+.pv .proc{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.2vw,34px);margin-top:clamp(50px,6vw,90px)}
+.pv .proc .fio{position:absolute;left:12%;right:12%;top:calc(var(--ic)/2);height:2px;background:linear-gradient(90deg,var(--ouro) 50%,transparent 0) 0 0/14px 2px;transform:scaleX(0);transform-origin:left;transition:transform 2.2s cubic-bezier(.6,0,.2,1) .4s}
+.pv .proc.vis .fio{transform:scaleX(1)}
+.pv .et{position:relative;text-align:center}
+.pv .et .ic{position:relative;z-index:1;width:var(--ic);height:var(--ic);margin:0 auto;border-radius:50%;background:radial-gradient(circle at 50% 35%,#fff,#f6efe1);box-shadow:0 0 0 1px rgba(137,114,60,.35),0 0 0 9px var(--f),0 0 0 10px rgba(137,114,60,.18),0 30px 44px -30px rgba(25,8,8,.55);display:grid;place-items:center;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.pv .et:hover .ic{transform:translateY(-8px)}
+.pv .et .ic svg{width:60%;height:60%;overflow:visible}
+.pv .et .ic svg *{fill:none;stroke:var(--t);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1.8s ease calc(.4s + var(--i,0)*.2s)}
+.pv .et .ic svg .o{stroke:var(--ouro);stroke-width:2}
+.pv .et .ic svg .ch{fill:var(--ouro2);stroke:none;opacity:0;transition:opacity .8s 1.6s}
+.pv .et.vis .ic svg *{stroke-dashoffset:0}.pv .et.vis .ic svg .ch{opacity:.22}
+.pv .et .k{display:block;margin-top:20px;font:500 46px/.9 'TRJN',Georgia,serif;color:var(--ouro)}
+.pv .et h4{margin-top:8px;font:500 clamp(20px,1.7vw,24px)/1.15 'TRJN',Georgia,serif}
+.pv .et p{margin:10px auto 0;max-width:280px;font-size:15px;line-height:1.56;opacity:.78}
+.pv .coaut{margin-top:clamp(70px,8vw,120px);border-radius:28px;background:var(--t);color:var(--f);padding:clamp(26px,4vw,60px);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,60px);align-items:center}
+.pv .coaut h3{font:500 clamp(28px,2.7vw,42px)/1.05 'TRJN',Georgia,serif}
+.pv .coaut h3 em{font-style:italic;color:var(--ouro2)}
+.pv .coaut p{margin-top:14px;font-size:var(--txt);line-height:1.65;opacity:.8}
+.pv .coaut img{width:100%;height:auto;display:block}
+
+/* 7 · FUNDADOR: foto grande, nome em cursiva (modelo Interseções INT-07) e, embaixo, onde ele já esteve */
+.pv .fund{padding:0;background:var(--t);color:var(--f)}
+.pv .heroi{position:relative;min-height:min(92vh,880px);display:flex;align-items:flex-end;overflow:hidden}
+.pv .heroi img.foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;transform:scale(1.1);transition:transform 2.6s cubic-bezier(.2,.8,.2,1)}
+.pv .heroi.vis img.foto{transform:none}
+.pv .heroi::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(25,8,8,0) 35%,rgba(25,8,8,.94) 90%)}
+.pv .heroi .tx{position:relative;z-index:2;padding:0 var(--pad) clamp(40px,6vw,90px);max-width:1180px;margin:0 auto;width:100%}
+.pv .heroi .qm{font:italic 500 clamp(20px,1.8vw,26px)/1 'TRJN',Georgia,serif;opacity:.85}
+.pv .heroi h2{margin-top:8px;font:400 clamp(76px,10.5vw,180px)/.85 'Sloop',cursive;color:var(--ouro2)}
+.pv .heroi .tit{display:block;margin-top:16px;font:800 clamp(14px,1.3vw,18px)/1 'FuturaCond',sans-serif;letter-spacing:.3em;text-transform:uppercase}
+.pv .fund .corpo{padding:clamp(50px,6vw,90px) var(--pad) clamp(80px,9vw,140px)}
+.pv .fund .bio{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,80px);align-items:center}
+.pv .fund .bio p{font-size:var(--txt);line-height:1.72;opacity:.86}
+.pv .fund .bio p+p{margin-top:14px}
+.pv .fund .links{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:28px}
+.pv .fund .arroba{font:800 13px/1 'FuturaCond',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro2);text-decoration:none;padding:10px 4px}
+.pv .livroc{display:grid;grid-template-columns:clamp(120px,11vw,170px) 1fr;gap:22px;align-items:center;padding:20px;border-radius:20px;background:rgba(255,251,243,.06);text-decoration:none;transition:background .3s}
+.pv .livroc:hover{background:rgba(255,251,243,.1)}
+.pv .livroc img{width:100%;height:auto;display:block;box-shadow:0 20px 30px -16px rgba(0,0,0,.7);transition:transform .5s}
+.pv .livroc:hover img{transform:rotate(-2deg) translateY(-4px)}
+.pv .livroc b{display:block;font:500 clamp(22px,2vw,28px)/1.1 'TRJN',serif}
+.pv .livroc small{display:block;margin-top:8px;font-size:13.5px;line-height:1.5;opacity:.72}
+.pv .livroc em{display:inline-block;margin-top:14px;font:800 11.5px/1 'FuturaCond',sans-serif;font-style:normal;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro2)}
+.pv .rotulo-sec{display:block;margin:clamp(64px,7vw,110px) 0 26px;font:500 clamp(26px,2.4vw,36px)/1.1 'TRJN',Georgia,serif}
+.pv .rotulo-sec em{font-style:italic;color:var(--ouro2)}
+.pv .prints{display:grid}
+.pv .prints figure{margin:0;background:#fff;padding:8px;box-shadow:0 26px 40px -24px rgba(0,0,0,.85);transform:rotate(var(--r,0deg));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.pv .prints figure:hover{transform:rotate(0) translateY(-6px) scale(1.02)}
+.pv .prints img{width:100%;height:auto;display:block}
+.pv .prints figcaption{padding:10px 4px 2px;color:var(--t);font:800 10px/1.3 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.pv .pods{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pv .pods a{display:block;text-decoration:none}
+.pv .pods .q{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#2a2020}
+.pv .pods img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.pv .pods a:hover img{transform:scale(1.05)}
+.pv .pods .q::after{content:"";position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:rgba(175,145,83,.95) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M7 5l8 5-8 5z' fill='%23190808'/%3E%3C/svg%3E") center/22px no-repeat;transition:transform .3s}
+.pv .pods a:hover .q::after{transform:scale(1.1)}
+.pv .pods b{display:block;margin-top:14px;font:500 18px/1.25 'TRJN',serif}
+.pv .pods small{display:block;margin-top:6px;font-size:13px;opacity:.6}
+.pv .sobre{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px}
+.pv .cit{position:relative;margin:0;padding:clamp(28px,3vw,42px);border-radius:22px;background:var(--f);color:var(--t)}
+.pv .cit::before{content:"“";position:absolute;top:-6px;left:24px;font:500 110px/1 'TRJN',serif;color:var(--ouro)}
+.pv .cit p{position:relative;margin-top:30px;font:italic 500 clamp(20px,1.7vw,25px)/1.35 'TRJN',Georgia,serif}
+.pv .cit footer{display:flex;align-items:center;gap:12px;margin-top:24px}
+.pv .cit footer img{width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center 22%}
+.pv .cit footer .av0{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--ouro2);color:var(--t);font:500 18px/1 'TRJN',serif}
+.pv .cit footer b{display:block;font-size:15px;font-weight:600}
+.pv .cit footer small{display:block;font-size:12.5px;opacity:.6}
+.pv .vazio{opacity:.45;font-size:14px}
+
+/* redes: mockup dos perfis do Instagram + comentários */
+.pv .redes{display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:18px;margin-top:clamp(56px,6vw,90px);align-items:start}
+.pv .perfil{background:#fff;color:#111;border-radius:18px;padding:18px 18px 14px;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.pv .perfil .topo{display:flex;align-items:center;gap:16px}
+.pv .perfil .ava{flex:none;width:76px;height:76px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#f9a03f,#d62976 55%,#962fbf)}
+.pv .perfil .ava img{width:100%;height:100%;border-radius:50%;border:3px solid #fff;object-fit:cover;display:block}
+.pv .perfil .nums{display:flex;gap:14px;flex:1;justify-content:space-around;text-align:center}
+.pv .perfil .nums b{display:block;font-size:17px;font-weight:700}
+.pv .perfil .nums span{font-size:12.5px;color:#555}
+.pv .perfil .nome{margin-top:12px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:5px}
+.pv .perfil .nome i{display:inline-block;width:14px;height:14px;border-radius:50%;background:#0095f6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' stroke='white' stroke-width='2.4' fill='none'/%3E%3C/svg%3E") center/10px no-repeat}
+.pv .perfil .user{font-size:12.5px;color:#666;margin-top:1px}
+.pv .perfil .bio{margin-top:6px;font-size:13.5px;line-height:1.4;white-space:pre-line}
+.pv .perfil .grade{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:14px -18px -14px;border-radius:0 0 18px 18px;overflow:hidden}
+.pv .perfil .grade img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.pv .coms{background:#fff;color:#111;border-radius:18px;padding:8px 18px 4px;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.pv .coms h5{font-size:14px;font-weight:700;text-align:center;padding:10px 0 12px;border-bottom:1px solid #eee}
+.pv .com{display:grid;grid-template-columns:34px 1fr 16px;gap:11px;padding:13px 0;border-bottom:1px solid #f2f2f2}
+.pv .com:last-child{border-bottom:0}
+.pv .com .a{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#e9e3d8,#cfc4b0)}
+.pv .com b{font-size:12.5px;font-weight:600;color:#666}
+.pv .com p{margin-top:2px;font-size:14px;line-height:1.42}
+.pv .com .c{align-self:center;width:14px;height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-9.5-9.2C1 8.3 3.3 5 6.6 5c2 0 3.6 1.1 5.4 3 1.8-1.9 3.4-3 5.4-3 3.3 0 5.6 3.3 4.1 6.8C19.5 16.4 12 21 12 21z' fill='%23ed4956'/%3E%3C/svg%3E") center/contain no-repeat}
+/* manchetes em mosaico, sem fonte */
+.pv .prints{display:block;columns:4 220px;column-gap:18px;margin-top:clamp(56px,6vw,90px)}
+.pv .prints figure{break-inside:avoid;margin:0 0 18px;padding:0;background:#fff;border-radius:6px;overflow:hidden;transform:none}
+.pv .prints figure:hover{transform:translateY(-4px)}
+
+/* 8 · O QUE DIZEM OS ASSINANTES: três em destaque, o resto em carrossel de cartões; Instagram numa faixa à parte */
+.pv .dest{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(44px,5vw,70px);align-items:stretch}
+.pv .dep{position:relative;display:flex;flex-direction:column;padding:clamp(24px,2.4vw,34px);border-radius:22px;background:#fff;color:var(--t);box-shadow:0 0 0 1px var(--ln)}
+.pv .dep.v{background:var(--vinho);color:var(--f);box-shadow:none}
+.pv .dep.esc{background:#241414;color:var(--f);box-shadow:0 0 0 1px rgba(255,251,243,.1)}
+.pv .dep .aspa{font:500 70px/.6 'TRJN',serif;color:var(--ouro);height:30px}
+.pv .dep.v .aspa,.pv .dep.esc .aspa{color:var(--ouro2)}
+.pv .dep .tx{margin-top:14px;font-size:15px;line-height:1.58}
+.pv .dest .dep .tx{font:italic 500 clamp(17px,1.25vw,19px)/1.4 'TRJN',Georgia,serif}
+.pv .dep .inteiro{all:unset;cursor:pointer;align-self:flex-start;margin-top:12px;font:800 10.5px/1 'FuturaCond',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro);border-bottom:1px solid currentColor;padding-bottom:3px}
+.pv .dep.v .inteiro,.pv .dep.esc .inteiro{color:var(--ouro2)}
+.pv .dep .quem{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:20px}
+.pv .dep .av{flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--ouro2);color:var(--t);font:500 17px/1 'TRJN',serif}
+.pv .dep .av img{width:100%;height:100%;object-fit:cover}
+.pv .dep .quem b{display:block;font:500 17px/1.15 'TRJN',serif}
+.pv .dep .quem small{display:block;margin-top:2px;font-size:11.5px;opacity:.6}
+.pv .trilho{position:relative;align-items:flex-start;margin-top:18px;padding:0 var(--pad) 8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--pad);scrollbar-width:none;display:flex;gap:18px;margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad))}
+.pv .trilho::-webkit-scrollbar{display:none}
+.pv .trilho .dep{flex:0 0 min(340px,84vw);scroll-snap-align:start}
+.pv .trilho .dep .tx{font-size:15px;line-height:1.6}
+.pv .trilho .dep.curto .tx{font:italic 500 clamp(21px,1.7vw,25px)/1.35 'TRJN',Georgia,serif;margin-top:22px}
+.pv .trilho{align-items:stretch!important}
+.pv .setas{display:flex;justify-content:center;gap:12px;margin-top:24px}
+.pv .setas button{all:unset;cursor:pointer;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,251,243,.35);display:grid;place-items:center;font:500 22px/1 'TRJN',serif;transition:background .25s,color .25s}
+.pv .setas button:hover{background:var(--f);color:var(--t)}
+.pv .ig-tit{display:block;text-align:center;margin-top:clamp(64px,7vw,110px);font:500 clamp(26px,2.4vw,36px)/1.1 'TRJN',Georgia,serif}
+.pv .ig-tit em{font-style:italic;color:var(--ouro2)}
+.pv .ig{margin:30px calc(-1*var(--pad)) 0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.pv .ig .fita{display:flex;gap:14px;width:max-content;animation:pv-corre 120s linear infinite;align-items:flex-start}
+.pv .ig .fita+.fita{margin-top:14px;animation-direction:reverse;animation-duration:140s}
+.pv .ig:hover .fita{animation-play-state:paused}
+.pv .igc{flex:0 0 330px;padding:18px 20px;border-radius:16px;background:rgba(255,251,243,.06);border:1px solid rgba(255,251,243,.1)}
+.pv .igc .u{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600}
+.pv .igc .u::before{content:"";flex:none;width:24px;height:24px;border-radius:50%;background:linear-gradient(45deg,#f9a03f,#c13584 55%,#5b51d8);box-shadow:inset 0 0 0 2px #190808}
+.pv .igc p{margin-top:10px;font-size:14.5px;line-height:1.5;opacity:.9}
+.pv .modal{position:fixed;inset:0;z-index:9999;display:none;place-items:center;padding:20px;background:rgba(10,4,4,.72);backdrop-filter:blur(6px)}
+.pv .modal.on{display:grid}
+.pv .modal .caixa{position:relative;max-width:640px;width:100%;max-height:84vh;overflow:auto;padding:clamp(28px,4vw,46px);border-radius:22px;background:var(--f);color:var(--t)}
+.pv .modal .caixa p{margin-top:16px;font-size:16.5px;line-height:1.7;white-space:pre-line}
+.pv .modal .caixa b{font:500 24px/1.1 'TRJN',serif}
+.pv .modal .fecha{all:unset;cursor:pointer;position:absolute;right:18px;top:12px;font:500 32px/1 'TRJN',serif}
+
+/* 9 · OFERTAS: anual primeiro, com a lista inteira; no passe, a mesma lista com o que ele não tem riscado */
+.pv .planos{display:grid;grid-template-columns:1.12fr 1fr;gap:clamp(16px,2vw,26px);max-width:1080px;margin:clamp(44px,5vw,64px) auto 0;align-items:stretch}
+.pv .plano{position:relative;display:flex;flex-direction:column;padding:clamp(28px,3.2vw,46px);border-radius:24px;border:1px solid var(--ln);background:#fff}
+.pv .plano.anual{background:var(--t);color:var(--f);border-color:var(--t);box-shadow:0 40px 80px -40px rgba(25,8,8,.8)}
+.pv .plano .nm{font:500 clamp(28px,2.5vw,36px)/1.05 'TRJN',Georgia,serif}
+.pv .plano .pq{margin-top:8px;font-size:15px;line-height:1.55;opacity:.72}
+.pv .plano .parc{margin-top:26px;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.pv .plano .pr{margin-top:8px;font:500 clamp(58px,6vw,92px)/.9 'TRJN',Georgia,serif;letter-spacing:-.03em}
+.pv .plano.anual .pr{color:var(--ouro2)}
+.pv .plano .vista{margin-top:10px;font-size:15px;opacity:.75}
+.pv .plano .juros{margin-top:4px;font-size:12px;opacity:.5}
+.pv .plano ul{list-style:none;margin:26px 0 32px;padding-top:24px;border-top:1px solid var(--ln);display:grid;gap:12px}
+.pv .plano.anual ul{border-color:rgba(255,251,243,.14)}
+.pv .plano li{position:relative;padding-left:28px;font-size:15.5px;line-height:1.5}
+.pv .plano li::before{content:"";position:absolute;left:0;top:.42em;width:12px;height:7px;border-left:2px solid var(--ouro);border-bottom:2px solid var(--ouro);transform:rotate(-45deg)}
+.pv .plano.anual li::before{border-color:var(--ouro2)}
+.pv .plano li.nao{opacity:.34;text-decoration:line-through;text-decoration-thickness:1px}
+.pv .plano li.nao::before{border:0;width:12px;height:2px;top:.72em;background:currentColor;transform:none}
+.pv .plano .pbt{margin-top:auto;width:100%}
+.pv .plano .selo{position:absolute;top:-14px;left:30px;padding:7px 13px;border-radius:30px;background:var(--ouro2);color:var(--t);font:800 10.5px/1 'FuturaCond',sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.pv .garantia{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:30px;font-size:15.5px}
+.pv .garantia b{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;border:1px solid var(--ouro);font:500 22px/1 'TRJN',serif;color:var(--ouro)}
+
+/* 10 · PERGUNTAS */
+.pv .faq{max-width:860px;margin:clamp(40px,5vw,60px) auto 0}
+.pv .faq details{border-bottom:1px solid var(--ln)}
+.pv .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:24px 0;font:500 clamp(19px,1.7vw,24px)/1.25 'TRJN',Georgia,serif}
+.pv .faq summary::-webkit-details-marker{display:none}
+.pv .faq summary i{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--ln);position:relative;transition:transform .35s,background .3s}
+.pv .faq summary i::before,.pv .faq summary i::after{content:"";position:absolute;left:9px;right:9px;top:15px;height:1.5px;background:var(--t)}
+.pv .faq summary i::after{transform:rotate(90deg)}
+.pv .faq details[open] summary i{transform:rotate(45deg);background:var(--ouro2);border-color:var(--ouro2)}
+.pv .faq details p{padding:0 52px 26px 0;font-size:16.5px;line-height:1.66;opacity:.8}
+
+/* 11 · CHAMADA FINAL + RODAPÉ */
+.pv .final{text-align:center}
+.pv .final .chama{font:800 clamp(36px,5vw,76px)/1 'FuturaCond',sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.pv .final .chama span{display:inline-block;margin:0 .14em;font:400 clamp(46px,6vw,98px)/.6 'Sloop',cursive;text-transform:none;letter-spacing:0;color:var(--ouro2);vertical-align:-.04em}
+.pv .final h2{max-width:800px;margin:24px auto 0;font:500 clamp(22px,2.4vw,34px)/1.2 'TRJN',Georgia,serif;opacity:.9}
+.pv .rod{position:relative;z-index:60;background:#120606;color:rgba(255,251,243,.7);padding:56px var(--pad) 40px}
+.pv .rod .in{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.pv .rod img{height:28px}
+.pv .rod nav{display:flex;gap:22px;flex-wrap:wrap;font:800 11.5px/1 'FuturaCond',sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.pv .rod nav a{text-decoration:none}.pv .rod nav a:hover{color:var(--ouro2)}
+.pv .rod small{display:block;width:100%;font-size:12px;opacity:.5;margin-top:10px}
+
+/* computador: a foto do fundador vai para a direita, inteira na altura, e o nome fica à esquerda */
+@media (min-width:1100px){
+ .pv .heroi{min-height:min(94vh,900px);align-items:center}
+ .pv .heroi img.foto{left:38%;width:62%;object-position:center 42%}
+ .pv .heroi::after{background:linear-gradient(90deg,#190808 38%,rgba(25,8,8,.55) 50%,rgba(25,8,8,0) 66%),linear-gradient(0deg,#190808 0,rgba(25,8,8,0) 22%)}
+ .pv .heroi .tx{padding-bottom:0}
+}
+/* iPad (700 a 1099) */
+@media (max-width:1099px){
+ .pv{--num:clamp(64px,10vw,110px);--h2:clamp(30px,4.4vw,44px);--capa-w:165px;--livro-h:225px;--pe-w:136px;--ic:132px;--card-w:330px;--btn-h:54px;--btn-f:13px}
+ .pv .oq .txt{font-size:16px}
+ .pv .conv{grid-template-columns:repeat(2,1fr);gap:18px}
+ .pv .proc{grid-template-columns:1fr 1fr;row-gap:54px}
+ .pv .proc .fio{display:none}
+ .pv .dest{grid-template-columns:1fr 1fr}.pv .dest .dep:nth-child(3){grid-column:span 2}
+ .pv .pods{gap:14px}.pv .pods b{font-size:16px}
+ .pv .fund .bio{grid-template-columns:1fr}
+ .pv .redes{grid-template-columns:1fr 1fr}.pv .coms{grid-column:span 2}
+ .pv .livroc{max-width:560px}
+ .pv .heroi{min-height:70vh}
+}
+/* celular (até 699) */
+@media (max-width:699px){
+ .pv{--h2:29px;--txt:15.5px;--btn-h:50px;--btn-f:12.5px;--capa-w:138px;--livro-h:168px;--pe-w:116px;--ic:112px;--card-w:84vw}
+ .pv #o-que-e{border-radius:22px 22px 0 0}
+ .pv .cap{grid-template-columns:1fr;gap:12px}
+ .pv .cap .r{display:none}.pv .cap .n{font-size:60px;line-height:.9}
+ .pv .esp{grid-template-columns:1fr;min-height:0}
+ .pv .esp::after{display:none}
+ .pv .oq{padding:0;background:var(--f)}
+ .pv .oq h2{font-size:40px}
+ .pv .oq .txt{max-width:none;text-align:left;margin-top:26px}
+ .pv .duo,.pv .coaut{grid-template-columns:1fr}
+ .pv .conv{gap:12px}
+ .pv .cv4 .au{font-size:13.5px}
+ .pv .proc{grid-template-columns:1fr;row-gap:42px}
+ .pv .dest{grid-template-columns:1fr}.pv .dest .dep:nth-child(3){grid-column:auto}
+ .pv .pods{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(-1*var(--pad));padding:0 var(--pad)}
+ .pv .pods::-webkit-scrollbar{display:none}
+ .pv .pods a{flex:0 0 78vw;scroll-snap-align:start}
+ .pv .pods,.pv .prints{scroll-padding:0 var(--pad)}
+ .pv .prints{display:flex;align-items:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(-1*var(--pad));padding:10px var(--pad) 24px;gap:16px}
+ .pv .prints::-webkit-scrollbar{display:none}
+ .pv .prints figure{flex:0 0 80vw;scroll-snap-align:start;margin:0}
+ .pv .prints{columns:auto}
+ .pv .redes{grid-template-columns:1fr}.pv .coms{grid-column:auto}
+ .pv .planos{grid-template-columns:1fr}
+ .pv .ouca{padding-right:16px}.pv .ouca .rot{display:none}
+ .pv .pbt{min-width:72%;padding:0 22px}
+ .pv .heroi{min-height:74vh}
+ .pv .livroc{grid-template-columns:96px 1fr;gap:16px;padding:16px}
+ .pv .igc{flex-basis:270px}
+ .pv .faq details p{padding-right:0}
+
+ .pv .fund .links{flex-direction:column;align-items:stretch}.pv .fund .arroba{text-align:center}
+}
+
+/* ===== rodada 3 (08/11): botões dourados, aula no modelo do /assine, mídia em leque, redes, conexões entre dobras ===== */
+.pv .pbt,.pv .pbt.linha,.pv .pbt.ouro{background:var(--ouro2);border-color:var(--ouro2);color:var(--t)}
+.pv .pbt:hover,.pv .pbt.linha:hover,.pv .pbt.ouro:hover,.pv .escuro .pbt.linha:hover,.pv .fund .pbt.linha:hover{background:#c4a868;border-color:#c4a868;color:var(--t)}
+.pv .sec{padding:clamp(64px,7.5vw,124px) var(--pad)}
+.pv .claro{background:linear-gradient(180deg,#FFFBF3 0%,#FAF3E6 100%)}
+.pv .escuro{background:linear-gradient(180deg,#221010 0%,#170707 55%,#120505 100%)}
+.pv .claro::before,.pv .escuro::before{content:"";position:absolute;left:0;right:0;top:0;height:clamp(60px,8vw,120px);pointer-events:none}
+.pv .claro::before{background:linear-gradient(180deg,rgba(137,114,60,.10),rgba(137,114,60,0))}
+.pv .escuro::before{background:linear-gradient(180deg,rgba(175,145,83,.14),rgba(175,145,83,0))}
+.pv .esp{min-height:0}
+.pv .pg.esq{display:flex;flex-direction:column}
+.pv .pg.esq .fecho{margin-top:auto;padding-top:22px}
+/* aula: framework e o vídeo do Davi lado a lado, como no /assine (o vídeo encosta no canto do quadro) */
+.pv .aula{max-width:1080px}
+.pv .aula .palco{display:grid;grid-template-columns:1fr 1.12fr;align-items:end}
+.pv .aula .tela{aspect-ratio:auto;background:transparent;overflow:visible;box-shadow:none;outline:0;border-radius:0}
+.pv .aula .tela img{position:static;transform:none;height:auto;width:100%;border-radius:18px;background:#fff;padding:clamp(10px,1.4vw,18px);box-shadow:0 40px 70px -40px rgba(25,8,8,.55),0 0 0 1px rgba(137,114,60,.28)}
+.pv .aula .cam{position:relative;z-index:2;margin:0 0 -26px -2.5%;border-radius:16px;overflow:hidden;border:6px solid #fff;box-shadow:0 30px 50px -20px rgba(25,8,8,.6)}
+.pv .aula .cam video{width:100%;aspect-ratio:480/266;object-fit:cover;display:block}
+.pv .aula .cam span{position:absolute;left:10px;bottom:8px;font-size:12px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.pv .aula .ouca{margin-top:clamp(44px,4.5vw,60px)}
+/* mídia: três manchetes alinhadas lado a lado, com a mesma altura e sem corte (cada uma ocupa a largura do seu formato) */
+.pv .leque{display:flex;gap:clamp(12px,1.4vw,18px);align-items:flex-start;margin:clamp(56px,6vw,90px) auto 0}
+.pv .leque figure{flex:var(--ar) 1 0;min-width:0;margin:0;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 30px 50px -26px rgba(0,0,0,.85);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.pv .leque figure:hover{transform:translateY(-6px)}
+.pv .leque img{width:100%;height:auto;display:block}
+.pv .sobre{grid-template-columns:repeat(2,1fr);gap:clamp(28px,3vw,40px) clamp(18px,2vw,26px);margin-top:clamp(70px,7vw,110px)}
+.pv .cit::before{top:-.42em;left:18px;font-size:clamp(120px,10vw,150px);line-height:1}
+.pv .cit p{margin-top:clamp(14px,1.4vw,22px)}
+.pv .cit{display:flex;flex-direction:column}.pv .cit p{flex:1}.pv .cit footer{margin-top:22px}
+.pv .sobre .cit p{font-size:clamp(17px,1.35vw,20px)}
+/* redes: perfil + comentários, um ao lado do outro */
+.pv .redes2{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.pv .rede{background:#fff;color:#111;border-radius:20px;padding:22px 22px 8px;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.pv .rede .topo{display:flex;align-items:center;gap:16px;padding-bottom:16px;border-bottom:1px solid #eee}
+.pv .rede .ava{flex:none;width:72px;height:72px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#f9a03f,#d62976 55%,#962fbf)}
+.pv .rede .ava img{width:100%;height:100%;border-radius:50%;border:3px solid #fff;object-fit:cover;display:block}
+.pv .rede .quem b{display:flex;align-items:center;gap:5px;font-size:16px;font-weight:700}
+.pv .rede .quem b i{display:inline-block;width:15px;height:15px;border-radius:50%;background:#0095f6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' stroke='white' stroke-width='2.4' fill='none'/%3E%3C/svg%3E") center/10px no-repeat}
+.pv .rede .quem span{display:block;font-size:13px;color:#666;margin-top:2px}
+.pv .rede .seg{margin-left:auto;text-align:right}
+.pv .rede .seg b{display:block;font-size:22px;font-weight:700;white-space:nowrap}
+.pv .rede .seg span{white-space:nowrap}
+.pv .rede .quem{min-width:0}
+.pv .rede .seg span{font-size:12.5px;color:#666}
+.pv .rede .com{display:grid;grid-template-columns:30px 1fr 16px;gap:11px;padding:14px 0;border-bottom:1px solid #f2f2f2}
+.pv .rede .com:last-child{border-bottom:0}
+.pv .rede .com .a{width:30px;height:30px}
+@media (max-width:1099px){
+ .pv .sobre{grid-template-columns:1fr 1fr}
+ .pv .leque{flex-direction:column;align-items:center;gap:14px}
+ .pv .leque figure{flex:none;width:min(100%,560px)}
+ .pv .rede{padding:18px 16px 6px}.pv .rede .topo{gap:12px}.pv .rede .ava{width:56px;height:56px}.pv .rede .quem b{font-size:15px;white-space:nowrap}.pv .rede .seg b{font-size:18px}
+}
+@media (max-width:699px){
+ .pv .redes2{grid-template-columns:1fr}
+ .pv .sobre{grid-template-columns:1fr}
+ .pv .leque{flex-direction:column;gap:12px}
+ .pv .leque figure{flex:none;width:100%}
+ .pv .aula .palco{grid-template-columns:1fr}
+ .pv .aula .cam{width:84%;margin:14px auto 0}
+ .pv .esp .pg.esq .fecho{margin-top:22px}
+}
+
+/* rodada 3b (08/11): menos espaço entre o fim do fundador e os assinantes; aspas dentro do cartão com só a ponta para fora */
+.pv .fund .corpo{padding-bottom:0}
+.pv .fund{padding-bottom:clamp(64px,7.5vw,124px)!important}
+.pv #prova{padding-top:clamp(44px,4.5vw,72px);padding-bottom:clamp(64px,7.5vw,124px)}
+.pv #o-que-e .acoes{margin-top:clamp(36px,4vw,56px)}
+.pv .cit{padding-top:clamp(52px,4.6vw,64px)}
+.pv .cit::before{top:-.14em;left:20px;font-size:clamp(110px,9vw,136px);line-height:1}
+.pv .cit p{margin-top:0}
+.pv .trilho{padding-top:30px}
+.pv .trilho .dep{position:relative;padding-top:clamp(44px,4vw,54px)}
+.pv .trilho .dep{overflow:visible}
+.pv .trilho .dep .aspa{position:absolute;top:-.14em;left:20px;height:auto;font:500 104px/1 'TRJN',serif}
+.pv .trilho .dep .tx{margin-top:0}
+
+.pv .trilho .dep.mini{display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.pv .trilho .dep.mini .item{padding-bottom:14px;border-bottom:1px solid var(--ln)}
+.pv .trilho .dep.mini .item:last-child{border-bottom:0;padding-bottom:0}
+.pv .trilho .dep.mini .tx{font-size:15px;line-height:1.5}
+.pv .trilho .dep.mini .quem{padding-top:10px;margin-top:0}
+.pv .trilho .dep.mini .av{width:34px;height:34px}
+
+/* copy de 08/11: rótulos, aplicativo, ajustes de design pedidos junto */
+.pv .oq .fecho{font:italic 500 clamp(24px,2.1vw,32px)/1.25 'TRJN',Georgia,serif;color:var(--ouro);max-width:none}
+.pv .cap .rot{font-size:clamp(22px,2vw,30px)}
+.pv .ouca-tit{display:none;margin:22px 0 -4px;text-align:center;font:800 11.5px/1.4 'FuturaCond',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro)}
+.pv .cv4 b,.pv .cv4 .bio,.pv .cv4 .au{text-wrap:balance}
+.pv .cv4 .bio{min-height:2.9em}
+.pv .cv4 .au{min-height:2.6em}
+.pv .fund{padding-left:0!important;padding-right:0!important;padding-top:0!important}
+.pv .coaut{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr)}
+.pv .heroi{min-height:min(70vh,640px)}
+.pv .heroi img.foto{object-position:center 46%}
+.pv .bio1{max-width:880px}
+.pv .bio1 p{font-size:var(--txt);line-height:1.72;opacity:.86}
+.pv .bio1 p+p{margin-top:14px}
+.pv .app{padding-top:clamp(56px,6vw,96px);padding-bottom:0}
+.pv .appbox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,60px);align-items:center;padding:clamp(26px,3.5vw,52px);border-radius:28px;background:#fff;box-shadow:0 0 0 1px var(--ln),0 40px 70px -50px rgba(25,8,8,.5)}
+.pv .appbox .rot{display:block;font:italic 500 clamp(22px,2vw,30px)/1 'TRJN',Georgia,serif;color:var(--ouro);margin-bottom:12px}
+.pv .appbox h2{font:500 clamp(28px,2.8vw,42px)/1.05 'TRJN',Georgia,serif}
+.pv .appbox h2 em{font-style:italic;color:var(--ouro)}
+.pv .appbox p{margin-top:14px;font-size:var(--txt);line-height:1.65;opacity:.8}
+.pv .appbox img{width:100%;height:auto;display:block}
+.pv .lojas{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.pv .loja{display:inline-flex;flex-direction:column;justify-content:center;min-width:160px;padding:10px 18px;border-radius:12px;background:var(--t);color:var(--f);text-decoration:none}
+.pv .loja b{font-size:16px;font-weight:600}.pv .loja small{font-size:11.5px;opacity:.7}
+@media (max-width:1099px){.pv .heroi{min-height:56vh}.pv .appbox{grid-template-columns:1fr}}
+@media (max-width:699px){.pv .cv4 .au{min-height:3.9em}.pv .ouca-tit{display:block}.pv .heroi{min-height:62vh}.pv .heroi img.foto{object-position:center 38%}.pv .coaut{grid-template-columns:1fr}.pv .loja{flex:1;min-width:0}}
+/* auditoria de 09/11: todo botão de dobra com a mesma largura em cada tela (a do texto mais longo), lojas na altura do botão */
+.pv .pbt{min-width:360px;padding:0 28px}
+.pv .plano .pbt{min-width:0}
+.pv .loja{min-height:var(--btn-h);padding:6px 18px;border-radius:4px}
+@media (max-width:1099px){.pv .pbt{min-width:320px}}
+@media (max-width:699px){.pv .pbt{min-width:0;width:300px;max-width:100%;padding:0 18px}.pv .plano .pbt{width:100%}}
+
+/* ajustes finos de 09/11: tipografia (equilíbrio de linhas, sem palavra sozinha), aula no celular, app, planos, garantia, emblema */
+.pv h1,.pv h2,.pv h3,.pv .rot,.pv .chama,.pv .dica,.pv summary,.pv .ouca-tit,.pv .ouca .rot,.pv .fecho,.pv .nm,.pv .plano .parc,.pv .selo,.pv figcaption,.pv .cap .r,.pv .emblema span{text-wrap:balance}
+.pv p,.pv li,.pv blockquote,.pv .dep p,.pv small,.pv .vista,.pv .garantia span,.pv .faq details p{text-wrap:pretty}
+.pv .cap p,.pv .centro p,.pv .faq details p{max-width:64ch}
+.pv .centro p{margin-left:auto;margin-right:auto}
+.pv .centro p,.pv .dica,.pv .appbox p{text-wrap:balance}
+.pv .nobr{white-space:nowrap}
+@media (max-width:699px){
+ .pv{--h2:clamp(26px,7.2vw,31px);--txt:clamp(15px,4vw,16.5px)}
+ .pv .aula{display:flex;flex-direction:column}
+ .pv .aula .palco{display:contents}
+ .pv .aula .cam{order:1;width:100%;margin:0;border-width:5px}
+ .pv .aula .ouca-tit{order:2;margin:20px 0 0}
+ .pv .aula .ouca{order:3;margin-top:12px}
+ .pv .aula .tela{order:4;margin-top:22px}
+}
+/* aplicativo: o celular da App Store e as lojas com as marcas */
+.pv .appbox img.cel{width:auto;max-width:100%;max-height:min(560px,70vh);margin:0 auto;filter:drop-shadow(0 30px 40px rgba(25,8,8,.35))}
+.pv .loja{flex-direction:row;align-items:center;gap:10px;min-width:176px}
+.pv .loja svg{width:24px;height:24px;flex:none}
+.pv .loja span{display:flex;flex-direction:column;line-height:1.15}
+.pv .loja small{font-size:11px;opacity:.75}.pv .loja b{font-size:17px;font-weight:600}
+@media (max-width:699px){.pv .loja{min-width:0;padding:6px 12px;gap:8px}.pv .loja b{font-size:15px}.pv .appbox img.cel{max-height:440px}}
+/* planos: o 12x ao lado do preço */
+.pv .plano .pr .x{display:inline-block;margin-right:.14em;font:800 .36em/1 'FuturaCond',sans-serif;letter-spacing:.04em;vertical-align:.62em;color:var(--f)}
+.pv .plano .parc{margin-top:22px}
+/* garantia em verde, com escudo */
+.pv .garantia{gap:12px;width:fit-content;max-width:100%;margin:34px auto 0;padding:14px 22px 14px 16px;border-radius:60px;background:#E8F4EC;color:#1D5E3B;font-size:15.5px;line-height:1.4}
+.pv .garantia svg{width:34px;height:34px;flex:none;color:#2E8B57}
+.pv .garantia b{display:inline;width:auto;height:auto;border:0;border-radius:0;font:inherit;font-weight:700;color:inherit}
+/* rodapé com o losango */
+.pv .rod .emblema{display:flex;flex-direction:column;align-items:center;gap:16px;padding:12px 0 46px;margin-bottom:40px;border-bottom:1px solid rgba(255,251,243,.08)}
+.pv .rod .emblema img{height:clamp(64px,7vw,92px);width:auto}
+.pv .rod .emblema span{font:800 clamp(11px,1vw,13px)/1.5 'FuturaCond',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,251,243,.86);text-align:center;max-width:none}
+
+/* 09/11 tarde: rodapé centralizado com o losango original do Figma, CNPJ; app com o iPad da App Store */
+.pv .rod .emblema{padding:8px 0 34px;margin-bottom:30px}
+.pv .rod .emblema img{height:clamp(58px,6vw,80px)}
+.pv .rod .in{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:18px}
+.pv .rod nav{justify-content:center}
+.pv .rod .leg{font-size:12.5px;line-height:1.6;opacity:.62;max-width:62ch}
+.pv .rod .leg a{color:inherit}
+.pv .rod small{margin-top:0;opacity:.42}
+.pv .appbox img.cel{max-height:min(440px,58vh);border-radius:22px;filter:none;box-shadow:0 30px 60px -30px rgba(25,8,8,.55)}
+@media (max-width:699px){.pv .appbox img.cel{max-height:380px;border-radius:18px}}
+
+/* 09/11 noite: a segunda dobra no modelo do celular em todas as telas (Sobre a ETER, ecossistema,
+   botão, sumário, um embaixo do outro, na largura inteira) e a folha branca que sobe ao rolar */
+.pv #o-que-e{margin-top:calc(-1 * var(--sobe,0px));transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.pv #o-que-e.baixa{transform:translateY(var(--sobe,0px))}
+@media (prefers-reduced-motion:reduce){.pv #o-que-e{transition:none}.pv #o-que-e.baixa{transform:none}}
+.pv .oq{padding:0;background:var(--f)}
+.pv .livro3d{max-width:none;perspective:none}
+.pv .esp{display:block;min-height:0;box-shadow:none!important}
+.pv .esp::after{display:none}
+.pv .pg{padding-left:max(var(--pad),calc((100% - 1000px) / 2));padding-right:max(var(--pad),calc((100% - 1000px) / 2))}
+.pv .pg.esq{display:block;padding-top:clamp(64px,8vw,120px);padding-bottom:0;background:var(--f)}
+.pv .oq h2{font-size:clamp(44px,7.4vw,96px)}
+.pv .oq .fant{display:none}
+.pv .oq .txt{max-width:60ch;margin-top:clamp(26px,3.5vw,44px);font-size:clamp(16.5px,1.35vw,20px);text-align:left;hyphens:manual;-webkit-hyphens:manual}
+.pv .oq .txt::first-letter{padding-left:0}
+.pv .oq .fecho,.pv .pg.esq .fecho{margin-top:clamp(24px,3vw,36px);padding-top:0;max-width:34ch;font-size:clamp(24px,2.6vw,38px)}
+.pv #o-que-e .esp>.acoes{margin:0;padding:clamp(34px,4vw,52px) var(--pad) clamp(64px,8vw,110px);background:var(--f);text-align:center}
+.pv .pg.dir{padding-top:clamp(64px,8vw,120px);padding-bottom:clamp(64px,8vw,120px)}
+.pv .oq h3{font-size:clamp(44px,5vw,78px)}
+.pv .oq ol{max-width:1000px}
+.pv .oq li .n{font-size:clamp(40px,4.2vw,68px)}
+.pv .oq li .t{font-size:clamp(17px,1.6vw,24px)}
+
+/* 09/11 noite: o app num celular desenhado na própria página, sem fundo e sem corte, levemente de lado;
+   rodapé só com o logo e as notas */
+.pv .fone{position:relative;width:min(196px,62vw);margin:0 auto;aspect-ratio:540/1164;padding:9px;border-radius:46px;background:linear-gradient(145deg,#3a3a3c,#0d0d0e 40%,#1c1c1e);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.14),0 2px 0 1px #2a2a2c,0 40px 60px -28px rgba(25,8,8,.55),0 20px 30px -20px rgba(25,8,8,.35);transform:perspective(1400px) rotateY(-14deg) rotateX(3deg) rotateZ(1.5deg);transform-style:preserve-3d}
+.pv .fone::before{content:"";position:absolute;left:-3px;top:22%;width:3px;height:9%;border-radius:2px 0 0 2px;background:#2a2a2c;box-shadow:0 -14% 0 #2a2a2c}
+.pv .fone-tela{width:100%;height:100%;border-radius:38px;overflow:hidden;background:#000}
+.pv .fone-tela img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:1099px){.pv .appbox{grid-template-columns:minmax(0,1fr) auto;align-items:center}.pv .fone{width:150px;border-radius:32px;padding:6px}.pv .fone-tela{border-radius:27px}}
+@media (max-width:699px){.pv .appbox{grid-template-columns:1fr}.pv .fone{width:124px;border-radius:27px;padding:5px}.pv .fone-tela{border-radius:23px}}
+.pv .rod .emblema{border-bottom:0;margin-bottom:6px;padding-bottom:22px}
+</style>
+
+<div class="pv" id="pv">
+
+<!-- 1 · O QUE É A ETER: a revista se abre -->
+<section class="sec oq folha" id="o-que-e">
+  <div class="livro3d" id="pv-livro3d">
+    <div class="esp">
+      <div class="pg esq" data-a><span class="fant" aria-hidden="true">E</span>
+        <h2>Sobre a <em>ETER</em></h2>
+        <p class="txt">A ETER é uma plataforma editorial por assinatura para profissionais e empreendedores inteligentes que desejam ser mais reconhecidos e bem pagos pelo seu conhecimento e repertório, produzindo conteúdo profundo e autoral sem ficar presos às fórmulas genéricas do mercado, nem à dependência dos algoritmos de redes sociais que beneficiam a superficialidade.</p>
+        <p class="fecho">Um ecossistema completo construído para reunir, posicionar e amplificar as ideias de uma nova vanguarda intelectual brasileira.</p>
+      </div>
+      <div class="acoes" data-a><a class="pbt" href="#assinatura">Assine agora</a></div>
+      <div class="pg dir" data-a style="--i:2"><span class="fant" aria-hidden="true">R</span>
+        <h3>Sumário</h3>
+        <ol>
+          <li><a href="#revista"><span class="n">01</span><span class="r"></span><span class="t">Revista ETER</span><span class="s">↓</span></a></li>
+          <li><a href="#comunidade"><span class="n">02</span><span class="r"></span><span class="t">Comunidade Vanguarda</span><span class="s">↓</span></a></li>
+          <li><a href="#leitura"><span class="n">03</span><span class="r"></span><span class="t">Aulas semanais ao vivo</span><span class="s">↓</span></a></li>
+          <li><a href="#convidados"><span class="n">04</span><span class="r"></span><span class="t">Convidados mensais</span><span class="s">↓</span></a></li>
+          <li><a href="#clube"><span class="n">05</span><span class="r"></span><span class="t">Clube de Escrita</span><span class="s">↓</span></a></li>
+          <li><a href="#assinatura"><span class="n">06</span><span class="r"></span><span class="t">Sobre a Assinatura</span><span class="s">↓</span></a></li>
+        </ol>
+      </div>
     </div>
-    <ul class="passe-itens" id="passe-itens"></ul>
-    <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE</button>
-    <p class="passe-nota" id="passe-nota"></p>
   </div>
 </section>
 
-<footer class="pe">
-  <p><a href="bibliografia">Bibliografia</a> <i class="pt"></i> <a href="privacidade.html">Privacidade</a></p>
-  <p id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</p>
+<!-- 2 · REVISTA -->
+<section class="sec claro folha" id="revista">
+  <div class="in">
+    <div class="cap" data-a><span class="n">01</span><span class="r"></span><div><span class="rot">Revista ETER</span><h2>A base intelectual para construir seu <em>posicionamento</em></h2><p>Receba, toda semana, uma nova edição da nossa revista de cultura e comunicação, que une história, filosofia, psicologia, antropologia e negócios para te fornecer as bases teóricas e práticas para você se posicionar e produzir conteúdo de forma autoral, sendo reconhecido como um formador de opinião na sua área.</p></div></div>
+  </div>
+  <div class="capas" id="pv-capas" data-a style="--i:1"><div class="fila"></div></div>
+  <p class="dica">Clique em qualquer uma das capas, ou no botão abaixo, para conhecer as edições de perto e resgatar uma leitura gratuita.</p>
+  <div class="acoes" data-a><a class="pbt" href="biblioteca/">Ler uma edição gratuitamente</a></div>
+  <div class="in">
+    <div class="duo">
+      <div data-a><h3>Tenha ferramentas práticas para aplicar <em>imediatamente</em></h3><p>Todas as edições contam com frameworks e exercícios práticos imediatamente aplicáveis em qualquer modelo de negócio ou área profissional, pensados para facilitar sua vida nas mais diversas áreas, como produção de conteúdo, leitura de tendências e comunicação.</p></div>
+      <div data-a="gira" style="--i:1"><img src="segunda-dobra/mk/ferramentas-baralho.webp" alt="Frameworks das edições da ETER" loading="lazy"></div>
+    </div>
+    <div class="meio" data-a><h3>Uma revista fundamentada nas ideias mais relevantes da <em>história</em></h3><p>O conteúdo de cada uma das edições é embasado por cerca de 20 obras de alguns dos maiores pensadores da história da humanidade, conectando os mais distintos assuntos para formular nossas teses.</p><p>Acesse nossa bibliografia pública para conhecê&#8209;las&nbsp;profundamente.</p></div>
+  </div>
+  <div class="livros" data-a><div class="fila" id="pv-livros"></div></div>
+  <div class="acoes" data-a><a class="pbt linha" href="bibliografia/">Acessar bibliografia</a></div>
+</section>
+
+<!-- 3 · COMUNIDADE -->
+<section class="sec escuro folha" id="comunidade">
+  <div class="in"><div class="cap" data-a><span class="n">02</span><span class="r"></span><div><span class="rot">Comunidade Vanguarda</span><h2>Pense, discuta e faça negócio com profissionais e empreendedores <em>inteligentes</em></h2><p>Como membro da comunidade, você terá acesso ao nosso fórum fechado e ao grupo de membros no WhatsApp, fazendo parte de uma comunidade de mentes pensantes que estão construindo projetos únicos.</p></div></div></div>
+  <div class="comu" data-a style="--i:1"><div class="fita" id="pv-f1"></div><div class="fita" id="pv-f2"></div></div>
+  <div class="acoes" data-a><a class="pbt ouro" href="#assinatura">Fazer parte da Vanguarda</a></div>
+</section>
+
+<!-- 4 · LEITURA COMENTADA -->
+<section class="sec claro folha" id="leitura">
+  <div class="in">
+    <div class="cap" data-a><span class="n">03</span><span class="r"></span><div><h2>Aulas semanais ao <em>vivo</em></h2><p>Toda semana, Davi Ribas lê, explica, discute e tangibiliza as principais teses, ferramentas práticas e provocações filosóficas das nossas edições, mostrando como aplicá-las na sua realidade. Todas ficam gravadas, disponíveis em vídeo e áudio, para você consumir quando quiser.</p></div></div>
+    <div class="aula">
+      <div class="palco" data-a="gira">
+        <div class="tela"><img id="pv-quadro" src="segunda-dobra/mk/aula-v3-quadro-framework.jpg" alt="Framework Arquitetura de Canais, da ED011"></div>
+        <div class="cam"><video muted loop playsinline autoplay preload="auto" poster="segunda-dobra/mk/aula-v3-rosto.jpg" src="segunda-dobra/mk/aula-v3-rosto.mp4"></video><span>Davi Ribas</span></div>
+      </div>
+      <p class="ouca-tit" data-a>Aperte o play e ouça um trecho de uma das&nbsp;aulas</p>
+      <div class="ouca" id="pv-ouca" data-a style="--i:1">
+        <button class="play" type="button" aria-label="Ouvir um trecho da aula"></button>
+        <span class="rot">Aperte o play e ouça um trecho de uma das aulas</span>
+        <span class="onda" id="pv-onda"></span>
+        <span class="tm" id="pv-tm"></span>
+        <audio preload="metadata" id="pv-audio"><source src="segunda-dobra/mk/aula-v3.m4a" type="audio/mp4"></audio>
+      </div>
+    </div>
+    <div class="acoes" data-a><a class="pbt" href="#assinatura">Assinar a ETER</a></div>
+  </div>
+</section>
+
+<!-- 5 · CONVIDADOS -->
+<section class="sec escuro folha" id="convidados">
+  <div class="in">
+    <div class="cap" data-a><span class="n">04</span><span class="r"></span><div><span class="rot">Convidados mensais</span><h2>Tenha aulas exclusivas com grandes pensadores, empreendedores e figuras públicas com as ideias mais relevantes do <em>mercado</em></h2></div></div>
+    <div class="conv" id="pv-conv"></div>
+    <div class="acoes" data-a><a class="pbt ouro" href="#assinatura">Assine a ETER</a></div>
+  </div>
+</section>
+
+<!-- 6 · CLUBE DE ESCRITA -->
+<section class="sec claro folha" id="clube">
+  <div class="in">
+    <div class="cap" data-a><span class="n">05</span><span class="r"></span><div><span class="rot">Clube de Escrita</span><h2>Onde seu repertório se transforma em reconhecimento e <em>dinheiro</em></h2><p>Tenha o Editor-Chefe da ETER e seu time, juntamente com os membros da comunidade, te ajudando a escrever conteúdos profundos, publicar no seu próprio canal editorial e divulgar nas redes sociais para construir uma audiência qualificada, engajada e compradora, sem depender exclusivamente dos algoritmos.</p></div></div>
+    <div class="proc" id="pv-proc" data-a>
+      <span class="fio" aria-hidden="true"></span>
+      <div class="et" data-a style="--i:1"><div class="ic"><svg viewBox="0 0 64 64"><rect class="ch" x="16" y="9" width="28" height="40" rx="2"/><rect x="14" y="7" width="30" height="42" rx="2"/><path d="M20 17h18M20 24h18M20 31h12M20 38h8"/><path class="o" d="M40 40l12-12 5 5-12 12-6 1z"/><path class="o" d="M48 32l5 5"/></svg></div><span class="k">01</span><h4>Você escreve</h4><p>Tenha clareza do que escrever e estruture suas ideias com a ajuda do nosso manual de escrita, sendo acompanhado pelo Editor-Chefe da ETER em reuniões quinzenais.</p></div>
+      <div class="et" data-a style="--i:2"><div class="ic"><svg viewBox="0 0 64 64"><rect class="ch" x="10" y="10" width="30" height="40" rx="2"/><rect x="8" y="8" width="30" height="40" rx="2"/><path d="M14 17h18M14 24h18M14 31h12"/><path class="o" d="M14 38h14"/><circle class="o" cx="47" cy="44" r="10"/><path class="o" d="M42 44l4 4 6-7"/></svg></div><span class="k">02</span><h4>Os textos são revisados</h4><p>Tenha seus textos revisados pelos editores da ETER e por revisores da comunidade, que te ajudam a melhorar suas ideias e sua escrita de forma contínua.</p></div>
+      <div class="et" data-a style="--i:3"><div class="ic"><svg viewBox="0 0 64 64"><rect class="ch" x="8" y="12" width="48" height="40" rx="3"/><rect x="6" y="10" width="48" height="40" rx="3"/><path d="M6 18h48"/><circle class="o" cx="19" cy="31" r="6"/><path d="M30 28h17M30 34h11M13 43h34"/></svg></div><span class="k">03</span><h4>Você publica em seu próprio canal</h4><p>Tenha um canal editorial próprio, feito para receber seu melhor conteúdo, onde você é dono da sua audiência e não depende dos algoritmos.</p></div>
+      <div class="et" data-a style="--i:4"><div class="ic"><svg viewBox="0 0 64 64"><rect class="ch" x="24" y="6" width="18" height="22" rx="2"/><rect x="22" y="4" width="18" height="22" rx="2"/><path d="M26 11h10M26 16h10M26 21h6"/><path class="o" d="M31 26v6M31 32L13 42M31 32l18 10M31 32v10"/><rect x="5" y="42" width="16" height="16" rx="3"/><rect x="23" y="42" width="16" height="16" rx="3"/><rect x="41" y="42" width="16" height="16" rx="3"/><path class="o" d="M29 47l5 3-5 3z"/></svg></div><span class="k">04</span><h4>Divulgue nas redes&nbsp;sociais</h4><p>Utilizando nossos manuais e formatos validados de conteúdo, transforme seus textos profundos em conteúdos de consumo rápido para as redes sociais, feitos para atrair público qualificado para seu canal editorial.</p></div>
+    </div>
+    <div class="coaut" data-a>
+      <div><h3>Possibilidade de coautoria na revista <em>semanal</em></h3><p>Os membros de maior destaque podem ter seus melhores textos publicados como capítulos da revista, ou até mesmo se tornarem edições completas em colaboração com os canais da ETER.</p></div>
+      <img src="segunda-dobra/mk/clube-leque.webp" alt="Capítulos assinados por membros dentro das edições" loading="lazy" data-a="gira" style="--i:1">
+    </div>
+    <div class="acoes" data-a><a class="pbt" href="#assinatura">Assinar agora</a></div>
+  </div>
+</section>
+
+<!-- 7 · FUNDADOR -->
+<section class="sec fund folha" id="fundador">
+  <div class="heroi" id="pv-heroi">
+    <img class="foto" id="pv-foto" src="autoridade/v2/fotos/principal.jpg" alt="Davi Ribas" onerror="this.onerror=null;this.src='img/davi-c.webp'">
+    <div class="tx"><span class="qm">Quem é</span><h2>Davi Ribas</h2><span class="tit">O fundador da ETER</span></div>
+  </div>
+  <div class="corpo"><div class="in">
+    <div class="bio bio1" data-a>
+      <p>Davi Ribas é escritor, empresário e artista. Autor do best-seller "Marketing Ideológico", publicado pela Editora Gente em 2024, e conselheiro direto de algumas das figuras públicas e formadores de opinião mais relevantes do Brasil.</p>
+      <p>Com passagens pela política, cinema, teatro e literatura, tornou-se conhecido por suas análises profundas e personalidade provocadora, sendo hoje uma figura amplamente conhecida no cenário do empreendedorismo digital brasileiro.</p>
+    </div>
+    <div class="sobre" id="pv-sobre" data-a></div>
+    <div class="acoes" data-a><a class="pbt" href="#assinatura">Assine a ETER</a></div>
+    <div class="leque" id="pv-prints" data-a></div>
+    <span class="rotulo-sec" data-a>Podcasts e <em>entrevistas</em></span>
+    <div class="pods" id="pv-pods" data-a></div>
+    <span class="rotulo-sec" data-a>Davi Ribas e ETER nas <em>redes sociais</em></span>
+    <div class="redes2" data-a><div class="rede" id="pv-r1"></div><div class="rede" id="pv-r2"></div></div>
+    <div class="acoes" data-a><a class="pbt" href="#assinatura">Assine a ETER</a></div>
+  </div>
+  </div>
+</section>
+
+<!-- 8 · O QUE DIZEM OS ASSINANTES -->
+<section class="sec escuro folha" id="prova">
+  <div class="in">
+    <div class="centro" data-a><h2>O que dizem nossos <em>assinantes</em></h2><p>Veja o que alguns dos membros da nossa comunidade dizem com as próprias palavras.</p></div>
+  </div>
+  <div class="trilho" id="pv-trilho"></div>
+  <div class="setas"><button type="button" id="pv-esq" aria-label="Anteriores">←</button><button type="button" id="pv-dir" aria-label="Próximos">→</button></div>
+  <div class="acoes" data-a><a class="pbt" href="#assinatura">Assine a ETER</a></div>
+  <div id="pv-fim-prova"></div>
+  <div class="modal" id="pv-modal" role="dialog" aria-modal="true"><div class="caixa"><button class="fecha" type="button" aria-label="Fechar">×</button><b></b><p></p></div></div>
+</section>
+
+<!-- 8b · APLICATIVO -->
+<section class="sec claro folha app" id="app">
+  <div class="in"><div class="appbox" data-a>
+    <div><h2>Aplicativo ETER <em>Brasil</em></h2><p>Baixe nosso aplicativo para iOS e Android para acessar as edições, aulas, audiorrevistas exclusivas e ter acesso a funcionalidades exclusivas quando e onde quiser.</p>
+      <div class="lojas"><a class="loja" href="https://apps.apple.com/br/app/eter-brasil/id6816236006" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Baixar na</small><b>App Store</b></span></a><a class="loja" href="https://play.google.com/store/apps/details?id=br.com.eterbrasil" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.523 15.341c-.551 0-.999-.449-.999-1s.448-.999.999-.999c.551 0 .999.448.999.999 0 .551-.448 1-.999 1m-11.046 0c-.551 0-.999-.449-.999-1s.448-.999.999-.999c.551 0 .999.448.999.999 0 .551-.448 1-.999 1m11.405-6.02 1.997-3.459a.416.416 0 0 0-.152-.568.416.416 0 0 0-.568.152l-2.022 3.503C15.59 8.244 13.853 7.851 12 7.851s-3.59.393-5.137 1.099L4.841 5.447a.416.416 0 0 0-.568-.152.416.416 0 0 0-.152.568l1.997 3.459C2.689 11.187.343 14.659 0 18.761h24c-.344-4.102-2.69-7.574-6.118-9.44"/></svg><span><small>Disponível no</small><b>Google Play</b></span></a></div></div>
+    <div class="fone" aria-label="Tela inicial do aplicativo ETER Brasil, como aparece na App Store"><div class="fone-tela"><img src="app/tela-app.webp?v=2" alt="" loading="lazy"></div></div>
+  </div></div>
+</section>
+
+<!-- 9 · OFERTAS -->
+<section class="sec claro folha" id="assinatura">
+  <div class="in">
+    <div class="centro" data-a><h2>Escolha seu plano e assine <em>agora</em></h2><p>Assine o plano anual ou adquira o passe de 30 dias para experimentar e decidir do lado&nbsp;de&nbsp;dentro.</p></div>
+    <div class="planos">
+      <div class="plano anual" data-a style="--i:1">
+        <span class="selo">Melhor oferta</span>
+        <span class="nm">Plano anual</span>
+        <span class="parc">assinatura de 12 meses</span>
+        <span class="pr" id="pv-parcela"><b class="x">12x</b>R$97,04</span>
+        <span class="vista">ou R$997 à vista</span>
+        <ul id="pv-lista-anual"></ul>
+        <a class="pbt ouro" id="pv-anual" href="https://wa.me/5543984845551" target="_blank" rel="noopener">Assinar o plano anual</a>
+      </div>
+      <div class="plano" data-a style="--i:2">
+        <span class="nm">Passe de 30 dias</span>
+        <span class="parc">cobrança única</span>
+        <span class="pr">R$97</span>
+        <span class="vista">acesso por 30 dias</span>
+        <ul id="pv-lista-passe"></ul>
+        <a class="pbt linha" href="https://clkdmg.site/pay/passe-de-30-dias">Comprar o passe</a>
+      </div>
+    </div>
+    <p class="garantia" data-a><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2 4 5.3v6.1c0 5 3.4 9.3 8 10.4 4.6-1.1 8-5.4 8-10.4V5.3z" fill="currentColor"/><path d="m8.3 12.1 2.6 2.6 4.9-5.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Em ambos os planos, você tem 7&nbsp;dias de&nbsp;garantia.</span></p>
+  </div>
+</section>
+
+<!-- 10 · PERGUNTAS -->
+<section class="sec claro folha" id="perguntas">
+  <div class="in">
+    <div class="centro" data-a><h2>Perguntas <em>frequentes</em></h2></div>
+    <div class="faq" data-a style="--i:1">
+      <details name="pv-faq" open><summary>A ETER funciona para a minha área de atuação?<i></i></summary><p>Sim. A ETER é feita para empreendedores de negócios físicos ou digitais, profissionais liberais e criadores de conteúdo que desejam ser mais reconhecidos e bem pagos pelo que sabem e pelo que pensam, através da criação de conteúdo. Todas as edições, aulas, frameworks e ferramentas práticas se aplicam a qualquer nicho, área profissional ou segmento de mercado, porque são baseadas em fontes e fundamentos validados.</p></details>
+      <details name="pv-faq"><summary>Quanto tempo preciso dedicar por semana?<i></i></summary><p>Cerca de 30 minutos, que é o tempo de ler uma edição. Todas as aulas ao vivo ficam gravadas, com versão em áudio, para você assistir no dia e na hora que quiser. E, sempre que tiver uma dúvida, o time e a comunidade estão disponíveis para te ajudar.</p></details>
+      <details name="pv-faq"><summary>Qual é a diferença entre o passe de 30 dias e o plano anual?<i></i></summary><p>O passe custa R$97 em cobrança única e serve para você conhecer a experiência da plataforma, com a revista nova toda semana, o acervo e as aulas semanais ao vivo, sem se comprometer por 12 meses. Gostando do conteúdo, o plano anual libera tudo isso pelo ano inteiro e acrescenta as aulas mensais com convidados, a comunidade com fórum fechado e grupo do WhatsApp e o Clube de Escrita, em que o nosso time te ajuda a escrever, revisar e publicar no seu canal.</p></details>
+      <details name="pv-faq"><summary>A ETER é um curso ou entrega fórmulas prontas?<i></i></summary><p>A ETER é leitura contínua, discussão entre os membros e publicação de artigos, para quem já cansou de informação rasa. Você recebe repertório fundamentado em algumas das obras mais relevantes da história, frameworks práticos validados em diversos setores, um time editorial pronto para te ajudar a escrever, revisar e publicar o seu conteúdo e uma comunidade engajada de pessoas inteligentes.</p></details>
+      <details name="pv-faq"><summary>O que acontece depois dos 30 dias do passe?<i></i></summary><p>O passe não renova, porque a cobrança é única, e o acesso termina no fim dos 30 dias. Para continuar recebendo o conteúdo toda semana, basta assinar o plano anual, que também libera as aulas mensais com convidados, a comunidade e o Clube de Escrita.</p></details>
+      <details name="pv-faq"><summary>Como funciona a garantia de 7 dias?<i></i></summary><p>O passe e o plano anual têm garantia de 7 dias. Você entra, lê as edições, conhece o acervo e decide na primeira semana se quer manter a assinatura.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer class="rod">
+  <div class="emblema"><img src="app/losango-eter.png" alt="ETER"></div>
+  <div class="in">
+    <p class="leg">© 2026 ETER COMPANY LTDA · CNPJ 37.223.854/0001-47 · Todos os direitos reservados · <a href="https://eterbrasil.com/revista/privacidade/">Política de privacidade</a></p>
+    <small>Como Associada Amazon, a ETER recebe por compras qualificadas.</small></div>
 </footer>
+</div>
 
 <script>
-/* A HOME. Ela não é a página de uma edição: é a porta da casa. Diz o que a
-   ETER é, mostra o acervo como prateleira, e oferece as duas saídas — a
-   leitura gratuita (que passa pela biblioteca, onde a pessoa escolhe) e o
-   passe. Tudo que é preço, item e edição vem do mesmo edicoes.json que a
-   porta usa: nada de oferta escrita em dois lugares. */
-(async () => {
-  let D;
-  try { D = await (await fetch('edicoes.json?v=202611071234')).json(); }
-  catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
+(()=>{
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const FOTO=/[?&]foto/.test(location.search),CEL=()=>matchMedia('(max-width:699px)').matches;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}}),{threshold:.14,rootMargin:'0px 0px -6% 0px'});
+const observa=()=>document.querySelectorAll('.pv [data-a]:not(.vis),#pv-heroi:not(.vis)').forEach(el=>FOTO?el.classList.add('vis'):io.observe(el));
 
-  const C = D.config, P = D.passe;
-  const BASE = C.baseImagens || './';
-  const pub = D.edicoes.filter(e => e.paginas);
+const pv=$('#pv');
+// posição real de uma parte (sem o efeito do sticky)
+function posDe(el){let sec=el.closest('.pv>section,.pv>footer');if(!sec)return el.getBoundingClientRect().top+scrollY;let y=pv.offsetTop;for(let s=pv.firstElementChild;s&&s!==sec;s=s.nextElementSibling)if(s.matches('section,footer'))y+=s.offsetHeight;return y+(el===sec?0:el.offsetTop)}
+function rolaAte(y,ms){const y0=scrollY,d=y-y0,t0=performance.now();document.documentElement.style.scrollBehavior='auto';return new Promise(ok=>{function p(t){const k=Math.min(1,(t-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;scrollTo(0,y0+d*e);k<1?requestAnimationFrame(p):ok()}requestAnimationFrame(p)})}
+document.addEventListener('click',async e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href').slice(1);
+  if(id==='topo'){e.preventDefault();rolaAte(0,900);return}
+  const alvo=document.getElementById(id);if(!alvo||!pv.contains(alvo))return;e.preventDefault();
+  if(id==='assinatura'){ // o Assine passa pelo fim dos depoimentos e desce devagar até a oferta
+    const yOf=posDe(alvo),yFim=posDe($('#pv-fim-prova'))-innerHeight*.8;
+    document.documentElement.style.scrollBehavior='auto';
+    if(scrollY<yFim-10){scrollTo(0,yFim);await new Promise(r=>setTimeout(r,500))}
+    await rolaAte(posDe(alvo),1800);return}
+  rolaAte(posDe(alvo),900)});
 
-  /* O CARROSSEL: as capas, da primeira à última, correndo em volta infinita.
-     Roda sozinho, o leitor arrasta para os dois lados, a capa sob o mouse
-     (ou sob o dedo) cresce, e o clique abre a edição. */
-  const ordem = pub.slice().sort((a, b) => a.n.localeCompare(b.n));
-  const capaHTML = e => `<a class="car-capa" href="${e.n}" title="${e.titulo}" draggable="false">
-      <img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp"
-        srcset="${BASE}edicoes/${e.n}/paginas/p001@240.webp 240w, ${BASE}edicoes/${e.n}/paginas/p001@800.webp 800w"
-        sizes="(min-width:60rem) 8.4rem, 7rem" alt="${e.titulo}" width="240" height="339" decoding="async" draggable="false"></a>`;
-  const pr = document.getElementById('prateleira');
-  pr.classList.add('carrossel');
-  pr.innerHTML = `<div class="car-fita">${ordem.map(capaHTML).join('').repeat(3)}</div>`;
-  (() => {
-    const t = pr, f = t.firstElementChild;
-    const volta = () => f.scrollWidth / 3;
-    const lento = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    let parado = false, baixo = false, arrastou = false, x0 = 0, s0 = 0, pos = 0, tempo = 0, apaga = 0;
-    const retoma = ms => { clearTimeout(tempo); tempo = setTimeout(() => { parado = false; }, ms); };
-    const semDestaque = () => t.querySelectorAll('.car-capa.ativa').forEach(x => x.classList.remove('ativa'));
-    requestAnimationFrame(() => { pos = volta(); t.scrollLeft = pos; });
-    /* o destaque do toque: no celular não existe mouse em cima, então a capa
-       que o dedo pousa cresce; se o dedo arrasta a fita, o destaque sai */
-    t.addEventListener('pointerdown', e => {
-      const a = e.target.closest('.car-capa');
-      if (e.pointerType !== 'mouse' && a) { clearTimeout(apaga); semDestaque(); a.classList.add('ativa'); }
-      if (e.pointerType !== 'mouse') return;
-      baixo = true; arrastou = false; parado = true; x0 = e.clientX; s0 = t.scrollLeft;
-    });
-    t.addEventListener('pointercancel', () => { semDestaque(); });
-    t.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') { clearTimeout(apaga); apaga = setTimeout(semDestaque, 900); } });
-    t.addEventListener('pointermove', e => {
-      if (!baixo) return;
-      const d = e.clientX - x0;
-      if (Math.abs(d) > 6) { arrastou = true; t.classList.add('arrastando'); }
-      if (arrastou) { t.scrollLeft = s0 - d; pos = t.scrollLeft; }
-    });
-    addEventListener('pointerup', () => { if (!baixo) return; baixo = false; t.classList.remove('arrastando'); retoma(1600); });
-    /* arrastar não é clicar: quem soltou a fita não abre a edição sem querer */
-    t.addEventListener('click', e => { if (arrastou) { e.preventDefault(); e.stopPropagation(); arrastou = false; } }, true);
-    t.addEventListener('mouseenter', () => { parado = true; clearTimeout(tempo); });
-    t.addEventListener('mouseleave', () => { if (!baixo) retoma(400); });
-    t.addEventListener('touchstart', () => { parado = true; clearTimeout(tempo); }, { passive: true });
-    t.addEventListener('touchmove', () => { semDestaque(); }, { passive: true });
-    t.addEventListener('touchend', () => retoma(1600), { passive: true });
-    t.addEventListener('scroll', () => { if (parado) pos = t.scrollLeft; }, { passive: true });
-    const passo = () => {
-      /* o navegador arredonda scrollLeft: a posição corre em ponto flutuante */
-      if (!parado && !lento) { pos -= 0.45; t.scrollLeft = Math.round(pos); }
-      const v = volta();
-      if (pos < v * 0.5) { pos += v; t.scrollLeft = Math.round(pos); }
-      else if (pos > v * 1.5) { pos -= v; t.scrollLeft = Math.round(pos); }
-      requestAnimationFrame(passo);
-    };
-    requestAnimationFrame(passo);
-  })();
-  document.querySelectorAll('#prateleira img').forEach(i => i.decode?.().catch(() => {}));
-  /* o mesmo motivo das provas: o Chrome baixa e não rasteriza sozinho */
-  document.querySelectorAll('.mock-passe img').forEach(i => i.decode?.().catch(() => {}));
+// 2 · revista: carrossel das 14 capas
+const C=[];for(let e=14;e>=1;e--)C.push(String(e).padStart(3,'0'));
+const capas=$('#pv-capas'),fila=capas.firstElementChild;
+fila.innerHTML=C.concat(C).map(c=>`<a href="./${c}/" draggable="false"><img src="img/capas/${c}.webp" alt="Capa da edição ${c}" loading="lazy"></a>`).join('');
+let x=0,arr=false,mov=0,x0=0,p0=0,parado=false;
+(function passo(){if(!arr&&!parado)x-=.4;const m=fila.scrollWidth/2;if(m){if(x<=-m)x+=m;if(x>0)x-=m}fila.style.transform=`translateX(${x}px)`;requestAnimationFrame(passo)})();
+capas.addEventListener('pointerdown',e=>{arr=true;mov=0;x0=e.clientX;p0=x;capas.classList.add('arr')});
+addEventListener('pointermove',e=>{if(!arr)return;mov=Math.abs(e.clientX-x0);x=p0+(e.clientX-x0)});
+addEventListener('pointerup',()=>{arr=false;capas.classList.remove('arr')});
+capas.addEventListener('click',e=>{if(mov>6){e.preventDefault();mov=0}},true);
+capas.addEventListener('mouseenter',()=>parado=true);capas.addEventListener('mouseleave',()=>parado=false);
+const L=["00","02","04","06","08","10","12","14","16","18","20","22","24","26","28","31","34","40","42","45","47","x03","x05","x07","x10","x13"];
+$('#pv-livros').innerHTML=L.concat(L).map(l=>`<img src="img/livros/${l}.webp" alt="" loading="lazy">`).join('');
 
-  /* o passe, montado do catálogo */
-  const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
-  document.getElementById('passe-rot').innerHTML = pontos(P.rotulo.replace('Passe ETER · ', 'Passe · '));
-  document.getElementById('passe-preco').textContent = C.precoPasse;
-  document.getElementById('passe-itens').innerHTML = P.itens
-    .map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('');
-  document.getElementById('passe-nota').textContent =
-    [P.condicao, P.credito].filter(Boolean).join(' ');
+// 3 · comunidade (e as fotos dos membros que também deram depoimento)
+let MEMBROS=[];
+Promise.all([fetch('segunda-dobra/membros-v2/dados.tsv').then(r=>r.text()),fetch('segunda-dobra/membros/dados.tsv').then(r=>r.text())]).then(([t2,t1])=>{
+  const le=(t,pasta)=>t.trim().split('\n').map(l=>l.split('\t')).filter(x=>x[2]&&x[2].trim()).map(x=>[x[0].trim(),(x[1]||'').trim(),`segunda-dobra/${pasta}/${x[2].trim()}.webp`]);
+  const v2=le(t2,'membros-v2'),v1=le(t1,'membros');
+  // mural completo da plataforma (membros-v2: nome, profissão e foto de rosto) + a Amanda, que tem profissão na lista antiga e no próprio depoimento
+  MEMBROS=v2.concat(v1.filter(m=>m[0]==='Amanda Rodrigues'));
+  const card=m=>`<div class="pe"><div class="q">${m[2]?`<img src="${m[2]}" alt="" loading="lazy">`:`<span class="ini">${esc(m[0].split(/\s+/).slice(0,2).map(x=>x[0]).join(''))}</span>`}</div><b>${esc(m[0])}</b><span>${esc(m[1])}</span></div>`;
+  // quem tem nome e profissão mas não tem foto no mural entra com as iniciais (pedido do Rei 08/11: todos com nome e profissão)
+  const SEMFOTO=t1.trim().split('\n').map(l=>l.split('\t')).filter(x=>(x[1]||'').trim()&&!(x[2]||'').trim()).map(x=>[x[0].trim(),x[1].trim(),null]);
+  const COM=MEMBROS.filter(m=>m[1]); // só quem tem foto de rosto (pedido do Rei, 08/11)
+  $('#pv-f1').innerHTML=COM.filter((_,i)=>i%2===0).map(card).join('').repeat(3);$('#pv-f2').innerHTML=COM.filter((_,i)=>i%2===1).map(card).join('').repeat(3);
+}).catch(()=>{}).finally(provaSocial);
 
-  const e = C.empresa || {};
-  const pe = document.getElementById('pe-empresa');
-  if (e.razaoSocial) pe.innerHTML = [e.razaoSocial, e.cnpj && 'CNPJ ' + e.cnpj]
-    .filter(Boolean).join(' <i class="pt"></i> ');
+// 4 · ouça uma aula: só a barra de áudio que se mexe
+const ouca=$('#pv-ouca'),au=$('#pv-audio'),onda=$('#pv-onda'),tm=$('#pv-tm');let bars=[];
+function desenha(P){onda.innerHTML=P.map((p,k)=>`<i style="height:${Math.round(14+p*86)}%;--k:${k}"></i>`).join('');bars=[...onda.children]}
+desenha([1.0,0.66,0.63,0.97,0.62,0.79,0.72,0.56,0.67,0.76,0.54,0.45,0.46,0.54,0.61,0.56,0.05,0.53,0.59,0.41,0.49,0.8,0.58,0.81,0.5,0.64,0.62,0.45,0.05,0.05,0.85,0.81,0.8,0.11,0.8,0.6,0.46,0.56,0.52,0.54,0.36,0.63,0.73,0.43,0.7,0.77,1.0,0.18,0.05,0.5,0.62,0.35,0.63,0.68,0.91,0.54,0.69,0.36,1.0,0.97,0.63,0.09,0.05,0.81,0.85,0.05,0.7,0.44,0.4,0.48,0.57,0.67,0.93,0.49,0.69,0.16,0.05,0.7,0.53,0.08,0.76,0.61,0.54,0.85,0.63,0.59,0.21,0.33,0.78,1.0,0.05,0.15,0.88,0.34,0.05,0.06]);
+fetch('segunda-dobra/mk/aula-v3.json').then(r=>r.ok?r.json():null).then(j=>{const P=j&&(j.picos||j.ondas);if(Array.isArray(P)&&P.length>20)desenha(P)}).catch(()=>{});
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+au.addEventListener('loadedmetadata',()=>{tm.textContent=fmt(au.duration)});
+ouca.querySelector('.play').onclick=()=>au.paused?au.play().catch(()=>{}):au.pause();
+onda.onclick=e=>{const r=onda.getBoundingClientRect();if(au.duration)au.currentTime=(e.clientX-r.left)/r.width*au.duration;au.play().catch(()=>{})};
+au.onplay=()=>ouca.classList.add('toca');au.onpause=()=>ouca.classList.remove('toca');au.onended=()=>{au.currentTime=0};
+au.ontimeupdate=()=>{const d=au.duration||1,f=au.currentTime/d;bars.forEach((b,i)=>b.classList.toggle('ja',i/bars.length<f));tm.textContent=fmt(Math.max(0,d-au.currentTime))};
 
-  const nova = pub.slice().sort((a, b) => b.n.localeCompare(a.n))[0];
-  /* o fundo: a arte da edição mais nova veste a home */
-  if (nova) {
-    const atm = document.getElementById('atmosfera');
-    /* A parede da home é a GERAL: páginas das oito edições, escolhidas
-       pela cor. A da edição mostra uma revista só, e aqui o assunto é
-       a revista inteira. */
-    const paredeArq = matchMedia('(max-width: 59.99rem)').matches ? 'parede-geral-m.webp' : 'parede-geral.webp';
-    const arte = `${BASE}edicoes/${paredeArq}?v=202611071234`;
-    const im = new Image();
-    im.onload = () => { atm.style.backgroundImage = `url("${arte}")`; atm.classList.add('parede', 'ver'); };
-    im.src = arte;
-  }
+// 5 · convidados, coloridos
+const CV=[['jonas-castro','Jonas Castro','Fundador da Escola do Jonas','Ecossistema de negócios digitais enxutos'],['rafael-censon','Rafael Censon','Diretor criativo e copywriter','A teoria do status e a difusão do desejo nas classes'],['cadu-pedroso','Cadu Pedroso','Idealizador do Turismo do Sono','Wellness economy, turismo do sono e o futuro do mercado'],['joao-pedro-garcia','João Pedro Garcia','Fundador da PAIDEIA e do Guanabara Connection','As disposições interiores de um líder vanguardista']];
+$('#pv-conv').innerHTML=CV.map((c,i)=>`<div class="cv4" data-a style="--i:${i+1}"><div class="q"><video muted loop playsinline autoplay preload="metadata" poster="video/pessoas/${c[0]}.jpg" src="video/pessoas/${c[0]}.mp4"></video></div><b>${c[1]}</b><span class="bio">${c[2]}</span><span class="au">${c[3]}</span></div>`).join('');
 
-  /* os dois botões do passe vão para o mesmo lugar, com origem diferente
-     para a telemetria saber qual dos dois converteu */
-  const irPagar = (origem, direto) => {
-    /* botão ao lado do card de entregáveis vai DIRETO; os soltos abrem a
-       oferta completa em popup. */
-    if (window.abrirOfertaCasa) window.abrirOfertaCasa(origem, direto);
-  };
+// 7 · fundador: prints, podcasts e o que dizem (arquivos da pesquisa em autoridade/v2/)
+const lista=j=>Array.isArray(j)?j:(j&&(j.itens||j.prints||j.podcasts||j.elogios||j.lista))||[];
+const pega=u=>fetch(u).then(r=>r.ok?r.json():[]).catch(()=>[]);
+pega('autoridade/v3/manchetes.json').then(j=>{const O=['jornal-de-brasilia','super-radio-tupi','4oito'];const P=(j.manchetes||[]).filter(p=>O.some(o=>p.arquivo.includes(o))).sort((a,b)=>O.findIndex(o=>a.arquivo.includes(o))-O.findIndex(o=>b.arquivo.includes(o)));$('#pv-prints').innerHTML=P.map((p,k)=>`<figure style="--ar:${(1200/(+(p.tamanho||'1200x1200').split('x')[1]||1200)).toFixed(3)}"><img src="autoridade/v3/${esc(p.arquivo)}" alt="${esc(p.titulo||'')}" loading="lazy"></figure>`).join('')}); // três alinhadas, mesma altura; a IstoÉ saiu a pedido do Rei (08/11)
+// redes: os dois perfis e os comentários que mais convencem (autoridade/v3/instagram.json e comentarios-top.json)
+const mil=n=>n>=1000?(Math.round(n/100)/10).toLocaleString('pt-BR')+' mil':String(n);
+// redes: foto, @ e seguidores de cada perfil, e embaixo os comentários que mais convencem (prova/comentarios.json, texto literal)
+const COMS={'@soudaviribas':['Cara, mudei muito minha maneira de me posicionar a partir do que aprendi com você','Seu conteúdo está me ajudando a construir essa narrativa para o meu público. Gratidão 🙏','Cirúrgico. Depois que comecei a acompanhar teu conteúdo, minha forma de comunicar mudou. Você é uma \'péssima\' influência hahaha','Cara, no marketing você é bom. Mas o seu ouro, sem dúvidas, é o seu repertório cultural, histórico e politico! Fico besta!'],
+'@eterbrasiloficial':['Que conteúdo bom! Há quanto tempo não lia algo realmente útil e bem escrito! …','“Adoro o éter na era da superficialidade “🫰🏻','Leitura riquíssima! Estou encantada com a riqueza de conteúdo e informações… é fascinante perceber como história, política, psicanálise, filosofia, cultura... se conectam.','Fabulosa colocação,o jornalista que escreveu merece um prêmio de conhecimento e autoridade.Enfim li algo que merece ser relido variaz vezes 👏👏👏👏 parabéns a revista 👏👏👏']};
+pega('autoridade/v3/instagram.json').then(j=>{(j.perfis||[]).forEach((p,k)=>{const el=$(k?'#pv-r2':'#pv-r1');if(!el)return;el.innerHTML=`<div class="topo"><span class="ava"><img src="autoridade/v3/${esc(p.avatar)}" alt=""></span><div class="quem"><b>${esc(p.nome_exibido)}${p.verificado?'<i></i>':''}</b><span>${esc(p.perfil)}</span></div><div class="seg"><b>${mil(p.seguidores)}</b><span>seguidores</span></div></div>`+(COMS[p.perfil]||[]).map(t=>`<div class="com"><span class="a"></span><div><p>${esc(t)}</p></div><span class="c"></span></div>`).join('')})});
+pega('autoridade/v2/podcasts.json').then(j=>{const P=lista(j);$('#pv-pods').innerHTML=P.slice(0,3).map(p=>`<a href="${esc(p.url)}" target="_blank" rel="noopener"><div class="q"><img src="autoridade/v2/${esc(p.miniatura||p.arquivo||'')}" alt="" loading="lazy"></div><b>${esc(p.titulo)}</b><small>${esc(p.canal||p.programa||'')}</small></a>`).join('')||'<p class="vazio">[a definir: os 3 podcasts]</p>'});
+// texto copiado da fala (legenda do YouTube) ou do comentário; antes de publicar, ouvir cada trecho no minuto indicado em autoridade/v2/elogios.json
+const ELOGIOS=[['…um jovem que eu considero um jovem muito talentoso. A escrita dele é talentosa. O jeito que ele pensa é diferente… tem identidade, tem\u00a0personalidade.','Joel Jota','Empresário e autor, num vídeo sobre as leituras que mudaram a forma de ele pensar','elogios/joel-jota.jpg'],
+['…um dos caras que eu conheço que tem mais repertório mesmo sendo muito novo.','Alan Nicolas','Fundador da Academia Lendária, a maior comunidade de IA para negócios do Brasil','elogios/alan-nicolas.jpg'],
+['…eu acredito que o Davi Ribas é um dos melhores caras que fala sobre isso [criar movimento] no Brasil, tá? Gosto muito da forma como ele fala isso.','Alfredo Soares','Cofundador do G4 Educação, fundador da XTech (comprada pela VTEX) e autor de Bora Vender','../v4/rostos/alfredo-soares.jpg'],
+['Gênio, eu transformei o marketing da family business quando você transformou teses complexas em prática. Recomendo todos a adquirirem qualquer produto da Eter!','Cadu Pedroso','Terceira geração da Cia do Sono e idealizador do Turismo do Sono','../v3/rostos/cadu-pedroso.jpg']];
+$('#pv-sobre').innerHTML=ELOGIOS.map(e=>`<blockquote class="cit"><p>${esc(e[0])}</p><footer>${e[3]?`<img src="autoridade/v2/${e[3]}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'av0',textContent:'${e[1].split(' ').map(x=>x[0]).join('')}'}))">`:`<span class="av0">${e[1].split(' ').map(x=>x[0]).join('')}</span>`}<span><b>${esc(e[1])}</b><small>${esc(e[2])}</small></span></footer></blockquote>`).join('');
+fetch('autoridade/v2/livro-link.txt').then(r=>r.ok?r.text():'').then(t=>{t=t.trim().split('\n')[0].trim();if(/^https?:\/\/[^\s]+$/.test(t))$('#pv-livro').href=t}).catch(()=>{});
 
+// 8 · assinantes
+const modal=$('#pv-modal');modal.querySelector('.fecha').onclick=()=>modal.classList.remove('on');modal.onclick=e=>{if(e.target===modal)modal.classList.remove('on')};addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('on')});
+const FORA=[]; // o Rei pediu todos os depoimentos (08/11)
+const DEST=['matheus-lima','carolina-lore-45livros','geovany-repertorio'];
+const IG=['barbara.wailand','cacaujannotti','gladssanches','escritamestra','drtiago.santos','marceloforadacurva','roberto_brandini','thomaspetersonbr','anapaula.schutz'];
+let ROSTOS={};
+function provaSocial(){Promise.all([pega('prova/depoimentos-cartoes.json'),pega('prova/comentarios.json'),pega('autoridade/v4/rostos.json')]).then(([Cj,Kj,Rj])=>{
+  (Rj.depoimentos||[]).forEach(r=>{if(r&&r.foto)ROSTOS[r.id]='autoridade/v4/'+r.foto.replace(/^autoridade\/v4\//,'')});
+  const D=(Cj.cartoes||[]); // um cartão por pessoa, trechos literais (prova/depoimentos-cartoes.json)
+  const membro=n=>MEMBROS.find(x=>x[0].trim().toLowerCase()===n.trim().toLowerCase());
+  const ini=n=>n.replace(/^Dra?\.? /,'').split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0]).join('').toUpperCase();
+  const card=(d,c)=>{const m=membro(d.nome),f=d.ids.map(i=>ROSTOS[i]).find(Boolean)||(m?m[2]:null);return `<article class="dep ${c||''}"><span class="aspa">“</span><div class="tx">${esc(d.texto)}</div><div class="quem"><span class="av">${f?`<img src="${f}" alt="">`:esc(ini(d.nome))}</span><span><b>${esc(d.nome)}</b><small>Membro da comunidade</small></span></div></article>`};
+  const foto=d=>{const m=membro(d.nome);return d.ids.map(i=>ROSTOS[i]).find(Boolean)||(m?m[2]:null)};
+  // regra do Rei (08/11): um cartão por pessoa; depoimento curto demais para um cartão sai
+  $('#pv-trilho').innerHTML=D.map((d,i)=>card(d,['','esc','v'][i%3])).join('');
+  const tr=$('#pv-trilho');$('#pv-esq').onclick=()=>tr.scrollBy({left:-tr.clientWidth*.8,behavior:'smooth'});$('#pv-dir').onclick=()=>tr.scrollBy({left:tr.clientWidth*.8,behavior:'smooth'});
+  observa();
+})}
 
-  /* O RASTRO SOBREVIVE AO CLIQUE. Os links de saída eram literais, e quem
-     chegava com utm e com o ?j de embaixador perdia os dois logo no
-     primeiro toque — a leitura, o lead e a venda que viessem depois
-     nasciam órfãos. Agora cada saída leva a busca inteira junto, do mesmo
-     jeito que a página de edição já faz. */
-  const comRastro = alvo => {
-    const u = new URL(alvo, location.href);
-    const veio = new URLSearchParams(location.search);
-    for (const [k, v] of veio) if (!u.searchParams.has(k)) u.searchParams.set(k, v);
-    return u.pathname + u.search;
-  };
-  document.querySelectorAll('a[href]').forEach(a => {
-    const h = a.getAttribute('href');
-    if (!h || /^(https?:|#|mailto:|tel:)/.test(h)) return;
-    a.setAttribute('href', comRastro(h));
-  });
-
-  /* a saudação da barra é de chegada: some assim que a página rola */
-  const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
-  addEventListener('scroll', rolagem, { passive: true }); rolagem();
-  document.getElementById('btn-passe-home').addEventListener('click', () => irPagar('home-hero'));
-  document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('home-oferta', true));
-  document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('home-topo'); });
+// 9 · ofertas: a lista inteira no anual; no passe, o que ele não tem fica riscado
+const ITENS=[['Uma nova revista toda semana',1],['Acervo com todas as edições já publicadas',1],['Aulas ao vivo semanais',1],['Aulas mensais com convidados',0],['Acesso à comunidade com fórum fechado e grupo do WhatsApp',0],['Clube de Escrita',0]];
+$('#pv-lista-anual').innerHTML=ITENS.map(i=>`<li>${i[0]}</li>`).join('');
+$('#pv-lista-passe').innerHTML=ITENS.map(i=>`<li class="${i[1]?'':'nao'}">${i[0]}</li>`).join('');
+observa();
 })();
 </script>
+<script>
+// ajustes finos de 09/11: nenhuma palavra sozinha na última linha. Prende as duas últimas palavras de cada bloco
+// com espaço não separável quando juntas têm até 26 letras, para não estourar coluna estreita.
+(()=>{const SEL='h1,h2,h3,p,li,summary,figcaption,small,.vista,.emblema span,.garantia span';
+function cola(el){const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n,ult=null,ant=null;while((n=tw.nextNode()))if(n.data.trim()){ant=ult;ult=n}if(!ult)return;
+ const t=ult.data,m=t.match(/(\S+)[ \t\n]+(\S+)\s*$/);
+ if(m){if(m[1].length+m[2].length>26)return;const i=t.lastIndexOf(m[0]);ult.data=t.slice(0,i)+m[1]+' '+m[2]+t.slice(i+m[0].length);return}
+ // a última palavra está sozinha num elemento (ex.: <em>história</em>): cola o espaço que vem antes dela
+ const so=t.trim();if(!ant||/\s/.test(so))return;const a=ant.data,k=a.match(/(\S+)[ \t\n]+$/);if(k&&k[1].length+so.length<=26)ant.data=a.replace(/[ \t\n]+$/,' ');}
+function todos(){document.querySelectorAll('.pv '+SEL.split(',').join(',.pv ')).forEach(cola)}
+let tm;new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(todos,120)}).observe(document.getElementById('pv'),{childList:true,subtree:true,characterData:false});
+todos();})();
+</script>
+
+<script>
+/* 09/11 noite: ao abrir, a primeira dobra aparece limpa; no primeiro movimento de rolagem a folha
+   branca do Sobre a ETER sobe e para na metade da tela, com espaço abaixo dos botões (no mínimo 72 px),
+   e rola junto com a primeira dobra, sem nunca cobrir os botões */
+(()=>{const s=document.getElementById('o-que-e'),b=document.getElementById('bt2');if(!s||!b)return;
+ let larg=innerWidth;
+ const mede=()=>{const r=(b.closest('.botoes')||b.parentElement).getBoundingClientRect();
+  const fundo=r.bottom+scrollY;const alvo=Math.max(fundo+Math.max(72,innerHeight*.08),innerHeight*.5);const sobe=Math.max(0,Math.round(innerHeight-alvo));
+  s.style.setProperty('--sobe',sobe+'px')};
+ mede();setTimeout(mede,1300);
+ addEventListener('resize',()=>{if(innerWidth!==larg){larg=innerWidth;mede()}});
+ if('scrollRestoration' in history)history.scrollRestoration='manual';
+ s.classList.add('baixa');
+ const sobe=()=>{s.classList.remove('baixa');['scroll','wheel','touchmove','keydown'].forEach(e=>removeEventListener(e,sobe))};
+ addEventListener('load',()=>{if(scrollY>8)sobe()});
+ ['wheel','touchmove','keydown'].forEach(e=>addEventListener(e,sobe,{passive:true}));
+ setTimeout(()=>addEventListener('scroll',sobe,{passive:true}),300);
+})();
+</script>
+<script src="compra.js?v=20261109f"></script>
+<script>
+/* a origem (utm_*, j=) segue em todos os links do site, como nas páginas das edições e no leitor (09/11/2026).
+   O checkout continua montado pelo compra.js, que já leva a origem. */
+(()=>{const q=new URLSearchParams(location.search),o=new URLSearchParams();for(const[k,v]of q)if(/^(utm_|j$|fbclid|gclid)/.test(k))o.set(k,v);
+const s=o.toString();if(!s)return;
+document.querySelectorAll('a[href]').forEach(a=>{const h=a.getAttribute('href');if(/^(#|mailto:)/.test(h))return;
+ if(/^https?:/.test(h)&&!/eterbrasil\.com\/revista/.test(h))return;if(/[?&](utm_|j=)/.test(h))return;
+ const[b,f]=h.split('#');a.setAttribute('href',b+(b.includes('?')?'&':'?')+s+(f?'#'+f:''))});})();
+</script>
+
+<style>
+/* Rei, 09/11: letras proporcionais ao formato. Piso de 12 px no celular; no iPad e no computador crescem com a tela. */
+.pv .cv4 .bio{font-size:clamp(12px,.85vw,13.5px);letter-spacing:.1em}
+.pv .plano .selo{font-size:clamp(12px,.85vw,13.5px);letter-spacing:.14em}
+.pv .ouca .rot{font-size:clamp(12px,.85vw,13.5px)}
+.pv .dep .quem small{font-size:clamp(12.5px,.9vw,14px)}
+.pv .loja small{font-size:clamp(12px,.85vw,13px)}
+.pv .rod small{font-size:clamp(12px,.85vw,13px)}
+</style>
+
+<style>
+.barra{transition:background .3s,box-shadow .3s}
+/* Rei, 09/11: sem fundo só com a página parada no topo; ao começar a rolar, a barra escura com sombra, para não passar por cima do título */
+.barra.rolou{background:rgba(25,8,8,.96)!important;box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+/* Rei, 09/11: a primeira dobra rola junto com a página; a folha branca sobe no primeiro movimento e
+   para na metade da tela, com espaço abaixo dos botões, e nunca passa por cima deles */
+.dobra{position:relative;z-index:0}
+.dobra .escurece{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:25}
+</style>
+<script>(()=>{const b=document.querySelector('.barra'),d=document.querySelector('.dobra');if(!b||!d)return;
+const v=document.createElement('div');v.className='escurece';d.appendChild(v);
+const f=()=>{b.classList.toggle('rolou',scrollY>4)};
+addEventListener('scroll',f,{passive:true});f()})()</script>
+<script>addEventListener('load',()=>{const d=window.__destino;if(!d||d.length<2)return;const el=document.getElementById(d.slice(1));if(!el)return;
+ const s=document.getElementById('o-que-e');if(s){s.style.transition='none';s.classList.remove('baixa')}
+ document.documentElement.style.scrollBehavior='auto';
+ const vai=()=>scrollTo(0,el.getBoundingClientRect().top+scrollY);vai();setTimeout(vai,400);setTimeout(()=>{if(s)s.style.transition=''},500)})</script>
 </body>
 </html>

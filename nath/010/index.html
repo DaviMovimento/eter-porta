@@ -22,7 +22,9 @@ a{color:#7D6429}</style>
   /* o Instagram grava o link da bio como http:// e o servidor nao leva
      para o https sozinho: o leitor via "nao seguro". A ponte da o salto */
   const base = location.protocol === 'http:' && "/revista/010/".startsWith('/') ? 'https://' + location.host : '';
-  const d = base + "/revista/010/" + (q ? "?" + q : "");
+  /* a busca entra antes do # (o passe do embaixador leva às ofertas da home, #assinatura) */
+  const [cam, ancora] = "/revista/010/".split("#");
+  const d = base + cam + (q ? "?" + q : "") + (ancora ? "#" + ancora : "");
   document.getElementById('ir').href = d;
   location.replace(d);
 })();

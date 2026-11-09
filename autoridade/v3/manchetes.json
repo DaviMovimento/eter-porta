@@ -1,0 +1,46 @@
+{
+ "gerado_em": "2026-11-08",
+ "como": "Cada página aberta no Chrome sem janela (densidade 2x); o título (e a linha fina, quando a matéria tem) foi remontado num cartão branco com a mesma fonte do veículo, alinhado à esquerda, e a foto principal entrou só onde é o Davi. Nada de logo, nome do veículo, menu, data, autor ou anúncio. Saída 1200 px de largura, PNG. O texto do título e da linha fina foi lido da própria página, sem alteração.",
+ "manchetes": [
+  {
+   "arquivo": "manchete-istoe.png",
+   "tamanho": "1200x1051",
+   "veiculo": "IstoÉ",
+   "titulo": "“O Movimento constrói o lucro”, destaca renomado especialista",
+   "linha_fina": null,
+   "data": "2022-10-07",
+   "url": "https://istoe.com.br/o-movimento-constroi-o-lucro-destaca-renomado-especialista",
+   "foto": "foto de divulgação do Davi (legenda da matéria: \"Davi Ribas. Foto: Divulgação\")"
+  },
+  {
+   "arquivo": "manchete-jornal-de-brasilia.png",
+   "tamanho": "1200x1227",
+   "veiculo": "Jornal de Brasília (coluna de Analice Nicolau)",
+   "titulo": "Davi Ribas: o jovem que move marcas brasileiras",
+   "linha_fina": "Como o fundador da ETER lidera o Renascimento Brasileiro no mundo",
+   "data": "2025-12-26",
+   "url": "https://jornaldebrasilia.com.br/blogs-e-colunas/analice-nicolau/davi-ribas-o-jovem-que-move-marcas-brasileiras/",
+   "foto": "foto principal da matéria em tamanho original (Davi no palco)"
+  },
+  {
+   "arquivo": "manchete-super-radio-tupi.png",
+   "tamanho": "1200x635",
+   "veiculo": "Super Rádio Tupi",
+   "titulo": "Especialista Davi Ribas analisa demissões em massa das ‘Big Techs’ e fala como poderiam ser evitadas",
+   "linha_fina": "Especialista em posicionamento de marcas e criação de movimentos digitais, fala que a ausência de um processo de comunicação estratégica é a principal causa",
+   "data": "2023-01-17",
+   "url": "https://www.tupi.fm/?p=1584212",
+   "foto": "sem foto: a imagem da matéria é de banco de imagens, não é o Davi"
+  },
+  {
+   "arquivo": "manchete-4oito.png",
+   "tamanho": "1200x552",
+   "veiculo": "4oito",
+   "titulo": "Mito, rito e doutrina: Como fazer com que sua empresa seja seguida como uma religião",
+   "linha_fina": "O empreendedor Davi Ribas explicou a tese",
+   "data": "2022-09-29",
+   "url": "https://www.4oito.com.br/noticia/mito-rito-e-doutrina-como-fazer-com-que-sua-empresa-seja-seguida-como-uma-religiao-61644",
+   "foto": "sem foto: a imagem da matéria é de banco de imagens, não é o Davi"
+  }
+ ]
+}

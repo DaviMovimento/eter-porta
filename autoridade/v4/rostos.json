@@ -1,0 +1,178 @@
+{
+ "gerado_em": "2026-11-08",
+ "regra": "Nenhum rosto inventado nem de outra pessoa. Fontes: lista de membros, avatares dos prints tratados (web/ e tratados/, nunca originais/), perfis públicos de Instagram/Threads só quando o nome bate; o formulário de compradores (mre-v1-semente.csv) liga nome e @. Novos rostos em quadrado 300 px; os que vieram da v3 continuam em 200 px.",
+ "resumo": "19 pessoas em 23 depoimentos; 17 com foto (21 depoimentos), 2 sem (Gilnaira Soarez, Renata). Novos nesta v4: Bárbara Miranda, Cecilia Mors, Dani, Melissa e Mádia Borges (refeita). Fotos baixadas da sessão do Rei: Instagram (só leitura, perfis abertos e foto lida) e plataforma Curseduca.",
+ "cadu": {
+  "id": "cadu-pedroso",
+  "nome": "Cadu Pedroso",
+  "foto": "rostos/cadu-pedroso.jpg",
+  "tamanho": "400x400",
+  "origem": "foto de perfil pública do @cadupedroso (Threads, 640 px, mesma conta do Instagram), recortada em quadrado no rosto. A identidade está confirmada no site oficial turismodosono.com.br, seção Embaixadores: \"Cadu Pedroso · 3ª geração & CMO da CiaDoSono · @cadupedroso\", que o descreve como idealizador do braço hoteleiro da CiaDoSono. Não é recorte do vídeo. O rosto aparece de perfil, olhando a janela de um avião; não achei foto frontal pública dele (a busca pela matéria da Revista Onne não trouxe resultado e o site da revista não abriu)",
+  "url": "https://www.threads.com/@cadupedroso",
+  "confirmacao": "https://www.turismodosono.com.br/"
+ },
+ "depoimentos": [
+  {
+   "id": "amanda-ferramentas",
+   "nome": "Amanda Rodrigues",
+   "foto": "rostos/amanda-ferramentas.jpg",
+   "origem": "lista de membros (segunda-dobra/membros/17310442.webp, \"Amanda Rodrigues, Consultoria de imagem\"); o avatar dela no print tratado amanda-ferramentas é a mesma pessoa; IG @amandachayil (Amanda Barbosa Rodrigues, no formulário de compradores) também confere (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "amanda-vanguarda",
+   "nome": "Amanda Rodrigues",
+   "foto": "rostos/amanda-vanguarda.jpg",
+   "origem": "lista de membros (segunda-dobra/membros/17310442.webp, \"Amanda Rodrigues, Consultoria de imagem\"); o avatar dela no print tratado amanda-ferramentas é a mesma pessoa; IG @amandachayil (Amanda Barbosa Rodrigues, no formulário de compradores) também confere (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "andrea-bocabello",
+   "nome": "Andrea Bocabello",
+   "foto": "rostos/andrea-bocabello.jpg",
+   "origem": "Instagram público @dea.bocabello (\"Andrea Marçon Bocabello\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @. O Instagram só entrega 150 px sem login: foto ampliada, um pouco mole (foto da v3, 200 px)",
+   "confianca": "alta (qualidade média)"
+  },
+  {
+   "id": "barbara-miranda",
+   "nome": "Bárbara Miranda ~ Mova Inovação",
+   "foto": "rostos/barbara-miranda.jpg",
+   "origem": "Foto de perfil do Instagram @movacombarbara ('Bárbara Miranda | Estratégia, Inovação e Gestão de Negócios', bio cita @movainovacao), 959 px, recortada no rosto. Vínculo: na plataforma de membros (eterbrasil.curseduca.pro, Mural de membros) a conta 'Bárbara Miranda' usa e-mail do domínio movainovacao.com, o mesmo 'Mova Inovação' do nome no print; o avatar do print tratado (porta/site/assine/prints/barbara.webp) é a mesma mulher. A plataforma não tem foto dela.",
+   "confianca": "alta"
+  },
+  {
+   "id": "carolina-lore-45livros",
+   "nome": "Carolina Lo Re",
+   "foto": "rostos/carolina-lore-45livros.jpg",
+   "origem": "Threads/Instagram público @carolina.lore (\"Carolina Lo Re\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @; o avatar no print tratado carolina-lore-45livros é a mesma pessoa (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "carolina-vitor-grupo",
+   "nome": "Carolina Lo Re",
+   "foto": "rostos/carolina-vitor-grupo.jpg",
+   "origem": "Threads/Instagram público @carolina.lore (\"Carolina Lo Re\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @; o avatar no print tratado carolina-lore-45livros é a mesma pessoa (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "cecilia-mors",
+   "nome": "Cecilia Mors",
+   "foto": "rostos/cecilia-mors.jpg",
+   "origem": "Foto de perfil do Instagram @ceci.escreve ('Ceci · Conteúdo Para Pediatra', escritora, 'universos narrativos'), 1080 px, recortada no rosto. Vínculo pelo conteúdo: o depoimento diz que ela é de Parauapebas, trabalha com branding e comunicação, levou a sério 'literatura infantil, teatro e canto' e está 'direcionando meus atendimentos para pediatras'; o formulário de compradores (mre-v1-semente.csv) liga @ceci.escreve a 'Ana Paula Cecilia Moreira da Silva', área 'Governança de marca, escrita criativa e dublagem'; na plataforma ela é 'Cecilia Moreira, Construção de Universo Narrativo & Governança de Marcas Amazônicas'; e no Instagram @ceci.escreve comentou em 23/08/2026 sobre a própria assinatura da ETER. O @ceciliamors (avatar de pintura, privado, 68 seguidores) não é usado. Divergência: a v3 registrou que a Cecilia Moreira teria e-mail e estado diferentes no formulário do webinário; não reabri esse formulário. Confirmar com o Rei.",
+   "confianca": "média-alta (conteúdo bate em 4 fontes; falta confirmação direta)"
+  },
+  {
+   "id": "dani-assuncao",
+   "nome": "Dani Assunção",
+   "foto": "rostos/dani-assuncao.jpg",
+   "origem": "Threads/Instagram público @daniassuncao.me (\"Dani Assunção • Performance para Líderes\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @. É a foto de perfil dela: selfie em P&B com o celular cobrindo metade do rosto (foto da v3, 200 px)",
+   "confianca": "alta (foto parcial do rosto)"
+  },
+  {
+   "id": "dani",
+   "nome": "Dani",
+   "foto": "rostos/dani.jpg",
+   "origem": "Foto de perfil do Instagram @dani_schui ('Dani Schui · Comunicação & Posicionamento', segue o Davi), 1080 px, recortada no rosto. Vínculo: o avatar do print tratado porta/site/assine/prints/dani.webp é uma mulher loira de cabelo longo, compatível com essa foto; o formulário de compradores liga @dani_schui a 'Daniele Chui' (comunicação e posicionamento) e a plataforma tem 'Daniele Chui, Comunicação e endomarketing'. Das outras Danis: Daniele Souza (plataforma) é outra pessoa (cabelo escuro) e Dani Assunção tem depoimento próprio. O avatar do print tem ~50 px, então a comparação é visual e não exata. Confirmar com o Rei.",
+   "confianca": "média (avatar compatível + formulário + plataforma)"
+  },
+  {
+   "id": "danrlei-carlos",
+   "nome": "Danrlei Carlos",
+   "foto": "rostos/danrlei-carlos.jpg",
+   "origem": "Threads/Instagram público @dcarlos.mkt (\"Danrlei Carlos\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @ (Danrlei Carlos da Silva) (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "geovany-offline",
+   "nome": "Geovany Ferreira",
+   "foto": "rostos/geovany-offline.jpg",
+   "origem": "Threads/Instagram público @geovany.ferreira_ (\"Geovany Ferreira\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @; também está na lista de membros (ca4d2c36.webp, foto escura e de cabeça baixa), por isso usei a do perfil (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "geovany-repertorio",
+   "nome": "Geovany Ferreira",
+   "foto": "rostos/geovany-repertorio.jpg",
+   "origem": "Threads/Instagram público @geovany.ferreira_ (\"Geovany Ferreira\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @; também está na lista de membros (ca4d2c36.webp, foto escura e de cabeça baixa), por isso usei a do perfil (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "geovany-suassuna",
+   "nome": "Geovany Ferreira",
+   "foto": "rostos/geovany-suassuna.jpg",
+   "origem": "Threads/Instagram público @geovany.ferreira_ (\"Geovany Ferreira\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @; também está na lista de membros (ca4d2c36.webp, foto escura e de cabeça baixa), por isso usei a do perfil (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "gilnaira-soarez",
+   "nome": "Gilnaira Soarez",
+   "foto": null,
+   "origem": "Não salva. Achei o Instagram @gilnaira ('Gilnaira Soarez', nome exato e raro, segue o Davi), mas o perfil é privado e a foto pública é de 150 px, antiga, com o rosto coberto pelo cabelo. Na plataforma ela aparece como 'Gilnaira Silva', sem foto. O avatar do print é uma cena de rua.",
+   "confianca": null,
+   "candidato": "@gilnaira"
+  },
+  {
+   "id": "igor-rodrigues",
+   "nome": "Igor Rodrigues",
+   "foto": "rostos/igor-rodrigues.jpg",
+   "origem": "Threads/Instagram público @igor.pqsim (\"Igor Rodrigues | Perpetuadores\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @ (Igor Rodrigues de Oliveira) (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "ione-camelo",
+   "nome": "Ione Camelo",
+   "foto": "rostos/ione-camelo.jpg",
+   "origem": "Threads/Instagram público @ionecamelo (\"Ione Camelo\"). Só o nome liga: idêntico e raro, mas ela não está no formulário de compradores. Confirmar com o Rei (foto da v3, 200 px)",
+   "confianca": "média (só nome)"
+  },
+  {
+   "id": "jordana-venancio",
+   "nome": "Jordana Venancio",
+   "foto": "rostos/jordana-venancio.jpg",
+   "origem": "Threads/Instagram público @jordanavenancio (\"Jordana Venâncio\", bio abre com \"Torna-te quem tu és\", o lema do Davi). Não está no formulário de compradores. Confirmar com o Rei (foto da v3, 200 px)",
+   "confianca": "média (nome + lema)"
+  },
+  {
+   "id": "juliana-gabriel",
+   "nome": "Dra Juliana Gabriel",
+   "foto": "rostos/juliana-gabriel.jpg",
+   "origem": "Threads/Instagram público @dra.julianagabriel (\"Dra Juliana Gabriel Endocrinologista\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @ (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "madia-borges",
+   "nome": "Madia Borges",
+   "foto": "rostos/madia-borges.jpg",
+   "origem": "Foto de perfil do LinkedIn de 'Mádia Santos Borges' (BG ARQ), já usada no deck do cliente BG Arquitetura (22-CONSULTORIA/clientes/bg-arquitetura/entregaveis/_design/deck/assets/img/pf-madia.jpg, 800 px), recortada no rosto. Vínculo: o Instagram @madia_borgrs (bio linka bgarquitetura.com) está no formulário de compradores como 'Mádia Santos borges'; ela está na plataforma como 'Mádia Borges'. A foto do Instagram é de corpo inteiro, 510 px e com marca d'água, por isso não foi usada. Nitidez razoável, um pouco mole.",
+   "confianca": "alta"
+  },
+  {
+   "id": "matheus-lima",
+   "nome": "Matheus Lima",
+   "foto": "rostos/matheus-lima.jpg",
+   "origem": "Threads/Instagram público @matheuslima.dcl (\"Matheus Lima | Comunicação Estratégica\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @ (MATHEUS AUGUSTO LIMA DA SILVA) (foto da v3, 200 px)",
+   "confianca": "alta"
+  },
+  {
+   "id": "melissa",
+   "nome": "Melissa",
+   "foto": "rostos/melissa.jpg",
+   "origem": "Foto de perfil do Instagram @melissabarthbygilda ('MELISSA BARTH | Curadoria em Sapatos, Bolsas e Acessórios', segue o Davi), 1080 px, recortada no rosto. Vínculo: é a única Melissa entre os 1.150 membros da plataforma ('Melissa Calux') e a única do formulário de compradores ('Melissa Barth Calux', varejo físico). O print tem só a letra 'M' como avatar, então não há comparação visual. Confirmar com o Rei.",
+   "confianca": "média (única Melissa membro; sem comparação de rosto)"
+  },
+  {
+   "id": "renata",
+   "nome": "Renata",
+   "foto": null,
+   "origem": "Não salva. Há 5 Renatas na plataforma (Gomes, Silva, Ceolin, Menescal e só 'Renata'); só a Renata Gomes (dentista, Uberaba) tem foto, e não dá para afirmar que é a mesma mulher do avatar do print (cabelo castanho, blusa escura frente-única). Sem sobrenome, a busca no Instagram dá dezenas de homônimas.",
+   "confianca": null
+  },
+  {
+   "id": "william-lima",
+   "nome": "WILLIAM LIMA",
+   "foto": "rostos/william-lima.jpg",
+   "origem": "Threads/Instagram público @william.jlima (\"William Lima\"); formulário de compradores (projetos/mre-v1-semente.csv, camada 1-comprador) liga o nome ao @; a mesma foto está na lista de membros (ea4149a3.webp). Foto de perfil lateral (foto da v3, 200 px)",
+   "confianca": "alta"
+  }
+ ]
+}

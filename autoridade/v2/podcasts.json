@@ -1,0 +1,53 @@
+{
+  "gerado_em": "2026-11-08",
+  "criterio": "Os três podcasts escolhidos pelo Rei. Números lidos no YouTube via yt-dlp em 08/11/2026. Miniatura maxresdefault (1280x720) em podcasts/<id>.jpg.",
+  "podcasts": [
+    {
+      "id": "vybEx4_sZ2s",
+      "titulo": "A Arte de Engajar Multidões - Davi Ribas",
+      "canal": "Excepcionais Podcast - Marcelo Toledo",
+      "apresentador": "Marcelo Toledo",
+      "data": "2024-12-17",
+      "url": "https://www.youtube.com/watch?v=vybEx4_sZ2s",
+      "duracao": "1h44",
+      "visualizacoes": 22748,
+      "curtidas": 1187,
+      "inscritos_do_canal": 198000,
+      "lido_em": "2026-11-08",
+      "miniatura": "podcasts/vybEx4_sZ2s.jpg",
+      "miniatura_resolucao": "1280x720 (maxresdefault)"
+    },
+    {
+      "id": "ERFCr_8qpVc",
+      "titulo": "O Renascimento do Brasil - Davi Ribas",
+      "canal": "Sem Groselha Podcast",
+      "formato": "debate com Fermento (descrição: \"Davi Ribas, fundador da Eter Company, e Fermento debatem o tema 'O Renascimento do Brasil'\")",
+      "data": "2025-12-14",
+      "url": "https://www.youtube.com/watch?v=ERFCr_8qpVc",
+      "duracao": "2h11",
+      "visualizacoes": 5888,
+      "curtidas": 287,
+      "inscritos_do_canal": 456000,
+      "lido_em": "2026-11-08",
+      "miniatura": "podcasts/ERFCr_8qpVc.jpg",
+      "miniatura_resolucao": "1280x720 (maxresdefault)",
+      "conferencia": "É o mais recente dos 5 episódios do Davi no canal (busca no próprio canal em 08/11/2026)."
+    },
+    {
+      "id": "ObQ5MIStHHs",
+      "titulo": "ENTREVISTA COM DAVI RIBAS: EMPREENDEDORISMO E NACIONALISMO NO BRASIL",
+      "canal": "Instituto Brasil 21",
+      "data": "2026-06-03",
+      "url": "https://www.youtube.com/watch?v=ObQ5MIStHHs",
+      "duracao": "1h20",
+      "visualizacoes": 129,
+      "curtidas": 16,
+      "inscritos_do_canal": 284,
+      "lido_em": "2026-11-08",
+      "miniatura": "podcasts/ObQ5MIStHHs.jpg",
+      "miniatura_resolucao": "1280x720 (maxresdefault)",
+      "conferencia": "Único resultado com esse título na busca do YouTube. A miniatura é fundo branco com o logo do instituto e o retrato P&B do Davi num círculo: destoa das outras duas; se o designer quiser, dá para usar um quadro do próprio vídeo.",
+      "cuidado": "Números baixos (129 views, canal de 284 inscritos): na página, mostrar sem contador de visualizações."
+    }
+  ]
+}

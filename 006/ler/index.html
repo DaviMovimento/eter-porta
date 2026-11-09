@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Lendo · A Arte de Fascinar Multidões · ETER</title>
+<style>
+@font-face{font-family:'TRJN';src:url('../../n/pd/fontes/trjn-medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'TRJN';src:url('../../n/pd/fontes/trjn-italico.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'FuturaCond';src:url('../../n/pd/fontes/futura-cond-xb.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'InterEter';src:url('../../n/pd/fontes/inter.ttf') format('truetype');font-display:swap}
+:root{--bege:#FFFBF3;--preto:#190808;--ouro-si:#AF9153;--ouro-claro:#D6BD84;--barra:clamp(64px,calc(46px + 2.3vw),84px);--ferr:52px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:radial-gradient(120% 90% at 50% 40%,#2a1414 0%,#170707 55%,#0f0404 100%) fixed;color:var(--bege);font-family:'InterEter',-apple-system,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+/* barra: a mesma da home, sempre escura no leitor */
+.barra{position:fixed;inset:0 0 auto 0;height:var(--barra);z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);background:rgba(25,8,8,.97);box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.barra .logo img{height:clamp(22px,calc(13px + 1.15vw),32px);width:auto;display:block}
+.barra nav{display:flex;align-items:center;gap:clamp(18px,2.6vw,40px)}
+.barra nav a{font:800 clamp(13px,calc(9px + .5vw),16.5px)/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bege);text-decoration:none;opacity:.88}
+.barra nav a.assine{opacity:1;color:#190808;background:var(--ouro-si);padding:.85em 1.35em;border-radius:2px}
+/* ferramentas da leitura, logo abaixo da barra */
+.ferr{position:fixed;left:0;right:0;top:var(--barra);height:var(--ferr);z-index:29;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(16px,4vw,48px);border-bottom:1px solid rgba(214,189,132,.16);background:rgba(23,7,7,.9)}
+.ferr .ed{font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--ouro-claro);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ferr .ed b{font:500 16px/1 'TRJN',Georgia,serif;letter-spacing:0;text-transform:none;color:var(--bege);margin-left:10px}
+.ferr .cont{font:600 14px/1 'InterEter',sans-serif;opacity:.85;font-variant-numeric:tabular-nums}
+.ferr .bts{display:flex;gap:10px;justify-content:flex-end}
+.ferr button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border:1px solid rgba(255,251,243,.3);border-radius:30px;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--bege)}
+.ferr button:hover{border-color:var(--ouro-claro);color:var(--ouro-claro)}
+.ferr svg{width:15px;height:15px}
+.prog{position:fixed;left:0;right:0;top:calc(var(--barra) + var(--ferr) - 2px);height:2px;z-index:31}
+.prog i{display:block;height:100%;width:0;background:var(--ouro-si);transition:width .4s}
+/* o palco da revista */
+.palco{position:fixed;left:0;right:0;bottom:0;top:calc(var(--barra) + var(--ferr));display:flex;overflow:auto;overscroll-behavior:contain}
+.palco .setas{margin:auto;display:flex;align-items:center;gap:clamp(10px,2vw,28px);padding:12px}
+.zoom{display:inline-flex;align-items:center;border:1px solid rgba(255,251,243,.3);border-radius:30px;overflow:hidden}
+.ferr .zoom button{border:0;border-radius:0;height:34px;padding:0 12px;font:600 15px/1 'InterEter',sans-serif;letter-spacing:0;text-transform:none}
+.ferr .zoom #z-val{min-width:58px;justify-content:center;font-size:12.5px;font-variant-numeric:tabular-nums;border-left:1px solid rgba(255,251,243,.18);border-right:1px solid rgba(255,251,243,.18)}
+#livro{filter:drop-shadow(0 34px 44px rgba(0,0,0,.6))}
+.pagina{background:#fff;overflow:hidden}.pagina img{width:100%;height:100%;object-fit:cover;display:block}
+.seta{all:unset;cursor:pointer;flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,251,243,.35);color:var(--bege);font-size:24px;background:rgba(25,8,8,.4)}
+.seta:hover{border-color:var(--ouro-claro);color:var(--ouro-claro)}
+.seta[disabled]{opacity:.25;cursor:default}
+/* avisos */
+.aviso{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 32px);padding:12px 16px;border-radius:14px;background:#FFFBF3;color:#190808;box-shadow:0 20px 40px -18px rgba(0,0,0,.7);font:500 15px/1.35 'InterEter',sans-serif;text-align:center}
+.aviso button{all:unset;cursor:pointer;padding:9px 14px;border-radius:2px;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;background:var(--ouro-si);color:#190808}
+.aviso button.sec{background:none;border:1px solid rgba(25,8,8,.3)}
+.dica{transition:opacity .6s}.dica.some{opacity:0}
+.aviso[hidden]{display:none}
+/* TELA CHEIA (Rei, 09/11): some a barra e as ferramentas; a revista ocupa a tela inteira em cada formato */
+.cheia-ui{display:none}
+html.cheia .barra,html.cheia .ferr,html.cheia .prog{display:none}
+html.cheia .palco{top:0;background:#0d0404}
+html.cheia .cheia-ui{display:flex;align-items:center;gap:10px;position:fixed;right:max(12px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));z-index:45}
+.cheia-ui button{all:unset;cursor:pointer;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:rgba(25,8,8,.72);border:1px solid rgba(255,251,243,.25);color:var(--bege);backdrop-filter:blur(6px)}
+.cheia-ui button svg{width:20px;height:20px}
+.cheia-cont{padding:8px 12px;border-radius:30px;background:rgba(25,8,8,.72);color:rgba(255,251,243,.8);font:600 12.5px/1 'InterEter',sans-serif;font-variant-numeric:tabular-nums;backdrop-filter:blur(6px)}
+/* em pé (celular e iPad), a tela cheia vira no deslizar do dedo: as setas saem para a página ocupar tudo */
+@media (max-width:1100px) and (orientation:portrait),(max-width:760px){html.cheia .seta{display:none}html.cheia .palco .setas{padding:6px}}
+#b-cheia svg{width:18px;height:18px}
+.aviso{text-wrap:balance}
+/* Rei, 09/11: o aviso de retomar é uma faixa fina de uma linha, que não cobre a revista */
+#retomar{flex-wrap:nowrap;gap:8px;width:auto;max-width:calc(100vw - 24px);padding:7px 7px 7px 16px;border-radius:40px;font-size:13.5px;white-space:nowrap}
+#retomar[hidden]{display:none}
+#retomar button{padding:9px 12px;border-radius:30px;font-size:11px;letter-spacing:.12em}
+@media (max-width:400px){#retomar{font-size:12.5px;gap:6px;padding-left:12px}#retomar button{padding:8px 9px;letter-spacing:.08em}}
+@media (max-width:760px){.aviso{bottom:auto;top:calc(var(--barra) + var(--ferr) + 10px);font-size:14px}}
+/* capítulos e ampliar */
+dialog{border:0;padding:0;background:transparent;color:inherit;max-width:none;max-height:none}
+dialog::backdrop{background:rgba(10,4,4,.8);backdrop-filter:blur(6px)}
+#caps{margin:auto;width:min(620px,calc(100vw - 32px))}
+#caps .caixa{position:relative;padding:clamp(26px,4vw,40px);border-radius:22px;background:#1b1311;border:1px solid rgba(214,189,132,.2)}
+#caps h2{font:500 clamp(30px,3vw,40px)/1 'TRJN',Georgia,serif}
+#caps ol{list-style:none;margin-top:22px;display:grid;gap:10px}
+#caps a{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:14px;padding-bottom:10px;border-bottom:1px dashed rgba(255,251,243,.28);color:var(--bege);text-decoration:none}
+#caps a .n{font:500 40px/.86 'TRJN',Georgia,serif;letter-spacing:-.03em;min-width:1.1em}
+#caps a .t{align-self:stretch;display:flex;align-items:center;padding-left:12px;border-left:1.5px solid rgba(255,251,243,.85);font:400 17px/1.3 'InterEter',sans-serif;text-wrap:balance}
+#caps a:hover .n,#caps a:hover .t{color:var(--ouro-claro)}
+#caps a.atual .t{color:var(--ouro-claro)}
+.fecha{all:unset;cursor:pointer;position:absolute;right:18px;top:12px;font:500 34px/1 'TRJN',serif;color:inherit;opacity:.8}
+/* fim da edição: sem oferta, só o caminho de volta ao acervo */
+#fim{margin:auto;width:min(560px,calc(100vw - 32px))}
+#fim .caixa{position:relative;padding:clamp(28px,4vw,44px);border-radius:22px;background:#FFFBF3;color:#190808;text-align:center}
+#fim .rot{font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#89723C}
+#fim h3{margin-top:12px;font:500 clamp(26px,3vw,34px)/1.15 'TRJN',Georgia,serif;text-wrap:balance}
+#fim .bt{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:56px;margin-top:22px;border-radius:2px;background:var(--ouro-si);color:#190808;text-decoration:none;font:800 14px/1 'FuturaCond',sans-serif;letter-spacing:.17em;text-transform:uppercase}
+#fim .bt.sec{margin-top:10px;background:none;border:1px solid rgba(25,8,8,.25)}
+/* celular e iPad em pé: uma página por vez, setas embaixo */
+@media (max-width:1100px) and (orientation:portrait),(max-width:760px){
+ .palco .setas{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+ .ferr .zoom #z-val{min-width:46px}.ferr .zoom button{height:32px;padding:0 9px}
+ .palco #ant{justify-self:end}.palco #prox{justify-self:start}
+ .palco #livro{grid-column:1/-1;grid-row:1}
+}
+@media (max-width:760px){
+ :root{--barra:56px;--ferr:46px}
+ .barra{padding:0 14px}.barra .logo img{height:16px}.barra nav{gap:11px}.barra nav a{font-size:12px;letter-spacing:.06em}.barra nav a.assine{padding:9px 11px}
+ .ferr{padding:0 12px;grid-template-columns:auto 1fr auto;gap:10px}.ferr .ed b{display:none}.ferr .cont{text-align:center;font-size:13px}
+ .ferr button{height:32px;padding:0 11px;font-size:11px;letter-spacing:.12em}.ferr button span{display:none}
+ .ferr .cont{white-space:nowrap}
+}
+@media (max-width:420px){
+ .ferr .ed{display:none}.ferr{grid-template-columns:auto 1fr}.ferr .cont{text-align:left}.ferr .bts{gap:6px}.ferr button{padding:0 9px}
+ .seta{width:46px;height:46px}
+}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32.png"><link rel="apple-touch-icon" href="../../img/favicon-180.png"><meta name="theme-color" content="#190808">
+<script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
+<script defer src="../../premium/calor.js"></script>
+</head>
+<body>
+<header class="barra" id="barra">
+  <a class="logo" href="../../" aria-label="ETER, página inicial"><img src="../../n/pd/img/logo-bege.svg" alt="ETER"></a>
+  <nav aria-label="Principal">
+    <a href="../../">Home</a>
+    <a href="../../biblioteca/">Edições</a>
+    <a href="../../bibliografia/">Bibliografia</a>
+    <a class="assine" href="../../#assinatura">Assine</a>
+  </nav>
+</header>
+<div class="ferr">
+  <p class="ed">Edição 006<b>A Arte de Fascinar Multidões</b></p>
+  <p class="cont" id="cont" aria-live="polite">1 / 56</p>
+  <div class="bts">
+    <button type="button" id="b-caps" aria-label="Capítulos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Capítulos</span></button>
+    <button type="button" id="b-cheia" aria-label="Ler em tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tela cheia</span></button><span class="zoom" role="group" aria-label="Zoom"><button type="button" id="z-menos" aria-label="Diminuir">−</button><button type="button" id="z-val" aria-label="Voltar ao tamanho normal">100%</button><button type="button" id="z-mais" aria-label="Aumentar">+</button></span>
+  </div>
+</div>
+<div class="prog"><i id="prog"></i></div>
+<main class="palco">
+  <div class="setas"><button class="seta" id="ant" type="button" aria-label="Página anterior">‹</button>
+  <div id="livro"></div>
+  <button class="seta" id="prox" type="button" aria-label="Próxima página">›</button></div>
+</main>
+<div class="cheia-ui" aria-hidden="false"><span class="cheia-cont" id="cheia-cont"></span><button type="button" id="b-sair" aria-label="Sair da tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+<div class="aviso" id="retomar" hidden><span id="retomar-txt"></span><button type="button" id="b-retomar">Continuar</button><button type="button" class="sec" id="b-recomecar">Do início</button></div>
+<div class="aviso dica" id="dica" hidden></div>
+<dialog id="caps" aria-labelledby="caps-t"><div class="caixa"><button type="button" class="fecha" aria-label="Fechar">×</button><h2 id="caps-t">Sumário</h2><ol><li><a href="#" data-p="5" data-f="13"><span class="n">01</span><span class="t">Psicologia das Massas e o Espírito do Tempo</span></a></li><li><a href="#" data-p="14" data-f="27"><span class="n">02</span><span class="t">A Guerra de Narrativas da Nova Economia</span></a></li><li><a href="#" data-p="28" data-f="38"><span class="n">03</span><span class="t">Mito, Rito e Doutrina</span></a></li><li><a href="#" data-p="39" data-f="48"><span class="n">04</span><span class="t">Exercício prático: Criação de Movimento</span></a></li><li><a href="#" data-p="49" data-f="53"><span class="n">05</span><span class="t">Os Filhos do Fogo</span></a></li><li><a href="#" data-p="54" data-f="56"><span class="n">06</span><span class="t">Bibliografia</span></a></li></ol></div></dialog>
+<dialog id="fim" aria-labelledby="fim-t"><div class="caixa"><button type="button" class="fecha" aria-label="Fechar">×</button><p class="rot">Edição 006</p><h3 id="fim-t">Você chegou ao fim de <em>A Arte de Fascinar Multidões</em></h3>
+  <a class="bt" href="../../biblioteca/">Conhecer todas as edições</a><a class="bt sec" href="../">Voltar à página da edição</a></div></dialog>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+(()=>{
+const ED='006', TOTAL=56, CAPS=[["01", "Psicologia das Massas e o Espírito do Tempo", 5, 13], ["02", "A Guerra de Narrativas da Nova Economia", 14, 27], ["03", "Mito, Rito e Doutrina", 28, 38], ["04", "Exercício prático: Criação de Movimento", 39, 48], ["05", "Os Filhos do Fogo", 49, 53], ["06", "Bibliografia", 54, 56]], ALTA='https://davimovimento.github.io/eter-porta/edicoes/006/paginas/';
+const q=new URLSearchParams(location.search);
+/* PORTA DO LEITOR, igual ao site de hoje (auditoria 09/11): todo leitor tem cadastro (Rei, 24/08; o c=1 do ManyChat não pula
+   o formulário). Sem cadastro, volta à página da edição, que abre o formulário; com o link pessoal (k=), a página da edição
+   recupera o cadastro pela chave. Com cadastro, o porteiro do servidor decide: edição do mês (anota quando a leitura abre),
+   assinante com passe (lê tudo) ou a parede dos 30 dias, mostrada na página da edição. Porteiro fora do ar libera. */
+let lead=null;try{lead=JSON.parse(localStorage.getItem('eter_lead')||'null')}catch(e){}
+if(lead&&!(lead.nome&&lead.email&&lead.whatsapp))lead=null;
+const volta=()=>location.replace('../?ler=1'+(location.search?'&'+location.search.slice(1):''));
+if(!lead&&true){if(q.get('k'))location.replace('../'+location.search);else volta();return}
+/* medição (o sensor da casa lê o dataLayer), com os nomes do site de hoje */
+const dl=(event,d)=>{try{(window.dataLayer=window.dataLayer||[]).push({event,edicao:ED,...(d||{})})}catch(e){}};
+dl('abriu_leitura');
+const WEB='https://script.google.com/macros/s/AKfycbzkY_WfokD6PcZDhf1Uh_toXCfn2ofcYKEldfTlga9RKdlHUR3cPg_zdRxqIzVjrt3E_w/exec',POST=c=>fetch(WEB,{method:'POST',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(c)}).then(r=>r.json());
+const porteiro=async()=>{try{const g=JSON.parse(localStorage.getItem('eter_mes')||'null');if(g&&String(g.edicao)===ED&&g.quem===lead.email&&Date.now()<g.ate)return g.veredito}catch(e){}
+  try{const v=await POST({acao:'pode_ler',email:lead.email,whatsapp:lead.whatsapp,ms:q.get('ms')||'',edicao:ED});try{localStorage.setItem('eter_mes',JSON.stringify({edicao:ED,quem:lead.email,veredito:v,ate:Date.now()+6e5}))}catch(e){}return v}
+  catch(e){return {liberado:true,motivo:'porteiro fora do ar'}}};
+if(lead&&true)porteiro().then(v=>{if(v&&v.liberado===false&&!v.assinante)return volta();if(v&&v.assinante)return;
+  /* a escolha do mês se gasta quando a leitura abre: uma vez por edição por aparelho; a marca só entra se o porteiro anotou */
+  const marca='eter_consumiu_'+ED;try{if(localStorage.getItem(marca))return}catch(e){}
+  POST({acao:'consumir',email:lead.email,whatsapp:lead.whatsapp,ms:q.get('ms')||'',edicao:ED}).then(r=>{if(r&&r.liberado===false&&!r.assinante){try{localStorage.setItem('eter_mes',JSON.stringify({edicao:ED,quem:lead.email,veredito:r,ate:Date.now()+6e5}))}catch(e){}volta()}
+    else{try{localStorage.setItem(marca,'1')}catch(e){}dl('liberou_edicao_do_mes')}}).catch(()=>{})});
+
+const pad=n=>String(n).padStart(3,'0');
+/* A REVISTA (auditoria 09/11, pedidos do Rei): monta-se no lugar, sem recarregar a página, para a tela cheia e o giro do
+   aparelho; as páginas carregam em ordem a partir da atual, sempre algumas à frente, para virar sem esperar. */
+const SRC=i=>`${ALTA}p${pad(i+1)}@800.webp`; /* o servidor de imagens do site (o mesmo do site de hoje) */
+let el=null,pf=null,uma=false;const carregadas=new Set();const flips=[];const onFlip=f=>{flips.push(f);if(pf)pf.on('flip',f)};
+const cheia=()=>document.documentElement.classList.contains('cheia');
+/* fila de carregamento: a partir da página atual, 4 de cada vez, para a frente primeiro */
+let filaT=0;const carrega=(de)=>{if(!el)return;const imgs=el.querySelectorAll('.pagina img');const ordem=[];
+  for(let k=0;k<TOTAL;k++){const a=de+k;if(a<TOTAL)ordem.push(a);if(k&&k<4&&de-k>=0)ordem.push(de-k)}
+  let ativos=0,pos=0;const meu=++filaT;const prox=()=>{while(ativos<4&&pos<ordem.length){if(meu!==filaT)return;const n=ordem[pos++];const im=imgs[n];if(!im)continue;
+    if(carregadas.has(n)){if(!im.getAttribute('src'))im.src=SRC(n);continue}
+    /* imagem solta: baixa mesmo com a página escondida e deixa o arquivo pronto no cache; a página só aponta para ele */
+    ativos++;carregadas.add(n);const pre=new Image();pre.fetchPriority=pos<6?'high':'low';pre.src=SRC(n);
+    const fim=()=>{if(!im.getAttribute('src'))im.src=SRC(n);ativos--;prox()};pre.onload=pre.onerror=fim}};prox()};
+let fator=1,alta=false;
+function monta(ir){
+  ir=Math.max(0,Math.min(TOTAL-1,ir||0));
+  if(pf){try{pf.destroy()}catch(e){}}
+  const v=document.getElementById('livro');if(v)v.remove();
+  el=document.createElement('div');el.id='livro';document.getElementById('prox').before(el);
+  el.innerHTML=Array.from({length:TOTAL},(_,i)=>`<div class="pagina"><img ${carregadas.has(i)||Math.abs(i-ir)<3?`src="${SRC(i)}"`:''} alt="Página ${i+1} de ${TOTAL}" decoding="async"></div>`).join('');
+  uma=innerWidth<=760||(innerWidth<=1100&&innerHeight>innerWidth);
+  const c=cheia(),cel=innerWidth<=760;
+  const barra=c?0:parseFloat(getComputedStyle(document.querySelector('.barra')).height),ferr=c?0:parseFloat(getComputedStyle(document.querySelector('.ferr')).height);
+  /* espaço livre: no celular em tela cheia a revista vai de borda a borda e vira no deslizar; nas outras telas sobram as setas */
+  const altura=innerHeight-barra-ferr-(c?(cel?24:40):(uma?110:76));
+  const largura=uma?innerWidth-(c&&cel?12:24):(innerWidth-(c?150:200))/2;
+  const pw=Math.floor(Math.max(140,Math.min(largura,altura/1.4144))),ph=Math.round(pw*1.4144);
+  el.style.width=(uma?pw:pw*2)+'px';el.style.height=ph+'px';
+  fator=1;alta=false;
+  pf=new St.PageFlip(el,{width:pw,height:ph,size:'fixed',showCover:true,usePortrait:uma,maxShadowOpacity:.45,flippingTime:700,mobileScrollSupport:false,drawShadow:true});
+  pf.loadFromHTML(el.querySelectorAll('.pagina'));
+  flips.forEach(f=>pf.on('flip',f));
+  if(ir)pf.turnToPage(ir);
+  carrega(ir);
+}
+monta(0);
+onFlip(()=>carrega(pf.getCurrentPageIndex()));
+
+/* contador, progresso e posição guardada */
+const chave='eter_pos_'+ED;let maxima=(()=>{try{return +localStorage.getItem(chave)||0}catch(e){return 0}})(); /* a página mais adiantada já lida; só volta a zero no Do início */
+const cont=document.getElementById('cont'),prog=document.getElementById('prog');
+const mostra=()=>{const i=pf.getCurrentPageIndex(),p=i+1;const par=!uma&&p>1&&p<TOTAL?`${p}–${p+1}`:`${p}`;
+  cont.textContent=`${par} / ${TOTAL}`;prog.style.width=Math.round(Math.min(TOTAL,p+(uma?0:1))/TOTAL*100)+'%';
+  document.getElementById('ant').disabled=i<=0;document.getElementById('prox').disabled=i>=TOTAL-1;
+  if(p>maxima){maxima=p;try{localStorage.setItem(chave,p)}catch(e){}}
+  document.querySelectorAll('#caps a').forEach(a=>{const ini=+a.dataset.p,fimc=+a.dataset.f;a.classList.toggle('atual',p>=ini&&p<=fimc)});
+  if(i>=TOTAL-(uma?1:2))setTimeout(()=>{if(pf.getCurrentPageIndex()>=TOTAL-(uma?1:2)&&!fim.open){fim.showModal();dl('chegou_ao_fim')}},900);
+  sessaoMax=Math.max(sessaoMax,p)};
+let sessaoMax=0;addEventListener('pagehide',()=>dl('leu_ate',{pagina:sessaoMax,porcento:Math.round(sessaoMax/TOTAL*100)}));
+onFlip(mostra);
+document.getElementById('prox').onclick=()=>pf.flipNext();
+document.getElementById('ant').onclick=()=>pf.flipPrev();
+addEventListener('keydown',e=>{if(document.querySelector('dialog[open]'))return;if(e.key==='ArrowRight')pf.flipNext();if(e.key==='ArrowLeft')pf.flipPrev()});
+
+/* capítulos */
+const caps=document.getElementById('caps'),fim=document.getElementById('fim');
+document.querySelectorAll('dialog .fecha').forEach(b=>b.onclick=()=>b.closest('dialog').close());
+document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
+document.getElementById('b-caps').onclick=()=>{caps.showModal();dl('abriu_sumario')};
+caps.addEventListener('click',e=>{const a=e.target.closest('a[data-p]');if(!a)return;e.preventDefault();caps.close();dl('saltou_capitulo',{pagina:+a.dataset.p});document.getElementById('retomar').hidden=true;pf.turnToPage(+a.dataset.p-1);mostra()});
+
+/* zoom livre, como no leitor antigo: pinça do trackpad ou Ctrl + roda no computador, dois dedos no celular, e os botões − e +.
+   Com zoom, a revista rola para os lados e para baixo, e um dedo arrasta sem virar a página. O nível fica lembrado. */
+const palco=document.querySelector('.palco');const CZ='eter_zoom';
+const zoom=(novo,ancora)=>{const antes=fator;fator=Math.min(3,Math.max(1,novo));if(Math.abs(fator-antes)<.001)return;
+  const r=palco.getBoundingClientRect(),ax=(ancora?ancora.x:r.left+r.width/2)-r.left,ay=(ancora?ancora.y:r.top+r.height/2)-r.top;
+  const px=(palco.scrollLeft+ax)/antes,py=(palco.scrollTop+ay)/antes;
+  el.style.zoom=fator;palco.scrollLeft=px*fator-ax;palco.scrollTop=py*fator-ay;
+  document.getElementById('z-val').textContent=Math.round(fator*100)+'%';
+  if(fator>1.2&&!alta){alta=true;el.querySelectorAll('.pagina img').forEach((im,k)=>{const n=pad(k+1);const a=new Image();a.onload=()=>{im.src=a.src};a.src=ALTA+'p'+n+'@1400.webp'})}
+  try{localStorage.setItem(CZ,fator.toFixed(2))}catch(e){}};
+document.getElementById('z-mais').onclick=()=>zoom(fator+.25);
+document.getElementById('z-menos').onclick=()=>zoom(fator-.25);
+document.getElementById('z-val').onclick=()=>zoom(1);
+/* roda do mouse com Ctrl: no máximo 28% por giro, para não pular; a pinça do trackpad manda passos pequenos e fica suave */
+addEventListener('wheel',e=>{if(!e.ctrlKey||document.querySelector('dialog[open]'))return;e.preventDefault();const dy=Math.max(-25,Math.min(25,e.deltaY));zoom(fator*Math.exp(-dy*.01),{x:e.clientX,y:e.clientY})},{passive:false});
+addEventListener('keydown',e=>{if(document.querySelector('dialog[open]'))return;if(e.key==='+'||e.key==='=')zoom(fator+.25);if(e.key==='-')zoom(fator-.25);if(e.key==='0')zoom(1)});
+let d0=0,f0=1;const dist=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY),meio=t=>({x:(t[0].clientX+t[1].clientX)/2,y:(t[0].clientY+t[1].clientY)/2});
+/* com zoom (ou com dois dedos) o toque não chega à revista, para não virar a página por engano */
+/* a pinça e a trava de virar página no mesmo passo, na fase de captura (auditoria 09/11): antes, a trava parava o toque
+   antes de ele chegar à pinça, e no celular de verdade os dois dedos não davam zoom */
+palco.addEventListener('touchstart',e=>{if(e.touches.length===2){d0=dist(e.touches);f0=fator}if(fator>1.02||e.touches.length>1)e.stopPropagation()},{capture:true,passive:true});
+palco.addEventListener('touchmove',e=>{if(e.touches.length===2&&d0){e.preventDefault();zoom(f0*dist(e.touches)/d0,meio(e.touches))}if(fator>1.02||e.touches.length>1)e.stopPropagation()},{capture:true,passive:false});
+palco.addEventListener('touchend',e=>{if(e.touches.length<2)d0=0},{capture:true,passive:true});
+['mousedown','pointerdown'].forEach(ev=>palco.addEventListener(ev,e=>{if(fator>1.02)e.stopPropagation()},{capture:true,passive:true}));
+try{const z=parseFloat(localStorage.getItem(CZ));if(z>1.02)setTimeout(()=>zoom(z),300)}catch(e){}
+
+/* retomar de onde parou */
+const salvo=(()=>{try{return +localStorage.getItem(chave)||0}catch(e){return 0}})();
+const ret=document.getElementById('retomar');
+if(salvo>3&&salvo<TOTAL){document.getElementById('retomar-txt').innerHTML=`Você parou na página&nbsp;${salvo}.`;ret.hidden=false;onFlip(()=>{ret.hidden=true});
+  document.getElementById('b-retomar').onclick=()=>{ret.hidden=true;pf.turnToPage(salvo-1);mostra()};
+  document.getElementById('b-recomecar').onclick=()=>{ret.hidden=true;maxima=0;try{localStorage.setItem(chave,1)}catch(e){}}}
+else{const d=document.getElementById('dica');d.textContent=uma?'Deslize para virar a página. Para ler de perto, use dois dedos para dar zoom.':'Use as setas ou o teclado para virar. Para ler de perto, use a pinça do trackpad ou Ctrl + roda do mouse.';
+  d.hidden=false;setTimeout(()=>d.classList.add('some'),4200);setTimeout(()=>d.hidden=true,5000)}
+/* endereço direto de uma página (#p12): abre nela; serve para mandar a alguém um trecho da edição */
+const hp=/^#p(\d+)$/.exec(location.hash);if(hp){ret.hidden=true;pf.turnToPage(Math.min(TOTAL,Math.max(1,+hp[1]))-1)}
+mostra();
+/* a origem (j=, utm_*) segue nos links para a home, onde está a compra */
+const orig=(()=>{const o=new URLSearchParams();for(const[k,v]of q)if(/^(utm_|j$|c$|ms$|fbclid|gclid|teste$)/.test(k))o.set(k,v);return o.toString()})();
+if(orig)document.querySelectorAll('a[href]').forEach(a=>{const h0=a.getAttribute('href');if(/^(#|https?:|mailto:)/.test(h0))return;const [b,h]=h0.split('#');a.setAttribute('href',b+(b.includes('?')?'&':'?')+orig+(h?'#'+h:''))});
+/* girar o aparelho ou mudar a largura: refaz o tamanho e volta à mesma página */
+/* tela cheia: usa a tela cheia do aparelho quando ele deixa (computador, Android, iPad) e, no iPhone, esconde a barra e as
+   ferramentas; em todos, a revista se remonta no tamanho novo, na mesma página */
+const fsEl=document.documentElement,fsPede=fsEl.requestFullscreen||fsEl.webkitRequestFullscreen,fsSai=document.exitFullscreen||document.webkitExitFullscreen;
+const fsAtivo=()=>document.fullscreenElement||document.webkitFullscreenElement;
+const contCheia=()=>{const c=document.getElementById('cheia-cont');if(c)c.textContent=document.getElementById('cont').textContent};onFlip(contCheia);
+const entra=()=>{if(cheia())return;const i=pf.getCurrentPageIndex();document.documentElement.classList.add('cheia');dl('tela_cheia');
+  try{fsPede&&fsPede.call(fsEl)}catch(e){}setTimeout(()=>{monta(i);mostra();contCheia()},fsPede?380:30)};
+const sai=()=>{if(!cheia())return;const i=pf.getCurrentPageIndex();document.documentElement.classList.remove('cheia');
+  try{if(fsAtivo())fsSai.call(document)}catch(e){}setTimeout(()=>{monta(i);mostra()},fsPede?380:30)};
+document.getElementById('b-cheia').onclick=entra;document.getElementById('b-sair').onclick=sai;
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if(!fsAtivo()&&cheia())sai()}));
+addEventListener('keydown',e=>{if(document.querySelector('dialog[open]'))return;if(e.key==='f'||e.key==='F')cheia()?sai():entra();if(e.key==='Escape'&&cheia())sai()});
+/* girar o aparelho ou entrar e sair da tela cheia: a revista se remonta no lugar, na mesma página */
+let larg=innerWidth,alt0=innerHeight,t;addEventListener('resize',()=>{if(Math.abs(innerWidth-larg)<60&&Math.abs(innerHeight-alt0)<120)return;clearTimeout(t);t=setTimeout(()=>{larg=innerWidth;alt0=innerHeight;monta(pf.getCurrentPageIndex());document.getElementById('z-val').textContent='100%';mostra()},300)});
+try{const ir=sessionStorage.getItem('eter_ir_'+ED);if(ir){sessionStorage.removeItem('eter_ir_'+ED);ret.hidden=true;pf.turnToPage(+ir);mostra()}}catch(e){}
+})();
+</script>
+</body>
+</html>

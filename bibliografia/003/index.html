@@ -2,202 +2,198 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bibliografia — os livros da Revista ETER</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bibliografia · O Verbo e a Máquina · ETER</title>
 <meta name="description" content="Conheça todos os livros que foram utilizados como base de pesquisa para a formulação de cada uma das edições da Revista ETER, organizados por edição.">
-<link rel="icon" type="image/png" sizes="32x32" href="../../premium/favicon-32.png">
-<link rel="apple-touch-icon" href="../../premium/favicon-180.png">
-<meta name="theme-color" content="#F2EEE6">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32.png"><link rel="apple-touch-icon" href="../../img/favicon-180.png"><meta name="theme-color" content="#190808">
+<script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
+<script defer src="../../premium/calor.js"></script>
+<style>
+@font-face{font-family:'TRJN';src:url('../../n/pd/fontes/trjn-medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'TRJN';src:url('../../n/pd/fontes/trjn-italico.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'FuturaCond';src:url('../../n/pd/fontes/futura-cond-xb.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'InterEter';src:url('../../n/pd/fontes/inter.ttf') format('truetype');font-display:swap}
 
-<link rel="preload" href="../../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<script defer src="../../premium/fone.js?v=202611071234"></script>
-<script defer src="../../premium/casa.js?v=202611071234"></script>
-<script defer src="../../premium/calor.js?v=202611071234"></script>
-<link rel="stylesheet" href="../../premium/premium.css?v=202611071234">
+:root{--bege:#FFFBF3;--preto:#190808;--ouro-of:#89723C;--ouro-si:#AF9153;--ouro-claro:#D6BD84;--barra:clamp(64px,calc(46px + 2.3vw),84px);
+ --fundo-rgb:25,8,8;--colw:250px;--gap:14px;--btn-h:68px;--btn-f:16.5px;--btn-w:460px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--preto);color:var(--bege);font-family:'InterEter',-apple-system,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+/* barra: a da home. Sem fundo parada no topo; escura com sombra ao rolar */
+.barra{position:fixed;inset:0 0 auto 0;height:var(--barra);z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);transition:background .3s,box-shadow .3s}
+.barra.rolou{background:rgba(25,8,8,.96);box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.barra .logo img{height:clamp(22px,calc(13px + 1.15vw),32px);width:auto;display:block}
+.barra nav{display:flex;align-items:center;gap:clamp(18px,2.6vw,40px)}
+.barra nav a{font:800 clamp(13px,calc(9px + .5vw),16.5px)/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bege);text-decoration:none;opacity:.88}
+.barra nav a.aqui{opacity:1;color:var(--ouro-claro)}
+.barra nav a.assine{opacity:1;color:#190808;background:var(--ouro-si);padding:.85em 1.35em;border-radius:2px}
+/* primeira dobra: o fundo de livros da home, subindo, sob o véu */
+.dobra{position:relative;overflow:hidden;isolation:isolate}
+.fundo{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--preto)}
+.colunas{position:absolute;top:0;left:50%;width:max-content;display:grid;grid-template-columns:repeat(var(--cols,7),var(--colw));gap:var(--gap);transform:translateX(-50%) rotate(-4deg) scale(1.12);transform-origin:50% 0}
+.col{display:flex;flex-direction:column;gap:var(--gap);animation:sobe var(--dur,90s) linear infinite}
+.casa{height:calc(var(--colw) * 1.414);display:flex;align-items:flex-end;justify-content:center}
+.casa img{max-width:100%;max-height:100%;display:block;border-radius:3px;box-shadow:0 14px 30px -14px rgba(0,0,0,.7)}
+@keyframes sobe{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.veu{position:absolute;inset:0;background:rgba(var(--fundo-rgb),.86)}
+.palco{max-width:1180px;margin:0 auto;padding:calc(var(--barra) + clamp(48px,7vh,88px)) clamp(20px,4vw,56px) clamp(80px,11vh,130px);text-align:center}
+.palco.lado{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:clamp(36px,5vw,80px);text-align:left;min-height:100svh;padding-bottom:clamp(90px,13vh,150px)}
+.num{display:flex;align-items:center;justify-content:center;gap:12px;font:800 clamp(13px,1vw,15px)/1 'FuturaCond',sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro-claro)}
+.num::before,.num::after{content:"";width:44px;height:1px;background:currentColor;opacity:.7}
+.lado .num{justify-content:flex-start}.lado .num::before{display:none}
+h1{margin-top:clamp(14px,2vh,22px);font:500 clamp(46px,min(4.8vw,8vh),72px)/1.04 'TRJN',Georgia,serif;letter-spacing:-.012em;text-wrap:balance}
+h1 em{font-style:italic;color:var(--ouro-claro)}
+h1 s{text-decoration-thickness:.06em;opacity:.75}
+.sub{margin:clamp(14px,2vh,22px) auto 0;max-width:40ch;font:400 clamp(17px,calc(9px + .9vw),21px)/1.55 'InterEter',sans-serif;color:rgba(255,251,243,.9);text-wrap:pretty}
+.lado .sub{margin-left:0}
+.nota{margin-top:14px;font:400 14px/1.4 'InterEter',sans-serif;color:rgba(255,251,243,.75)}.nota b{font-weight:600;color:var(--ouro-claro)}
+.capa-ed{display:block;height:min(66vh,600px);width:auto;border-radius:4px;box-shadow:0 40px 70px -30px rgba(0,0,0,.85)}
+.pbt{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:var(--btn-w);max-width:100%;min-height:var(--btn-h);border-radius:2px;background:var(--ouro-si);color:#190808;text-decoration:none;font:800 var(--btn-f)/1 'FuturaCond',sans-serif;letter-spacing:.17em;text-transform:uppercase;box-shadow:0 18px 36px -16px rgba(175,145,83,.65);transition:transform .25s,background .25s;cursor:pointer;border:0}
+.pbt:hover{transform:translateY(-2px);background:#c4a868}
+.palco .pbt{margin-top:clamp(28px,3.8vh,40px)}
+/* a folha clara que sobe ao rolar, como o Nesta edição das páginas das edições */
+.folha{position:relative;z-index:2;background:linear-gradient(180deg,#FFFBF3 0%,#FAF3E6 100%);color:#190808;border-radius:36px 36px 0 0;box-shadow:0 -30px 60px -26px rgba(0,0,0,.5);will-change:transform;padding:clamp(56px,6vw,88px) clamp(20px,4vw,56px) clamp(72px,8vw,110px)}
+.folha .in{max-width:1180px;margin:0 auto}
+.ordem{display:flex;justify-content:center;margin-bottom:clamp(28px,3vw,40px)}
+.ordem button{all:unset;cursor:pointer;padding:11px 18px;border:1px solid rgba(25,8,8,.2);border-radius:30px;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#190808}
+.ordem button:hover{border-color:var(--ouro-si);color:var(--ouro-of)}
+.acoes{margin-top:clamp(48px,5vw,72px);text-align:center}
+[data-a]{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}[data-a].vis{opacity:1;transform:none}
+/* cartões (mesma função das páginas de hoje) */
+.cards{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2vw,28px)}
+.card{display:flex;flex-direction:column;height:100%;padding:clamp(18px,1.8vw,26px);border:1px solid rgba(25,8,8,.1);border-radius:16px;background:#fff;color:inherit;text-decoration:none;box-shadow:0 18px 30px -24px rgba(25,8,8,.4);transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-5px);border-color:var(--ouro-si);box-shadow:0 26px 40px -24px rgba(25,8,8,.5)}
+.card .n{font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ouro-of)}
+.card b{display:block;margin-top:8px;font:500 clamp(20px,1.6vw,24px)/1.18 'TRJN',Georgia,serif;text-wrap:balance}
+.card b s{opacity:.55}
+.card .s{display:block;margin-top:8px;font:400 14.5px/1.5 'InterEter',sans-serif;color:rgba(25,8,8,.72);text-wrap:pretty}
+.card .mini{align-self:flex-start;margin-top:auto;padding-top:18px}
+.card .mini span{display:inline-block;padding:11px 16px;border-radius:2px;background:var(--ouro-si);color:#190808;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;transition:background .25s}
+.card:hover .mini span{background:#c4a868}
+/* todas as edições: capa ao lado do texto */
+.ed{display:grid!important;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:18px;align-items:start}
+.ed img{width:100%;aspect-ratio:1/1.414;object-fit:cover;border-radius:4px;box-shadow:0 22px 34px -20px rgba(25,8,8,.6)}
+.ed .t{display:flex;flex-direction:column;height:100%}
+/* bibliografia geral: capa pequena e os três livros da vitrine em leque */
+.bib .vis-l{position:relative;height:190px;margin-bottom:22px}
+.bib .vis-l img{position:absolute;bottom:0;height:150px;max-width:44%;object-fit:contain;border-radius:3px;box-shadow:0 18px 28px -16px rgba(25,8,8,.6);background:#fff}
+.bib .vis-l .ce{height:180px;max-width:none;left:4%;z-index:4;box-shadow:0 24px 34px -18px rgba(25,8,8,.75)}
+.bib .vis-l .l1{left:32%;transform:rotate(-5deg);z-index:3}.bib .vis-l .l2{left:48%;transform:rotate(1deg);z-index:2}.bib .vis-l .l3{left:63%;transform:rotate(6deg);z-index:1}
+/* auditoria 09/11 (Rei: botões centralizados): no cartão em pé da bibliografia geral, texto e botão no centro */
+.bib{text-align:center}.bib .mini{align-self:center}
+/* livros da bibliografia de cada edição */
+.livros{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,2vw,28px)}
+.livro a,.livro .sem{display:flex;flex-direction:column;height:100%;padding:clamp(16px,1.6vw,22px);border:1px solid rgba(25,8,8,.1);border-radius:14px;background:#fff;color:inherit;text-decoration:none;box-shadow:0 16px 28px -24px rgba(25,8,8,.4);transition:transform .3s,border-color .3s}
+.livro a:hover{transform:translateY(-5px);border-color:var(--ouro-si)}
+.livro .capa{display:flex;align-items:flex-end;justify-content:center;height:clamp(200px,17vw,250px);margin-bottom:18px}
+.livro .capa img{max-width:100%;max-height:100%;display:block;border-radius:3px;box-shadow:0 20px 34px -18px rgba(25,8,8,.55)}
+.livro .semcapa{display:grid;place-items:center;width:72%;height:100%;padding:14px;border-radius:3px;background:#efe6d4;font:500 15px/1.25 'TRJN',serif;text-align:center}
+.livro .aut{font:800 clamp(12px,.85vw,13.5px)/1.3 'FuturaCond',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro-of)}
+.livro .tit{margin-top:8px;font:500 17px/1.25 'TRJN',Georgia,serif;text-wrap:balance}
+.livro .meta{margin-top:6px;font:400 12.5px/1.35 'InterEter',sans-serif;color:rgba(25,8,8,.55)}
+.livro .compra{margin-top:auto;padding-top:16px}
+.livro .compra span{display:block;padding:11px 10px;border:1px solid var(--ouro-si);border-radius:2px;text-align:center;font:800 clamp(12px,.85vw,13.5px)/1.2 'FuturaCond',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro-of);transition:background .25s,color .25s}
+.livro a:hover .compra span{background:var(--ouro-si);color:#190808}
+.livro .fora span{opacity:.6}
+/* fecho escuro e rodapé */
+.fecho{background:linear-gradient(180deg,#221010 0%,#170707 55%,#120505 100%);padding:clamp(72px,8vw,110px) clamp(20px,4vw,56px);text-align:center}
+.fecho h2{font:500 clamp(30px,3.2vw,46px)/1.1 'TRJN',Georgia,serif;text-wrap:balance}.fecho h2 em{font-style:italic;color:var(--ouro-claro)}
+.fecho p{margin:16px auto 0;max-width:46ch;font:400 clamp(16px,1.25vw,18.5px)/1.6 'InterEter',sans-serif;opacity:.85;text-wrap:pretty}
+.fecho .pbt{margin-top:32px}
+.rod{background:#120606;color:rgba(255,251,243,.7);padding:56px 16px 40px;text-align:center}
+.rod .emblema img{height:clamp(58px,6vw,80px);width:auto}
+.rod .leg{margin-top:26px;font-size:12.5px;line-height:1.6;opacity:.62}.rod .leg a{color:inherit}
+.rod small{display:block;margin-top:10px;font-size:12px;opacity:.42}
+/* iPad */
+@media (max-width:1100px){
+ :root{--colw:220px}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr))}.livros{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:1100px) and (orientation:portrait){
+ .palco.lado{grid-template-columns:1fr;text-align:center;justify-items:center;min-height:auto;padding-top:calc(var(--barra) + 56px)}
+ .lado .num{justify-content:center}.lado .num::before{display:block}.lado .sub{margin-left:auto}
+ .palco.lado .capa-ed{height:min(44vh,480px)}
+ .palco.lado > a{order:2}
+ h1{font-size:56px}.sub{font-size:20px}
+}
+/* celular */
+@media (max-width:760px){
+ :root{--barra:56px;--colw:150px;--gap:10px;--btn-h:50px;--btn-f:12.5px;--btn-w:300px}
+ .barra{padding:0 14px}.barra .logo img{height:16px}.barra nav{gap:11px}.barra nav a{font-size:12px;letter-spacing:.06em}.barra nav a.assine{padding:9px 11px}
+ .palco,.palco.lado{padding:calc(var(--barra) + 40px) 16px 76px}
+ .palco.lado{grid-template-columns:1fr;text-align:center;justify-items:center;gap:26px;min-height:auto}
+ .lado .num{justify-content:center}.lado .num::before{display:block}.lado .sub{margin-left:auto}
+ .palco.lado > a{order:2}
+ .palco.lado .capa-ed{height:min(40vh,320px)}
+ .num{font-size:11.5px}.num::before,.num::after{width:34px}
+ h1{font-size:36px;line-height:1.08}.sub{font-size:16px}
+ .folha{border-radius:22px 22px 0 0;padding:44px 16px 64px}
+ .cards{grid-template-columns:1fr;gap:16px}.livros{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .livro a,.livro .sem{padding:12px}.livro .capa{height:170px;margin-bottom:12px}.livro .tit{font-size:15px}.livro .compra span{font-size:11.5px;letter-spacing:.06em;padding:10px 4px;line-height:1.25}
+ .ed{grid-template-columns:110px 1fr}
+ .bib .vis-l{height:160px}.bib .vis-l img{height:124px}.bib .vis-l .ce{height:150px}
+ .fecho{padding:64px 16px}.fecho h2{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){.col{animation:none}}
+</style>
 </head>
-<body class="pagina biblioteca livros-pagina">
-
-<header class="topo">
-  <a class="topo-marca" href="../../" aria-label="ETER — início">
-    <img src="../../premium/logo.webp" alt="ETER" width="900" height="240">
-  </a>
-  <span class="topo-tag">Bem-vindo à <em>Vanguarda</em></span>
-  <nav class="topo-nav">
+<body>
+<header class="barra" id="barra">
+  <a class="logo" href="../../" aria-label="ETER, página inicial"><img src="../../n/pd/img/logo-bege.svg" alt="ETER"></a>
+  <nav aria-label="Principal">
     <a href="../../">Home</a>
-    <a href="../../biblioteca">Todas as edições</a>
-    <a href="../../bibliografia" class="atual-nav sec">Bibliografia</a>
-    <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
+    <a href="../../biblioteca/">Edições</a>
+    <a class="aqui" href="../">Bibliografia</a>
+    <a class="assine" href="../../#assinatura">Assine</a>
   </nav>
 </header>
-
-<main class="papelada">
-  <div class="selo">
-    <p class="rotulo" id="rotulo">Bibliografia</p>
-    <h1 id="h1">Os livros que fazem a&nbsp;<span class="nome-eter">ETER</span></h1>
-    <p class="dek" id="dek">Conheça todos os livros que foram utilizados como base de pesquisa
-    para a formulação de cada uma das nossas edições.</p>
-  </div>
-
-  <ul class="bibli-index" id="indice" hidden></ul>
-  <div id="estantes" hidden></div>
-  <p class="bibli-ponte" id="ponte" hidden></p>
-
-  <section class="oferta-home">
-    <p class="oferta-chamada">Você começa hoje pela edição que quiser, e o mês corre com a ETER inteira aberta.</p>
-
-    <figure class="mock-passe">
-      <img src="../../premium/mockup-assinatura.webp?v=202611071234" alt="Tudo que você acessa ao assinar"
-        width="794" height="485" decoding="async">
-    </figure>
-    <div class="passe">
-    <div class="passe-topo">
-        <span class="passe-rot" id="passe-rot"></span>
-        <span class="passe-preco" id="passe-preco"></span>
-      </div>
-      <ul class="passe-itens" id="passe-itens"></ul>
-      <button class="btn btn-passe" id="btn-passe-baixo">ADQUIRIR O PASSE</button>
-      <p class="passe-nota" id="passe-nota"></p>
-    </div>
-  </section>
-
-  <p class="aviso-afiliado" id="aviso"></p>
-
-  <p class="pe">
-    <span id="pe-empresa">ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</span><br>
-    <a href="../../privacidade">Privacidade</a>
-  </p>
+<main>
+<section class="dobra"><div class="fundo"><div class="colunas" id="colunas"></div><div class="veu"></div></div>
+ <div class="palco lado"><a href="../../003/"><img class="capa-ed" src="../../n/pd/img/capas/003.webp" alt="Capa da edição 003"></a>
+  <div class="texto"><p class="num">Edição 003 · Bibliografia</p><h1>O Verbo e a&nbsp;Máquina</h1>
+   <a class="pbt" href="#livros">Conheça a bibliografia</a></div></div></section>
+<section class="folha" id="livros"><div class="in"><ul class="livros"><li class="livro"><a href="https://www.amazon.com.br/dp/8531400937?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/8531400937.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Ludwig Wittgenstein</span><span class="tit">Tractatus Logico-Philosophicus</span><span class="meta">1921</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/8531601029?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/8531601029.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Ferdinand de Saussure</span><span class="tit">Curso de linguística geral</span><span class="meta">Cultrix · 2006</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/8576089149?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/8576089149.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Erik Brynjolfsson &amp; Andrew McAfee</span><span class="tit">A Segunda Era das Máquinas: trabalho, progresso e prosperidade em uma época de tecnologias brilhantes</span><span class="meta">Alta Books · 2015</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/6559211541?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/6559211541.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Ailton Krenak</span><span class="tit">Futuro Ancestral</span><span class="meta">Companhia das Letras · 2022</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/0156584468?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/0156584468.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">C. K. Ogden &amp; I. A. Richards</span><span class="tit">The Meaning of Meaning</span><span class="meta">Kegan Paul · 1923</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/0226575772?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/I/71pkskbxcQL._SL1500_.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Charles W. Morris</span><span class="tit">Foundations of the Unity of Science (Volume 1)</span><span class="meta">University of Chicago Press · 1938</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/972708141X?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/972708141X.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Jean Baudrillard</span><span class="tit">Simulacros e Simulação</span><span class="meta">Relógio D&#x27;Água · 1991</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/8576802066?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/8576802066.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">John Howkins</span><span class="tit">Economia criativa: como ganhar dinheiro com ideias criativas</span><span class="meta">M.Books · 2012</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/0374173222?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/0374173222.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Joseph Henrich</span><span class="tit">The WEIRDest People in the World</span><span class="meta">Farrar, Straus and Giroux · 2020</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/0786738960?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/0786738960.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Joseph S. Nye Jr.</span><span class="tit">Soft Power: The Means to Success in World Politics</span><span class="meta">PublicAffairs · 2004</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/853160236X?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/853160236X.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Karl Popper</span><span class="tit">A Lógica da Pesquisa Científica</span><span class="meta">1934</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/857283978X?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/857283978X.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Klaus Schwab</span><span class="tit">A quarta revolução industrial</span><span class="meta">Edipro · 2016</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/1503603660?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/1503603660.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Nick Couldry &amp; Ulises A. Mejias</span><span class="tit">The Costs of Connection: How Data Is Colonizing Human Life and Appropriating It for Capitalism</span><span class="meta">Stanford University Press · 2019</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li><li class="livro"><a href="https://www.amazon.com.br/dp/8525415936?tag=eterbrasil-20" target="_blank" rel="nofollow sponsored noopener"><span class="capa"><img src="https://m.media-amazon.com/images/P/8525415936.01.LZZZZZZZ.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="aut">Stefan Zweig</span><span class="tit">Brasil, País do Futuro</span><span class="meta">1941</span><span class="compra"><span>Comprar na&nbsp;Amazon</span></span></a></li></ul>
+ <div class="acoes"><a class="pbt" href="../../003/">Voltar à página da edição</a></div></div></section>
 </main>
-
+<footer class="rod">
+  <div class="emblema"><img src="../../app/losango-eter.png" alt="ETER"></div>
+  <p class="leg">© 2026 ETER COMPANY LTDA · CNPJ 37.223.854/0001-47 · Todos os direitos reservados · <a href="https://eterbrasil.com/revista/privacidade/">Política de privacidade</a></p>
+  <small>Como Associada Amazon, a ETER recebe por compras qualificadas.</small>
+</footer>
 <script>
-/* A BIBLIOGRAFIA. Uma estante por edição, cada livro com a glosa que a
-   própria revista escreveu na página impressa: o motivo de ele estar ali.
-   A capa leva à Amazon com o código de afiliado, que vive num lugar só
-   (livros.json → config.afiliadoTag). O passe fica no pé, como em toda
-   página da casa: a estante é prova de profundidade, o pedido é o passe. */
-(async () => {
-  const ED_PATH = (location.pathname.match(/\/bibliografia\/(\d{3})\/?$/) || [])[1];
-  const ACIMA = ED_PATH ? '../../' : (/\/bibliografia\/?$/.test(location.pathname) ? '../' : '');
-  const ED = ED_PATH || new URLSearchParams(location.search).get('ed') || '';
-  /* endereço de uma bibliografia: limpo no domínio, com ?ed= no rascunho local */
-  const LIMPO = /\/bibliografia(\/\d{3})?\/?$/.test(location.pathname);
-  const urlEd = n => LIMPO ? `${ACIMA}bibliografia/${n}/` : `bibliografia.html?ed=${n}`;
-  /* os links da barra e do rodapé já chegam certos: o publicar.sh reescreve
-     o HTML de cada endereço limpo (../ e ../../); aqui só o que é montado
-     por JavaScript usa ACIMA */
-  let D, L;
-  try {
-    [D, L] = await Promise.all([
-      fetch(`${ACIMA}edicoes.json?v=202611071234`).then(r => r.json()),
-      fetch(`${ACIMA}livros.json?v=202611071234`).then(r => r.json()),
-    ]);
-  } catch (e) { console.warn('[eter] catálogo indisponível', e); return; }
+(()=>{const LIVROS=["https://m.media-amazon.com/images/P/8531400937.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8531601029.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8576089149.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/6559211541.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/0156584468.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/I/71pkskbxcQL._SL1500_.jpg", "https://m.media-amazon.com/images/P/972708141X.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8576802066.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/0374173222.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/0786738960.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/853160236X.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/857283978X.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/1503603660.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8525415936.01.LZZZZZZZ.jpg"];
 
-  const C = D.config, P = D.passe, T = L.config.afiliadoTag;
-  /* em localhost as imagens saem da própria pasta, para conferir antes do push */
-  const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  const BASE = LOCAL ? ACIMA : (C.baseImagens || './');
-  const edicoes = D.edicoes.filter(e => e.paginas).slice().sort((a, b) => a.n.localeCompare(b.n));
-  const porEdicao = Object.fromEntries(edicoes.map(e => [e.n, []]));
-  for (const l of L.livros) for (const c of l.edicoes) if (porEdicao[c.n]) porEdicao[c.n].push({ ...l, glosa: c.nota, pagina: c.pagina });
+/* barra: escura com sombra ao rolar */
+const barra=document.getElementById('barra');const rola=()=>barra.classList.toggle('rolou',scrollY>4);addEventListener('scroll',rola,{passive:true});rola();
+/* fundo: a grade da home. Livro da casa (r,c) = (A·r + B·c) mod N, nunca o mesmo livro ao lado; as colunas sobem juntas */
+(()=>{const cont=document.getElementById('colunas');if(!cont||!LIVROS.length)return;const cs=getComputedStyle(document.documentElement);
+ const N=LIVROS.length,gcd=(a,b)=>b?gcd(b,a%b):a,B=gcd(3,N)===1?3:2,A=[5,7,4,9,11,13].find(a=>gcd(a,N)===1&&(a-B)%N&&(a+B)%N&&a%N!==B%N)||1;
+ const colw=parseFloat(cs.getPropertyValue('--colw'))||250,gap=parseFloat(cs.getPropertyValue('--gap'))||14;
+ const dob=cont.closest('.dobra').getBoundingClientRect();
+ const cols=Math.ceil(innerWidth*1.25/(colw+gap))+1,casa=colw*1.414+gap;let linhas=Math.ceil(Math.max(innerHeight,dob.height)*1.3/casa)+2;
+ const ruim=L=>[0,B,N-B].some(d=>((A*(L-1)+d)%N+N)%N===0||((A*(L-1)-d)%N+N)%N===0);let g=0;while(ruim(linhas)&&g++<N)linhas++;
+ cont.style.setProperty('--cols',cols);
+ for(let c=0;c<cols;c++){const col=document.createElement('div');col.className='col';col.style.setProperty('--dur',(linhas*7)+'s');
+  const l=[];for(let r=0;r<linhas;r++)l.push(LIVROS[(A*r+B*c)%N]);
+  col.innerHTML=l.concat(l).map(s=>`<div class="casa"><img src="${s}" alt="" loading="lazy" referrerpolicy="no-referrer"></div>`).join('');cont.appendChild(col)}})();
+/* elementos sobem ao aparecer */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}}),{threshold:.06});
+document.querySelectorAll('[data-a]').forEach(el=>io.observe(el));
+/* a folha clara sobe ao rolar, no dobro da velocidade, e para antes do último elemento da primeira dobra, com respiro */
+const folha=document.querySelector('.folha'),dob=document.querySelector('.dobra');
+if(folha&&dob&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let S=0,ped=false;
+ const ref=()=>{let b=0;dob.querySelectorAll('.palco > *, .palco .texto > *').forEach(e=>{const r=e.getBoundingClientRect();if(r.height)b=Math.max(b,r.bottom+scrollY)});return b};
+ const mede=()=>{const fim=dob.getBoundingClientRect().bottom+scrollY;S=Math.round(fim-ref()-Math.max(40,innerHeight*.06));folha.style.marginTop=(-S)+'px';anda()};
+ const anda=()=>{ped=false;folha.style.transform='translateY('+Math.max(0,S-scrollY)+'px)'};
+ let larg=innerWidth;mede();setTimeout(mede,700);addEventListener('load',()=>setTimeout(mede,200));addEventListener('resize',()=>{if(innerWidth!==larg){larg=innerWidth;setTimeout(mede,300)}});
+ addEventListener('scroll',()=>{if(!ped){ped=true;requestAnimationFrame(anda)}},{passive:true});}
+/* ordem das edições: da mais nova para a mais antiga, ou o contrário */
+const ord=document.getElementById('ordem');if(ord){const ul=document.querySelector('.cards');let nova=true;
+ ord.onclick=()=>{nova=!nova;[...ul.children].reverse().forEach(li=>ul.appendChild(li));ord.textContent=nova?'Da mais antiga para a mais nova':'Da mais nova para a mais antiga'}}
+/* a origem (utm_*, j=) segue em todos os links do site */
+const q=new URLSearchParams(location.search),o=new URLSearchParams();for(const[k,v]of q)if(/^(utm_|j$|fbclid|gclid)/.test(k))o.set(k,v);
+const s=o.toString();if(s)document.querySelectorAll('a[href]').forEach(a=>{const h=a.getAttribute('href');if(/^(#|mailto:)/.test(h))return;if(/^https?:/.test(h)&&!/eterbrasil\.com\/revista/.test(h))return;const[b,f]=h.split('#');a.setAttribute('href',b+(b.includes('?')?'&':'?')+s+(f?'#'+f:''))});
 
-  const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const comprar = l => T ? l.amazon + (l.amazon.includes('?') ? '&' : '?') + 'tag=' + encodeURIComponent(T) : l.amazon;
-
-  const cartao = l => {
-    const capa = l.capa
-      ? `<img src="${/^https?:/.test(l.capa) ? l.capa : BASE + l.capa}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`
-      : `<span class="semcapa">${esc(l.titulo)}</span>`;
-    /* loja alternativa: livro fora da Amazon mas à venda em outro lugar
-       (sebo, editora) ganha o botão normal de compra, sem código de afiliado */
-    const loja = l.comprar_em;
-    const fora = l.indisponivel_amazon && !loja;
-    const href = loja ? l.comprar_url : fora ? (l.fora_amazon_url || '') : comprar(l);
-    const rel = loja || fora ? 'noopener' : 'nofollow sponsored noopener';
-    const chamada = loja ? `Comprar na ${esc(loja)}` : fora ? `Não disponível na Amazon${l.fora_amazon_nome ? ' · ' + esc(l.fora_amazon_nome) : ''}` : 'Comprar na Amazon';
-    const dentro = `
-      <span class="capinha">${capa}</span>
-      <span class="aut">${esc(l.autor)}</span>
-      <span class="tit">${esc(l.titulo)}</span>
-      <span class="meta">${esc([l.editora, l.ano].filter(Boolean).join(' · '))}</span>${l.aviso ? `
-      <span class="idioma">${esc(l.aviso)}</span>` : ''}
-      <span class="chamada${fora ? ' fora' : ''}">${chamada}</span>`;
-    return href
-      ? `<li><a href="${esc(href)}" target="_blank" rel="${rel}">${dentro}</a></li>`
-      : `<li><span class="indisp">${dentro}</span></li>`;
-  };
-
-  const srcCapa = l => l.capa ? (/^https?:/.test(l.capa) ? l.capa : BASE + l.capa) : '';
-  const capaRevista = e => `<img src="${BASE}edicoes/${e.n}/paginas/p001@240.webp" alt="" width="240" height="339" loading="lazy" decoding="async">`;
-  const edAtual = edicoes.find(e => e.n === ED && porEdicao[e.n].length);
-
-  if (edAtual) {
-    /* A BIBLIOGRAFIA DE UMA EDIÇÃO. O rótulo diz onde se está; a ponte no
-       fim leva quem ainda não leu para a leitura gratuita. */
-    document.title = `Bibliografia da edição ${edAtual.n} — ${edAtual.titulo} · Revista ETER`;
-    document.getElementById('rotulo').innerHTML = `<a href="${LIMPO ? ACIMA + 'bibliografia' : 'bibliografia.html'}">Bibliografia</a> <i class="pt"></i> Edição ${edAtual.n}`;
-    document.getElementById('h1').textContent = edAtual.titulo;
-    document.getElementById('dek').textContent = 'Os livros que foram a base de pesquisa desta edição.';
-    const estantes = document.getElementById('estantes');
-    estantes.hidden = false;
-    estantes.innerHTML = `<section class="edicao-livros"><ul class="livros">${porEdicao[edAtual.n].map(l => cartao({ ...l, _n: edAtual.n })).join('')}</ul></section>`;
-    const ponte = document.getElementById('ponte');
-    ponte.hidden = false;
-    ponte.innerHTML = `Ainda não leu esta edição? <a href="${ACIMA}${edAtual.n}">Ler o primeiro capítulo de graça</a>`;
-  } else {
-    /* O ÍNDICE. A capa da revista é pequena e fica ao lado de três capas de
-       livro: o cartão anuncia "livros" antes de qualquer texto, para não se
-       confundir com a Biblioteca, onde a capa é o objeto e o verbo é ler. */
-    const indice = document.getElementById('indice');
-    indice.hidden = false;
-    indice.innerHTML = edicoes.filter(e => porEdicao[e.n].length).map(e => {
-      const porId = Object.fromEntries(porEdicao[e.n].map(l => [l.id, l]));
-      const vitrine = ((L.config.vitrine || {})[e.n] || []).map(id => porId[id]).filter(l => l && l.capa);
-      const tres = vitrine.length ? vitrine : porEdicao[e.n].filter(l => l.capa).slice(0, 3);
-      return `<li><a href="${urlEd(e.n)}">
-        <span class="pilha">
-          <span class="rev">${capaRevista(e)}</span>
-          <span class="livs">${tres.map(l => `<img src="${srcCapa(l)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`).join('')}</span>
-        </span>
-        <span class="alg">Edição ${e.n}</span>
-        <span class="nom">${esc(e.titulo)}</span>
-        <span class="chamada">Acessar bibliografia completa</span>
-      </a></li>`;
-    }).join('');
-  }
-  document.querySelectorAll('.livros img, .bibli-index img').forEach(i => i.decode?.().catch(() => {}));
-
-  document.getElementById('aviso').textContent = L.config.aviso || '';
-
-  const pontos = t => String(t).replace(/ · /g, ' <i class="pt"></i> ');
-  document.getElementById('passe-rot').innerHTML = pontos(P.rotulo.replace('Passe ETER · ', 'Passe · '));
-  document.getElementById('passe-preco').textContent = C.precoPasse;
-  document.getElementById('passe-itens').innerHTML = P.itens
-    .map(([a, b]) => `<li><b>${a}</b>${b ? `<span>${b}</span>` : ''}</li>`).join('');
-  document.getElementById('passe-nota').textContent = [P.condicao, P.credito].filter(Boolean).join(' ');
-
-  const emp = C.empresa || {};
-  if (emp.razaoSocial) document.getElementById('pe-empresa').innerHTML =
-    [emp.razaoSocial, emp.cnpj && 'CNPJ ' + emp.cnpj].filter(Boolean).join(' <i class="pt"></i> ');
-
-  const irPagar = (origem, direto) => { if (window.abrirOfertaCasa) window.abrirOfertaCasa(origem, direto); };
-
-  /* o rastro sobrevive ao clique interno; os links da Amazon ficam como estão */
-  const comRastro = alvo => {
-    const u = new URL(alvo, location.href);
-    const veio = new URLSearchParams(location.search);
-    for (const [k, v] of veio) if (!u.searchParams.has(k)) u.searchParams.set(k, v);
-    return u.pathname + u.search;
-  };
-  document.querySelectorAll('a[href]').forEach(a => {
-    const h = a.getAttribute('href');
-    if (!h || /^(https?:|#|mailto:|tel:)/.test(h)) return;
-    a.setAttribute('href', comRastro(h));
-  });
-
-  const rolagem = () => document.body.classList.toggle('rolou', scrollY > 24);
-  addEventListener('scroll', rolagem, { passive: true }); rolagem();
-  document.getElementById('btn-passe-baixo').addEventListener('click', () => irPagar('bibliografia-oferta', true));
-  document.getElementById('nav-passe').addEventListener('click', ev => { ev.preventDefault(); irPagar('bibliografia-topo'); });
 })();
 </script>
 </body>

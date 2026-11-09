@@ -1,0 +1,6 @@
+https://www.amazon.com.br/dp/6555445092?tag=eterbrasil-20
+
+Livro: Marketing Ideológico (Davi Ribas, Editora Gente, 2024), ASIN/ISBN-10 6555445092.
+Tag de afiliado da ETER: eterbrasil-20 (fonte: projetos/porta/site/livros.json, config.afiliadoTag).
+Formato igual ao do site: projetos/porta/site/bibliografia.html, linha 104 (l.amazon + '?tag=' + tag).
+Aviso que o site usa junto: "Como Associada Amazon, a ETER recebe por compras qualificadas."

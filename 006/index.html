@@ -1,240 +1,606 @@
 <!doctype html>
-<html lang="pt-BR" class="montando">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Revista ETER</title>
-<link rel="preload" as="fetch" href="../edicoes.json" crossorigin>
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/006/parede-m.webp" media="(max-width:959px)">
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/006/parede.webp" media="(min-width:960px)">
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p001@800.webp" fetchpriority="high">
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p002@800.webp">
-<link rel="preload" as="image" href="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p003@800.webp">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>A Arte de Fascinar Multidões · ETER</title>
+<!-- Primeira dobra da página da edição (protótipo, 09/11/2026). Fundo escolhido pelo Rei: os livros da bibliografia
+     da edição, com as mesmas regras da home (casas da mesma altura, colunas subindo juntas, véu em toda a tela,
+     nunca o mesmo livro lado a lado). A revista usa a biblioteca StPageFlip (page-flip 2.0.7), que imita o Flipsnack,
+     o leitor da revista dentro da Curseduca: capa sozinha no centro, depois páginas em pares, em todas as telas. -->
+<style>
+@font-face{font-family:'TRJN';src:url('../n/pd/fontes/trjn-medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'TRJN';src:url('../n/pd/fontes/trjn-italico.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Sloop';src:url('../n/pd/fontes/sloop.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'FuturaCond';src:url('../n/pd/fontes/futura-cond-xb.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'InterEter';src:url('../n/pd/fontes/inter.ttf') format('truetype');font-display:swap}
+:root{--bege:#FFFBF3;--preto:#190808;--ouro-of:#89723C;--ouro-si:#AF9153;--barra:clamp(64px,calc(46px + 2.3vw),84px);
+ --fundo-rgb:25,8,8;--colw:270px;--gap:14px;
+ --btn-h:68px;--btn-f:16.5px;--btn-w:460px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--preto);color:var(--bege);font-family:'InterEter',-apple-system,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 
-<meta name="description" content="A revista semanal da nova economia brasileira.">
-<link rel="icon" type="image/png" sizes="32x32" href="../premium/favicon-32.png">
-<link rel="apple-touch-icon" href="../premium/favicon-180.png">
-<meta name="theme-color" content="#F2EEE6">
+/* barra: a da home. Sem fundo parada no topo; escura com sombra ao rolar */
+.barra{position:fixed;inset:0 0 auto 0;height:var(--barra);z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);transition:background .3s,box-shadow .3s}
+.barra.rolou{background:rgba(25,8,8,.96);box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.barra .logo img{height:clamp(22px,calc(13px + 1.15vw),32px);width:auto;display:block}
+.barra nav{display:flex;align-items:center;gap:clamp(18px,2.6vw,40px)}
+.barra nav a{font:800 clamp(13px,calc(9px + .5vw),16.5px)/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bege);text-decoration:none;opacity:.88}
+.barra nav a.assine{opacity:1;color:#190808;background:var(--ouro-si);padding:.85em 1.35em;border-radius:2px}
 
-<link rel="preload" href="../premium/fontes/trjn-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<script defer src="../premium/calor.js?v=202611071234"></script>
-<link rel="stylesheet" href="../premium/premium.css?v=202611071234">
-<script>
-/* A PÁGINA SÓ APARECE MONTADA. O HTML cru (molde claro, botões, imagem
-   sem página) piscava por meio segundo antes de o script vestir a capa.
-   Agora a chegada fica invisível até o script terminar; se ele falhar,
-   quatro segundos depois a página aparece de qualquer jeito. */
-setTimeout(function () { document.documentElement.classList.remove('montando'); }, 4000);
-</script>
+/* fundo: a grade da home. Casas da mesma altura (proporção da capa), todas as colunas sobem juntas, véu na tela inteira */
+.dobra{position:relative;min-height:100svh;overflow:hidden;isolation:isolate}
+.fundo{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--preto)}
+.colunas{position:absolute;top:0;left:50%;width:max-content;display:grid;grid-template-columns:repeat(var(--cols,7),var(--colw));gap:var(--gap);transform:translateX(-50%) rotate(-4deg) scale(1.12);transform-origin:50% 0}
+.col{display:flex;flex-direction:column;gap:var(--gap);animation:sobe var(--dur,90s) linear infinite}
+.casa{height:calc(var(--colw) * 1.414);display:flex;align-items:flex-end;justify-content:center}
+.casa img{max-width:100%;max-height:100%;display:block;border-radius:3px;box-shadow:0 14px 30px -14px rgba(0,0,0,.7)}
+@keyframes sobe{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.veu{position:absolute;inset:0;background:rgba(var(--fundo-rgb),.86)}
+
+/* conteúdo (Rei, 09/11 noite): computador e iPad lado a lado, revista grande à esquerda e texto à direita;
+   celular empilhado. Uma letra por frase; os dourados no tom claro, para ler sobre o fundo escuro. */
+:root{--ouro-claro:#D6BD84}
+.palco{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.85fr);grid-template-areas:'livro texto' 'acoes .';column-gap:clamp(28px,3vw,52px);row-gap:0;align-items:center;align-content:center;max-width:1320px;margin:0 auto;min-height:100svh;padding:calc(var(--barra) + clamp(12px,2vh,28px)) clamp(20px,4vw,56px) clamp(20px,3vh,36px)}
+.texto{grid-area:texto;text-align:left}
+.saud{display:flex;align-items:baseline;gap:.5em}
+.saud .a{font:800 13px/1 'FuturaCond',sans-serif;letter-spacing:.3em;text-transform:uppercase;opacity:.9}
+.saud .b{font:400 clamp(32px,3.2vw,44px)/.8 'Sloop',cursive;color:var(--ouro-claro);transform:translateY(.12em)}
+.num{display:flex;align-items:center;gap:12px;margin-top:clamp(26px,3.6vh,38px);font:800 clamp(13px,1vw,15px)/1 'FuturaCond',sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro-claro)}
+.num::after{content:"";width:48px;height:1px;background:currentColor;opacity:.7}
+h1{margin-top:clamp(10px,1.6vh,18px);font:500 clamp(50px,min(5vw,8.2vh),74px)/1.02 'TRJN',Georgia,serif;letter-spacing:-.012em}
+.sub{margin-top:clamp(16px,2.2vh,24px);font:400 clamp(18px,calc(9px + 1vw),23px)/1.55 'InterEter',-apple-system,sans-serif;letter-spacing:.005em;color:rgba(255,251,243,.92);max-width:30ch}
+.sub b{font-weight:600;color:var(--ouro-claro)}
+.livro-lado{grid-area:livro;display:flex;justify-content:center;width:100%}
+.acoes{grid-area:acoes;display:flex;flex-direction:column;align-items:center;transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.livro{--lh:clamp(300px,calc(100svh - 345px),560px);position:relative;width:min(100%,calc(var(--lh) * 1.4144))!important;max-width:100%!important;transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+/* lado a lado, a capa fica no lado do texto, à mesma distância das páginas abertas; no celular ela vai ao centro */
+.livro.capa{transform:none}
+.livro.stf__parent{filter:drop-shadow(0 34px 44px rgba(0,0,0,.6))}
+.pagina{background:#fff;overflow:hidden}
+.pagina img{width:100%;height:100%;object-fit:cover;display:block}
+.pagina.trava{background:#170707;position:relative;cursor:pointer}
+.trava .dentro{position:absolute;inset:0;container-type:size;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 13%}
+.trava svg{width:22cqw;height:22cqw;color:var(--ouro-claro);margin-bottom:9cqw}
+.trava p{font:500 7.6cqw/1.35 'TRJN',Georgia,serif;color:var(--bege);text-wrap:balance}
+.setas{display:flex;gap:12px;margin-top:16px}
+.setas button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,251,243,.45);background:rgba(25,8,8,.35);color:var(--bege);font-size:20px;line-height:1;cursor:pointer}
+.setas button:hover{border-color:var(--ouro-claro);color:var(--ouro-claro)}
+.pbt{display:inline-flex;align-items:center;justify-content:center;width:var(--btn-w);max-width:100%;min-height:var(--btn-h);margin-top:clamp(28px,3.8vh,44px);border-radius:2px;background:var(--ouro-si);color:#190808;box-shadow:0 18px 36px -16px rgba(175,145,83,.65);text-decoration:none;font:800 var(--btn-f)/1 'FuturaCond',sans-serif;letter-spacing:.17em;text-transform:uppercase;transition:transform .25s,background .25s}
+.pbt:hover{transform:translateY(-2px);background:#c4a868}
+.nota{margin-top:12px;font:400 clamp(13.5px,1vw,15px)/1.45 'InterEter',sans-serif;letter-spacing:.01em;color:rgba(255,251,243,.82);text-align:center}
+.nota b{font-weight:600;color:var(--ouro-claro)}
+
+/* iPad em pé (e telas estreitas até 1100 px): empilhado e centralizado como o celular, em tamanho maior,
+   porque lado a lado a revista encolhia e sobrava altura (Rei, 09/11 noite). iPad deitado segue o notebook. */
+@media (max-width:1100px){
+ :root{--colw:240px}
+ .palco{column-gap:28px}
+}
+@media (max-width:1100px) and (orientation:portrait){
+ .palco{grid-template-columns:1fr;grid-template-areas:'texto' 'livro' 'acoes';gap:0;align-content:center;padding-left:32px;padding-right:32px}
+ .texto{text-align:center}.saud,.num{justify-content:center}.num::before{content:"";width:48px;height:1px;background:currentColor;opacity:.7}
+ h1{font-size:56px}
+ .sub{font-size:20px;line-height:1.55;max-width:34ch;margin-left:auto;margin-right:auto}
+ .livro-lado{margin-top:clamp(24px,3vh,36px)}
+ .livro{width:min(100%,720px,calc((100svh - 680px) * 1.4144))!important}
+ .livro.capa{transform:translateX(-25%)}
+}
+/* celular: empilhado e centralizado, letra maior para ler bem */
+@media (max-width:760px){
+ :root{--barra:56px;--colw:150px;--gap:10px;--btn-h:50px;--btn-f:12.5px;--btn-w:300px}
+ .barra{padding:0 14px}.barra .logo img{height:16px}.barra nav{gap:11px}.barra nav a{font-size:12px;letter-spacing:.06em}.barra nav a.assine{padding:9px 11px}
+ .palco{grid-template-columns:1fr;grid-template-areas:'texto' 'livro' 'acoes';gap:0;align-content:start;padding:calc(var(--barra) + 18px) 16px 22px}
+ .texto{text-align:center}.saud,.num{justify-content:center}.num::before{content:"";width:40px;height:1px;background:currentColor;opacity:.7}
+ .saud .a{font-size:11.5px}.saud .b{font-size:30px}
+ .num{font-size:11.5px;margin-top:20px}
+ h1{font-size:36px;line-height:1.08;margin-top:10px}
+ .sub{font-size:16px;line-height:1.55;max-width:32ch;margin:10px auto 0}
+ .livro-lado{margin-top:18px}
+ .livro{width:100%!important}
+ .livro.capa{transform:translateX(-25%)}
+ .setas{margin-top:12px}.setas button{width:38px;height:38px;font-size:18px}
+ .pbt{margin-top:28px}
+ .nota{font-size:13px;margin-top:9px}
+}
+@media (max-width:760px) and (max-height:760px){
+ .saud .b{font-size:26px}.num{margin-top:16px}h1{font-size:32px}.sub{font-size:15px;margin-top:8px}
+ .livro-lado{margin-top:14px}.setas{margin-top:10px}.setas button{width:34px;height:34px;font-size:16px}.pbt{margin-top:22px}
+}
+@media (prefers-reduced-motion:reduce){.col{animation:none}.livro{transition:none}}
+
+  /* ===== página inteira da edição (09/11): as dobras seguem a home (claro/escuro, botões, letras, animações) ===== */
+  .dob{position:relative;padding:clamp(72px,9vw,140px) clamp(16px,5vw,64px)}
+  .claro{background:linear-gradient(180deg,#FFFBF3 0%,#FAF3E6 100%);color:#190808}
+  .escuro{background:linear-gradient(180deg,#221010 0%,#170707 55%,#120505 100%);color:#FFFBF3}
+  .in{max-width:1180px;margin:0 auto}.estreito{max-width:820px}
+  /* cada dobra ocupa a tela inteira, de ponta a ponta, sem cartão colado por cima (Rei, 09/11) */
+  /* cada dobra vai de ponta a ponta e tem a altura que o conteúdo pede (Rei, 09/11) */
+  .folha-sobe{z-index:2;border-radius:36px 36px 0 0;box-shadow:0 -30px 60px -26px rgba(0,0,0,.5);will-change:transform}
+  [data-a]{opacity:0;transform:translateY(46px);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  [data-a].vis{opacity:1;transform:none}
+  .rot{font:800 13px/1 'FuturaCond',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--ouro-of)}
+  .escuro .rot{color:var(--ouro-claro)}
+  .dob h2{margin-top:14px;font:500 clamp(34px,3.6vw,54px)/1.08 'TRJN',Georgia,serif;letter-spacing:-.01em;text-wrap:balance}
+  .dob h2 em{font-style:italic;color:var(--ouro-of)}.escuro h2 em{color:var(--ouro-claro)}
+  .topo-sec{text-align:center;max-width:820px;margin:0 auto}
+  .intro{margin-top:16px;font-size:clamp(16.5px,1.3vw,19px);line-height:1.65;opacity:.85;text-wrap:pretty}
+  .nesta{margin-top:22px;font:400 clamp(19px,1.75vw,25px)/1.62 'InterEter',sans-serif;color:#190808;text-wrap:pretty}
+  #nesta .rot{text-align:left}
+  .tempo{display:flex;align-items:center;gap:10px;margin-top:30px;font:600 15px/1.3 'InterEter',sans-serif;color:var(--ouro-of)}
+  .tempo svg{width:22px;height:22px}
+  /* leque parado: páginas abertas em leque e, na frente, os quadros da edição */
+  .leque{position:relative;margin:clamp(44px,5vw,72px) auto 0;max-width:1100px;height:calc(var(--pw) * 1.415 * var(--vis) + var(--fwh) * 1.12 + 12px);--vis:1;--pw:clamp(118px,12.5vw,190px);--fwh:0px}
+  .leque.com-fw{--fwh:clamp(150px,16vw,240px);--vis:.62}
+  .leque .pgs{position:absolute;inset:0}
+  .leque .pg{position:absolute;top:calc(var(--a) * var(--a) * 7px);left:50%;width:var(--pw);margin:0;transform-origin:50% 120%;transform:translateX(calc(-50% + var(--i) * 62%)) rotate(calc(var(--i) * 4.5deg))}
+  .leque img{width:100%;display:block;border-radius:3px;box-shadow:0 26px 40px -20px rgba(25,8,8,.55);background:#fff}
+  .leque .fws{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:flex-end}
+  .leque .fw{margin:0 calc(var(--fwh) * -.09);height:var(--fwh);transform:rotate(calc(var(--j) * 3deg)) translateY(calc(var(--j) * var(--j) * 10px));z-index:20}
+  .leque .fw[style*="--j:0"]{height:calc(var(--fwh) * 1.12);z-index:21}
+  .leque .fw img{height:100%;width:auto;border-radius:8px;box-shadow:0 34px 60px -24px rgba(25,8,8,.7);border:6px solid #fff}
+  .acoes-cap{margin-top:clamp(44px,5vw,64px)}.acoes-cap.centro{text-align:center}
+  /* sumário: o mesmo desenho do sumário de dentro da revista, maior e clicável */
+  .suma{background:#1b1311;overflow:hidden}
+  .suma .fantasma{position:absolute;left:50%;bottom:-.22em;transform:translateX(-50%);font:500 clamp(300px,42vw,620px)/1 'TRJN',Georgia,serif;color:rgba(110,30,26,.16);pointer-events:none;letter-spacing:-.02em}
+  .suma .in{position:relative;max-width:900px}
+  .suma h2{margin-top:0}
+  :root{--tc:clamp(26px,2.5vw,36px)}
+  .sumario{list-style:none;margin-top:clamp(40px,5vw,72px);display:grid;gap:clamp(22px,2.4vw,32px)}
+  .sumario a{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:clamp(12px,1.6vw,20px);padding-bottom:clamp(12px,1.6vw,18px);border-bottom:1px dashed rgba(255,251,243,.32);text-decoration:none;color:#FFFBF3;transition:border-color .3s}
+  .sumario .t,.rel3 b,.cab .ct span,.estante figcaption{text-wrap:balance}
+  .sumario .n{font:500 calc(var(--tc) * 2.7)/.86 'TRJN',Georgia,serif;letter-spacing:-.03em;min-width:1.1em;transition:color .3s}
+  .sumario .t{align-self:stretch;display:flex;align-items:center;padding-left:clamp(12px,1.4vw,18px);border-left:1.5px solid rgba(255,251,243,.85);font:400 var(--tc)/1.25 'InterEter',sans-serif;transition:color .3s,transform .35s cubic-bezier(.2,.8,.2,1)}
+  .sumario a:hover,.sumario a:focus-visible{border-color:var(--ouro-claro);outline:none}
+  .sumario a:hover .n,.sumario a:hover .t,.sumario a:focus-visible .t{color:var(--ouro-claro)}
+  .sumario a:hover .t{transform:translateX(8px)}
+  html{scroll-behavior:smooth}
+
+  /* mockup de páginas do capítulo: três folhas paradas, a do meio maior */
+  .mock{--mw:clamp(150px,16vw,220px);display:flex;justify-content:center;align-items:center;margin:clamp(40px,4.5vw,56px) auto 0;padding:10px 0}
+  .mock .m{margin:0 calc(var(--mw) * -.14);width:var(--mw)}
+  .mock .m img{width:100%;display:block;border-radius:3px;background:#fff;box-shadow:0 30px 50px -24px rgba(25,8,8,.6)}
+  .escuro .mock .m img{box-shadow:0 30px 50px -22px rgba(0,0,0,.85)}
+  .mock .l{transform:rotate(-5deg) translateY(5%);z-index:1}.mock .r{transform:rotate(5deg) translateY(5%);z-index:1}
+  .mock .c{width:calc(var(--mw) * 1.14);z-index:2}
+  /* dobra do capítulo: o título como na abertura da revista, saindo de dentro do número */
+  .cap{padding-top:clamp(56px,7vh,96px);padding-bottom:clamp(56px,7vh,96px)}
+  .capin{max-width:820px;text-align:left}
+  .cab{display:flex;align-items:center;gap:clamp(14px,1.8vw,24px);margin:0;text-align:left;font-size:inherit}
+  .cab .cn{font:500 clamp(110px,min(11vw,19vh),176px)/.8 'TRJN',Georgia,serif;letter-spacing:-.04em;opacity:0;transform:scale(.92);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  .cab .ct{position:relative;overflow:hidden;padding:.3em 0 .3em clamp(14px,1.6vw,22px);font:400 var(--tc)/1.22 'InterEter',sans-serif;letter-spacing:-.005em}
+  .cab .ct::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1.5px;background:currentColor;transform:scaleY(0);transform-origin:50% 50%;transition:transform .7s cubic-bezier(.2,.8,.2,1) .35s}
+  .cab .ct>span{display:block;transform:translateX(-105%);transition:transform 1.1s cubic-bezier(.2,.8,.2,1) .8s}
+  .cab.vis .cn{opacity:1;transform:none}.cab.vis .ct::before{transform:none}.cab.vis .ct>span{transform:none}
+  .por{display:flex;align-items:center;gap:14px;margin-top:clamp(30px,3.6vw,48px);text-align:left}
+  .por img{width:54px;height:54px;border-radius:50%;object-fit:cover;flex:none}
+  .por p{font:500 clamp(21px,1.8vw,25px)/1.2 'TRJN',Georgia,serif}.por p b{font-weight:500}
+  .por .papel{display:block;margin-top:4px;max-width:24ch;font:400 13.5px/1.4 'InterEter',sans-serif;opacity:.72;text-wrap:balance}
+  .por .rede{display:inline-block;margin-top:5px;font:600 13.5px/1.3 'InterEter',sans-serif}
+  .por a{color:var(--ouro-of);font-weight:600;text-decoration:none}.escuro .por a{color:var(--ouro-claro)}
+  .release{margin:clamp(26px,3vw,38px) 0 0;max-width:760px}
+  .release p{font:500 clamp(19px,1.55vw,23px)/1.62 'TRJN',Georgia,serif;text-wrap:pretty}
+  .release p+p{margin-top:1em}
+  .cap.escuro+#bibliografia{padding-top:clamp(48px,5vw,72px)}
+  .cap.escuro+#bibliografia::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(1180px,calc(100% - 32px));height:1px;background:linear-gradient(90deg,transparent,rgba(214,189,132,.45),transparent)}
+  .estante{margin-top:clamp(36px,4vw,56px);overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .estante .fila{display:flex;width:max-content;animation:anda 70s linear infinite;will-change:transform}
+  .estante .lv{margin:0 22px 0 0;width:150px;flex:none}
+  .estante .lv img{height:220px;width:auto;max-width:150px;display:block;margin:0 auto;object-fit:contain;border-radius:3px;box-shadow:0 20px 34px -18px rgba(0,0,0,.8)}
+  .estante figcaption{margin-top:12px;font:500 15px/1.25 'TRJN',Georgia,serif;text-align:center}
+  .estante figcaption small{display:block;margin-top:4px;font:400 12px/1.3 'InterEter',sans-serif;opacity:.65}
+  @keyframes anda{to{transform:translateX(-50%)}}
+  .rel3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,40px);max-width:900px;margin:clamp(36px,4vw,56px) auto 0}
+  .rel3 a{text-decoration:none;color:inherit;text-align:center;transition:transform .3s}
+  .rel3 a:hover{transform:translateY(-6px)}
+  .rel3 img{width:100%;display:block;border-radius:4px;box-shadow:0 30px 50px -28px rgba(25,8,8,.6)}
+  .rel3 span{display:block;margin-top:16px;font:800 clamp(12px,.85vw,14px)/1 'FuturaCond',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ouro-of)}
+  .rel3 b{display:block;margin-top:8px;font:500 clamp(18px,1.6vw,23px)/1.2 'TRJN',Georgia,serif}
+  .rod{background:#120606;color:rgba(255,251,243,.7);padding:56px 16px 40px;text-align:center}
+  .rod .emblema img{height:clamp(58px,6vw,80px);width:auto}
+  .rod .leg{margin-top:26px;font-size:12.5px;line-height:1.6;opacity:.62}.rod .leg a{color:inherit}
+  .rod small{display:block;margin-top:10px;font-size:12px;opacity:.42}
+  .pop{margin:auto;border:0;padding:0;background:transparent;max-width:min(500px,calc(100vw - 32px));width:100%;color:#190808}
+  .pop::backdrop{background:rgba(10,4,4,.74);backdrop-filter:blur(6px)}
+  .pop form,.pop .caixa{position:relative;display:grid;gap:12px;padding:clamp(26px,4vw,40px);border-radius:22px;background:#FFFBF3;text-align:left}
+  .pop .caixa{text-align:center;justify-items:center}
+  .pop .caixa svg{width:44px;height:44px;color:var(--ouro-of)}
+  .pop h3{font:500 clamp(24px,3vw,30px)/1.12 'TRJN',Georgia,serif}
+  .pop .dek{font-size:15.5px;line-height:1.55;opacity:.75}
+  .pop input[type=text],.pop input[type=email],.pop input[type=tel]{height:52px;padding:0 16px;border:1px solid rgba(25,8,8,.15);border-radius:3px;background:#fff;font:400 16px 'InterEter',sans-serif}
+  .pop .ok{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;opacity:.75}.pop .ok a{color:inherit}
+  .pop .erro{font-size:13px;color:#511212}
+  .pop .pbt{width:100%;margin-top:6px}
+  .pop .fecha{position:absolute;right:16px;top:10px;border:0;background:none;font:500 32px/1 'TRJN',serif;cursor:pointer;color:inherit}
+  /* auditoria 09/11: botão sem a borda do navegador, campo errado marcado, seletor de país, aviso com a edição do mês */
+  .pop button.pbt{border:0;cursor:pointer}.pop button.pbt:disabled{opacity:.7;cursor:wait}
+  .pop .rot{padding-right:36px;line-height:1.5}.pop .rot .inteiro{white-space:nowrap}
+  .pop input[type=text],.pop input[type=email],.pop input[type=tel]{width:100%;min-width:0;color:#190808}
+  .pop input:focus{outline:2px solid var(--ouro-si);outline-offset:1px;border-color:transparent}
+  .pop input.falta,.pop .fone.falta input,.pop .fone.falta .fone-pais{border-color:#A41E13;background:#fff7f5}
+  .pop .ok.falta{color:#A41E13;opacity:1}.pop .ok input{width:18px;height:18px;margin-top:1px;flex:0 0 auto;accent-color:#89723C}
+  .pop .erro{font-size:14px;line-height:1.4;color:#A41E13}
+  .pop .fone{display:flex;gap:8px}.pop .fone input{flex:1 1 auto}
+  .pop .fone-pais{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:92px;height:52px;padding:0 12px;border:1px solid rgba(25,8,8,.15);border-radius:3px;background:#fff;font:400 16px 'InterEter',sans-serif;cursor:pointer}
+  .pop .fone-pais select{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:16px}
+  .pop .fone-pais::after{content:'';width:6px;height:6px;margin-left:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.55}
+  .pop .caixa .pbt+.pbt{margin-top:0}
+  .pop .pbt.linha{background:none;border:1px solid rgba(25,8,8,.28);box-shadow:none}
+  .pop .nota-pop{font-size:14px;line-height:1.45;opacity:.65}
+  .leque{overflow-x:clip}.leque .fw img{max-width:calc((100vw - 40px) / 2.3)}
+  /* computador */
+  .dob{padding:clamp(88px,8vw,124px) clamp(24px,5vw,64px)}.cap{padding-top:clamp(88px,8vw,112px);padding-bottom:clamp(88px,8vw,112px)}
+  /* iPad (deitado e em pé) */
+  @media (min-width:761px) and (max-width:1100px){
+   .dob,.cap{padding:96px 48px}
+   :root{--tc:30px}
+   .sumario{gap:34px;margin-top:60px}
+   .estante .lv{width:190px}.estante .lv img{height:280px;max-width:190px}.estante figcaption{font-size:17px}.estante figcaption small{font-size:13px}
+   .intro{font-size:18px}
+   .rel3{max-width:760px;gap:32px}.rel3 b{font-size:21px}
+   .mock{--mw:200px}
+  }
+  @media (min-width:761px) and (max-width:1100px) and (orientation:portrait){
+   .cab .cn{font-size:150px}.release p{font-size:21px}.por p{font-size:24px}
+  }
+  @media (max-width:760px){
+   .dob,.cap{padding:64px 16px}.folha-sobe{border-radius:22px 22px 0 0}
+   :root{--tc:20px}
+   .sumario{gap:24px;margin-top:40px}
+   .acoes-cap{margin-top:40px}
+   .mock{--mw:31vw;margin-top:36px}
+   .rel3{margin-top:32px}
+   .nesta{font-size:18px}
+   .leque{--pw:22vw}.leque.com-fw{--fwh:23vw;--vis:.66}.leque .pg{transform:translateX(calc(-50% + var(--i) * 52%)) rotate(calc(var(--i) * 4deg))}
+   .leque .pg[style*="--a:3"]{display:none}
+   .leque .fw img{border-width:3px;border-radius:5px}
+ 
+   .cab .cn{font-size:92px}
+   .por img{width:46px;height:46px}.por p{font-size:19px}.por .papel,.por .rede{font-size:12.5px}
+   .release p{font-size:18px;line-height:1.6}
+   .rel3{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.rel3 b{font-size:15px}.rel3 span{font-size:11.5px;letter-spacing:.1em}
+   .estante .lv{width:120px}.estante .lv img{height:176px;max-width:120px}
+  }
+  
+h1{font-size:calc(clamp(50px,min(5vw,8.2vh),74px) * 0.72);text-wrap:balance}
+h1 s{text-decoration-thickness:.06em;opacity:.75}
+@media (max-width:1100px) and (orientation:portrait){h1{font-size:calc(56px * 0.72)}}
+@media (max-width:760px){h1{font-size:calc(36px * 0.72)}}
+@media (max-width:760px) and (max-height:760px){h1{font-size:calc(32px * 0.72)}}
+@media (max-width:760px) and (max-height:700px){.sub .l1{display:none}}
+.leque .fw.fwp{margin:0 calc(var(--fwh) * -.04)}.leque .fw.fwp{height:calc(var(--fwh) * 1.3)}.leque .fw.fwp[style*="--j:0"]{height:calc(var(--fwh) * 1.45)}
+</style>
+<meta name="description" content="Como antecipar, construir e liderar os movimentos culturais que dominam o mercado.">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png"><link rel="apple-touch-icon" href="../img/favicon-180.png"><meta name="theme-color" content="#190808">
+<script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
+<script defer src="../premium/calor.js"></script>
+<meta property="og:type" content="website"><meta property="og:site_name" content="ETER"><meta property="og:title" content="A Arte de Fascinar Multidões · ETER"><meta property="og:description" content="Como antecipar, construir e liderar os movimentos culturais que dominam o mercado."><meta property="og:url" content="https://eterbrasil.com/revista/006/"><meta property="og:image" content="https://eterbrasil.com/revista/006/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-
-<!-- ══ A BARRA DA CASA — hoje uma página, amanhã várias ══════════ -->
-<header class="topo" id="topo">
-  <a class="topo-marca" href="../" aria-label="ETER — início">
-    <img src="../premium/logo.webp" alt="ETER" width="900" height="240">
-  </a>
-  <nav class="topo-nav">
+<header class="barra" id="barra">
+  <a class="logo" href="../" aria-label="ETER, página inicial"><img src="../n/pd/img/logo-bege.svg" alt="ETER"></a>
+  <nav aria-label="Principal">
     <a href="../">Home</a>
-    <a href="#" id="nav-acervo">Todas as edições</a>
-    <a href="../bibliografia" class="sec">Bibliografia</a>
-    <a href="#" id="nav-passe" class="destaque">Adquirir passe</a>
+    <a href="../biblioteca/">Edições</a>
+    <a href="../bibliografia/">Bibliografia</a>
+    <a class="assine" href="../#assinatura">Assine</a>
   </nav>
 </header>
-
-<!-- ══ TELA 1 <i class="pt"></i> A CHEGADA ══════════════════════════════════════ -->
-<main id="chegada">
-  <!-- o fundo: a atmosfera vem da própria capa, e as páginas da edição
-       ficam penduradas como provas numa parede de gráfica -->
-  <div class="atmosfera" id="atmosfera" aria-hidden="true"></div>
-  <div class="mosaico" id="mosaico" aria-hidden="true"></div>
-  <div class="veu" aria-hidden="true"></div>
-  <div class="vinheta" aria-hidden="true"></div>
-
-  <div class="folha">
-
-    <!-- a revista, espiável na própria chegada -->
-    <section class="revista" id="revista">
-      <!-- a revista aberta na mesa: duas páginas e a lombada no meio -->
-      <div class="visor" id="visor">
-        <div class="spread" id="spread">
-          <div class="pg-slot esq"><img id="pg-esq" alt="" width="600" height="849"><i class="sombra"></i></div>
-          <div class="pg-slot dir"><img id="pg-dir" alt="" width="600" height="849" fetchpriority="high"><i class="sombra"></i></div>
-          <div class="lombada" aria-hidden="true"></div>
-
-          <!-- a folha que vira, com frente e verso -->
-          <div class="virador" id="virador" aria-hidden="true">
-            <div class="face frente"><img id="vira-frente" alt=""><i class="luz"></i></div>
-            <div class="face verso"><img id="vira-verso" alt=""><i class="luz"></i></div>
-          </div>
-
-          <!-- o cadeado da amostra: o resto da edição abre com o cadastro -->
-          <div class="tranca" id="tranca" hidden>
-            <button class="tranca-btn" id="tranca-btn">
-              <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
-                <path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                <rect x="4.5" y="10" width="15" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-                <circle cx="12" cy="15" r="1.3" fill="currentColor"/>
-              </svg>
-              <span class="tranca-tit">O resto da edição</span>
-              <span class="tranca-sub">abre com o cadastro, de graça</span>
-            </button>
-          </div>
-        </div>
-
-        <p id="aviso-trava" class="so-leitor" role="status" aria-live="polite"></p>
-
-        <button class="seta esq" id="seta-esq" aria-label="Página anterior">&lsaquo;</button>
-        <button class="seta dir" id="seta-dir" aria-label="Próxima página">&rsaquo;</button>
-      </div>
-
-      <div class="pulso">
-        <span id="pulso-n">Capa</span>
-        <span class="trilho" id="trilho"><i></i></span>
-        <span id="pulso-cap"></span>
-      </div>
-
-      <div class="faixa" id="faixa" role="group" aria-label="Páginas desta edição"></div>
-      <p class="dica-faixa" id="dica-faixa">deslize para espiar <i class="pt"></i> <b>toque para ler a partir dali</b></p>
-    </section>
-
-    <!-- os dizeres -->
-    <section class="dizeres">
-    <p class="numero" id="numero"></p>
-    <h1 id="titulo"></h1>
-    <p class="promessa" id="promessa"></p>
-    <p class="convite-frase" id="convite-frase" hidden></p>
-    <p class="ficha" id="ficha"></p>
-
-    <div class="convites">
-      <button class="btn btn-ler" id="btn-ler">
-        Ler esta edição
-        <span class="sub" id="sub-ler">uma edição completa por mês, sem pagar nada</span>
-      </button>
-
-      <div class="ou">adquira o passe completo</div>
-
-      <div class="passe">
-        <div class="passe-topo">
-          <span class="passe-rot" id="passe-rot"></span>
-          <span class="passe-preco" id="passe-preco"></span>
-        </div>
-        <ul class="passe-itens" id="passe-itens"></ul>
-        <button class="btn btn-passe" data-passe="capa">Adquirir passe</button>
-        <p class="passe-nota" id="passe-nota"></p>
-        </div>
-      </div>
-    </section>
-
-    <footer class="pe">
-      <p><a href="#" id="ver-edicoes">o acervo</a> <i class="pt"></i> <a href="../bibliografia">bibliografia</a> <i class="pt"></i> <a href="../privacidade.html">privacidade</a></p>
-      <p>ETER Company <i class="pt"></i> CNPJ 37.223.854/0001-47</p>
-    </footer>
+<main>
+<section class="dobra">
+  <div class="fundo"><div class="colunas" id="colunas"></div><div class="veu"></div></div>
+  <div class="palco">
+    <div class="texto">
+      <p class="saud"><span class="a">Bem-vindo à</span><span class="b">Vanguarda</span></p>
+      <p class="num">Edição 006</p>
+      <h1>A Arte de Fascinar Multidões</h1>
+      <p class="sub">Como antecipar, construir e liderar os <b>movimentos culturais</b> que dominam o&nbsp;mercado.</p>
+    </div>
+    <div class="livro-lado">
+      <div class="livro capa" id="livro"></div>
+    </div>
+    <div class="acoes">
+      <div class="setas"><button type="button" id="ant" aria-label="Página anterior">‹</button><button type="button" id="prox" aria-label="Próxima página">›</button></div>
+      <a class="pbt" href="ler/" id="ler">Ler edição completa</a>
+      <p class="nota">Você pode resgatar uma leitura gratuita <b>a cada 30&nbsp;dias</b>.</p>
+    </div>
   </div>
+</section>
+
+  <!-- 2 · NESTA EDIÇÃO: o texto de dentro da revista, literal, e o leque parado com páginas e quadros -->
+  <section class="dob claro folha-sobe" id="nesta">
+    <div class="in estreito">
+      <h2 data-a>Nesta <em>edição</em></h2>
+      <p class="nesta" data-a>Você vai entender por que multidões inteiras se reúnem em torno de uma única pessoa e por que a guerra que decide o futuro da nova economia não é travada entre produtos, mas sim entre&nbsp;narrativas.</p><p class="nesta" data-a>E nas próximas páginas você vai acessar o passo a passo e a ferramenta de uma página para criar e liderar o seu próprio movimento, transformando sua audiência em uma comunidade engajada e&nbsp;lucrativa.</p>
+      <p class="tempo" data-a><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Tempo médio de leitura: aproximadamente 30&nbsp;minutos</p>
+    </div>
+    <div class="in"><div class="leque com-fw" data-a aria-hidden="true"><div class="pgs"><figure class="pg" style="--i:-3;--a:3;z-index:4"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p007@800.webp" alt="" loading="lazy"></figure><figure class="pg" style="--i:-2;--a:2;z-index:6"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p013@800.webp" alt="" loading="lazy"></figure><figure class="pg" style="--i:-1;--a:1;z-index:8"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p023@800.webp" alt="" loading="lazy"></figure><figure class="pg" style="--i:0;--a:0;z-index:10"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p024@800.webp" alt="" loading="lazy"></figure><figure class="pg" style="--i:1;--a:1;z-index:8"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p020@800.webp" alt="" loading="lazy"></figure><figure class="pg" style="--i:2;--a:2;z-index:6"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p027@800.webp" alt="" loading="lazy"></figure><figure class="pg" style="--i:3;--a:3;z-index:4"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p011@800.webp" alt="" loading="lazy"></figure></div><div class=fws><figure class="fw" style="--j:0"><img src="../n/pd/img/fw2/006-circulos-do-movimento.webp" alt="" loading="lazy"></figure></div></div>
+      <div class="acoes-cap centro" data-a><a class="pbt ler" href="ler/">Resgatar leitura gratuita</a></div>
+    </div>
+  </section>
+
+  <!-- 3 · SUMÁRIO: o mesmo desenho do sumário de dentro da revista, maior e clicável -->
+  <section class="dob escuro suma" id="capitulos">
+    <div class="fantasma" aria-hidden="true">006</div>
+    <div class="in estreito">
+      <h2 data-a>Sumário</h2>
+      <ol class="sumario" data-a><li><a href="#cap01"><span class="n">01</span><span class="t">Psicologia das Massas e o Espírito do&nbsp;Tempo</span></a></li><li><a href="#cap02"><span class="n">02</span><span class="t">A Guerra de Narrativas da Nova&nbsp;Economia</span></a></li><li><a href="#cap03"><span class="n">03</span><span class="t">Mito, Rito e&nbsp;Doutrina</span></a></li><li><a href="#cap04"><span class="n">04</span><span class="t">Exercício prático: Criação de&nbsp;Movimento</span></a></li><li><a href="#cap05"><span class="n">05</span><span class="t">Os Filhos do&nbsp;Fogo</span></a></li><li><a href="#bibliografia"><span class="n">06</span><span class="t">Bibliografia</span></a></li></ol>
+    </div>
+  </section>
+  
+  <section class="dob cap claro" id="cap01">
+    <div class="in capin">
+      <h2 class="cab" data-b aria-label="Capítulo 01, Psicologia das Massas e o Espírito do Tempo"><span class="cn">01</span><span class="ct"><span>Psicologia das&nbsp;Massas<br>e o Espírito do&nbsp;Tempo</span></span></h2>
+      <div class="por" data-a><img src="autores/davi.webp" alt=""><div><p>por <b>Davi Ribas</b></p><span class="papel">Escritor best-seller e Fundador da ETER</span><a class="rede" href="https://www.instagram.com/soudaviribas/" target="_blank" rel="noopener">@soudaviribas</a></div></div>
+      <div class="release"><p data-a>Em 13 de outubro de 1806, às vésperas de uma das batalhas mais decisivas da Europa, o filósofo Hegel escreveu a um amigo que vira o imperador Napoleão sair a cavalo pela cidade, e viu ali, mais do que o general em carne e osso, o espírito de uma era inteira manifestado em uma única&nbsp;pessoa.</p><p data-a>Neste capítulo, percorremos as ideias de Hegel, de Sigmund Freud e de Gustave Le Bon, autores de obras clássicas sobre o espírito do tempo e sobre as massas, e respondemos à pergunta que atravessa toda grande mudança histórica: como uma tensão invisível de uma época vira um movimento que reúne milhares de pessoas em torno de uma única&nbsp;pessoa?</p></div>
+      <div class="mock" data-a aria-hidden="true"><figure class="m l"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p008@800.webp" alt="" loading="lazy"></figure><figure class="m c"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p010@800.webp" alt="" loading="lazy"></figure><figure class="m r"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p012@800.webp" alt="" loading="lazy"></figure></div>
+      <div class="acoes-cap centro" data-a><a class="pbt ler" href="ler/">Resgatar leitura gratuita</a></div>
+    </div>
+  </section>
+  <section class="dob cap escuro" id="cap02">
+    <div class="in capin">
+      <h2 class="cab" data-b aria-label="Capítulo 02, A Guerra de Narrativas da Nova Economia"><span class="cn">02</span><span class="ct"><span>A Guerra de&nbsp;Narrativas<br>da Nova&nbsp;Economia</span></span></h2>
+      <div class="por" data-a><img src="autores/davi.webp" alt=""><div><p>por <b>Davi Ribas</b></p><span class="papel">Escritor best-seller e Fundador da ETER</span><a class="rede" href="https://www.instagram.com/soudaviribas/" target="_blank" rel="noopener">@soudaviribas</a></div></div>
+      <div class="release"><p data-a>Há mais de um século e meio, com a primeira revolução industrial já consolidada, o filósofo e economista alemão Karl Marx diagnosticou as engrenagens do capitalismo, em que a riqueza nascia do trabalho físico, e esse consenso durou quase dois séculos, até que a inteligência artificial e os algoritmos da Quarta Revolução Industrial provocaram uma ruptura nessa&nbsp;dinâmica.</p><p data-a>Neste capítulo, usamos a lente de Marx para analisar a economia de hoje e respondemos à pergunta de quem disputa o mercado: como funciona, na prática, a guerra de narrativas, e quais são as engrenagens ocultas desse novo&nbsp;jogo?</p></div>
+      <div class="mock" data-a aria-hidden="true"><figure class="m l"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p017@800.webp" alt="" loading="lazy"></figure><figure class="m c"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p021@800.webp" alt="" loading="lazy"></figure><figure class="m r"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p025@800.webp" alt="" loading="lazy"></figure></div>
+      <div class="acoes-cap centro" data-a><a class="pbt ler" href="ler/">Resgatar leitura gratuita</a></div>
+    </div>
+  </section>
+  <section class="dob cap claro" id="cap03">
+    <div class="in capin">
+      <h2 class="cab" data-b aria-label="Capítulo 03, Mito, Rito e Doutrina"><span class="cn">03</span><span class="ct"><span>Mito, Rito<br>e Doutrina</span></span></h2>
+      <div class="por" data-a><img src="autores/davi.webp" alt=""><div><p>por <b>Davi Ribas</b></p><span class="papel">Escritor best-seller e Fundador da ETER</span><a class="rede" href="https://www.instagram.com/soudaviribas/" target="_blank" rel="noopener">@soudaviribas</a></div></div>
+      <div class="release"><p data-a>No início do século XX, o sociólogo alemão Max Weber se debruçou sobre um dos maiores enigmas das instituições humanas, que é saber como certas revoluções, religiões e impérios sobrevivem ao teste do tempo, enquanto outros desaparecem assim que o fogo inicial se apaga, e o seu aviso é que a atração de uma narrativa ou do carisma de um líder dura&nbsp;pouco.</p><p data-a>Neste capítulo, percorremos as três peças de uma arquitetura que mantém uma comunidade unida na rotina, e respondemos à pergunta de quem quer construir um movimento duradouro: como transformar a atração inicial em pertencimento que resista ao&nbsp;tempo?</p></div>
+      <div class="mock" data-a aria-hidden="true"><figure class="m l"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p030@800.webp" alt="" loading="lazy"></figure><figure class="m c"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p031@800.webp" alt="" loading="lazy"></figure><figure class="m r"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p036@800.webp" alt="" loading="lazy"></figure></div>
+      <div class="acoes-cap centro" data-a><a class="pbt ler" href="ler/">Resgatar leitura gratuita</a></div>
+    </div>
+  </section>
+  <section class="dob cap escuro" id="cap04">
+    <div class="in capin">
+      <h2 class="cab" data-b aria-label="Capítulo 04, Exercício prático: Criação de Movimento"><span class="cn">04</span><span class="ct"><span>Exercício prático:<br>Criação de&nbsp;Movimento</span></span></h2>
+      <div class="por" data-a><img src="autores/davi.webp" alt=""><div><p>por <b>Davi Ribas</b></p><span class="papel">Escritor best-seller e Fundador da ETER</span><a class="rede" href="https://www.instagram.com/soudaviribas/" target="_blank" rel="noopener">@soudaviribas</a></div></div>
+      <div class="release"><p data-a>Compreender a estrutura de um movimento, com seu mito, seus ritos e sua doutrina, é a primeira parte do trabalho, e a segunda é colocá-lo de pé no próprio mercado, onde ele precisa ganhar força concreta e direcionar o fluxo de atenção e de valor de pessoas&nbsp;reais.</p><p data-a>Neste capítulo, conduzimos um exercício prático, acompanhado de um caso único, o Raiz, um clube de bem-estar focado em práticas ancestrais como respiração guiada, exposição ao frio e encontros em círculo, e respondemos à pergunta de quem quer liderar a própria comunidade: como criar o seu próprio&nbsp;movimento?</p></div>
+      <div class="mock" data-a aria-hidden="true"><figure class="m l"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p042@800.webp" alt="" loading="lazy"></figure><figure class="m c"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p041@800.webp" alt="" loading="lazy"></figure><figure class="m r"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p043@800.webp" alt="" loading="lazy"></figure></div>
+      <div class="acoes-cap centro" data-a><a class="pbt ler" href="ler/">Resgatar leitura gratuita</a></div>
+    </div>
+  </section>
+  <section class="dob cap claro" id="cap05">
+    <div class="in capin">
+      <h2 class="cab" data-b aria-label="Capítulo 05, Os Filhos do Fogo"><span class="cn">05</span><span class="ct"><span>Os Filhos<br>do Fogo</span></span></h2>
+      <div class="por" data-a><img src="autores/davi.webp" alt=""><div><p>por <b>Davi Ribas</b></p><span class="papel">Escritor best-seller e Fundador da ETER</span><a class="rede" href="https://www.instagram.com/soudaviribas/" target="_blank" rel="noopener">@soudaviribas</a></div></div>
+      <div class="release"><p data-a>O primeiro imperador do Brasil, Dom Pedro I, lendo as cartas de ultimato de Lisboa, decidiu desobedecer à Coroa para fundar um império independente, o líder americano dos direitos civis Martin Luther King Jr., sozinho à mesa da cozinha após uma ameaça de morte, escolheu entregar a própria vida a uma causa, e a revolucionária Anita Garibaldi virou as costas para a segurança de uma vida provinciana para liderar revoluções em dois&nbsp;continentes.</p><p data-a>Neste capítulo, aprofundamos o que essas trajetórias têm em comum e respondemos à pergunta de quem sente a urgência da própria geração: o que leva alguém a assumir a frente de um&nbsp;movimento?</p></div>
+      <div class="mock" data-a aria-hidden="true"><figure class="m l"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p051@800.webp" alt="" loading="lazy"></figure><figure class="m c"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p052@800.webp" alt="" loading="lazy"></figure><figure class="m r"><img src="https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p053@800.webp" alt="" loading="lazy"></figure></div>
+      <div class="acoes-cap centro" data-a><a class="pbt ler" href="ler/">Resgatar leitura gratuita</a></div>
+    </div>
+  </section>
+
+  <!-- BIBLIOGRAFIA -->
+  <section class="dob escuro" id="bibliografia">
+    <div class="in">
+      <div class="topo-sec" data-a><p class="rot">Bibliografia</p><h2>As teses desta edição são baseadas nas <em>obras mais relevantes do mundo</em></h2>
+        <p class="intro">em psicologia das massas, sociologia e antropologia, filosofia política e da história, economia, mitologia e religião, narrativa e marketing, e tecnologia e sociedade&nbsp;digital.</p></div>
+    </div>
+    <div class="estante" data-a><div class="fila"><figure class="lv"><img src="https://m.media-amazon.com/images/P/8546902410.01.LZZZZZZZ.jpg" alt="Psicologia das multidões" loading="lazy"><figcaption>Psicologia das multidões<small>Gustave Le Bon</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/6558020246.01.LZZZZZZZ.jpg" alt="Cadernos do cárcere (Vol. 1): Introdução ao estudo da filosofia. A filosofia de Benedetto Croce" loading="lazy"><figcaption>Cadernos do cárcere (Vol. 1)<small>Antonio Gramsci</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8531502942.01.LZZZZZZZ.jpg" alt="O Herói de Mil Faces" loading="lazy"><figcaption>O Herói de Mil Faces<small>Joseph Campbell</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/857283978X.01.LZZZZZZZ.jpg" alt="A quarta revolução industrial" loading="lazy"><figcaption>A quarta revolução industrial<small>Klaus Schwab</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8532623549.01.LZZZZZZZ.jpg" alt="Os Arquétipos e o Inconsciente Coletivo" loading="lazy"><figcaption>Os Arquétipos e o Inconsciente Coletivo<small>Carl Gustav Jung</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8537808032.01.LZZZZZZZ.jpg" alt="O filtro invisível: O que a internet está escondendo de você" loading="lazy"><figcaption>O filtro invisível<small>Eli Pariser</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/1782394842.01.LZZZZZZZ.jpg" alt="The Attention Merchants" loading="lazy"><figcaption>The Attention Merchants<small>Tim Wu</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/6555601442.01.LZZZZZZZ.jpg" alt="A era do capitalismo de vigilância: A luta por um futuro humano na nova fronteira do poder" loading="lazy"><figcaption>A era do capitalismo de vigilância<small>Shoshana Zuboff</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/31G9AecpZtL.jpg" alt="A Sociedade De Consumo" loading="lazy"><figcaption>A Sociedade De Consumo<small>Jean Baudrillard</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/6556600547.01.LZZZZZZZ.jpg" alt="As formas elementares da vida religiosa: O sistema totêmico na Austrália" loading="lazy"><figcaption>As formas elementares da vida religiosa<small>Émile Durkheim</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/41HjQ2gZblL._SL1162_.jpg" alt="Mito e realidade" loading="lazy"><figcaption>Mito e realidade<small>Mircea Eliade</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/853591871X.01.LZZZZZZZ.jpg" alt="Psicologia das Massas e Análise do Eu" loading="lazy"><figcaption>Psicologia das Massas e Análise do Eu<small>Sigmund Freud</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8576088045.01.LZZZZZZZ.jpg" alt="Tribos: nós precisamos que você nos lidere" loading="lazy"><figcaption>Tribos<small>Seth Godin</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/9895890516.01.LZZZZZZZ.jpg" alt="Storytelling: Como as Histórias nos Tornam Humanos" loading="lazy"><figcaption>Storytelling<small>Jonathan Gottschall</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8523003622.01.LZZZZZZZ.jpg" alt="Filosofia da História" loading="lazy"><figcaption>Filosofia da História<small>G. W. F. Hegel</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/0060505915.01.LZZZZZZZ.jpg" alt="O Verdadeiro Crente" loading="lazy"><figcaption>O Verdadeiro Crente<small>Eric Hoffer</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/71AZ-TN2MsL._SL1500_.jpg" alt="Stride Toward Freedom: The Montgomery Story: 1" loading="lazy"><figcaption>Stride Toward Freedom<small>Martin Luther King Jr.</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/61vP47xqhfL._SL1048_.jpg" alt="O Tempo das Tribos: O declínio do individualismo nas sociedades de massa" loading="lazy"><figcaption>O Tempo das Tribos<small>Michel Maffesoli</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8573590866.01.LZZZZZZZ.jpg" alt="Anita Garibaldi: uma heroína brasileira" loading="lazy"><figcaption>Anita Garibaldi<small>Paulo Markun</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8577430480.01.LZZZZZZZ.jpg" alt="Contribuição à crítica da economia política" loading="lazy"><figcaption>Contribuição à crítica da economia política<small>Karl Marx</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/6557172298.01.LZZZZZZZ.jpg" alt="O Capital [Livro 1]: crítica da economia política. O processo de produção do capital" loading="lazy"><figcaption>O Capital [Livro 1]<small>Karl Marx</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/81UQnovW41L._SL1500_.jpg" alt="Princípios de economia" loading="lazy"><figcaption>Princípios de economia<small>Carl Menger</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/8550804592.01.LZZZZZZZ.jpg" alt="Storybrand: crie mensagens claras e atraia a atenção dos clientes para sua marca" loading="lazy"><figcaption>Storybrand<small>Donald Miller</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/61MxLc9JQWL._SL1280_.jpg" alt="Ação Humana: Um tratado de economia" loading="lazy"><figcaption>Ação Humana<small>Ludwig von Mises</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/6555445092.01.LZZZZZZZ.jpg" alt="Marketing Ideológico: Como liderar seu mercado e transformar seus clientes em defensores da sua marca" loading="lazy"><figcaption>Marketing Ideológico<small>Davi Ribas</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/P/0743222091.01.LZZZZZZZ.jpg" alt="Diffusion of Innovations" loading="lazy"><figcaption>Diffusion of Innovations<small>Everett M. Rogers</small></figcaption></figure><figure class="lv"><img src="https://m.media-amazon.com/images/I/51MWF9zH+YL._SL1000_.jpg" alt="Economia e Sociedade (Volume 1)" loading="lazy"><figcaption>Economia e Sociedade (Volume 1)<small>Max Weber</small></figcaption></figure></div></div>
+    <div class="in"><div class="acoes-cap centro" data-a><a class="pbt" href="../bibliografia/006/">Acessar a bibliografia da edição</a></div></div>
+  </section>
+
+  <!-- RELACIONADAS -->
+  <section class="dob claro" id="relacionadas">
+    <div class="in">
+      <div class="topo-sec" data-a><h2>Se você se interessou por <em>A Arte de Fascinar Multidões</em>, também vai gostar de</h2></div>
+      <div class="rel3" data-a><a href="../004/"><img src="../n/pd/img/capas/004.webp" alt="Corações Miméticos" loading="lazy"><span>Edição 004</span><b>Corações Miméticos</b></a><a href="../011/"><img src="../n/pd/img/capas/011.webp" alt="Micro-hegemonias" loading="lazy"><span>Edição 011</span><b>Micro-hegemonias</b></a><a href="../014/"><img src="../n/pd/img/capas/014.webp" alt="Pátria Mãe Solteira" loading="lazy"><span>Edição 014</span><b>Pátria Mãe&nbsp;Solteira</b></a></div>
+      <div class="acoes-cap centro" data-a><a class="pbt" href="../biblioteca/">Conhecer todas as edições</a></div>
+    </div>
+  </section>
+
+  <footer class="rod">
+    <div class="emblema"><img src="../app/losango-eter.png" alt="ETER"></div>
+    <p class="leg">© 2026 ETER COMPANY LTDA · CNPJ 37.223.854/0001-47 · Todos os direitos reservados · <a href="https://eterbrasil.com/revista/privacidade/">Política de privacidade</a></p>
+    <small>Como Associada Amazon, a ETER recebe por compras qualificadas.</small>
+  </footer>
+
+  <!-- popups: cadastro da leitura grátis e leitura do mês já usada -->
+  <dialog class="pop" id="pop-cad" aria-labelledby="pc-t">
+    <form method="dialog" novalidate>
+      <button type="button" class="fecha" aria-label="Fechar">×</button>
+      <p class="rot">Edição 006 · A Arte de Fascinar Multidões</p>
+      <h3 id="pc-t">Resgate sua leitura gratuita</h3>
+      <p class="dek">Deixe seus dados e a edição completa abre na hora.</p>
+      <input id="pc-nome" type="text" autocomplete="name" placeholder="Seu nome">
+      <input id="pc-mail" type="email" autocomplete="email" placeholder="Seu melhor e-mail">
+      <input id="pc-zap" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="WhatsApp com DDD">
+      <label class="ok"><input type="checkbox" id="pc-aceite"><span>Autorizo a ETER a me enviar a edição, comunicações e ofertas por WhatsApp e e-mail. <a href="https://eterbrasil.com/revista/privacidade/" target="_blank" rel="noopener">Privacidade</a>.</span></label>
+      <p class="erro" id="pc-erro" hidden>Preencha nome, e-mail, WhatsApp com DDD e a autorização.</p>
+      <button class="pbt" type="submit">Ler a edição completa</button>
+    </form>
+  </dialog>
+  <dialog class="pop" id="pop-usou" aria-labelledby="pu-t">
+    <div class="caixa">
+      <button type="button" class="fecha" aria-label="Fechar">×</button>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="10" width="15" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+      <h3 id="pu-t">Você já utilizou sua leitura gratuita deste mês</h3>
+      <p class="dek">Assine a ETER para ter acesso ilimitado a todo o conteúdo.</p>
+      <a class="pbt" href="../#assinatura">Assine a ETER</a>
+      <a class="pbt linha" id="pu-outra" href="#" hidden>Ler a edição do mês</a>
+      <p class="nota-pop" id="pu-data" hidden></p>
+    </div>
+  </dialog>
+  
 </main>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+(()=>{
+const pad=n=>String(n).padStart(3,'0');
+const PAGS=Array.from({length:56},(_,i)=>`https://davimovimento.github.io/eter-porta/edicoes/006/paginas/p${pad(i+1)}@800.webp`);
+const LIVROS=["https://m.media-amazon.com/images/P/8546902410.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/6558020246.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8531502942.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/857283978X.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8532623549.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8537808032.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/1782394842.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/6555601442.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/I/31G9AecpZtL.jpg", "https://m.media-amazon.com/images/P/6556600547.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/I/41HjQ2gZblL._SL1162_.jpg", "https://m.media-amazon.com/images/P/853591871X.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8576088045.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/9895890516.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8523003622.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/0060505915.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/I/71AZ-TN2MsL._SL1500_.jpg", "https://m.media-amazon.com/images/I/61vP47xqhfL._SL1048_.jpg", "https://m.media-amazon.com/images/P/8573590866.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/8577430480.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/P/6557172298.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/I/81UQnovW41L._SL1500_.jpg", "https://m.media-amazon.com/images/P/8550804592.01.LZZZZZZZ.jpg", "https://m.media-amazon.com/images/I/61MxLc9JQWL._SL1280_.jpg"];
+const LIVRE=13; // a leitura grátis vai até a página 13; o capítulo 2 começa na 14
 
-<!-- o convite que alcança o polegar: some quando o botão real aparece -->
-<div class="convite-fixo oculto" id="convite-fixo">
-  <button class="btn btn-ler" id="btn-ler-fixo">Ler edição completa</button>
-</div>
+/* barra */
+const barra=document.getElementById('barra');
+const rola=()=>barra.classList.toggle('rolou',scrollY>4);addEventListener('scroll',rola,{passive:true});rola();
 
-<!-- ══ TELA 2 <i class="pt"></i> A LEITURA ══════════════════════════════════════ -->
-<main id="leitura">
-  <div class="regua" id="regua"></div>
+/* fundo: grade da home. Livro da casa (r,c) = (5r + 3c) mod 17: nunca o mesmo livro ao lado (horizontal,
+   vertical ou diagonal), nem na emenda do giro da coluna. Todas as colunas sobem juntas, na mesma velocidade. */
+(()=>{const cont=document.getElementById('colunas');const cs=getComputedStyle(document.documentElement);
+ const colw=parseFloat(cs.getPropertyValue('--colw'))||270, gap=parseFloat(cs.getPropertyValue('--gap'))||14;
+ const cols=Math.ceil(innerWidth*1.25/(colw+gap))+1, casa=colw*1.414+gap;let linhas=Math.ceil(innerHeight*1.3/casa)+2;
+ /* na volta da coluna, a última linha encosta na primeira: pula a quantidade de linhas que repetiria o livro
+    na vertical ou na diagonal da coluna vizinha */
+ const ruim=L=>[0,2,22].some(d=>((5*(L-1)+d)%24+24)%24===0||((5*(L-1)-d)%24+24)%24===0);
+ while(ruim(linhas))linhas++;
+ cont.style.setProperty('--cols',cols);
+ for(let c=0;c<cols;c++){const col=document.createElement('div');col.className='col';col.style.setProperty('--dur',(linhas*7)+'s');
+  const l=[];for(let r=0;r<linhas;r++)l.push(LIVROS[(5*r+2*c)%24]);
+  col.innerHTML=l.concat(l).map(s=>`<div class="casa"><img src="${s}" alt="" loading="lazy"></div>`).join('');cont.appendChild(col)}
+})();
 
-  <header class="cromo" id="cromo">
-    <button class="ic" id="btn-voltar" aria-label="Voltar">←</button>
-    <span class="cromo-tit" id="cromo-tit"></span>
-    <button class="cromo-assine" id="cromo-assine">Assine</button>
-    <button class="ic" id="btn-sumario" aria-label="Capítulos" title="Capítulos">☰</button>
-    <span class="pagina-n" id="pagina-n"></span>
-  </header>
-  <div class="paginas" id="paginas"></div>
+/* a revista: duas páginas em todas as telas */
+const el=document.getElementById('livro');
+el.innerHTML=PAGS.slice(0,LIVRE).map(s=>`<div class="pagina"><img src="${s}" alt=""></div>`).join('')
+ +`<div class="pagina trava"><div class="dentro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="10" width="15" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="15" r="1.2" fill="currentColor"/></svg><p>Clique no botão e resgate sua leitura gratuita para acessar a edição completa.</p></div></div>`;
+/* celular: a revista ocupa o que sobra da altura da tela depois do texto, das setas, do botão e da nota,
+   para o botão aparecer na primeira tela em qualquer celular (Rei, 09/11) */
+const cabe=()=>{if(innerWidth>760){el.style.removeProperty('width');return}
+  const nota=document.querySelector('.nota').getBoundingClientRect().bottom+scrollY;const h=el.getBoundingClientRect().height;
+  const sobra=innerHeight-(nota-h)-18, larg=el.parentElement.getBoundingClientRect().width;
+  el.style.setProperty('width',Math.round(Math.max(150,Math.min(larg,sobra*1.4144)))+'px','important')};
+cabe();
+/* no celular alto, o que sobra embaixo vai para o espaço acima do botão (até 34 px), para o botão descer um pouco */
+const desce=()=>{const b=document.getElementById('ler');b.style.removeProperty('margin-top');if(innerWidth>760)return;
+  const sobra=innerHeight-document.querySelector('.nota').getBoundingClientRect().bottom-scrollY-18;
+  if(sobra>0)b.style.marginTop=(parseFloat(getComputedStyle(b).marginTop)+Math.min(34,Math.round(sobra/2)))+'px'};
+const pf=new St.PageFlip(el,{width:400,height:566,size:'stretch',minWidth:90,maxWidth:900,minHeight:127,maxHeight:1270,
+  showCover:true,usePortrait:false,maxShadowOpacity:.45,flippingTime:950,mobileScrollSupport:true,drawShadow:true,autoSize:true});
+pf.loadFromHTML(el.querySelectorAll('.pagina'));
+/* com só a capa à vista, lado a lado, as setas, o botão e a nota ficam embaixo da capa; abertas as páginas, voltam ao centro */
+const acoes=document.querySelector('.acoes');
+const naCapa=()=>{const c=pf.getCurrentPageIndex()===0;el.classList.toggle('capa',c);
+  const lado=innerWidth>760&&!(innerWidth<=1100&&innerHeight>innerWidth);
+  acoes.style.transform=c&&lado?`translateX(${Math.round(el.getBoundingClientRect().width/4)}px)`:'none'};
+let largura=innerWidth;addEventListener('resize',()=>{if(innerWidth!==largura){largura=innerWidth;cabe();setTimeout(desce,200)}naCapa()});
+setTimeout(desce,400);
+pf.on('flip',naCapa);naCapa();
 
-  <div class="barra" id="barra">
-    <img class="mono" src="../premium/monograma.webp" alt="" width="256" height="256">
-    <p class="barra-txt" id="barra-txt"></p>
-    <button class="btn btn-passe" data-passe="barra">Adquirir</button>
-  </div>
-</main>
-
-<dialog id="sumario-dialog">
-  <div class="painel">
-    <button class="fechar" data-fecha="sumario-dialog" aria-label="Fechar">×</button>
-    <h2 id="sum-tit"></h2>
-    <p class="leg" id="sum-leg"></p>
-    <ul class="caps" id="caps"></ul>
-  </div>
-</dialog>
-
-<dialog id="acervo-dialog">
-  <div class="painel">
-    <button class="fechar" data-fecha="acervo-dialog" aria-label="Fechar">×</button>
-    <h2>O acervo</h2>
-    <p class="leg">todas as edições publicadas</p>
-    <ul class="caps" id="acervo"></ul>
-  </div>
-</dialog>
-
-<dialog id="form-dialog">
-  <form class="form" id="form" novalidate>
-    <button type="button" class="fechar" data-fecha="form-dialog" aria-label="Fechar">×</button>
-    <img class="mono" src="../premium/monograma.webp" alt="" width="256" height="256">
-    <h2 id="form-tit">Para onde mandamos a edição?</h2>
-    <p class="dek2" id="form-dek">A leitura abre na hora, aqui mesmo. O WhatsApp é para você receber a próxima edição.</p>
-
-    <div class="campo" id="c-nome">
-      <label for="f-nome">Seu nome</label>
-      <input id="f-nome" aria-describedby="msg-nome" type="text" autocomplete="given-name" placeholder="Como te chamam" enterkeyhint="next">
-      <span class="msg" id="msg-nome" role="alert">Escreva seu nome.</span>
-    </div>
-
-    <div class="campo" id="c-mail">
-      <label for="f-mail">Seu melhor e-mail</label>
-      <input id="f-mail" aria-describedby="msg-mail" type="email" autocomplete="email" placeholder="voce@email.com" enterkeyhint="next">
-      <span class="msg" id="msg-mail" role="alert">Escreva um e-mail válido.</span>
-    </div>
-
-    <div class="campo" id="c-zap">
-      <label for="f-zap">WhatsApp</label>
-      <input id="f-zap" aria-describedby="msg-zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 90000-0000" enterkeyhint="go">
-      <span class="msg" id="msg-zap" role="alert">Precisa ter DDD e 8 ou 9 dígitos.</span>
-    </div>
-
-    <div class="campo" id="c-ok">
-    <label class="consent">
-      <input type="checkbox" id="f-ok" aria-describedby="msg-ok">
-      <span>Autorizo a <b>ETER</b> a me enviar a edição, comunicações e ofertas por WhatsApp e e-mail. Saio quando quiser respondendo <b>SAIR</b>. <a href="../privacidade.html" target="_blank" rel="noopener">Privacidade</a>.</span>
-    </label>
-      <span class="msg" id="msg-ok" role="alert">Precisamos da sua autorização para enviar a edição.</span>
-    </div>
-
-    <button class="btn btn-passe" type="submit" id="btn-enviar">Abrir a edição</button>
-  </form>
-</dialog>
-
-<!-- ══ A EDIÇÃO DO MÊS JÁ FOI ESCOLHIDA ═══════════════════════ -->
-<dialog id="mes-dialog">
-  <div class="painel oferta" id="mes-caixa">
-    <button type="button" class="fechar" data-fecha="mes-dialog" aria-label="Fechar">×</button>
-    <h2 id="mes-tit">Curtiu a leitura? Então vem.</h2>
-    <p class="oferta-chamada" id="mes-dek"></p>
-    <figure class="mock-passe">
-      <img src="../premium/mockup-assinatura.webp" alt="Tudo que o passe abre"
-        width="794" height="485" decoding="async">
-    </figure>
-    <p class="oferta-rot" id="mes-rot"></p>
-    <ul class="oferta-itens" id="mes-itens"></ul>
-    <button class="btn btn-passe" id="mes-passe">ADQUIRIR O PASSE</button>
-    <button class="btn btn-fantasma" id="mes-voltar">Ler a minha edição deste mês</button>
-    <p class="oferta-pe" id="mes-pe"></p>
-  </div>
-</dialog>
-
-<script src="../premium/fone.js?v=202611071234"></script>
-<script src="../premium/premium.js?v=202611071234"></script>
+/* abre aos 15 s e vira a cada 5 s; para no cadeado; para de virar sozinha se a pessoa mexer */
+let auto=true,t;
+const noCadeado=()=>pf.getCurrentPageIndex()+1>=LIVRE;
+const passo=()=>{if(!auto||noCadeado())return;pf.flipNext();t=setTimeout(passo,5000)};
+t=setTimeout(passo,15000);
+const mexeu=()=>{auto=false;clearTimeout(t)};
+document.getElementById('prox').onclick=()=>{mexeu();pf.flipNext()};
+document.getElementById('ant').onclick=()=>{mexeu();pf.flipPrev()};
+pf.on('changeState',e=>{if(e.data==='user_fold')mexeu()});
+/* o cadeado leva ao mesmo lugar do botão */
+el.addEventListener('click',ev=>{if(ev.target.closest('.trava'))location.href=document.getElementById('ler').href});
+})();
+</script>
+<script src="../premium/fone.js"></script>
+<script>
+  (()=>{const ED='006';
+  /* elementos sobem ao aparecer, como na home */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('[data-a],[data-b]').forEach(el=>io.observe(el));
+  /* folha do Nesta edição (Rei, 09/11): parada, fica inteira abaixo da primeira dobra; ao rolar, sobe no dobro da velocidade
+     e para antes do botão e da nota, sempre com respiro (no mínimo 40 px); ao voltar ao topo, volta para baixo */
+  const folha=document.getElementById('nesta');
+  if(folha&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let S=0,pedido=false;
+   const nota=document.querySelector('.dobra .nota'),dob=document.querySelector('.dobra');
+   /* S = quanto a folha avança sobre a primeira dobra: o fim da dobra menos o fim da nota menos o respiro; se a dobra não
+      tem sobra, S fica negativo e a folha começa um pouco mais abaixo, para o respiro valer sempre */
+   const mede=()=>{const y=scrollY,fimNota=nota.getBoundingClientRect().bottom+y,fimDob=dob.getBoundingClientRect().bottom+y;
+    S=Math.round(fimDob-fimNota-Math.max(40,innerHeight*.06));folha.style.marginTop=(-S)+'px';anda()};
+   const anda=()=>{pedido=false;folha.style.transform='translateY('+Math.max(0,S-scrollY)+'px)'};
+   let larg=innerWidth;mede();setTimeout(mede,700);addEventListener('load',()=>setTimeout(mede,300));addEventListener('resize',()=>{if(innerWidth!==larg){larg=innerWidth;setTimeout(mede,450)}});
+   addEventListener('scroll',()=>{if(!pedido){pedido=true;requestAnimationFrame(anda)}},{passive:true});}
+  /* a estante roda sem fim: os livros se repetem em sequência (o primeiro volta colado ao último) até cobrir duas telas,
+     e a volta anda exatamente o tamanho de uma sequência, por isso não há tranco */
+  const fila=document.querySelector('.estante .fila');if(fila){const um=fila.innerHTML;let n=1;while(fila.scrollWidth<innerWidth*2&&n<6){fila.innerHTML+=um;n++}fila.innerHTML+=fila.innerHTML;}
+  /* PORTA DE LEITURA, igual ao site de hoje (premium.js), refeita na auditoria de 09/11:
+     - todo leitor se cadastra (Rei, 24/08): o c=1 do ManyChat não pula o formulário; o ms= segue como rastro;
+     - o link pessoal do e-mail e do WhatsApp de entrega (k=) recupera o cadastro no servidor (acao 'quem') e abre o leitor;
+     - o porteiro do servidor (acao 'pode_ler') decide: edição do mês, assinante com passe (lê tudo) ou a parede dos 30 dias,
+       com a edição que a pessoa escolheu e a data em que a próxima leitura libera; porteiro fora do ar libera (falhar aberto);
+     - o cadastro vai para a mesma planilha do site de hoje (edicoes.json → config.webhookLead), com o WhatsApp de qualquer país.
+     ?teste=1 marca o cadastro como TESTE na planilha; ?teste=usou mostra a parede. */
+  const ENDPOINT='https://script.google.com/macros/s/AKfycbzkY_WfokD6PcZDhf1Uh_toXCfn2ofcYKEldfTlga9RKdlHUR3cPg_zdRxqIzVjrt3E_w/exec';
+  const Q=new URLSearchParams(location.search);
+  const O=new URLSearchParams();for(const[k,v]of Q)if(/^(utm_|j$|c$|ms$|via$|fbclid|gclid|teste$)/.test(k))O.set(k,v);
+  const origem=()=>O.toString(),LER=()=>'ler/'+(origem()?'?'+origem():'');
+  if(origem())document.querySelectorAll('a[href]').forEach(a=>{const h0=a.getAttribute('href');if(/^(#|https?:|mailto:)/.test(h0)||a.classList.contains('ler')||a.id==='ler')return;const [b,h]=h0.split('#');a.setAttribute('href',b+(b.includes('?')?'&':'?')+origem()+(h?'#'+h:''))});
+  const ler=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}};
+  const grava=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+  const lead=()=>{const l=ler('eter_lead');return l&&l.nome&&l.email&&l.whatsapp?l:null};
+  /* medição (o sensor da casa lê o dataLayer): os mesmos nomes de evento do site de hoje */
+  const dl=(event,d)=>{try{(window.dataLayer=window.dataLayer||[]).push({event,edicao:ED,...(d||{})})}catch(e){}};
+  dl('viu_porta');
+  const post=c=>fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(c)}).then(r=>r.json());
+  const cad=document.getElementById('pop-cad'),aviso=document.getElementById('pop-usou');
+  document.querySelectorAll('.pop .fecha').forEach(b=>b.onclick=()=>b.closest('dialog').close());
+  document.querySelectorAll('.pop').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
+  /* o veredito do porteiro fica guardado 10 minutos (a mesma chave do site de hoje): o leitor e esta página não reperguntam */
+  const guardado=()=>{const g=ler('eter_mes'),l=lead();return g&&l&&String(g.edicao)===ED&&g.quem===l.email&&Date.now()<g.ate?g.veredito:null};
+  let emVoo=null;
+  const porteiro=()=>{const v=guardado();if(v)return Promise.resolve(v);const l=lead();if(!l)return Promise.resolve(null);
+   if(!emVoo)emVoo=post({acao:'pode_ler',email:l.email,whatsapp:l.whatsapp,ms:Q.get('ms')||'',edicao:ED})
+     .then(v=>{grava('eter_mes',{edicao:ED,quem:l.email,veredito:v,ate:Date.now()+6e5});return v}).catch(()=>({liberado:true,motivo:'porteiro fora do ar'}));
+   return emVoo};
+  const negado=v=>v&&v.liberado===false&&!v.assinante;
+  const mostraAviso=v=>{const n=String(v&&v.edicaoEmCurso||'').replace(/\D/g,'').padStart(3,'0'),b=document.getElementById('pu-outra'),d=document.getElementById('pu-data');
+   b.hidden=!+n||n===ED;if(!b.hidden){b.textContent='Ler a Edição '+n;b.href='../'+n+'/index.html'+(origem()?'?'+origem():'')}
+   d.hidden=!(v&&v.liberaEmBR);if(!d.hidden)d.textContent='A próxima leitura gratuita libera em '+v.liberaEmBR+'.';
+   if(cad.open)cad.close();if(!aviso.open){aviso.showModal();dl('bateu_no_porteiro',{origem:n})}};
+  document.getElementById('pu-outra').addEventListener('click',()=>dl('porteiro_voltou'));
+  aviso.querySelector('.pbt:not(.linha)').addEventListener('click',()=>dl('porteiro_virou_passe'));
+  const abreCad=()=>{if(!cad.open){cad.showModal();dl('viu_formulario')}};let enviou=false;
+  cad.addEventListener('close',()=>{if(!enviou)dl('desistiu_do_formulario')});
+  const DEMO={liberado:false,edicaoEmCurso:'012',liberaEmBR:'09/12'}; /* o servidor devolve dd/MM (formatarBR) */
+  /* o porteiro NÃO é perguntado ao carregar: no servidor no ar, consultar pode já gravar a escolha do mês (o site de hoje desligou o
+     aquecimento por isso, premium.js aquecerPorteiro). A pergunta sai só no clique em Ler, como hoje. */
+  const clica=async ev=>{ev.preventDefault();dl('clicou_ler',{origem:(ev.currentTarget&&ev.currentTarget.id)||'pagina'});
+   if(false)return mostraAviso(DEMO);
+   if(!lead())return abreCad();
+   if(false)return location.href=LER();
+   const bt=ev.currentTarget&&ev.currentTarget.closest?ev.currentTarget:null,antes=bt&&bt.textContent;if(bt&&!guardado())bt.textContent='Abrindo…';
+   const v=await Promise.race([porteiro(),new Promise(ok=>setTimeout(()=>ok(null),3500))]);if(bt)bt.textContent=antes;
+   if(negado(v))return mostraAviso(v);location.href=LER()};
+  document.querySelectorAll('#ler,.pbt.ler').forEach(a=>a.addEventListener('click',clica));
+  document.getElementById('livro').addEventListener('click',ev=>{if(ev.target.closest('.trava')){ev.stopImmediatePropagation();clica(ev)}},true);
+  /* link pessoal da entrega: recupera o cadastro pela chave e abre o leitor; sem resposta, o formulário */
+  const k=(Q.get('k')||'').trim().toLowerCase();
+  if(k&&!lead()&&/^[a-z0-9]{8}$/.test(k)){(async()=>{let r=null;try{r=await post({acao:'quem',k})}catch(e){}
+    if(!r||!r.ok){await new Promise(ok=>setTimeout(ok,1500));try{r=await post({acao:'quem',k})}catch(e){}}
+    if(r&&r.ok&&r.email&&r.whatsapp){grava('eter_lead',{nome:r.nome||'Leitor',email:r.email,whatsapp:r.whatsapp,onde:'chave',em:new Date().toISOString()});
+     const via=O.get('via')||'';O.delete('via');if(!O.get('utm_source')){O.set('utm_source',via==='email'?'email':'voxuy');O.set('utm_medium',via==='email'?'email':'whatsapp');O.set('utm_campaign','entrega')}
+     const v=await Promise.race([porteiro(),new Promise(ok=>setTimeout(()=>ok(null),3500))]);if(negado(v))return mostraAviso(v);location.replace(LER())}
+    else{try{const u=new URL(location.href);u.searchParams.delete('k');history.replaceState(null,'',u)}catch(e){}abreCad()}})()}
+  else if(k&&lead())location.replace(LER());
+  /* ?ler=1: o leitor devolveu a pessoa para cá; vale o veredito que ele guardou, sem nova consulta ao servidor */
+  if(Q.get('ler')==='1')setTimeout(()=>{if(false)return mostraAviso(DEMO);if(!lead())return abreCad();const v=guardado();if(negado(v))mostraAviso(v)},600);
+  /* o formulário: WhatsApp de qualquer país (fone.js, o mesmo do site de hoje), campo errado marcado e com foco */
+  const fone=window.EterFone?window.EterFone.montar(cad.querySelector('#pc-zap'),()=>cad.querySelector('#pc-zap').closest('.fone').classList.remove('falta')):null;
+  const comp=ler('eter_lead_compra');if(comp&&comp.nome){cad.querySelector('#pc-nome').value=comp.nome;cad.querySelector('#pc-mail').value=comp.email||''}
+  cad.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>i.classList.remove('falta')));
+  cad.querySelector('form').addEventListener('submit',async ev=>{ev.preventDefault();const v=id=>cad.querySelector(id).value.trim();
+   const nome=v('#pc-nome'),mail=v('#pc-mail'),z=fone?fone.ler():{ok:/^\d{10,11}$/.test(v('#pc-zap').replace(/\D/g,'')),whatsapp:'55'+v('#pc-zap').replace(/\D/g,''),msg:''};
+   const ok={nome:nome.length>1,mail:/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail),zap:z.ok,aceite:cad.querySelector('#pc-aceite').checked};
+   cad.querySelector('#pc-nome').classList.toggle('falta',!ok.nome);cad.querySelector('#pc-mail').classList.toggle('falta',!ok.mail);
+   (cad.querySelector('.fone')||cad.querySelector('#pc-zap')).classList.toggle('falta',!ok.zap);cad.querySelector('.ok').classList.toggle('falta',!ok.aceite);
+   const erro=document.getElementById('pc-erro');
+   erro.textContent=!ok.nome?'Escreva o seu nome.':!ok.mail?'Confira o e-mail.':!ok.zap?(z.msg||'Confira o WhatsApp.'):!ok.aceite?'Marque a autorização para receber a edição.':'';
+   erro.hidden=!erro.textContent;if(erro.textContent){(cad.querySelector('input.falta')||cad.querySelector('.fone.falta input')||cad.querySelector('#pc-aceite')).focus();return}
+   const teste=false,J=(()=>{const s=ler('eter_j');return Q.get('j')||(s&&s.j&&s.ate>Date.now()?s.j:null)})();
+   const corpo={nome:(teste?'TESTE ':'')+nome,email:mail,whatsapp:z.whatsapp,edicao:ED,onde:teste?'TESTE pagina-edicao':'pagina-edicao',
+     jornaleiro:J,ms:Q.get('ms')||null,utm_source:Q.get('utm_source')||'',utm_medium:Q.get('utm_medium')||'',utm_campaign:Q.get('utm_campaign')||'',
+     utm_content:Q.get('utm_content')||'',utm_term:Q.get('utm_term')||'',pagina:location.pathname,referrer:document.referrer||'',em:new Date().toISOString()};
+   const bt=cad.querySelector('button[type=submit]');if(bt.disabled)return;bt.disabled=true;bt.textContent='Abrindo…';
+   grava('eter_lead',{nome,email:mail,whatsapp:z.whatsapp,edicao:ED,onde:corpo.onde,em:corpo.em});
+   enviou=true;dl('virou_lead',{origem:corpo.onde});
+   /* o cadastro já é a pergunta ao porteiro: a resposta dele vale como veredito desta edição */
+   emVoo=fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(corpo),keepalive:true}).then(r=>r.json())
+     .then(r=>{grava('eter_mes',{edicao:ED,quem:mail,veredito:r,ate:Date.now()+6e5});return r}).catch(()=>({liberado:true,motivo:'porteiro fora do ar'}));
+   const r=await Promise.race([emVoo,new Promise(ok=>setTimeout(()=>ok(null),3500))]);
+   bt.disabled=false;bt.textContent='Ler a edição completa';if(negado(r))return mostraAviso(r);cad.close();location.href=LER()});
+  })();
+  </script>
 </body>
 </html>
