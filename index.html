@@ -1250,14 +1250,17 @@ todos();})();
 (()=>{const s=document.getElementById('o-que-e'),b=document.getElementById('bt2');if(!s||!b)return;
  let larg=innerWidth;
  const mede=()=>{const r=(b.closest('.botoes')||b.parentElement).getBoundingClientRect();
-  const fundo=r.bottom+scrollY;const alvo=Math.max(fundo+Math.max(72,innerHeight*.08),innerHeight*.5);const sobe=Math.max(0,Math.round(innerHeight-alvo));
+  /* 10/11 (Rei: no Chrome dele a folha ainda cobria os botões): a primeira dobra tem 100svh, que no computador pode ser menor
+     que a janela (855 contra 986 px no Chrome do Rei); a conta parte do fim real da primeira dobra, e não da altura da janela */
+  const dob=document.querySelector('.dobra'),fimDob=dob?dob.getBoundingClientRect().bottom+scrollY:innerHeight;
+  const fundo=r.bottom+scrollY;const alvo=Math.max(fundo+Math.max(72,innerHeight*.08),Math.min(fimDob,innerHeight)*.5);const sobe=Math.max(0,Math.round(fimDob-alvo));
   s.style.setProperty('--sobe',sobe+'px')};
- mede();setTimeout(mede,1300);
+ mede();setTimeout(mede,1300);addEventListener('load',()=>setTimeout(mede,100));try{document.fonts.ready.then(mede)}catch(e){}
  /* 09/11 (Rei: a folha cobria o botão no computador): refaz a conta quando muda a largura e, com mouse, também quando muda só a altura (barra de downloads, ferramentas, janela redimensionada); no celular a altura muda sozinha com a barra do navegador e não conta */
  let alt=innerHeight,tr;addEventListener('resize',()=>{const mouse=matchMedia('(pointer:fine)').matches;if(innerWidth!==larg||(mouse&&innerHeight!==alt)){larg=innerWidth;alt=innerHeight;clearTimeout(tr);tr=setTimeout(mede,150)}});
  if('scrollRestoration' in history)history.scrollRestoration='manual';
  s.classList.add('baixa');
- const sobe=()=>{s.classList.remove('baixa');['scroll','wheel','touchmove','keydown'].forEach(e=>removeEventListener(e,sobe))};
+ const sobe=()=>{mede();s.classList.remove('baixa');['scroll','wheel','touchmove','keydown'].forEach(e=>removeEventListener(e,sobe))};
  addEventListener('load',()=>{if(scrollY>8)sobe()});
  ['wheel','touchmove','keydown'].forEach(e=>addEventListener(e,sobe,{passive:true}));
  setTimeout(()=>addEventListener('scroll',sobe,{passive:true}),300);
