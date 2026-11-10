@@ -2,13 +2,12 @@
 /* ═══ O MAPA DE CALOR DA PORTA ════════════════════════════════
    A leitura dos pontos que o sensor coletou: o funil em números e os
    toques desenhados POR CIMA da própria página, ao vivo. Protegido
-   pela chave da casa. */
-$CHAVE = 'vanguarda-2026';
-if (($_GET['chave'] ?? '') !== $CHAVE) { http_response_code(404); exit('nada aqui'); }
-$ARQ = dirname(__DIR__) . '/pontos-b7k2f9.ndjson';
-$linhas = file_exists($ARQ) ? file($ARQ, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
+   pela chave da casa (só a impressão dela fica no código, em base.php). */
+require __DIR__ . '/base.php';
+if (!calor_chave_ok()) { http_response_code(404); exit('nada aqui'); }
+calor_migra();
 $eventos = [];
-foreach ($linhas as $l) { $j = json_decode($l, true); if ($j) $eventos[] = $j; }
+calor_le(function ($l) use (&$eventos) { $j = json_decode(trim($l), true); if ($j) $eventos[] = $j; });
 ?><!doctype html>
 <html lang="pt-BR">
 <head>
