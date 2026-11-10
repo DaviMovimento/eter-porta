@@ -107,6 +107,11 @@ h1{margin-top:clamp(10px,1.6vh,18px);font:500 clamp(50px,min(5vw,8.2vh),74px)/1.
  .saud .b{font-size:26px}.num{margin-top:16px}h1{font-size:32px}.sub{font-size:15px;margin-top:8px}
  .livro-lado{margin-top:14px}.setas{margin-top:10px}.setas button{width:34px;height:34px;font-size:16px}.pbt{margin-top:22px}
 }
+/* 10/11: celular baixo (navegador do Instagram num celular pequeno): os textos de cima apertam para o botão caber na primeira tela */
+@media (max-width:760px) and (max-height:600px){
+ .saud .b{font-size:22px}.num{margin-top:8px}h1{font-size:28px}.sub{font-size:14px;margin-top:6px;line-height:1.4}
+ .livro-lado{margin-top:10px}.setas{margin-top:6px}.setas button{width:30px;height:30px;font-size:15px}.pbt{margin-top:14px}.nota{margin-top:7px}
+}
 @media (prefers-reduced-motion:reduce){.col{animation:none}.livro{transition:none}}
 
   /* ===== página inteira da edição (09/11): as dobras seguem a home (claro/escuro, botões, letras, animações) ===== */
@@ -220,6 +225,7 @@ h1{margin-top:clamp(10px,1.6vh,18px);font:500 clamp(50px,min(5vw,8.2vh),74px)/1.
   .pop input.falta,.pop .fone.falta input,.pop .fone.falta .fone-pais{border-color:#A41E13;background:#fff7f5}
   .pop .ok.falta{color:#A41E13;opacity:1}.pop .ok input{width:18px;height:18px;margin-top:1px;flex:0 0 auto;accent-color:#89723C}
   .pop .erro{font-size:14px;line-height:1.4;color:#A41E13}
+  .pop .msg-campo{margin-top:-4px;font-size:13.5px;line-height:1.4;color:#A41E13}.pop .msg-campo.aviso{color:#5c4a1e;background:#f6edd8;padding:8px 10px;border-radius:3px}.pop .msg-campo[hidden]{display:none}
   .pop .fone{display:flex;gap:8px}.pop .fone input{flex:1 1 auto}
   .pop .fone-pais{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:92px;height:52px;padding:0 12px;border:1px solid rgba(25,8,8,.15);border-radius:3px;background:#fff;font:400 16px 'InterEter',sans-serif;cursor:pointer}
   .pop .fone-pais select{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:16px}
@@ -268,12 +274,13 @@ h1 s{text-decoration-thickness:.06em;opacity:.75}
 @media (max-width:760px){h1{font-size:calc(36px * 0.8)}}
 @media (max-width:760px) and (max-height:760px){h1{font-size:calc(32px * 0.8)}}
 @media (max-width:760px) and (max-height:700px){.sub .l1{display:none}}
+@media (max-width:760px) and (max-height:600px){h1{font-size:calc(28px * 0.8)}}
 .leque .fw.fwp{margin:0 calc(var(--fwh) * -.04)}.leque .fw.fwp{height:calc(var(--fwh) * 1.3)}.leque .fw.fwp[style*="--j:0"]{height:calc(var(--fwh) * 1.45)}
 </style>
 <meta name="description" content="Uma análise cultural (indigesta) da política tupiniquim para empreendedores que (ainda) pensam.">
 <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png"><link rel="apple-touch-icon" href="../img/favicon-180.png"><meta name="theme-color" content="#190808">
 <script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
-<script defer src="../premium/calor.js"></script>
+<script defer src="../premium/calor.js?h=3458e1db"></script>
 <meta property="og:type" content="website"><meta property="og:site_name" content="ETER"><meta property="og:title" content="Pátria Mãe Solteira · ETER"><meta property="og:description" content="Uma análise cultural (indigesta) da política tupiniquim para empreendedores que (ainda) pensam."><meta property="og:url" content="https://eterbrasil.com/revista/014/"><meta property="og:image" content="https://eterbrasil.com/revista/014/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
@@ -460,11 +467,15 @@ el.innerHTML=PAGS.slice(0,LIVRE).map(s=>`<div class="pagina"><img src="${s}" alt
  +`<div class="pagina trava"><div class="dentro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="10" width="15" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="15" r="1.2" fill="currentColor"/></svg><p>Clique no botão e resgate sua leitura gratuita para acessar a edição completa.</p></div></div>`;
 /* celular: a revista ocupa o que sobra da altura da tela depois do texto, das setas, do botão e da nota,
    para o botão aparecer na primeira tela em qualquer celular (Rei, 09/11) */
-const cabe=()=>{if(innerWidth>760){el.style.removeProperty('width');return}
+/* 10/11 (medido no navegador do Instagram, 360x520 e 375x548): a biblioteca da revista voltava a largura para 100% ao montar
+   e a revista nunca encolhia; o limite agora vai no contêiner dela, e a conta roda de novo depois que ela monta */
+const cabe=()=>{const caixa=el.parentElement;if(innerWidth>760){caixa.style.removeProperty('max-width');return}
+  caixa.style.removeProperty('max-width');
   const nota=document.querySelector('.nota').getBoundingClientRect().bottom+scrollY;const h=el.getBoundingClientRect().height;
-  const sobra=innerHeight-(nota-h)-18, larg=el.parentElement.getBoundingClientRect().width;
-  el.style.setProperty('width',Math.round(Math.max(150,Math.min(larg,sobra*1.4144)))+'px','important')};
-cabe();
+  const sobra=innerHeight-(nota-h)-18, larg=caixa.getBoundingClientRect().width;
+  const alvo=Math.round(Math.max(150,Math.min(larg,sobra*1.4144)));
+  if(alvo<larg-2){caixa.style.maxWidth=alvo+'px';caixa.style.marginLeft='auto';caixa.style.marginRight='auto'}
+  try{pf&&pf.update&&pf.update()}catch(e){}};
 /* no celular alto, o que sobra embaixo vai para o espaço acima do botão (até 34 px), para o botão descer um pouco */
 const desce=()=>{const b=document.getElementById('ler');b.style.removeProperty('margin-top');if(innerWidth>760)return;
   const sobra=innerHeight-document.querySelector('.nota').getBoundingClientRect().bottom-scrollY-18;
@@ -472,6 +483,7 @@ const desce=()=>{const b=document.getElementById('ler');b.style.removeProperty('
 const pf=new St.PageFlip(el,{width:400,height:566,size:'stretch',minWidth:90,maxWidth:900,minHeight:127,maxHeight:1270,
   showCover:true,usePortrait:false,maxShadowOpacity:.45,flippingTime:950,mobileScrollSupport:true,drawShadow:true,autoSize:true});
 pf.loadFromHTML(el.querySelectorAll('.pagina'));
+cabe();setTimeout(()=>{cabe();desce()},250);addEventListener('load',()=>{cabe();desce()});
 /* com só a capa à vista, lado a lado, as setas, o botão e a nota ficam embaixo da capa; abertas as páginas, voltam ao centro */
 const acoes=document.querySelector('.acoes');
 const naCapa=()=>{const c=pf.getCurrentPageIndex()===0;el.classList.toggle('capa',c);
@@ -494,7 +506,7 @@ pf.on('changeState',e=>{if(e.data==='user_fold')mexeu()});
 el.addEventListener('click',ev=>{if(ev.target.closest('.trava'))location.href=document.getElementById('ler').href});
 })();
 </script>
-<script src="../premium/fone.js"></script>
+<script src="../premium/fone.js?h=482539c5"></script>
 <script>
   (()=>{const ED='014';
   /* elementos sobem ao aparecer, como na home */
@@ -578,16 +590,23 @@ el.addEventListener('click',ev=>{if(ev.target.closest('.trava'))location.href=do
   if(Q.get('ler')==='1')setTimeout(()=>{if(false)return mostraAviso(DEMO);if(!lead())return abreCad();const v=guardado();if(negado(v))mostraAviso(v)},600);
   /* o formulário: WhatsApp de qualquer país (fone.js, o mesmo do site de hoje), campo errado marcado e com foco */
   const fone=window.EterFone?window.EterFone.montar(cad.querySelector('#pc-zap'),()=>cad.querySelector('#pc-zap').closest('.fone').classList.remove('falta')):null;
+  /* WhatsApp (Rei, 10/11): o erro aparece embaixo do campo, sem apagar o que a pessoa digitou; com o 9 acrescentado, ela confirma */
+  const zapMsg=document.createElement('p');zapMsg.className='msg-campo';zapMsg.hidden=true;(cad.querySelector('.fone')||cad.querySelector('#pc-zap')).after(zapMsg);
+  cad.querySelector('#pc-zap').addEventListener('input',()=>{zapMsg.hidden=true});
   const comp=ler('eter_lead_compra');if(comp&&comp.nome){cad.querySelector('#pc-nome').value=comp.nome;cad.querySelector('#pc-mail').value=comp.email||''}
   cad.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>i.classList.remove('falta')));
   cad.querySelector('form').addEventListener('submit',async ev=>{ev.preventDefault();const v=id=>cad.querySelector(id).value.trim();
    const nome=v('#pc-nome'),mail=v('#pc-mail'),z=fone?fone.ler():{ok:/^\d{10,11}$/.test(v('#pc-zap').replace(/\D/g,'')),whatsapp:'55'+v('#pc-zap').replace(/\D/g,''),msg:''};
    const ok={nome:nome.length>1,mail:/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail),zap:z.ok,aceite:cad.querySelector('#pc-aceite').checked};
    cad.querySelector('#pc-nome').classList.toggle('falta',!ok.nome);cad.querySelector('#pc-mail').classList.toggle('falta',!ok.mail);
-   (cad.querySelector('.fone')||cad.querySelector('#pc-zap')).classList.toggle('falta',!ok.zap);cad.querySelector('.ok').classList.toggle('falta',!ok.aceite);
+   (cad.querySelector('.fone')||cad.querySelector('#pc-zap')).classList.toggle('falta',!ok.zap&&!z.corrigido);cad.querySelector('.ok').classList.toggle('falta',!ok.aceite);
    const erro=document.getElementById('pc-erro');
-   erro.textContent=!ok.nome?'Escreva o seu nome.':!ok.mail?'Confira o e-mail.':!ok.zap?(z.msg||'Confira o WhatsApp.'):!ok.aceite?'Marque a autorização para receber a edição.':'';
-   erro.hidden=!erro.textContent;if(erro.textContent){(cad.querySelector('input.falta')||cad.querySelector('.fone.falta input')||cad.querySelector('#pc-aceite')).focus();return}
+   zapMsg.hidden=ok.zap;zapMsg.classList.remove('aviso');
+   if(!ok.zap&&z.corrigido){zapMsg.classList.add('aviso');zapMsg.textContent='Acrescentamos o 9 do celular: '+z.mostrar+'. Se estiver certo, toque de novo em Ler a edição completa.';dl('whatsapp_corrigido',{origem:'BR'})}
+   else if(!ok.zap){zapMsg.textContent=z.msg||'Confira o WhatsApp.';dl('whatsapp_recusado',{motivo:z.motivo||'',origem:fone?fone.pais():'BR'})}
+   erro.textContent=!ok.nome?'Escreva o seu nome.':!ok.mail?'Confira o e-mail.':!ok.aceite&&ok.zap?'Marque a autorização para receber a edição.':'';
+   erro.hidden=!erro.textContent;
+   if(erro.textContent||!ok.zap||!ok.aceite){(cad.querySelector('input.falta')||cad.querySelector('.fone.falta input')||cad.querySelector('#pc-aceite')).focus();return}
    const teste=false,J=(()=>{const s=ler('eter_j');return Q.get('j')||(s&&s.j&&s.ate>Date.now()?s.j:null)})();
    const corpo={nome:(teste?'TESTE ':'')+nome,email:mail,whatsapp:z.whatsapp,edicao:ED,onde:teste?'TESTE pagina-edicao':'pagina-edicao',
      jornaleiro:J,ms:Q.get('ms')||null,utm_source:Q.get('utm_source')||'',utm_medium:Q.get('utm_medium')||'',utm_campaign:Q.get('utm_campaign')||'',

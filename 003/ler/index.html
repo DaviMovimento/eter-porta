@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Lendo · O Verbo e a Máquina · ETER</title>
 <style>
@@ -104,41 +104,110 @@ dialog::backdrop{background:rgba(10,4,4,.8);backdrop-filter:blur(6px)}
  .ferr .ed{display:none}.ferr{grid-template-columns:auto 1fr}.ferr .cont{text-align:left}.ferr .bts{gap:6px}.ferr button{padding:0 9px}
  .seta{width:46px;height:46px}
 }
+
+/* PROPOSTA: barra do leitor com Voltar e Assine */
+.barra.barra-ler{justify-content:space-between}
+.barra-ler .voltar{display:inline-flex;align-items:center;gap:8px;font:800 clamp(13px,calc(9px + .5vw),16px)/1 'FuturaCond',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--bege);text-decoration:none;opacity:.9}
+.barra-ler .voltar svg{width:18px;height:18px}
+.barra-ler .logo{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none}
+.barra-ler .cta{display:flex;align-items:center;gap:clamp(20px,1.6vw,24px)}
+.barra-ler .cta-txt{max-width:360px;font:400 16.5px/1.25 'TRJN',Georgia,serif;color:rgba(255,251,243,.88);text-align:right;text-wrap:balance}
+.barra-ler .cta-txt b{font-weight:400;color:var(--ouro-claro)}
+.barra-ler .assine{font:800 clamp(13px,calc(9px + .5vw),16.5px)/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#190808;background:var(--ouro-si);padding:.85em 1.35em;border-radius:2px;text-decoration:none;white-space:nowrap}
+.barra-ler .assine.brilha{animation:brilha 1.6s ease 2}
+@keyframes brilha{0%,100%{box-shadow:0 0 0 0 rgba(214,189,132,0)}40%{box-shadow:0 0 0 8px rgba(214,189,132,.35)}}
+@media (max-width:1100px){.barra-ler .cta-txt{max-width:250px;font-size:15px}}
+/* celular: o texto fica sempre ao lado do Assine, dentro da barra, em até três linhas de 13 px */
+@media (max-width:760px){:root{--barra:62px}.barra-ler{gap:10px;padding:0 12px}.barra-ler .logo{display:none}
+ .barra-ler .voltar{flex:none;font-size:12px;letter-spacing:.06em;gap:4px}.barra-ler .voltar svg{width:16px;height:16px}
+ .barra-ler .cta{flex:1;min-width:0;gap:10px;justify-content:flex-end}
+ .barra-ler .cta-txt{display:block;max-width:none;font-size:13px;line-height:1.2;text-align:right}
+ .barra-ler .assine{flex:none;font-size:12px;letter-spacing:.1em;padding:15px 12px}}
+/* destaque do fim do capítulo 1: faixa fina com o texto e o Assine, some sozinha em 9 s e não cobre a revista (celular) */
+.destaque{position:fixed;left:50%;transform:translate(-50%,-8px);top:calc(var(--barra) + 8px);z-index:41;display:flex;align-items:center;gap:10px;width:min(560px,calc(100vw - 24px));padding:10px 10px 10px 16px;border-radius:14px;background:#FFFBF3;color:#190808;box-shadow:0 18px 36px -16px rgba(0,0,0,.7);font:500 13.5px/1.35 'InterEter',sans-serif;opacity:0;transition:opacity .4s,transform .4s}
+.destaque.on{opacity:1;transform:translate(-50%,0)}
+.destaque[hidden]{display:none}
+.destaque span{flex:1;text-wrap:balance}
+.destaque .d-assine{flex:none;padding:10px 14px;border-radius:2px;background:var(--ouro-si);color:#190808;text-decoration:none;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.destaque .d-x{all:unset;cursor:pointer;flex:none;width:28px;text-align:center;font:500 22px/1 'TRJN',serif;opacity:.55}
+@media (min-width:761px){.destaque{display:none!important}}
+/* Rei, 10/11: uma barra só em cima; embaixo, sem barra, um grupo só de controles, centralizado: a contagem, as setas,
+   e ao lado delas o sumário e a tela cheia. O zoom continua no gesto (pinça, Ctrl + roda, dois dedos), sem botões */
+/* Rei, 10/11 (terceiro áudio): os controles ficam logo abaixo da revista, dentro do palco e sem fundo; com zoom, descem junto */
+.ferr{position:fixed;inset:auto;left:50%;transform:translateX(-50%);z-index:30;height:var(--ferr);margin-top:0;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none;display:flex;justify-content:center;align-items:center;gap:14px;flex:none}
+.ferr .ed,.ferr .zoom{display:none!important}
+.ferr .cont{order:1;min-width:64px;text-align:right}
+.ferr .nav{order:2;display:flex;gap:10px}
+.ferr .bts{order:3;display:flex;gap:10px}
+.ferr .nav .seta{display:grid;place-items:center;width:42px;height:42px;padding:0;border-radius:50%;font:400 22px/1 'InterEter',sans-serif;letter-spacing:0}
+.palco .setas{display:flex!important;flex-direction:column;align-items:center;gap:10px;padding:12px}
+/* Rei, 10/11 (quarto áudio): os controles ficam numa posição só, fixos logo abaixo da área da revista. A revista amplia e
+   rola só dentro da área dela (do tamanho exato dela a 100%), então os controles nunca ficam por cima da página e não
+   precisam de fundo; o espaço que sobra fica embaixo. As posições vêm de posiciona(), chamada a cada montagem */
+html.cheia .ferr{display:flex}
+html.cheia .palco{bottom:env(safe-area-inset-bottom)}
+html.cheia .cheia-cont{display:none}
+@media (max-width:760px){.ferr{gap:10px}.ferr .cont{min-width:0}.ferr .nav .seta{width:40px;height:40px}}
+@media (max-width:1100px) and (orientation:portrait),(max-width:760px){html.cheia .ferr .nav .seta{display:grid}}
+.prog{top:var(--barra)}
+.palco{top:var(--barra);bottom:env(safe-area-inset-bottom)}
+.aviso{top:calc(var(--barra) + 12px);bottom:auto}
+/* Rei, 10/11: o aviso de retomar e a dica na mesma linguagem da pílula de controles: escuro translúcido, borda fina,
+   frase na serifada da casa e as ações como texto (Continuar em dourado, Do início apagado), sem botões cheios */
+.aviso{gap:14px;padding:9px 18px;border-radius:40px;background:rgba(20,8,8,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,251,243,.12);box-shadow:0 14px 34px -16px rgba(0,0,0,.8);color:rgba(255,251,243,.88);font:400 15px/1.3 'TRJN',Georgia,serif}
+.aviso button,.aviso button.sec{all:unset;cursor:pointer;padding:6px 2px;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.16em;text-transform:uppercase;background:none;border:0;color:var(--ouro-claro)}
+.aviso button.sec{color:rgba(255,251,243,.55)}
+.aviso button:hover{color:var(--bege)}
+#retomar{padding:8px 18px;gap:14px;font-size:15px}
+#retomar button{padding:6px 2px;border-radius:0}
+#retomar .sec{position:relative;padding-left:14px}
+#retomar .sec::before{content:'';position:absolute;left:0;top:50%;width:1px;height:12px;margin-top:-6px;background:rgba(255,251,243,.22)}
+.dica{font-size:14.5px;padding:9px 18px;max-width:min(560px,calc(100vw - 32px))}
+@media (max-width:400px){#retomar{font-size:14px;gap:10px;padding:7px 14px}#retomar .sec{padding-left:10px}#retomar button{letter-spacing:.1em}}
+.destaque{top:calc(var(--barra) + 8px)}
+/* Rei, 10/11: no computador a capa aparece no centro (a revista aberta põe a capa na metade direita) e desliza para o
+   centro do livro aberto quando a pessoa vira; na contracapa, o mesmo para o outro lado */
+#livro{transition:transform .6s cubic-bezier(.3,.7,.2,1)}
+/* a pinça fora da revista (em cima das barras) não amplia a página inteira, para o Assine não sair do lugar;
+   dentro da revista o zoom continua livre, pelo próprio leitor */
+.barra,.ferr,.cheia-ui,.aviso{touch-action:pan-x pan-y}
+/* fim da edição: a frase da oferta e dois botões */
+#fim .oferta{margin-top:16px;font:400 17px/1.5 'InterEter',sans-serif;color:rgba(25,8,8,.82);text-wrap:pretty}
+/* tela cheia: o Assine continua à mão, pequeno, ao lado do número da página */
+.cheia-assine{padding:9px 13px;border-radius:30px;background:var(--ouro-si);color:#190808;text-decoration:none;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.12em;text-transform:uppercase}
 </style>
 <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32.png"><link rel="apple-touch-icon" href="../../img/favicon-180.png"><meta name="theme-color" content="#190808">
 <script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
-<script defer src="../../premium/calor.js"></script>
+<script defer src="../../premium/calor.js?h=3458e1db"></script>
 </head>
 <body>
-<header class="barra" id="barra">
-  <a class="logo" href="../../" aria-label="ETER, página inicial"><img src="../../n/pd/img/logo-bege.svg" alt="ETER"></a>
-  <nav aria-label="Principal">
-    <a href="../../">Home</a>
-    <a href="../../biblioteca/">Edições</a>
-    <a href="../../bibliografia/">Bibliografia</a>
-    <a class="assine" href="../../#assinatura">Assine</a>
-  </nav>
+<header class="barra barra-ler" id="barra">
+  <a class="voltar" id="b-voltar" href="../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Voltar</span></a>
+  <span class="logo" aria-hidden="true"><img src="../../n/pd/img/logo-bege.svg" alt="ETER"></span>
+  <div class="cta"><span class="cta-txt">Para acessar o acervo completo e receber <b>uma nova edição por semana</b></span><a class="assine" id="b-assine" data-assine="leitor-barra" href="../../#assinatura">Assine</a></div>
 </header>
-<div class="ferr">
+<div class="destaque" id="destaque" hidden role="status"><span>Para acessar o acervo completo e receber uma nova edição por semana</span><a class="d-assine" data-assine="leitor-destaque" href="../../#assinatura">Assine</a><button type="button" class="d-x" aria-label="Fechar">×</button></div>
+<div class="prog"><i id="prog"></i></div>
+<main class="palco">
+  <div class="setas">
+  <div id="livro"></div><div class="ferr">
   <p class="ed">Edição 003<b>O Verbo e a Máquina</b></p>
-  <p class="cont" id="cont" aria-live="polite">1 / 52</p>
+  <div class="nav"><button class="seta" id="ant" type="button" aria-label="Página anterior">‹</button><button class="seta" id="prox" type="button" aria-label="Próxima página">›</button></div><p class="cont" id="cont" aria-live="polite">1 / 52</p>
   <div class="bts">
     <button type="button" id="b-caps" aria-label="Capítulos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Capítulos</span></button>
     <button type="button" id="b-cheia" aria-label="Ler em tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tela cheia</span></button><span class="zoom" role="group" aria-label="Zoom"><button type="button" id="z-menos" aria-label="Diminuir">−</button><button type="button" id="z-val" aria-label="Voltar ao tamanho normal">100%</button><button type="button" id="z-mais" aria-label="Aumentar">+</button></span>
   </div>
 </div>
-<div class="prog"><i id="prog"></i></div>
-<main class="palco">
-  <div class="setas"><button class="seta" id="ant" type="button" aria-label="Página anterior">‹</button>
-  <div id="livro"></div>
-  <button class="seta" id="prox" type="button" aria-label="Próxima página">›</button></div>
+
+  </div>
 </main>
-<div class="cheia-ui" aria-hidden="false"><span class="cheia-cont" id="cheia-cont"></span><button type="button" id="b-sair" aria-label="Sair da tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+<div class="cheia-ui" aria-hidden="false"><a class="cheia-assine" data-assine="leitor-tela-cheia" href="../../#assinatura">Assine</a><span class="cheia-cont" id="cheia-cont"></span><button type="button" id="b-sair" aria-label="Sair da tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
 <div class="aviso" id="retomar" hidden><span id="retomar-txt"></span><button type="button" id="b-retomar">Continuar</button><button type="button" class="sec" id="b-recomecar">Do início</button></div>
 <div class="aviso dica" id="dica" hidden></div>
 <dialog id="caps" aria-labelledby="caps-t"><div class="caixa"><button type="button" class="fecha" aria-label="Fechar">×</button><h2 id="caps-t">Sumário</h2><ol><li><a href="#" data-p="5" data-f="11"><span class="n">01</span><span class="t">Bem vindo à Revolução Criativa</span></a></li><li><a href="#" data-p="12" data-f="20"><span class="n">02</span><span class="t">O Verbo</span></a></li><li><a href="#" data-p="21" data-f="30"><span class="n">03</span><span class="t">A Máquina</span></a></li><li><a href="#" data-p="31" data-f="38"><span class="n">04</span><span class="t">Perguntas e Proposições</span></a></li><li><a href="#" data-p="39" data-f="45"><span class="n">05</span><span class="t">Ancestralidade e Tecnologia</span></a></li><li><a href="#" data-p="46" data-f="50"><span class="n">06</span><span class="t">O País do presente</span></a></li><li><a href="#" data-p="51" data-f="52"><span class="n">07</span><span class="t">Bibliografia</span></a></li></ol></div></dialog>
 <dialog id="fim" aria-labelledby="fim-t"><div class="caixa"><button type="button" class="fecha" aria-label="Fechar">×</button><p class="rot">Edição 003</p><h3 id="fim-t">Você chegou ao fim de <em>O Verbo e a Máquina</em></h3>
-  <a class="bt" href="../../biblioteca/">Conhecer todas as edições</a><a class="bt sec" href="../">Voltar à página da edição</a></div></dialog>
+  <p class="oferta">Assinando a ETER, você recebe uma nova edição toda semana, acessa o acervo completo, participa de aulas ao vivo, escreve e publica o conteúdo profundo que irá te tornar um formador de opinião reconhecido e bem pago pelo seu repertório.</p>
+  <a class="bt" data-assine="leitor-fim" href="../../#assinatura">Assine a ETER</a><a class="bt sec" href="../../biblioteca/">Conhecer todas as edições</a></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
 (()=>{
@@ -180,24 +249,32 @@ let filaT=0;const carrega=(de)=>{if(!el)return;const imgs=el.querySelectorAll('.
     ativos++;carregadas.add(n);const pre=new Image();pre.fetchPriority=pos<6?'high':'low';pre.src=SRC(n);
     const fim=()=>{if(!im.getAttribute('src'))im.src=SRC(n);ativos--;prox()};pre.onload=pre.onerror=fim}};prox()};
 let fator=1,alta=false;
+
+function posiciona(ph){const c=document.documentElement.classList.contains('cheia'),b=c?0:document.getElementById('barra').offsetHeight;
+  const f=document.querySelector('.ferr'),fh=f.offsetHeight||52,area=ph+24,sobra=Math.max(0,innerHeight-b-area-fh-8),t=b+Math.min(16,Math.round(sobra/2));
+  const pal=document.querySelector('.palco');pal.style.top=t+'px';pal.style.bottom=Math.max(0,innerHeight-t-area)+'px';f.style.top=(t+area)+'px'}
+function centra(){if(!pf||!el)return;const i=pf.getCurrentPageIndex(),w=el.offsetWidth/2;let x=0;
+  if(!uma&&i===0)x=-w/2;else if(!uma&&TOTAL%2===0&&i>=TOTAL-1)x=w/2;
+  if(!el.dataset.c){el.dataset.c=1;el.style.transition='none';requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.transition=''}))}
+  el.style.transform=x?`translateX(${x}px)`:''}
 function monta(ir){
   ir=Math.max(0,Math.min(TOTAL-1,ir||0));
   if(pf){try{pf.destroy()}catch(e){}}
   const v=document.getElementById('livro');if(v)v.remove();
-  el=document.createElement('div');el.id='livro';document.getElementById('prox').before(el);
+  el=document.createElement('div');el.id='livro';document.querySelector('.setas').prepend(el);
   el.innerHTML=Array.from({length:TOTAL},(_,i)=>`<div class="pagina"><img ${carregadas.has(i)||Math.abs(i-ir)<3?`src="${SRC(i)}"`:''} alt="Página ${i+1} de ${TOTAL}" decoding="async"></div>`).join('');
   uma=innerWidth<=760||(innerWidth<=1100&&innerHeight>innerWidth);
   const c=cheia(),cel=innerWidth<=760;
-  const barra=c?0:parseFloat(getComputedStyle(document.querySelector('.barra')).height),ferr=c?0:parseFloat(getComputedStyle(document.querySelector('.ferr')).height);
+  const barra=c?0:parseFloat(getComputedStyle(document.querySelector('.barra')).height),ferr=parseFloat(getComputedStyle(document.querySelector('.ferr')).height);
   /* espaço livre: no celular em tela cheia a revista vai de borda a borda e vira no deslizar; nas outras telas sobram as setas */
-  const altura=innerHeight-barra-ferr-(c?(cel?24:40):(uma?110:76));
-  const largura=uma?innerWidth-(c&&cel?12:24):(innerWidth-(c?150:200))/2;
+  const altura=innerHeight-barra-ferr-(c?(cel?36:44):(uma?40:44));
+  const largura=uma?innerWidth-(c&&cel?12:24):(innerWidth-(c?40:80))/2;
   const pw=Math.floor(Math.max(140,Math.min(largura,altura/1.4144))),ph=Math.round(pw*1.4144);
   el.style.width=(uma?pw:pw*2)+'px';el.style.height=ph+'px';
   fator=1;alta=false;
   pf=new St.PageFlip(el,{width:pw,height:ph,size:'fixed',showCover:true,usePortrait:uma,maxShadowOpacity:.45,flippingTime:700,mobileScrollSupport:false,drawShadow:true});
   pf.loadFromHTML(el.querySelectorAll('.pagina'));
-  flips.forEach(f=>pf.on('flip',f));
+  flips.forEach(f=>pf.on('flip',f));posiciona(ph);pf.on('flip',centra);pf.on('changeState',e=>{if(e.data==='read')centra();else if(!uma&&(e.data==='flipping'||e.data==='user_fold'))el.style.transform=''});centra();
   if(ir)pf.turnToPage(ir);
   carrega(ir);
 }
@@ -251,7 +328,7 @@ palco.addEventListener('touchstart',e=>{if(e.touches.length===2){d0=dist(e.touch
 palco.addEventListener('touchmove',e=>{if(e.touches.length===2&&d0){e.preventDefault();zoom(f0*dist(e.touches)/d0,meio(e.touches))}if(fator>1.02||e.touches.length>1)e.stopPropagation()},{capture:true,passive:false});
 palco.addEventListener('touchend',e=>{if(e.touches.length<2)d0=0},{capture:true,passive:true});
 ['mousedown','pointerdown'].forEach(ev=>palco.addEventListener(ev,e=>{if(fator>1.02)e.stopPropagation()},{capture:true,passive:true}));
-try{const z=parseFloat(localStorage.getItem(CZ));if(z>1.02)setTimeout(()=>zoom(z),300)}catch(e){}
+/* sem botões de zoom, a revista sempre abre em 100% (Rei, 10/11) */
 
 /* retomar de onde parou */
 const salvo=(()=>{try{return +localStorage.getItem(chave)||0}catch(e){return 0}})();
@@ -283,6 +360,26 @@ addEventListener('keydown',e=>{if(document.querySelector('dialog[open]'))return;
 /* girar o aparelho ou entrar e sair da tela cheia: a revista se remonta no lugar, na mesma página */
 let larg=innerWidth,alt0=innerHeight,t;addEventListener('resize',()=>{if(Math.abs(innerWidth-larg)<60&&Math.abs(innerHeight-alt0)<120)return;clearTimeout(t);t=setTimeout(()=>{larg=innerWidth;alt0=innerHeight;monta(pf.getCurrentPageIndex());document.getElementById('z-val').textContent='100%';mostra()},300)});
 try{const ir=sessionStorage.getItem('eter_ir_'+ED);if(ir){sessionStorage.removeItem('eter_ir_'+ED);ret.hidden=true;pf.turnToPage(+ir);mostra()}}catch(e){}
+})();
+</script>
+<script>
+/* PROPOSTA: Voltar leva à página de onde a pessoa veio (ou à página da edição); Assine leva às ofertas da home;
+   no fim do capítulo 1, um destaque discreto, uma vez por leitura, sem bloquear */
+(()=>{const dl=(event,d)=>{try{(window.dataLayer=window.dataLayer||[]).push({event,edicao:'003',...(d||{})})}catch(e){}};
+ const pag=()=>{const t=(document.getElementById('cont').textContent||'').match(/\d+/);return t?+t[0]:0};
+ const v=document.getElementById('b-voltar');v.addEventListener('click',e=>{dl('clicou_voltar',{pagina:pag()});
+   try{if(document.referrer&&new URL(document.referrer).origin===location.origin&&history.length>1){e.preventDefault();history.back()}}catch(x){}});
+ document.querySelectorAll('[data-assine]').forEach(a=>a.addEventListener('click',()=>dl('clicou_assine',{origem:a.dataset.assine,pagina:pag()})));
+ const FAIXA=new URLSearchParams(location.search).get('faixa')==='1'; /* alternativa B: a faixa no fim do capítulo 1 */
+ const FIM1=11,d=document.getElementById('destaque'),b=document.getElementById('b-assine');let visto=false,t;
+ const mostra=()=>{if(visto)return;visto=true;dl('viu_destaque_assine',{pagina:pag()});if(new URLSearchParams(location.search).get('brilho')==='1')b.classList.add('brilha');
+   if(FAIXA&&innerWidth<=760){d.hidden=false;requestAnimationFrame(()=>d.classList.add('on'));t=setTimeout(fecha,9000)}};
+ const fecha=()=>{d.classList.remove('on');setTimeout(()=>d.hidden=true,400)};
+ d.querySelector('.d-x').onclick=()=>{clearTimeout(t);fecha()};
+ setInterval(()=>{if(!visto&&pag()>FIM1)mostra()},700);
+ ['gesturestart','gesturechange'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
+ document.addEventListener('touchmove',e=>{if(e.touches.length>1&&!e.target.closest('.palco'))e.preventDefault()},{passive:false});
+ const bc=document.getElementById('b-cheia'),entra0=bc.onclick;bc.onclick=()=>document.documentElement.classList.contains('cheia')?document.getElementById('b-sair').click():entra0();
 })();
 </script>
 </body>

@@ -177,6 +177,12 @@ const CSS = `
 #cp-dialog .cp-campo .msg{display:none;font-size:13px;color:var(--vinho,#511212);margin-top:6px}
 #cp-dialog .cp-campo.erro input{border-color:var(--vinho,#511212)}
 #cp-dialog .cp-campo.erro .msg{display:block}
+#cp-dialog .fone{display:flex;gap:8px}#cp-dialog .fone input{flex:1 1 auto;min-width:0}
+#cp-dialog .fone-pais{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:92px;border:1px solid rgba(25,8,8,.15);border-radius:3px;background:#fff;font:400 16px 'InterEter',sans-serif;cursor:pointer;color:#190808}
+#cp-dialog .fone-pais select{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:16px}
+#cp-dialog .fone-pais::after{content:'';width:6px;height:6px;margin-left:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.55}
+#cp-dialog .cp-campo.erro .fone-pais{border-color:var(--vinho,#511212)}
+#cp-dialog .cp-campo.aviso .msg{display:block;color:#5c4a1e;background:#f6edd8;padding:8px 10px;border-radius:3px}
 #cp-dialog .cp-ok{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;color:var(--t3,rgba(25,8,8,.5))}
 #cp-dialog .cp-ok input{margin-top:3px;accent-color:var(--ouro,#89723C)}
 #cp-dialog .cp-ok a{color:inherit}
@@ -227,14 +233,8 @@ function montarPopup() {
   (document.getElementById('pv') || document.body).append(dlg);
 
   const zap = dlg.querySelector('#cp-zap');
-  zap.addEventListener('input', () => {
-    if (zap.value.trim().startsWith('+')) return;   /* número de fora: livre */
-    const d = soDigitos(zap.value).slice(0, 11);
-    zap.value = d.length <= 2 ? d
-      : d.length <= 6 ? `(${d.slice(0, 2)}) ${d.slice(2)}`
-      : d.length <= 10 ? `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`
-      : `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-  });
+  /* Rei, 10/11: o mesmo seletor de país e a mesma regra do cadastro da leitura (fone.js) */
+  const fone = window.EterFone ? window.EterFone.montar(zap, () => { const c = zap.closest('.cp-campo'); c.classList.remove('erro', 'aviso'); }) : null;
 
   const fechar = () => { dl('desistiu_do_popup', { origem: 'assine-' + tipoPopup }); dlg.close(); };
   dlg.querySelector('.cp-fecha').addEventListener('click', fechar);
@@ -247,17 +247,22 @@ function montarPopup() {
     if (dlg.dataset.enviando === '1') return;              /* clique duplo */
     const v = id => dlg.querySelector(id).value.trim();
     const erra = (c, sim) => dlg.querySelector(`[data-c="${c}"]`).classList.toggle('erro', sim);
-    const nome = v('#cp-nome'), mail = v('#cp-mail'), bruto = v('#cp-zap');
-    /* Brasil: DDD + 8 ou 9 dígitos. Com "+": código do país + número. */
-    const internacional = bruto.startsWith('+');
-    const d = soDigitos(bruto);
-    const whatsapp = internacional ? d : '55' + d;
-    const zapOk = internacional ? d.length >= 8 && d.length <= 15 : d.length >= 10 && d.length <= 11;
+    const nome = v('#cp-nome'), mail = v('#cp-mail');
+    const campoZap = dlg.querySelector('[data-c="zap"]'), msgZap = campoZap.querySelector('.msg');
+    const z = fone ? fone.ler() : { ok: soDigitos(v('#cp-zap')).length >= 10, whatsapp: '55' + soDigitos(v('#cp-zap')) };
+    const whatsapp = z.whatsapp;
+    campoZap.classList.remove('aviso');
+    /* com o 9 acrescentado, a peça já pôs o número corrigido no campo: a pessoa confere e toca de novo */
+    if (!z.ok && z.corrigido) {
+      campoZap.classList.add('aviso');
+      msgZap.textContent = 'Acrescentamos o 9 do celular: ' + z.mostrar + '. Se estiver certo, toque de novo no botão.';
+      dl('whatsapp_corrigido', { origem: 'assine-' + tipoPopup });
+    } else if (!z.ok) { msgZap.textContent = z.msg || 'Confira o WhatsApp.'; dl('whatsapp_recusado', { motivo: z.motivo || '', origem: 'assine-' + tipoPopup }); }
     erra('nome', nome.length < 2);
     erra('mail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
-    erra('zap', !zapOk);
+    erra('zap', !z.ok && !z.corrigido);
     erra('ok', !dlg.querySelector('#cp-aceite').checked);
-    if (dlg.querySelector('.cp-campo.erro')) return;
+    if (dlg.querySelector('.cp-campo.erro') || !z.ok) return;
 
     dlg.dataset.enviando = '1';
     setTimeout(() => { dlg.dataset.enviando = ''; }, 1500);
