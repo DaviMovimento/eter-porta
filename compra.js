@@ -1,7 +1,13 @@
-/* ═══ COMPRA — os dois botões da seção #assinatura da home de venda ═══════
+/* ═══ COMPRA — o botão da seção #assinatura da home de venda e o passe de embaixador ═══
    Protótipo (08/11/2026). Nada aqui está no ar.
 
-   PASSE  (a[href*="passe-de-30-dias"])
+   11/11/2026 (Rei): o passe de 30 dias saiu da página; a seção #assinatura tem só o
+   plano anual. O passe continua existindo só pelos links de embaixador
+   (/revista/ricardo/passe/, /revista/nath/passe/), que chegam à home com
+   ?comprar=passe#assinatura. Sem botão na página, o código mesmo faz o passo do
+   clique, com o mesmo comportamento de antes (ver "LIGAR").
+
+   PASSE  (só com ?comprar=passe)
      1. Já tem cadastro no aparelho (chave `eter_lead` com nome, e-mail e
         WhatsApp, a mesma que a leitura gratuita e a caixa da oferta do site
         gravam)? Vai direto ao pagamento.
@@ -50,6 +56,8 @@ const CHAVE_LEAD = 'eter_lead';
    não pediria o cadastro na edição e ela nunca receberia a leitura. */
 const CHAVE_LEAD_COMPRA = 'eter_lead_compra';
 const PAGINA = 'home';
+/* pagamento do passe de 30 dias (= edicoes.json → config.checkoutPasse); o passe não tem mais botão na página */
+const CHECKOUT_PASSE = 'https://clkdmg.site/pay/passe-de-30-dias';
 
 /* ── utilidades ──────────────────────────────────────────────────────── */
 const qs = new URLSearchParams(location.search);
@@ -155,13 +163,11 @@ function irAoPasse(base, lead, marca) {
   location.href = linkCheckout(base, 'assine-passe', marca, lead);
 }
 
-function cliquePasse(ev) {
-  const a = ev.currentTarget;
-  ev.preventDefault();
+function cliquePasse() {
   dl('clicou_passe', { origem: 'assine-passe' });
   const lead = leadSalvo();
-  if (lead) { irAoPasse(a.href, lead, marcaDe(lead)); return; }
-  abrirPopup(a.href, 'passe');
+  if (lead) { irAoPasse(CHECKOUT_PASSE, lead, marcaDe(lead)); return; }
+  abrirPopup(CHECKOUT_PASSE, 'passe');
 }
 
 /* ── o popup ─────────────────────────────────────────────────────────── */
@@ -331,8 +337,6 @@ function cliqueAnual(ev) {
 
 /* ═══ LIGAR ═════════════════════════════════════════════════════════════ */
 function ligar() {
-  document.querySelectorAll('#assinatura a[href*="passe-de-30-dias"]').forEach(a =>
-    a.addEventListener('click', cliquePasse));
   const anual = document.getElementById('pv-anual');
   if (anual) {
     /* o href real serve para tocar e segurar no celular e para quem abre em
@@ -344,11 +348,9 @@ function ligar() {
     anual.addEventListener('click', cliqueAnual);
   }
   /* Rei, 09/11: os passes de embaixador (/ricardo/passe, /nath/passe) chegam com ?comprar=passe e passam
-     pelo mesmo formulário curto antes do checkout; quem já tem cadastro segue direto, como no clique */
-  if (qs.get('comprar') === 'passe') {
-    const a = document.querySelector('#assinatura a[href*="passe-de-30-dias"]');
-    if (a) setTimeout(() => a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })), 700);
-  }
+     pelo mesmo formulário curto antes do checkout; quem já tem cadastro segue direto, como no clique.
+     11/11: o botão do passe saiu da página, então o passo do clique é feito direto, com o mesmo atraso */
+  if (qs.get('comprar') === 'passe') setTimeout(cliquePasse, 700);
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', ligar) : ligar();

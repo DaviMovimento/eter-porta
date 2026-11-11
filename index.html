@@ -621,8 +621,9 @@ let rt, larg0=innerWidth; addEventListener('resize',()=>{if(innerWidth===larg0) 
 .pv .modal .caixa b{font:500 24px/1.1 'TRJN',serif}
 .pv .modal .fecha{all:unset;cursor:pointer;position:absolute;right:18px;top:12px;font:500 32px/1 'TRJN',serif}
 
-/* 9 · OFERTAS: anual primeiro, com a lista inteira; no passe, a mesma lista com o que ele não tem riscado */
-.pv .planos{display:grid;grid-template-columns:1.12fr 1fr;gap:clamp(16px,2vw,26px);max-width:1080px;margin:clamp(44px,5vw,64px) auto 0;align-items:stretch}
+/* 9 · OFERTAS: só o plano anual (Rei, 11/11). O cartão fica centralizado, com a largura que a coluna do anual tinha na grade de dois cartões (1.12fr de 2.12fr, menos o vão); abaixo de 700 px ocupa a largura inteira */
+.pv .planos{--vao:clamp(16px,2vw,26px);display:flex;justify-content:center;max-width:1080px;margin:clamp(44px,5vw,64px) auto 0}
+.pv .planos .plano.anual{flex:0 0 calc((100% - var(--vao)) * 1.12 / 2.12)}
 .pv .plano{position:relative;display:flex;flex-direction:column;padding:clamp(28px,3.2vw,46px);border-radius:24px;border:1px solid var(--ln);background:#fff}
 .pv .plano.anual{background:var(--t);color:var(--f);border-color:var(--t);box-shadow:0 40px 80px -40px rgba(25,8,8,.8)}
 .pv .plano .nm{font:500 clamp(28px,2.5vw,36px)/1.05 'TRJN',Georgia,serif}
@@ -713,7 +714,7 @@ let rt, larg0=innerWidth; addEventListener('resize',()=>{if(innerWidth===larg0) 
  .pv .prints figure{flex:0 0 80vw;scroll-snap-align:start;margin:0}
  .pv .prints{columns:auto}
  .pv .redes{grid-template-columns:1fr}.pv .coms{grid-column:auto}
- .pv .planos{grid-template-columns:1fr}
+ .pv .planos .plano.anual{flex-basis:100%}
  .pv .ouca{padding-right:16px}.pv .ouca .rot{display:none}
  .pv .pbt{min-width:72%;padding:0 22px}
  .pv .heroi{min-height:74vh}
@@ -1072,7 +1073,7 @@ let rt, larg0=innerWidth; addEventListener('resize',()=>{if(innerWidth===larg0) 
 <!-- 9 · OFERTAS -->
 <section class="sec claro folha" id="assinatura">
   <div class="in">
-    <div class="centro" data-a><h2>Escolha seu plano e assine <em>agora</em></h2><p>Assine o plano anual ou adquira o passe de 30 dias para experimentar e decidir do lado&nbsp;de&nbsp;dentro.</p></div>
+    <div class="centro" data-a><h2>Assine <em>agora</em></h2></div>
     <div class="planos">
       <div class="plano anual" data-a style="--i:1">
         <span class="selo">Melhor oferta</span>
@@ -1083,16 +1084,8 @@ let rt, larg0=innerWidth; addEventListener('resize',()=>{if(innerWidth===larg0) 
         <ul id="pv-lista-anual"></ul>
         <a class="pbt ouro" id="pv-anual" href="https://wa.me/5543984845551" target="_blank" rel="noopener">Assinar o plano anual</a>
       </div>
-      <div class="plano" data-a style="--i:2">
-        <span class="nm">Passe de 30 dias</span>
-        <span class="parc">cobrança única</span>
-        <span class="pr">R$97</span>
-        <span class="vista">acesso por 30 dias</span>
-        <ul id="pv-lista-passe"></ul>
-        <a class="pbt linha" href="https://clkdmg.site/pay/passe-de-30-dias">Comprar o passe</a>
-      </div>
     </div>
-    <p class="garantia" data-a><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2 4 5.3v6.1c0 5 3.4 9.3 8 10.4 4.6-1.1 8-5.4 8-10.4V5.3z" fill="currentColor"/><path d="m8.3 12.1 2.6 2.6 4.9-5.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Em ambos os planos, você tem 7&nbsp;dias de&nbsp;garantia.</span></p>
+    <p class="garantia" data-a><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2 4 5.3v6.1c0 5 3.4 9.3 8 10.4 4.6-1.1 8-5.4 8-10.4V5.3z" fill="currentColor"/><path d="m8.3 12.1 2.6 2.6 4.9-5.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Você tem 7&nbsp;dias de&nbsp;garantia.</span></p>
   </div>
 </section>
 
@@ -1103,10 +1096,8 @@ let rt, larg0=innerWidth; addEventListener('resize',()=>{if(innerWidth===larg0) 
     <div class="faq" data-a style="--i:1">
       <details name="pv-faq" open><summary>A ETER funciona para a minha área de atuação?<i></i></summary><p>Sim. A ETER é feita para empreendedores de negócios físicos ou digitais, profissionais liberais e criadores de conteúdo que desejam ser mais reconhecidos e bem pagos pelo que sabem e pelo que pensam, através da criação de conteúdo. Todas as edições, aulas, frameworks e ferramentas práticas se aplicam a qualquer nicho, área profissional ou segmento de mercado, porque são baseadas em fontes e fundamentos validados.</p></details>
       <details name="pv-faq"><summary>Quanto tempo preciso dedicar por semana?<i></i></summary><p>Cerca de 30 minutos, que é o tempo de ler uma edição. Todas as aulas ao vivo ficam gravadas, com versão em áudio, para você assistir no dia e na hora que quiser. E, sempre que tiver uma dúvida, o time e a comunidade estão disponíveis para te ajudar.</p></details>
-      <details name="pv-faq"><summary>Qual é a diferença entre o passe de 30 dias e o plano anual?<i></i></summary><p>O passe custa R$97 em cobrança única e serve para você conhecer a experiência da plataforma, com a revista nova toda semana, o acervo e as aulas semanais ao vivo, sem se comprometer por 12 meses. Gostando do conteúdo, o plano anual libera tudo isso pelo ano inteiro e acrescenta as aulas mensais com convidados, a comunidade com fórum fechado e grupo do WhatsApp e o Clube de Escrita, em que o nosso time te ajuda a escrever, revisar e publicar no seu canal.</p></details>
       <details name="pv-faq"><summary>A ETER é um curso ou entrega fórmulas prontas?<i></i></summary><p>A ETER é leitura contínua, discussão entre os membros e publicação de artigos, para quem já cansou de informação rasa. Você recebe repertório fundamentado em algumas das obras mais relevantes da história, frameworks práticos validados em diversos setores, um time editorial pronto para te ajudar a escrever, revisar e publicar o seu conteúdo e uma comunidade engajada de pessoas inteligentes.</p></details>
-      <details name="pv-faq"><summary>O que acontece depois dos 30 dias do passe?<i></i></summary><p>O passe não renova, porque a cobrança é única, e o acesso termina no fim dos 30 dias. Para continuar recebendo o conteúdo toda semana, basta assinar o plano anual, que também libera as aulas mensais com convidados, a comunidade e o Clube de Escrita.</p></details>
-      <details name="pv-faq"><summary>Como funciona a garantia de 7 dias?<i></i></summary><p>O passe e o plano anual têm garantia de 7 dias. Você entra, lê as edições, conhece o acervo e decide na primeira semana se quer manter a assinatura.</p></details>
+      <details name="pv-faq"><summary>Como funciona a garantia de 7 dias?<i></i></summary><p>O plano anual tem garantia de 7 dias. Você entra, lê as edições, conhece o acervo e decide na primeira semana se quer manter a assinatura.</p></details>
     </div>
   </div>
 </section>
@@ -1222,10 +1213,9 @@ function provaSocial(){Promise.all([pega('prova/depoimentos-cartoes.json'),pega(
   observa();
 })}
 
-// 9 · ofertas: a lista inteira no anual; no passe, o que ele não tem fica riscado
+// 9 · ofertas: só o anual, com a lista inteira
 const ITENS=[['Uma nova revista toda semana',1],['Acervo com todas as edições já publicadas',1],['Aulas ao vivo semanais',1],['Aulas mensais com convidados',0],['Acesso à comunidade com fórum fechado e grupo do WhatsApp',0],['Clube de Escrita',0]];
 $('#pv-lista-anual').innerHTML=ITENS.map(i=>`<li>${i[0]}</li>`).join('');
-$('#pv-lista-passe').innerHTML=ITENS.map(i=>`<li class="${i[1]?'':'nao'}">${i[0]}</li>`).join('');
 observa();
 })();
 </script>
@@ -1267,7 +1257,7 @@ todos();})();
 })();
 </script>
 <script src="premium/fone.js?h=482539c5"></script>
-<script src="compra.js?h=f3e7b07b"></script>
+<script src="compra.js?h=436ddf14"></script>
 <script>
 /* a origem (utm_*, j=) segue em todos os links do site, como nas páginas das edições e no leitor (09/11/2026).
    O checkout continua montado pelo compra.js, que já leva a origem. */
