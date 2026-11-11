@@ -1,22 +1,10 @@
-/* ═══ COMPRA — o botão da seção #assinatura da home de venda e o passe de embaixador ═══
-   Protótipo (08/11/2026). Nada aqui está no ar.
-
-   11/11/2026 (Rei): o passe de 30 dias saiu da página; a seção #assinatura tem só o
-   plano anual. O passe continua existindo só pelos links de embaixador
-   (/revista/ricardo/passe/, /revista/nath/passe/), que chegam à home com
-   ?comprar=passe#assinatura. Sem botão na página, o código mesmo faz o passo do
-   clique, com o mesmo comportamento de antes (ver "LIGAR").
-
-   PASSE  (só com ?comprar=passe)
-     1. Já tem cadastro no aparelho (chave `eter_lead` com nome, e-mail e
-        WhatsApp, a mesma que a leitura gratuita e a caixa da oferta do site
-        gravam)? Vai direto ao pagamento.
-     2. Não tem? Abre o popup (nome, e-mail, WhatsApp, autorização) e só
-        depois vai ao pagamento.
-     3. A URL da Guru sai com o rastro de origem (src, sck, utm_*) e, se
-        PREENCHER_CHECKOUT, com nome, e-mail e telefone já preenchidos.
-     4. Registra no mesmo endpoint do site (Apps Script, aba `leads`, coluna
-        `onde`), SÓ se ENVIAR = true.
+/* ═══ COMPRA — o botão do plano anual da seção #assinatura da home de venda ═══
+   11/11/2026 (Rei): "tira também, vamos direcionar tudo para o anual". O passe de 30 dias
+   não é mais vendido em nenhuma página do site: saiu da home e, agora, também dos links
+   de embaixador (/revista/ricardo/passe/ e /revista/nath/passe/), que passam a abrir as
+   ofertas da home, só com o anual, guardando o embaixador que indicou. Este arquivo não
+   leva mais ninguém ao pagamento do passe. A versão anterior, com o caminho do passe,
+   está em compra-v3-antes-embaixador-anual-11-11.js.
 
    ANUAL  (#pv-anual)
      Abre o WhatsApp do Luiz com a mensagem pronta, na voz do comprador.
@@ -28,7 +16,6 @@
      leitura    → já se cadastrou na leitura gratuita de uma edição
      cadastrado → já se cadastrou antes, mas por um botão de compra
      popup      → se cadastrou agora, no popup desta página
-     (no anual, quem não tem cadastro vai como `novo`)
    ═══════════════════════════════════════════════════════════════════════ */
 (() => {
 'use strict';
@@ -40,10 +27,6 @@
 const ENVIAR = true;
 /* Sem pixel da Meta (Rei, 09/11: sem tráfego pago por enquanto). O que vale
    é o registro na planilha; os eventos vão só ao dataLayer. */
-/* Nome, e-mail e telefone na URL da Guru. Decisão do Rei: o site no ar tem a
-   regra contrária escrita no porta.js ("nada de nome ou telefone na URL").
-   Ver compra-LEIA.md. */
-const PREENCHER_CHECKOUT = true;
 
 /* ── endereços (conferidos em 08/11 no site local) ───────────────────── */
 /* = edicoes.json → config.webhookLead */
@@ -56,8 +39,6 @@ const CHAVE_LEAD = 'eter_lead';
    não pediria o cadastro na edição e ela nunca receberia a leitura. */
 const CHAVE_LEAD_COMPRA = 'eter_lead_compra';
 const PAGINA = 'home';
-/* pagamento do passe de 30 dias (= edicoes.json → config.checkoutPasse); o passe não tem mais botão na página */
-const CHECKOUT_PASSE = 'https://clkdmg.site/pay/passe-de-30-dias';
 
 /* ── utilidades ──────────────────────────────────────────────────────── */
 const qs = new URLSearchParams(location.search);
@@ -89,41 +70,6 @@ function manychat() {
   try { const g = localStorage.getItem('eter_ms') || ''; return /^\d{4,20}$/.test(g) ? g : ''; } catch (e) { return ''; }
 }
 
-/* telefone no formato da Guru: código do país à parte. Só o Brasil é
-   separado com certeza; número de fora vai sem preencher o telefone. */
-function foneGuru(w) {
-  const d = soDigitos(w);
-  return /^55\d{10,11}$/.test(d) ? { phone_local_code: '55', phone: d.slice(2) } : null;
-}
-
-/* ── o link da Guru ──────────────────────────────────────────────────── */
-/* Segue o desenho do site no ar (casa.js): src = a página, sck = o botão
-   (+ embaixador), utm_source = porta, utm_campaign = a página, utm_medium =
-   o botão. Os utm de anúncio atravessam, menos medium e content, que são
-   desta página. Novo: utm_content leva a marca de origem. */
-function linkCheckout(base, botao, marca, lead) {
-  const u = new URL(base);
-  const j = embaixador(), ms = manychat();
-  const p = u.searchParams;
-  p.set('src', PAGINA);
-  p.set('sck', `${botao}-${marca}` + (j ? `-${j}` : ''));
-  p.set('utm_source', 'porta');
-  p.set('utm_campaign', PAGINA);
-  for (const [k, v] of qs) if (k.startsWith('utm_') && v) p.set(k, v);
-  p.set('utm_medium', botao);
-  p.set('utm_content', marca);
-  if (ms) p.set('utm_term', `ms-${ms}`);
-  if (PREENCHER_CHECKOUT && lead) {
-    /* parâmetros da doc da Guru, "Como configurar parâmetros na URL";
-       o checkout lê e APAGA esses campos da barra de endereço ao abrir */
-    p.set('name', lead.nome);
-    p.set('email', lead.email);
-    const f = foneGuru(lead.whatsapp);
-    if (f) { p.set('phone_local_code', f.phone_local_code); p.set('phone', f.phone); }
-  }
-  return u.toString();
-}
-
 /* ── registro no endpoint do site ────────────────────────────────────── */
 /* Mesmo formato que casa.js e premium.js mandam (text/plain, sem preflight,
    o Apps Script lê do mesmo jeito). O porteiro grava na aba `leads`; a
@@ -145,7 +91,7 @@ function registrar(lead, onde) {
   } catch (e) { /* a compra nunca espera a planilha */ }
 }
 
-/* ═══ PASSE ═════════════════════════════════════════════════════════════ */
+/* ── o registro do clique ────────────────────────────────────────────── */
 /* O clique vai à planilha SEM edição, como faz a caixa da oferta do site no ar:
    com edição, o porteiro gastaria a edição do mês da pessoa (aba acessos).
    Quem se cadastrou na leitura há menos de 20 minutos vai SEM o e-mail (só nome
@@ -156,19 +102,6 @@ function registrar(lead, onde) {
 const RECENTE_MS = 20 * 60 * 1000;
 const leituraRecente = lead => { const t = Date.parse(lead && lead.em || ''); return !!lead.edicao && !isNaN(t) && Date.now() - t < RECENTE_MS; };
 const registrarSeNovo = (lead, marca, onde) => registrar(leituraRecente(lead) ? { ...lead, email: '' } : lead, onde);
-
-function irAoPasse(base, lead, marca) {
-  registrarSeNovo(lead, marca, `checkout-${PAGINA}-assine-passe-${marca}`);
-  dl('foi_ao_checkout', { origem: 'assine-passe', marca });
-  location.href = linkCheckout(base, 'assine-passe', marca, lead);
-}
-
-function cliquePasse() {
-  dl('clicou_passe', { origem: 'assine-passe' });
-  const lead = leadSalvo();
-  if (lead) { irAoPasse(CHECKOUT_PASSE, lead, marcaDe(lead)); return; }
-  abrirPopup(CHECKOUT_PASSE, 'passe');
-}
 
 /* ── o popup ─────────────────────────────────────────────────────────── */
 const CSS = `
@@ -196,9 +129,8 @@ const CSS = `
 #cp-dialog .cp-fecha{all:unset;cursor:pointer;position:absolute;right:18px;top:12px;font:500 32px/1 'TRJN',serif}
 `;
 
-let dlg = null, destino = '', tipoPopup = 'passe';
+let dlg = null, tipoPopup = 'anual';
 const TEXTOS = {
-  passe: { rot: 'Passe de 30 dias · R$97', tit: 'Para onde mandamos o seu acesso?', dek: 'Com estes dados, a página de pagamento já abre preenchida.', bt: 'Continuar para o pagamento' },
   anual: { rot: 'Plano anual · 12x R$97,04', tit: 'Fale com a nossa equipe no WhatsApp', dek: 'Deixe seus dados e a conversa abre com a mensagem pronta.', bt: 'Continuar para o WhatsApp' },
 };
 
@@ -276,7 +208,7 @@ function montarPopup() {
        oferta passam a reconhecer esta pessoa e não pedem os dados de novo */
     const lead = {
       nome, email: mail, whatsapp, edicao: '',
-      onde: tipoPopup === 'anual' ? `whatsapp-${PAGINA}-assine-anual` : `checkout-${PAGINA}-assine-passe`,
+      onde: `whatsapp-${PAGINA}-assine-anual`,
       jornaleiro: embaixador() || null, ms: manychat() || null,
       utm_source: qs.get('utm_source') || '', utm_medium: qs.get('utm_medium') || '',
       utm_campaign: qs.get('utm_campaign') || '',
@@ -285,13 +217,13 @@ function montarPopup() {
     gravar(CHAVE_LEAD_COMPRA, lead);
     dl('virou_lead', { onde: lead.onde });
     dlg.close();
-    if (tipoPopup === 'anual') irAoWhatsapp(lead, 'popup'); else irAoPasse(destino, lead, 'popup');
+    irAoWhatsapp(lead, 'popup');
   });
 }
 
-function abrirPopup(base, tipo) {
+function abrirPopup(tipo) {
   if (!dlg) montarPopup();
-  destino = base; tipoPopup = tipo || 'passe';
+  tipoPopup = tipo || 'anual';
   const t = TEXTOS[tipoPopup];
   dlg.querySelector('.cp-rot').textContent = t.rot;
   dlg.querySelector('#cp-titulo').textContent = t.tit;
@@ -332,7 +264,7 @@ function cliqueAnual(ev) {
   const lead = leadSalvo();
   dl('clicou_anual', { origem: 'assine-anual' });
   if (lead) { irAoWhatsapp(lead, marcaDe(lead)); return; }
-  abrirPopup('', 'anual');
+  abrirPopup('anual');
 }
 
 /* ═══ LIGAR ═════════════════════════════════════════════════════════════ */
@@ -347,10 +279,6 @@ function ligar() {
     anual.removeAttribute('data-afazer');
     anual.addEventListener('click', cliqueAnual);
   }
-  /* Rei, 09/11: os passes de embaixador (/ricardo/passe, /nath/passe) chegam com ?comprar=passe e passam
-     pelo mesmo formulário curto antes do checkout; quem já tem cadastro segue direto, como no clique.
-     11/11: o botão do passe saiu da página, então o passo do clique é feito direto, com o mesmo atraso */
-  if (qs.get('comprar') === 'passe') setTimeout(cliquePasse, 700);
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', ligar) : ligar();

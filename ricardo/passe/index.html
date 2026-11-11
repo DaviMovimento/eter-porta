@@ -16,7 +16,7 @@ a{color:#7D6429}</style>
 (() => {
   const p = new URLSearchParams(location.search);
   /* o parametro da ponte e o padrao; se a campanha mandar o dela, a dela vence */
-  const fixos = {"j": "ricardo", "comprar": "passe", "utm_source": "embaixador", "utm_medium": "indicacao", "utm_campaign": "ricardo"};
+  const fixos = {"j": "ricardo", "utm_source": "embaixador", "utm_medium": "indicacao", "utm_campaign": "ricardo"};
   for (const [k, v] of Object.entries(fixos)) if (!p.get(k)) p.set(k, v);
   const q = p.toString();
   /* o Instagram grava o link da bio como http:// e o servidor nao leva
