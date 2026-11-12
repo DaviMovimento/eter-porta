@@ -276,6 +276,19 @@ h1 s{text-decoration-thickness:.06em;opacity:.75}
 @media (max-width:760px) and (max-height:700px){.sub .l1{display:none}}
 @media (max-width:760px) and (max-height:600px){h1{font-size:calc(28px * 0.9)}}
 .leque .fw.fwp{margin:0 calc(var(--fwh) * -.04)}.leque .fw.fwp{height:calc(var(--fwh) * 1.3)}.leque .fw.fwp[style*="--j:0"]{height:calc(var(--fwh) * 1.45)}
+
+/* AVISO 4 (Rei, 11/11): o limite de 30 dias */
+.pop .av-linha{margin:-4px 0 0;font:400 13.5px/1.3 'InterEter',sans-serif;color:rgba(25,8,8,.62)}
+#pop-usou{max-height:calc(100dvh - 16px);overflow:auto}
+/* celular: o rótulo quebra em duas linhas inteiras (número em cima, título embaixo), sem o ponto sobrando no fim da linha */
+@media (max-width:520px){#pop-usou .rot .pt{display:none}#pop-usou .rot .tt{display:block;margin-top:.55em}}
+@media (max-height:620px){
+ #pop-usou .caixa{padding:20px 22px;gap:8px}
+ #pop-usou svg{width:30px;height:30px}
+ #pop-usou h3{font-size:22px}
+ #pop-usou .dek{font-size:14px;line-height:1.4}
+ #pop-usou .pbt{min-height:50px}
+}
 </style>
 <meta name="description" content="Como construir o personagem certo para se destacar no teatro social do mercado.">
 <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png"><link rel="apple-touch-icon" href="../img/favicon-180.png"><meta name="theme-color" content="#190808">
@@ -433,10 +446,12 @@ h1 s{text-decoration-thickness:.06em;opacity:.75}
   <dialog class="pop" id="pop-usou" aria-labelledby="pu-t">
     <div class="caixa">
       <button type="button" class="fecha" aria-label="Fechar">×</button>
+      <p class="rot">Edição 007<span class="pt"> · </span><span class="tt">O Baile de Máscaras</span></p>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="10" width="15" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
       <h3 id="pu-t">Você já utilizou sua leitura gratuita deste mês</h3>
       <p class="dek">Assine a ETER para ter acesso ilimitado a todo o conteúdo.</p>
-      <a class="pbt" href="../#assinatura">Assine a ETER</a>
+      <a class="pbt" id="pu-conversa" href="../#assinatura">Assine a ETER</a>
+      <p class="av-linha">Abre uma conversa no WhatsApp</p>
       <a class="pbt linha" id="pu-outra" href="#" hidden>Ler a edição do mês</a>
       <p class="nota-pop" id="pu-data" hidden></p>
     </div>
@@ -630,5 +645,24 @@ el.addEventListener('click',ev=>{if(ev.target.closest('.trava'))location.href=do
    bt.disabled=false;bt.textContent='Ler a edição completa';if(negado(r))return mostraAviso(r);cad.close();location.href=LER()});
   })();
   </script>
+<script>
+/* AVISO 4 (Rei, 11/11): o botão "Assine a ETER" da janela do limite abre a conversa, com a edição que a pessoa quis ler.
+   Sem cadastro no aparelho, segue o link de hoje (ofertas da home). Nenhum pedido a script.google.com. */
+(()=>{
+const NUM='007',TITULO="O Baile de Máscaras",WHATS='5543984845551',$=id=>document.getElementById(id);
+const dl=(event,d)=>{try{(window.dataLayer=window.dataLayer||[]).push({event,edicao:NUM,...(d||{})})}catch(e){}};
+const ler=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}};
+const valido=l=>l&&l.nome&&l.email&&l.whatsapp?l:null;
+const lead=()=>valido(ler('eter_lead'))||valido(ler('eter_lead_compra'));
+const pop=$('pop-usou'),b=$('pu-conversa');
+b.addEventListener('click',ev=>{dl('clicou_conversa',{origem:'aviso-4'});const l=lead();if(!l)return;ev.preventDefault();
+ const p=String(l.nome).trim().split(/\s+/)[0];
+ const m='Olá, tudo bem? '+(p?'Aqui é '+p+'. ':'')+'Já usei minha leitura gratuita deste mês e queria ler a edição '+NUM+', '+TITULO+'. Gostaria de conhecer a assinatura anual da ETER.';
+ const url='https://wa.me/'+WHATS+'?text='+encodeURIComponent(m);let w=null;
+ try{w=window.open(url,'_blank');if(w)try{w.opener=null}catch(e){}}catch(e){}
+ if(!w)location.href=url});
+new MutationObserver(()=>{if(pop.open)dl('viu_aviso',{origem:'aviso-4'})}).observe(pop,{attributes:true,attributeFilter:['open']});
+})();
+</script>
 </body>
 </html>

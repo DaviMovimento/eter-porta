@@ -175,10 +175,43 @@ html.cheia .cheia-cont{display:none}
 #fim .oferta{margin-top:16px;font:400 17px/1.5 'InterEter',sans-serif;color:rgba(25,8,8,.82);text-wrap:pretty}
 /* tela cheia: o Assine continua à mão, pequeno, ao lado do número da página */
 .cheia-assine{padding:9px 13px;border-radius:30px;background:var(--ouro-si);color:#190808;text-decoration:none;font:800 12px/1 'FuturaCond',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+
+/* AVISOS (Rei, 11/11): correções da barra que os avisos exigem */
+.barra-ler .assine{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:64px}
+@media (max-width:1180px){.barra-ler .logo{display:none}}
+.ferr button,.ferr .cont{white-space:nowrap}
+@media (min-width:761px) and (max-width:1100px){.barra-ler .cta-txt{max-width:300px}}
+@media (max-width:340px){.barra-ler .cta-txt{font-size:12px;line-height:1.15}.barra-ler .assine{letter-spacing:.06em;padding-left:9px;padding-right:9px}}
+/* avisos 1 e 2: a faixa escura logo abaixo da barra, 10 s, com X; a faixa inteira abre a conversa. A barra do topo não muda */
+.av-faixa{position:fixed;left:50%;top:calc(var(--barra) + 12px);transform:translate(-50%,-6px);z-index:40;display:flex;align-items:flex-start;width:max-content;max-width:min(560px,calc(100vw - 24px));border-radius:22px;background:rgba(20,8,8,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,251,243,.16);box-shadow:0 18px 40px -16px rgba(0,0,0,.85);color:rgba(255,251,243,.94);font:400 16px/1.32 'TRJN',Georgia,serif;opacity:0;transition:opacity .4s,transform .4s;touch-action:pan-x pan-y}
+.av-faixa.on{opacity:1;transform:translate(-50%,0)}
+.av-faixa[hidden]{display:none}
+.av-faixa .av-corpo{all:unset;box-sizing:border-box;cursor:pointer;flex:1;min-width:0;display:block;padding:14px 2px 15px 20px}
+.av-faixa .av-frase{display:block;text-wrap:balance}
+.av-faixa .av-acao{display:block;margin-top:8px;font:800 12.5px/1.35 'FuturaCond',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro-claro);text-wrap:balance}
+.av-faixa .av-corpo:hover .av-acao{color:var(--bege)}
+.av-faixa .av-x{all:unset;cursor:pointer;flex:none;width:44px;height:44px;margin:3px 3px 0 0;display:grid;place-items:center;font:500 24px/1 'TRJN',serif;opacity:.6}
+@media (max-width:400px){.av-faixa{font-size:15px}.av-faixa .av-corpo{padding-left:16px}.av-faixa .av-acao{font-size:12px;letter-spacing:.1em}}
+/* aviso 3: a linha de aviso embaixo do botão e a janela compacta em tela baixa */
+#fim{max-height:calc(100dvh - 16px);overflow:auto}
+#fim .av-linha{margin-top:10px;font:400 13.5px/1.3 'InterEter',sans-serif;color:rgba(25,8,8,.62);text-align:center}
+@media (max-height:600px){
+ #fim .caixa{padding:22px}
+ #fim h3{margin-top:8px;font-size:23px;line-height:1.12}
+ #fim .oferta{margin-top:10px;font-size:15px;line-height:1.4}
+ #fim .bt{min-height:50px;margin-top:14px}
+ #fim .av-linha{margin-top:8px}
+ #fim .bt.sec{margin-top:8px}
+}
 </style>
 <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32.png"><link rel="apple-touch-icon" href="../../img/favicon-180.png"><meta name="theme-color" content="#190808">
 <script>try{const j=(new URLSearchParams(location.search).get('j')||'').trim().toLowerCase(),a=Date.now(),s=JSON.parse(localStorage.getItem('eter_j')||'null');if(/^[a-z0-9_-]{2,40}$/.test(j)&&(!s||s.j!==j||s.ate<a))localStorage.setItem('eter_j',JSON.stringify({j,ate:a+30*864e5}))}catch(e){}</script>
 <script defer src="../../premium/calor.js?h=3458e1db"></script>
+<script>
+(()=>{try{const F=window.__avFim={abriu:false,liberado:false},o=HTMLDialogElement.prototype.showModal;
+ HTMLDialogElement.prototype.showModal=function(){if(this.id==='fim'){if(F.abriu&&!F.liberado)return;F.abriu=true;F.liberado=false}return o.apply(this,arguments)};
+}catch(e){}})();
+</script>
 </head>
 <body>
 <header class="barra barra-ler" id="barra">
@@ -207,7 +240,7 @@ html.cheia .cheia-cont{display:none}
 <dialog id="caps" aria-labelledby="caps-t"><div class="caixa"><button type="button" class="fecha" aria-label="Fechar">×</button><h2 id="caps-t">Sumário</h2><ol><li><a href="#" data-p="5" data-f="11"><span class="n">01</span><span class="t">Bem vindo à Revolução Criativa</span></a></li><li><a href="#" data-p="12" data-f="20"><span class="n">02</span><span class="t">O Verbo</span></a></li><li><a href="#" data-p="21" data-f="30"><span class="n">03</span><span class="t">A Máquina</span></a></li><li><a href="#" data-p="31" data-f="38"><span class="n">04</span><span class="t">Perguntas e Proposições</span></a></li><li><a href="#" data-p="39" data-f="45"><span class="n">05</span><span class="t">Ancestralidade e Tecnologia</span></a></li><li><a href="#" data-p="46" data-f="50"><span class="n">06</span><span class="t">O País do presente</span></a></li><li><a href="#" data-p="51" data-f="52"><span class="n">07</span><span class="t">Bibliografia</span></a></li></ol></div></dialog>
 <dialog id="fim" aria-labelledby="fim-t"><div class="caixa"><button type="button" class="fecha" aria-label="Fechar">×</button><p class="rot">Edição 003</p><h3 id="fim-t">Você chegou ao fim de <em>O Verbo e a Máquina</em></h3>
   <p class="oferta">Assinando a ETER, você recebe uma nova edição toda semana, acessa o acervo completo, participa de aulas ao vivo, escreve e publica o conteúdo profundo que irá te tornar um formador de opinião reconhecido e bem pago pelo seu repertório.</p>
-  <a class="bt" data-assine="leitor-fim" href="../../#assinatura">Assine a ETER</a><a class="bt sec" href="../../biblioteca/">Conhecer todas as edições</a></div></dialog>
+  <a class="bt" id="fim-conversa" data-assine="leitor-fim" href="../../#assinatura">Assine a ETER</a><p class="av-linha">Abre uma conversa no WhatsApp</p><a class="bt sec" href="../../biblioteca/">Conhecer todas as edições</a></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
 (()=>{
@@ -380,6 +413,75 @@ try{const ir=sessionStorage.getItem('eter_ir_'+ED);if(ir){sessionStorage.removeI
  ['gesturestart','gesturechange'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
  document.addEventListener('touchmove',e=>{if(e.touches.length>1&&!e.target.closest('.palco'))e.preventDefault()},{passive:false});
  const bc=document.getElementById('b-cheia'),entra0=bc.onclick;bc.onclick=()=>document.documentElement.classList.contains('cheia')?document.getElementById('b-sair').click():entra0();
+})();
+</script>
+<script>
+/* AVISOS 1, 2 e 3 (Rei, 11/11). Lê só o que está na tela (contador, janelas, tela cheia); não mexe no leitor. Nenhum pedido a script.google.com. */
+(()=>{
+const NUM='003',TITULO="O Verbo e a Máquina",M=28,BIB=51,TOTAL=52,WHATS='5543984845551';
+const $=id=>document.getElementById(id),html=document.documentElement;
+const dl=(event,d)=>{try{(window.dataLayer=window.dataLayer||[]).push({event,edicao:NUM,...(d||{})})}catch(e){}};
+const ler=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}};
+const valido=l=>l&&l.nome&&l.email&&l.whatsapp?l:null;
+const lead=()=>valido(ler('eter_lead'))||valido(ler('eter_lead_compra'));
+const mensagem=()=>{const l=lead(),p=l?String(l.nome).trim().split(/\s+/)[0]:'';
+ return 'Olá, tudo bem? '+(p?'Aqui é '+p+'. ':'')+'Peguei a leitura gratuita da edição '+NUM+', '+TITULO+', e gostaria de conhecer a assinatura anual da ETER.'};
+/* com cadastro: abre a conversa em aba nova (sem o terceiro argumento 'noopener', que faria o retorno ser sempre nulo); sem cadastro: as ofertas da home */
+const conversa=n=>{dl('clicou_conversa',{origem:'aviso-'+n});
+ if(!lead()){location.href=CASA;return false}
+ const url='https://wa.me/'+WHATS+'?text='+encodeURIComponent(mensagem());let w=null;
+ try{w=window.open(url,'_blank');if(w)try{w.opener=null}catch(e){}}catch(e){}
+ if(!w)location.href=url;return true};
+const CASA=$('b-assine').href;
+const CH='eter_av_'+NUM,av=()=>{try{return JSON.parse(localStorage.getItem(CH)||'{}')||{}}catch(e){return {}}};
+const marca=k=>{try{const a=av();a[k]=Date.now();localStorage.setItem(CH,JSON.stringify(a))}catch(e){}};
+const ret=$('retomar'),fimEl=$('fim');
+const uma=()=>innerWidth<=760||(innerWidth<=1100&&innerHeight>innerWidth);
+const cheia=()=>html.classList.contains('cheia');
+const dialogoAberto=()=>!!document.querySelector('dialog[open]');
+let ativo=null,fim1=0;
+const podeMostrar=()=>!ativo&&!dialogoAberto()&&!cheia()&&document.visibilityState==='visible';
+const espera=(cond,ms)=>new Promise(ok=>{const t0=Date.now(),i=setInterval(()=>{if(cond()){clearInterval(i);ok(true)}else if(Date.now()-t0>ms){clearInterval(i);ok(false)}},400)});
+
+/* a faixa dos avisos 1 e 2: criada uma vez, logo abaixo da barra */
+const fx=document.createElement('div');fx.className='av-faixa';fx.hidden=true;fx.setAttribute('role','status');
+fx.innerHTML='<button type="button" class="av-corpo"><span class="av-frase">Gostaria de mais informações para saber se a assinatura da ETER é para você?</span><span class="av-acao">Clique aqui para conversar com o nosso time</span></button><button type="button" class="av-x" aria-label="Fechar">×</button>';
+document.body.append(fx);
+fx.querySelector('.av-corpo').addEventListener('click',()=>{const a=ativo;if(!a)return;conversa(a.n);fecha(a)});
+fx.querySelector('.av-x').addEventListener('click',()=>{if(ativo)fecha(ativo)});
+function abre(n){if(ativo)return false;const a={n,t:0};ativo=a;fx.hidden=false;requestAnimationFrame(()=>fx.classList.add('on'));a.t=setTimeout(()=>fecha(a),10000);
+ dl('viu_aviso',{origem:'aviso-'+n});return true}
+function fecha(a){if(ativo!==a)return;clearTimeout(a.t);fx.classList.remove('on');setTimeout(()=>{if(!ativo)fx.hidden=true},400);ativo=null;if(a.n===1)fim1=Date.now()}
+/* some na hora se a pessoa abrir o sumário, a tela cheia ou outra janela */
+setInterval(()=>{if(ativo&&(dialogoAberto()||cheia()))fecha(ativo)},250);
+
+/* AVISO 1: ao pegar a edição. 6 s depois de a capa abrir, na primeira abertura deste aparelho; adia até 60 s se houver janela ou tela cheia */
+setTimeout(()=>{
+ if(av().a1||av().a2)return;                /* o 2 já passou (quem chega ao meio em menos de 6 s): o 1 não vem depois */
+ if(!ret.hidden)return;                      /* "Você parou na página N": não é a primeira abertura */
+ espera(podeMostrar,60000).then(ok=>{if(ok&&!av().a1&&!av().a2&&abre(1))marca('a1')})},6000);
+
+/* AVISO 2: no meio. A página mais adiantada que a pessoa vê chega a M (ou passa) por uma virada de verdade e fica 2,5 s sem virar */
+const nums=()=>(($('cont').textContent||'').split('/')[0].match(/\d+/g)||[]).map(Number);
+const pMax=()=>Math.max(0,...nums()),pMin=()=>Math.min(...nums(),Infinity);
+let ultimo=pMax(),tVirada=Date.now(),viradaOK=false,pulo=Date.now();
+document.addEventListener('click',e=>{if(e.target.closest&&(e.target.closest('#b-retomar')||e.target.closest('#caps a[data-p]')))pulo=Date.now()},true);
+/* a janela do fim: de volta às últimas páginas depois de mais de 60 s fora, ela pode reabrir */
+const F=window.__avFim||{},naFim=()=>pMin()>=TOTAL-(uma()?0:1);
+let dentro=naFim(),foraDesde=Date.now();
+setInterval(()=>{
+ const p=pMax();
+ if(p!==ultimo){viradaOK=Date.now()-pulo>2500&&Math.abs(p-ultimo)<=2;ultimo=p;tVirada=Date.now()}
+ const d=naFim();if(d!==dentro){if(d)F.liberado=!!F.abriu&&Date.now()-foraDesde>60000;else foraDesde=Date.now();dentro=d}
+ if(!viradaOK)return;
+ const parado=Date.now()-tVirada;
+ if(parado>2500+60000){viradaOK=false;return}   /* adiado demais (tela cheia ou janela): espera a próxima virada */
+ if(!av().a2&&p>=M&&p<BIB&&parado>=2500&&Date.now()-fim1>=30000&&podeMostrar()){if(abre(2)){marca('a2');viradaOK=false}}
+},300);
+
+/* AVISO 3: a janela do fim. O botão "Assine a ETER" abre a conversa (com cadastro); o clique continua contando como clicou_assine */
+$('fim-conversa').addEventListener('click',ev=>{if(lead())ev.preventDefault();conversa(3)});
+new MutationObserver(()=>{if(fimEl.open)dl('viu_aviso',{origem:'aviso-3'})}).observe(fimEl,{attributes:true,attributeFilter:['open']});
 })();
 </script>
 </body>
